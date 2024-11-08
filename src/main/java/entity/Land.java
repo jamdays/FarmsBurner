@@ -1,15 +1,7 @@
 package main.java.entity;
 import java.util.List;
 
-/*
-int size
-List<Crops> crops
-boolean isDry
-boolean isWet
-boolean isSnowy
- */
-
-public class Farm {
+public class Land {
 
     // instance variables
     private int size;
@@ -19,7 +11,7 @@ public class Farm {
     private boolean isSnowy;
 
     // constructor
-    public Farm(int size, List<Crop> crops) {
+    public Land(int size, List<Crop> crops) {
         this.size = size;
         this.crops = crops;
         this.isDry = true;
