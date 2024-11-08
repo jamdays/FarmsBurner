@@ -20,5 +20,6 @@ public class FarmState {
     }
 
     public void water(){
+        this.farm.water();
     }
 }

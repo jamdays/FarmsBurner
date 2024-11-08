@@ -11,6 +11,7 @@ public class Land implements Serializable {
     private boolean isDry;
     private boolean isWet;
     private boolean isSnowy;
+    private int width;
 
     // constructor
     public Land(int size, List<Crop> crops) {
@@ -21,8 +22,9 @@ public class Land implements Serializable {
         this.isSnowy = false;
     }
 
-    public Land(int size) {
-        this.size = size;
+    public Land(int width) {
+        this.width = width;
+        this.size = width*width;
         this.crops = new ArrayList<Crop>();
         this.isDry = true;
         this.isWet = false;
@@ -93,4 +95,6 @@ public class Land implements Serializable {
         if (this.size <=  1 + this.crops.size())
             this.crops.add(crop);
     }
+
+    public int getWidth() {return this.width;}
 }
