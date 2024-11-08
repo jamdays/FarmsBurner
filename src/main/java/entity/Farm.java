@@ -1,4 +1,5 @@
 package main.java.entity;
+import java.io.Serializable;
 import java.util.List;
 
 /*
@@ -12,7 +13,7 @@ boolean isSnowy
 import java.util.ArrayList;
 import java.util.List;
 
-public class Farm {
+public class Farm implements Serializable {
 
     //Instance Variables
     private Land farmLand;

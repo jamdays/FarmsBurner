@@ -1,6 +1,8 @@
 package main.java.entity;
 
-public class Crop {
+import java.io.Serializable;
+
+public class Crop implements Serializable {
 
     // instance variables
     private int age;
@@ -12,6 +14,12 @@ public class Crop {
         this.age = age;
         this.isAlive = isAlive;
         this.price = price;
+    }
+
+    public Crop(){
+        this.age = 0;
+        this.isAlive = true;
+        this.price = 0;
     }
 
     // getter and setter for age

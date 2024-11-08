@@ -1,8 +1,9 @@
 package main.java.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Storage {
+public class Storage implements Serializable {
 
     // instance variables
     private int capacity;
