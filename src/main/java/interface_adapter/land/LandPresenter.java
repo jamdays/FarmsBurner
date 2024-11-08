@@ -1,6 +1,5 @@
-package main.java.interface_adapter.plant;
+package main.java.interface_adapter.land;
 
-import main.java.entity.Land;
 import main.java.use_case.plant.PlantOutputBoundary;
 
 public class LandPresenter implements PlantOutputBoundary {
