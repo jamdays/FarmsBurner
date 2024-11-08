@@ -16,17 +16,17 @@ import java.util.List;
 public class Farm implements Serializable {
 
     //Instance Variables
-    private Land farmLand;
+    private final Land farmLand;
     private int barnBucks;
     private int power;
-    private List<FarmTool> farmTools;
+    private final Sprinkler sprinkler;
 
     // Constructor
     public Farm(Land farmLand) {
         this.farmLand = farmLand;
         this.barnBucks = 0;
         this.power = 0;
-        List<FarmTool> farmTools = new ArrayList<FarmTool>();
+        this.sprinkler = new Sprinkler();
     }
 
     public Land getFarmLand() {
@@ -41,12 +41,8 @@ public class Farm implements Serializable {
         this.barnBucks = barnBucks;
     }
 
-    public List<FarmTool> getFarmTools() {
-        return this.farmTools;
-    }
-
-    public void addFarmTools(ArrayList<FarmTool> farmTools) {
-        this.farmTools.addAll(farmTools);
+    public Sprinkler getSprinkler() {
+        return this.sprinkler;
     }
 
     public int getPower() {
@@ -55,5 +51,13 @@ public class Farm implements Serializable {
 
     public void setPower(int power) {
         this.power = power;
+    }
+
+    public void water(){
+        for(int c = 0; c < Math.min(farmLand.getWidth(), sprinkler.getLevel() + 1); c++){
+            for (int r = 0; r < Math.min(farmLand.getSize()/farmLand.getWidth(), sprinkler.getLevel() + 1); r++){
+                farmLand.getCrops().get(c + r*Math.min(farmLand.getWidth(), sprinkler.getLevel() + 10)).water();
+            }
+        }
     }
 }

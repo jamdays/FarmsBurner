@@ -1,4 +1,4 @@
-package main.java.interface_adapter.plant;
+package main.java.interface_adapter.land;
 
 import main.java.interface_adapter.ViewModel;
 
