@@ -4,7 +4,7 @@ Created by Maximillian Djaya, Punnawit Payapvattanavong, Aayush Karki, and Melod
 
 ## Project overview
 
-Farms burner is a farming game that is affected by real world weather data.
+Farms burner is a farming game that is affected by real world weather data. 
 
 ## User story
 

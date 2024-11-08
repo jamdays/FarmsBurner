@@ -9,67 +9,50 @@ boolean isWet
 boolean isSnowy
  */
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Farm {
 
-    // instance variables
-    private int size;
-    private List<Crop> crops;
-    private boolean isDry;
-    private boolean isWet;
-    private boolean isSnowy;
+    //Instance Variables
+    private Land farmLand;
+    private int barnBucks;
+    private int power;
+    private List<FarmTool> farmTools;
 
-    // constructor
-    public Farm(int size, List<Crop> crops) {
-        this.size = size;
-        this.crops = crops;
-        this.isDry = true;
-        this.isWet = false;
-        this.isSnowy = false;
+    // Constructor
+    public Farm(Land farmLand) {
+        this.farmLand = farmLand;
+        this.barnBucks = 0;
+        this.power = 0;
+        List<FarmTool> farmTools = new ArrayList<FarmTool>();
     }
 
-    // getter and setter for size
-    public int getSize() {
-        return size;
+    public Land getFarmLand() {
+        return this.farmLand;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public int getBarnBucks() {
+        return this.barnBucks;
     }
 
-    // getter and setter for crops
-    public List<Crop> getCrops() {
-        return crops;
+    public void setBarnBucks(int barnBucks) {
+        this.barnBucks = barnBucks;
     }
 
-    public void setCrops(List<Crop> crops) {
-        this.crops = crops;
+    public List<FarmTool> getFarmTools() {
+        return this.farmTools;
     }
 
-    // getter and setter for isDry
-    public boolean getIsDry() {
-        return isDry;
+    public void addFarmTools(ArrayList<FarmTool> farmTools) {
+        this.farmTools.addAll(farmTools);
     }
 
-    public void setIsDry(boolean isDry) {
-        this.isDry = isDry;
+    public int getPower() {
+        return this.power;
     }
 
-    // getter and setter for isWet
-    public boolean getIsWet() {
-        return isWet;
-    }
-
-    public void setIsWet(boolean isWet) {
-        this.isWet = isWet;
-    }
-
-    // getter and setter for isSnowy
-
-    public boolean getIsSnowy() {
-        return isSnowy;
-    }
-
-    public void setIsSnowy(boolean isSnowy) {
-        this.isSnowy = isSnowy;
+    public void setPower(int power) {
+        this.power = power;
     }
 }
