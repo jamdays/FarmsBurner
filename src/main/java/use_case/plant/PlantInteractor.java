@@ -1,4 +1,5 @@
 package main.java.use_case.plant;
 
-public class PlantInteractor {
+public class PlantInteractor implements PlantInputBoundary{
+
 }
