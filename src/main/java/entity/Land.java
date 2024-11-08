@@ -1,7 +1,9 @@
 package main.java.entity;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Land {
+public class Land implements Serializable {
 
     // instance variables
     private int size;
@@ -17,6 +19,15 @@ public class Land {
         this.isDry = true;
         this.isWet = false;
         this.isSnowy = false;
+    }
+
+    public Land(int size) {
+        this.size = size;
+        this.crops = new ArrayList<Crop>();
+        this.isDry = true;
+        this.isWet = false;
+        this.isSnowy = false;
+
     }
 
     // getter and setter for size
@@ -63,5 +74,23 @@ public class Land {
 
     public void setIsSnowy(boolean isSnowy) {
         this.isSnowy = isSnowy;
+    }
+
+    /**
+     * adds all crops in crops to the crops if there is space
+     * @param crops the crops to be added
+     */
+    public void addCrops(List<Crop> crops){
+        if (this.size <=  crops.size() + this.crops.size())
+            this.crops.addAll(crops);
+    }
+
+    /**
+     * adds this crop to the crops if there is space
+     * @param crop the crop to be added
+     */
+    public void addCrop(Crop crop){
+        if (this.size <=  1 + this.crops.size())
+            this.crops.add(crop);
     }
 }
