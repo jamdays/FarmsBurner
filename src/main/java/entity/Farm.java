@@ -1,4 +1,13 @@
 package main.java.entity;
+import java.util.List;
+
+/*
+int size
+List<Crops> crops
+boolean isDry
+boolean isWet
+boolean isSnowy
+ */
 
 import java.util.ArrayList;
 import java.util.List;
