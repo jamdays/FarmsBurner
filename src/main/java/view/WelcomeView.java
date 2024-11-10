@@ -24,16 +24,24 @@ public class WelcomeView {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Start clicked");
+                System.out.println("Start");
             }
         });
 
         // Location
         JPanel locationPanel = new JPanel();
-        JLabel location = (new JLabel("Set Location:"));
-        location.setFont(new Font("Press Start 2P", Font.PLAIN, 12));
+        JButton location = (new JButton("Set Location:"));
+        location.setFont(new Font ("Press Start 2P", Font.PLAIN, 12));
         locationPanel.add(location);
-        locationPanel.add(new JTextField(20));
+        JTextField locationText = new JTextField(20);
+        locationText.setFont(new Font("Press Start 2P", Font.PLAIN, 12));
+        location.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Set location to " + locationText.getText());
+            }
+        });
+        locationPanel.add(locationText);
         locationPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Main Panel

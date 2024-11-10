@@ -40,7 +40,32 @@ public class FarmView {
         });
 
         JPanel landPanel = new JPanel();
-        JPanel barnBucksPanel = new JPanel();
+        landPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        for (int row = 0; row < 10; row++) {
+            for (int col = 0; col < 8; col++) {
+                JButton button = new JButton("   ");
+                button.setFont(new Font ("Press Start 2P", Font.PLAIN, 12));
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        button.setText("T");
+                    }
+                });
+                button.setPreferredSize(new Dimension(50, 50));
+                gbc.anchor = GridBagConstraints.CENTER;
+                gbc.gridx = col;
+                gbc.gridy = row;
+                landPanel.add(button, gbc);
+            }
+        }
+
+        JPanel footerPanel = new JPanel();
+        JLabel power = new JLabel("Power: 0");
+        JLabel barnBucks = new JLabel("Barn Bucks: 0");
+        footerPanel.add(power);
+        footerPanel.add(barnBucks);
 
         navBar.add(farmSettings);
         navBar.add(weather);
@@ -52,7 +77,7 @@ public class FarmView {
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.add(navBar);
         mainPanel.add(landPanel);
-        mainPanel.add(barnBucksPanel);
+        mainPanel.add(footerPanel);
 
         JFrame frame = new JFrame("Farm View");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
