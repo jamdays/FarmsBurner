@@ -16,20 +16,36 @@ import java.util.List;
 public class Farm implements Serializable {
 
     //Instance Variables
-    private final Land farmLand;
+    private final Land[][] farmLand;
     private int barnBucks;
     private int power;
     private final Sprinkler sprinkler;
 
     // Constructor
-    public Farm(Land farmLand) {
+    public Farm(Land[][] farmLand) {
         this.farmLand = farmLand;
         this.barnBucks = 0;
         this.power = 0;
         this.sprinkler = new Sprinkler();
     }
 
-    public Land getFarmLand() {
+    public Farm(){
+        this.farmLand = new Land[8][10];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 10; j++) {
+                farmLand[i][j] = new Land();
+                if ((i == 3 || i == 4) && (j == 4 || j == 5)){
+                    farmLand[i][j].setClaimed(true);
+                }
+            }
+        }
+        this.barnBucks = 0;
+        this.power = 0;
+        this.sprinkler = new Sprinkler();
+
+    }
+
+    public Land[][] getFarmLand() {
         return this.farmLand;
     }
 
@@ -53,11 +69,11 @@ public class Farm implements Serializable {
         this.power = power;
     }
 
-    public void water(){
-        for(int c = 0; c < Math.min(farmLand.getWidth(), sprinkler.getLevel() + 1); c++){
-            for (int r = 0; r < Math.min(farmLand.getSize()/farmLand.getWidth(), sprinkler.getLevel() + 1); r++){
-                farmLand.getCrops().get(c + r*Math.min(farmLand.getWidth(), sprinkler.getLevel() + 10)).water();
-            }
-        }
+    public void water(int r, int c){
+        this.farmLand[r][c].water();
+    }
+
+    public void plant(int r, int c){
+        this.farmLand[r][c].plant();
     }
 }

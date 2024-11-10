@@ -7,8 +7,8 @@ public class PlantInteractor implements PlantInputBoundary{
         this.outputBoundary = outputBoundary;
     }
     @Override
-    public void execute() {
-        outputBoundary.addCrop();
+    public void execute(int r, int c) {
+        outputBoundary.addCrop(r, c);
     }
 }
 

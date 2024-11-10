@@ -9,9 +9,8 @@ public class FarmController {
         this.plantInteractor = plantInteractor;
     }
 
-    public void plantCrop(){
-        plantInteractor.execute();
-
+    public void plantCrop(int r, int c){
+        plantInteractor.execute(r, c);
     }
 
 

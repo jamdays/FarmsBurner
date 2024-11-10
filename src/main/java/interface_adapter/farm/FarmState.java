@@ -8,18 +8,15 @@ public class FarmState {
     private Farm farm;
 
     public FarmState() {
-        this.farm = new Farm(new Land(4));
+        this.farm = new Farm();
     }
 
-    public Land getland() {
-        return this.farm.getFarmLand();
+
+    public void plantCrop(int r, int c){
+        this.farm.plant(r, c);
     }
 
-    public void plantCrop(){
-        this.farm.getFarmLand().addCrop(new Crop());
-    }
-
-    public void water(){
-        this.farm.water();
+    public void water(int r, int c){
+        this.farm.water(r, c)   ;
     }
 }
