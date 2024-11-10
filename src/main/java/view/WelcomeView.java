@@ -1,5 +1,7 @@
 package main.java.view;
 
+import main.java.entity.Farm;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,17 +12,14 @@ public class WelcomeView {
         // Welcome panel
         JPanel welcomePanel = new JPanel();
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
-        JLabel welcome = new JLabel("Welcome to");
-        welcome.setFont(new Font("Press Start 2P", Font.PLAIN, 24));
-        JLabel title = new JLabel("Farms Burner");
-        title.setFont(new Font("Press Start 2P", Font.PLAIN, 36));
+        FarmLabel welcome = new FarmLabel("Welcome to", 24);
+        FarmLabel title = new FarmLabel("Farms Burner", 36);
         welcomePanel.add(welcome);
         welcomePanel.add(title);
         welcomePanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Start button
-        JButton start = new JButton("Start");
-        start.setFont(new Font("Press Start 2P", Font.PLAIN, 12));
+        FarmButton start = new FarmButton("Start",12);
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -30,11 +29,9 @@ public class WelcomeView {
 
         // Location
         JPanel locationPanel = new JPanel();
-        JButton location = (new JButton("Set Location:"));
-        location.setFont(new Font ("Press Start 2P", Font.PLAIN, 12));
+        FarmButton location = (new FarmButton("Set Location:", 12));
         locationPanel.add(location);
         JTextField locationText = new JTextField(20);
-        locationText.setFont(new Font("Press Start 2P", Font.PLAIN, 12));
         location.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
