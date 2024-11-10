@@ -6,48 +6,40 @@ import java.util.List;
 public class Land implements Serializable {
 
     // instance variables
-    private int size;
-    private List<Crop> crops;
+    private Crop crop;
     private boolean isDry;
     private boolean isWet;
     private boolean isSnowy;
-    private int width;
+    private boolean claimed;
+    private boolean planted;
 
     // constructor
-    public Land(int size, List<Crop> crops) {
-        this.size = size;
-        this.crops = crops;
+    public Land(Crop crop) {
+        this.crop = crop;
         this.isDry = true;
         this.isWet = false;
         this.isSnowy = false;
+        this.planted = true;
+        this.claimed = true;
     }
 
-    public Land(int width) {
-        this.width = width;
-        this.size = width*width;
-        this.crops = new ArrayList<Crop>();
+    public Land() {
         this.isDry = true;
         this.isWet = false;
         this.isSnowy = false;
-
+        this.planted = false;
+        this.claimed = false;
     }
 
-    // getter and setter for size
-    public int getSize() {
-        return size;
-    }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
 
     // getter and setter for crops
-    public List<Crop> getCrops() {
-        return crops;
+    public Crop getCrop() {
+        return crop;
     }
 
-    public void setCrops(List<Crop> crops) {
-        this.crops = crops;
+    public void setCrop(Crop crop) {
+        this.crop = crop;
     }
 
     // getter and setter for isDry
@@ -78,23 +70,31 @@ public class Land implements Serializable {
         this.isSnowy = isSnowy;
     }
 
-    /**
-     * adds all crops in crops to the crops if there is space
-     * @param crops the crops to be added
-     */
-    public void addCrops(List<Crop> crops){
-        if (this.size <=  crops.size() + this.crops.size())
-            this.crops.addAll(crops);
+    public boolean isPlanted() {
+        return planted;
     }
 
-    /**
-     * adds this crop to the crops if there is space
-     * @param crop the crop to be added
-     */
-    public void addCrop(Crop crop){
-        if (this.size <=  1 + this.crops.size())
-            this.crops.add(crop);
+    public void setPlanted(boolean planted) {
+        this.planted = planted;
     }
 
-    public int getWidth() {return this.width;}
+    public boolean isClaimed() {
+        return claimed;
+    }
+
+    public void setClaimed(boolean claimed) {
+        this.claimed = claimed;
+    }
+
+    public void water(){
+        this.isWet = true;
+        crop.water();
+    }
+
+    public void plant(){
+        if (claimed && !planted && !isSnowy){
+            planted = true;
+            setCrop(new Crop());
+        }
+    }
 }

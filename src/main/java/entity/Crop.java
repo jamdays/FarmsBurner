@@ -8,21 +8,21 @@ public class Crop implements Serializable {
     private int age;
     private boolean isAlive;
     private int price;
-    private boolean isWatered;
+    private int waterlevel;
 
     // constructor
     public Crop(int age, boolean isAlive, int price) {
         this.age = age;
         this.isAlive = isAlive;
         this.price = price;
-        this.isWatered = false;
+        this.waterlevel = 0;
     }
 
     public Crop(){
         this.age = 0;
         this.isAlive = true;
         this.price = 0;
-        this.isWatered = false;
+        this.waterlevel = 0;
     }
 
     // getter and setter for age
@@ -52,9 +52,19 @@ public class Crop implements Serializable {
         this.price = price;
     }
 
-    public boolean isWatered() {return this.isWatered;}
+    public boolean isWatered() {return this.waterlevel >= 0;}
 
-    public void setWatered(boolean isWatered) {this.isWatered = isWatered;}
+    public void setWaterlevel(int level) {
+        this.waterlevel = level;
+    }
 
-    public void water(){this.isWatered = true;}
+    public void water(){
+        if (this.waterlevel == 0){
+            age += 1;
+        }
+        this.waterlevel += 1;
+        if (this.waterlevel == 5){
+            isAlive = false;
+        }
+    }
 }
