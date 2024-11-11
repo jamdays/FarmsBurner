@@ -9,29 +9,29 @@ public class FarmView {
     public static void main(String[] args) {
         // Navigation Bar
         JPanel navBar = new JPanel();
-        JButton farmSettings = new JButton("=");
+        FarmButton farmSettings = new FarmButton("=");
         farmSettings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open farm settings");
             }
         });
-        JLabel weather = new JLabel("Weather:");
-        JButton sell = new JButton("Sell");
+        FarmLabel weather = new FarmLabel("Weather:");
+        FarmButton sell = new FarmButton("Sell");
         sell.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open sell menu");
             }
         });
-        JButton buy = new JButton("Buy");
+        FarmButton buy = new FarmButton("Buy");
         buy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open buy menu");
             }
         });
-        JButton help = new JButton("i");
+        FarmButton help = new FarmButton("i");
         help.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,7 +45,7 @@ public class FarmView {
 
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 8; col++) {
-                JButton button = new JButton("   ");
+                FarmButton button = new FarmButton("   ");
                 button.setFont(new Font ("Press Start 2P", Font.PLAIN, 12));
                 button.addActionListener(new ActionListener() {
                     @Override
@@ -62,8 +62,8 @@ public class FarmView {
         }
 
         JPanel footerPanel = new JPanel();
-        JLabel power = new JLabel("Power: 0");
-        JLabel barnBucks = new JLabel("Barn Bucks: 0");
+        FarmLabel power = new FarmLabel("Power: 0");
+        FarmLabel barnBucks = new FarmLabel("Barn Bucks: 0");
         footerPanel.add(power);
         footerPanel.add(barnBucks);
 
