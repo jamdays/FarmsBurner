@@ -19,11 +19,22 @@ public class FarmState {
 
 
     public void plantCrop(int r, int c){
-        this.farmLand[r][c] = farmLand[r][c] | PLANTED;
+        if ((farmLand[r][c] & CLAIMED) == CLAIMED)
+            this.farmLand[r][c] = farmLand[r][c] | PLANTED | ALIVE;
         
     }
 
     public void water(int r, int c){
-        this.farmLand[r][c] = farmLand[r][c] | WET;
+        if ((farmLand[r][c] & CLAIMED) == CLAIMED)
+            this.farmLand[r][c] = farmLand[r][c] | WET;
+    }
+
+    public void claim(int r, int c){
+        this.farmLand[r][c] = farmLand[r][c] | CLAIMED;
+
+    }
+
+    public int[][] getFarmLand() {
+        return farmLand;
     }
 }

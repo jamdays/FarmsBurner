@@ -12,11 +12,20 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
-    FarmController farmController;
+    private final int WET = 0B1;
+    private final int CLAIMED = 0B10;
+    private final int SNOWY = 0B100;
+    private final int PLANTED = 0B1000;
+    private final int ALIVE = 0B100000;
+    private FarmController farmController;
+    private FarmButton[][] farmLand;
+    private FarmViewModel viewModel;
 
     public FarmView(FarmViewModel farmViewModel) {
         // Navigation Bar
         JPanel navBar = new JPanel();
+        viewModel = farmViewModel;
+        viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
         FarmButton farmSettings = new FarmButton("=");
         farmSettings.addActionListener(new ActionListener() {
@@ -53,17 +62,25 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         landPanel.setSize(new Dimension(1000, 800));
         landPanel.setBackground(new Color(169, 152, 126));
         GridBagConstraints gbc = new GridBagConstraints();
-        Color green =new Color(20,130,50);
-        Color brown =new Color(50,20,20);
-        for (int row = 0; row < 10; row++) {
-            for (int col = 0; col < 8; col++) {
+        farmLand = new FarmButton[8][10];
+        for (int row = 0; row < 8; row++) {
+            for (int col = 0; col < 10; col++) {
+                final int r = row;
+                final int c = col;
                 FarmButton button = new FarmButton("  ", 20, Color.BLACK);
+                farmLand[r][c] = button;
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        button.setForeground(green);
-                        button.setText("T");
-                        button.setBackground(brown);
+                        if ((e.getModifiers() & 1) == 1) {
+                            farmController.claim(r, c);
+                        }
+                        else if ((e.getModifiers() & 2) == 2) {
+                            farmController.plantCrop(r, c);
+                        }
+                        else {
+                            farmController.waterCrop(r, c);
+                        }
                     }
                 });
                 button.setSize(new Dimension(80, 80));
@@ -101,7 +118,29 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        Color green =new Color(20,130,50);
+        Color dirt =new Color(75,40,40);
+        Color wetdirt =new Color(50,20,20);
         final FarmState state = (FarmState) evt.getNewValue();
+        for (int r = 0; r < state.getFarmLand().length; r++) {
+            for (int c = 0; c < state.getFarmLand()[r].length; c++) {
+                if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
+                    farmLand[r][c].setBackground(dirt);
+                    if ((state.getFarmLand()[r][c] & WET) == WET) {
+                        farmLand[r][c].setBackground(wetdirt);
+
+                    }
+                    if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
+                        farmLand[r][c].setText("T");
+                        farmLand[r][c].setForeground(Color.gray);
+                        if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
+                            farmLand[r][c].setForeground(green);
+
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void setFarmController(FarmController controller) {

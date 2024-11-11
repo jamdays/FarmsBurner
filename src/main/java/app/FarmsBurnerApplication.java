@@ -9,7 +9,6 @@ import java.util.Properties;
 
 public class FarmsBurnerApplication {
     public static void main(String[] args) {
-        //TODO MAKE A GENERAL DATA ACCESS FOR TESTING ETC
         var props = new Properties();
         var envFile = Paths.get(".env");
         try (var inputStream = Files.newInputStream(envFile)) {
@@ -18,6 +17,7 @@ public class FarmsBurnerApplication {
             throw new RuntimeException(e);
         }
         String apiKey = props.get("WAK").toString();
+        //TODO MAKE A GENERAL DATA ACCESS FOR TESTING ETC
         final OpenWeatherAccess dao = new OpenWeatherAccess(apiKey);
 
         final AppBuilder builder = new AppBuilder();

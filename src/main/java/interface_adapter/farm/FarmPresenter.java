@@ -1,9 +1,10 @@
 package main.java.interface_adapter.farm;
 
+import main.java.use_case.claim.ClaimOutputBoundary;
 import main.java.use_case.plant.PlantOutputBoundary;
 import main.java.use_case.water.WaterOutputBoundary;
 
-public class FarmPresenter implements PlantOutputBoundary, WaterOutputBoundary {
+public class FarmPresenter implements PlantOutputBoundary, WaterOutputBoundary, ClaimOutputBoundary {
     private final FarmViewModel farmViewModel;
 
     public FarmPresenter(FarmViewModel farmViewModel) {
@@ -12,12 +13,18 @@ public class FarmPresenter implements PlantOutputBoundary, WaterOutputBoundary {
     @Override
     public void addCrop(int r, int c) {
         ((FarmState) (farmViewModel.getState())).plantCrop(r, c);
-        farmViewModel.firePropertyChanged();
+        farmViewModel.firePropertyChanged("plant");
     }
 
     @Override
     public void water(int r, int c){
         ((FarmState) (farmViewModel.getState())).water(r, c);
-        farmViewModel.firePropertyChanged();
+        farmViewModel.firePropertyChanged("water");
+    }
+
+    @Override
+    public void claim(int r, int c){
+        ((FarmState) (farmViewModel.getState())).claim(r, c);
+        farmViewModel.firePropertyChanged("claim");
     }
 }

@@ -4,6 +4,9 @@ import main.java.data_access.OpenWeatherAccess;
 import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmPresenter;
 import main.java.interface_adapter.farm.FarmViewModel;
+import main.java.use_case.claim.ClaimInputBoundary;
+import main.java.use_case.claim.ClaimInteractor;
+import main.java.use_case.claim.ClaimOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
@@ -24,23 +27,27 @@ public class AppBuilder {
     private FarmView farmView;
     private PlantInteractor plantInteractor;
     private WaterInteractor waterInteractor;
+    private ClaimInteractor claimInteractor;
 
 
     /**
      * Creates the objects for the Plant Use Case and connects the FarmView to its
      * controller.
-     * <p>This method must be called after addNoteView!</p>
+     * <p>This method must be called after addFarmView!</p>
      * @return this builder
      * @throws RuntimeException if this method is called before addFarmView
      */
     public AppBuilder addPlantUseCase() {
         final PlantOutputBoundary plantOutputBoundary = new FarmPresenter(farmViewModel);
-        final WaterOutputBoundary waterOutputBoundary = new FarmPresenter(farmViewModel);
+        final WaterOutputBoundary waterOutputBoundary = (WaterOutputBoundary) plantOutputBoundary;
+        final ClaimOutputBoundary claimOutputBoundary = (ClaimOutputBoundary) waterOutputBoundary;
         plantInteractor = new PlantInteractor(plantOutputBoundary);
         waterInteractor = new WaterInteractor(waterOutputBoundary);
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor);
+        claimInteractor = new ClaimInteractor(claimOutputBoundary);
+
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor);
         if (farmView == null) {
-            throw new RuntimeException("addNoteView must be called before addNoteUseCase");
+            throw new RuntimeException("addFarmView must be called before addUseCase");
         }
         farmView.setFarmController(controller);
         return this;
@@ -74,7 +81,6 @@ public class AppBuilder {
         frame.setTitle("Farms Burner");
         frame.setSize(WIDTH, HEIGHT);
         frame.add(farmView);
-        frame.getContentPane().setBackground(new Color(169, 152, 126));
 
         return frame;
 
