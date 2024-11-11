@@ -76,4 +76,8 @@ public class Farm implements Serializable {
     public void plant(int r, int c){
         this.farmLand[r][c].plant();
     }
+
+    public void claim(int r, int c){
+        this.farmLand[r][c].setClaimed(true);
+    }
 }
