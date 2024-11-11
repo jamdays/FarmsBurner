@@ -1,49 +1,42 @@
 package main.java.entity;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Land {
+public class Land implements Serializable {
 
     // instance variables
-    private int size;
-    private List<Crop> crops;
-    private boolean isDry;
+    private Crop crop;
     private boolean isWet;
     private boolean isSnowy;
+    private boolean claimed;
+    private boolean planted;
 
     // constructor
-    public Land(int size, List<Crop> crops) {
-        this.size = size;
-        this.crops = crops;
-        this.isDry = true;
+    public Land(Crop crop) {
+        this.crop = crop;
         this.isWet = false;
         this.isSnowy = false;
+        this.planted = true;
+        this.claimed = true;
     }
 
-    // getter and setter for size
-    public int getSize() {
-        return size;
+    public Land() {
+        this.isWet = false;
+        this.isSnowy = false;
+        this.planted = false;
+        this.claimed = false;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
+
 
     // getter and setter for crops
-    public List<Crop> getCrops() {
-        return crops;
+    public Crop getCrop() {
+        return crop;
     }
 
-    public void setCrops(List<Crop> crops) {
-        this.crops = crops;
-    }
-
-    // getter and setter for isDry
-    public boolean getIsDry() {
-        return isDry;
-    }
-
-    public void setIsDry(boolean isDry) {
-        this.isDry = isDry;
+    public void setCrop(Crop crop) {
+        this.crop = crop;
     }
 
     // getter and setter for isWet
@@ -63,5 +56,33 @@ public class Land {
 
     public void setIsSnowy(boolean isSnowy) {
         this.isSnowy = isSnowy;
+    }
+
+    public boolean isPlanted() {
+        return planted;
+    }
+
+    public void setPlanted(boolean planted) {
+        this.planted = planted;
+    }
+
+    public boolean isClaimed() {
+        return claimed;
+    }
+
+    public void setClaimed(boolean claimed) {
+        this.claimed = claimed;
+    }
+
+    public void water(){
+        this.isWet = true;
+        crop.water();
+    }
+
+    public void plant(){
+        if (claimed && !planted && !isSnowy){
+            planted = true;
+            setCrop(new Crop());
+        }
     }
 }

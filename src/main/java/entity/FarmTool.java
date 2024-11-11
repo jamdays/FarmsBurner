@@ -1,9 +1,12 @@
 package main.java.entity;
 
+import javax.tools.Tool;
+import java.io.Serializable;
+
 /**
  * Abstract class for farm tools
  */
-abstract class FarmTool {
+abstract class FarmTool implements Serializable{
     //power per use
     private int power;
     //level of tool
@@ -15,7 +18,7 @@ abstract class FarmTool {
     }
 
     //constructor with default power and level (both 0)
-    FarmTool() {
+    public FarmTool() {
         power = 0;
         level = 0;
     }

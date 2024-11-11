@@ -1,6 +1,8 @@
 package main.java.entity;
 
-public class Crate {
+import java.io.Serializable;
+
+public class Crate implements Serializable {
 
     // instance variables
     private int daysLeft;

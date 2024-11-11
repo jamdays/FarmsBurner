@@ -1,9 +1,8 @@
-package main.java.use_case.plant;
+package main.java.use_case.water;
 
-public interface PlantInputBoundary {
-
+public interface WaterInputBoundary {
     /**
-     * executes code for plant use case
+     * executes code for water use case
      * @param r, row to be placed at
      * @param c, column to be placed at
      */
