@@ -1,5 +1,7 @@
 package main.java.use_case.plant;
 
+import main.java.entity.FarmSingleton;
+
 public class PlantInteractor implements PlantInputBoundary{
     private final PlantOutputBoundary outputBoundary;
 
@@ -9,6 +11,7 @@ public class PlantInteractor implements PlantInputBoundary{
     @Override
     public void execute(int r, int c) {
         outputBoundary.addCrop(r, c);
+        FarmSingleton.getInstance().getFarm().plant(r, c);
     }
 }
 

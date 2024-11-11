@@ -31,6 +31,7 @@ public class ViewModel<T> {
     }
 
     public void setState(T state) {
+        support.firePropertyChange("state", this.state, state);
         this.state = state;
     }
 
@@ -59,5 +60,9 @@ public class ViewModel<T> {
      */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         this.support.addPropertyChangeListener(listener);
+    }
+
+    public PropertyChangeSupport getSupport() {
+        return support;
     }
 }

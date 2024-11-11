@@ -1,12 +1,20 @@
 package main.java.view;
 
+import main.java.interface_adapter.farm.FarmController;
+import main.java.interface_adapter.farm.FarmState;
+import main.java.interface_adapter.farm.FarmViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class FarmView {
-    public static void main(String[] args) {
+public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
+    FarmController farmController;
+
+    public FarmView(FarmViewModel farmViewModel) {
         // Navigation Bar
         JPanel navBar = new JPanel();
         FarmButton farmSettings = new FarmButton("=");
@@ -73,16 +81,28 @@ public class FarmView {
         navBar.add(buy);
         navBar.add(help);
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(navBar);
-        mainPanel.add(landPanel);
-        mainPanel.add(footerPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(navBar);
+        this.add(landPanel);
+        this.add(footerPanel);
 
-        JFrame frame = new JFrame("Farm View");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(741, 420);
-        frame.getContentPane().add(mainPanel);
-        frame.setVisible(true);
+        // JFrame frame = new JFrame("Farm View");
+        // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // frame.setSize(741, 420);
+        // frame.getContentPane().add(mainPanel);
+        // frame.setVisible(true);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        final FarmState state = (FarmState) evt.getNewValue();
+    }
+
+    public void setFarmController(FarmController controller) {
+        this.farmController = controller;
+    }
+
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Click " + evt.getActionCommand());
     }
 }

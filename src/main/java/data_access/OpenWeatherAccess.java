@@ -1,4 +1,4 @@
-package data_access;
+package main.java.data_access;
 
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
