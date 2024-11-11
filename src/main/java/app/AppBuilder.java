@@ -11,13 +11,14 @@ import main.java.use_case.water.WaterOutputBoundary;
 import main.java.view.FarmView;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Builder for farms burner
  */
 public class AppBuilder {
-    public static final int HEIGHT = 420;
-    public static final int WIDTH = 741;
+    public static final int HEIGHT = 1000;
+    public static final int WIDTH = 1000;
     private OpenWeatherAccess farmDAO;
     private FarmViewModel farmViewModel;
     private FarmView farmView;
@@ -72,8 +73,8 @@ public class AppBuilder {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Farms Burner");
         frame.setSize(WIDTH, HEIGHT);
-
         frame.add(farmView);
+        frame.getContentPane().setBackground(new Color(169, 152, 126));
 
         return frame;
 

@@ -17,6 +17,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     public FarmView(FarmViewModel farmViewModel) {
         // Navigation Bar
         JPanel navBar = new JPanel();
+        this.setBackground(new Color(169, 152, 126));
         FarmButton farmSettings = new FarmButton("=");
         farmSettings.addActionListener(new ActionListener() {
             @Override
@@ -49,19 +50,23 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
         JPanel landPanel = new JPanel();
         landPanel.setLayout(new GridBagLayout());
+        landPanel.setSize(new Dimension(1000, 800));
+        landPanel.setBackground(new Color(169, 152, 126));
         GridBagConstraints gbc = new GridBagConstraints();
-
+        Color green =new Color(20,130,50);
+        Color brown =new Color(50,20,20);
         for (int row = 0; row < 10; row++) {
             for (int col = 0; col < 8; col++) {
-                FarmButton button = new FarmButton("   ");
-                button.setFont(new Font ("Press Start 2P", Font.PLAIN, 12));
+                FarmButton button = new FarmButton("  ", 20, Color.BLACK);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        button.setForeground(green);
                         button.setText("T");
+                        button.setBackground(brown);
                     }
                 });
-                button.setPreferredSize(new Dimension(50, 50));
+                button.setSize(new Dimension(80, 80));
                 gbc.anchor = GridBagConstraints.CENTER;
                 gbc.gridx = col;
                 gbc.gridy = row;
@@ -74,18 +79,19 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         FarmLabel barnBucks = new FarmLabel("Barn Bucks: 0");
         footerPanel.add(power);
         footerPanel.add(barnBucks);
+        footerPanel.setBackground(new Color(169, 152, 126));
 
         navBar.add(farmSettings);
         navBar.add(weather);
         navBar.add(sell);
         navBar.add(buy);
         navBar.add(help);
+        navBar.setBackground(new Color(169, 152, 126));
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(navBar);
         this.add(landPanel);
         this.add(footerPanel);
-
         // JFrame frame = new JFrame("Farm View");
         // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // frame.setSize(741, 420);
