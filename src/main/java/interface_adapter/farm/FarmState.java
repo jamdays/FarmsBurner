@@ -5,18 +5,25 @@ import main.java.entity.Farm;
 import main.java.entity.Land;
 
 public class FarmState {
-    private Farm farm;
+    private final int[][] farmLand;
+    private final int WET = 0B1;
+    private final int CLAIMED = 0B10;
+    private final int SNOWY = 0B100;
+    private final int PLANTED = 0B1000;
+    private final int ALIVE = 0B100000;
+
 
     public FarmState() {
-        this.farm = new Farm();
+         farmLand = new int[8][10];
     }
 
 
     public void plantCrop(int r, int c){
-        this.farm.plant(r, c);
+        this.farmLand[r][c] = farmLand[r][c] | PLANTED;
+        
     }
 
     public void water(int r, int c){
-        this.farm.water(r, c)   ;
+        this.farmLand[r][c] = farmLand[r][c] | WET;
     }
 }

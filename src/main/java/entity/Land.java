@@ -7,7 +7,6 @@ public class Land implements Serializable {
 
     // instance variables
     private Crop crop;
-    private boolean isDry;
     private boolean isWet;
     private boolean isSnowy;
     private boolean claimed;
@@ -16,7 +15,6 @@ public class Land implements Serializable {
     // constructor
     public Land(Crop crop) {
         this.crop = crop;
-        this.isDry = true;
         this.isWet = false;
         this.isSnowy = false;
         this.planted = true;
@@ -24,7 +22,6 @@ public class Land implements Serializable {
     }
 
     public Land() {
-        this.isDry = true;
         this.isWet = false;
         this.isSnowy = false;
         this.planted = false;
@@ -40,15 +37,6 @@ public class Land implements Serializable {
 
     public void setCrop(Crop crop) {
         this.crop = crop;
-    }
-
-    // getter and setter for isDry
-    public boolean getIsDry() {
-        return isDry;
-    }
-
-    public void setIsDry(boolean isDry) {
-        this.isDry = isDry;
     }
 
     // getter and setter for isWet

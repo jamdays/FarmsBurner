@@ -12,10 +12,12 @@ public class FarmPresenter implements PlantOutputBoundary, WaterOutputBoundary {
     @Override
     public void addCrop(int r, int c) {
         ((FarmState) (farmViewModel.getState())).plantCrop(r, c);
+        farmViewModel.firePropertyChanged();
     }
 
     @Override
     public void water(int r, int c){
         ((FarmState) (farmViewModel.getState())).water(r, c);
+        farmViewModel.firePropertyChanged();
     }
 }
