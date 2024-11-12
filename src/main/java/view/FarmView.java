@@ -68,6 +68,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 final int r = row;
                 final int c = col;
                 FarmButton button = new FarmButton("  ", 20, Color.BLACK);
+                button.setBackground(Color.BLACK);
                 farmLand[r][c] = button;
                 button.addActionListener(new ActionListener() {
                     @Override

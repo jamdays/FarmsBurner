@@ -37,4 +37,9 @@ public class FarmState {
     public int[][] getFarmLand() {
         return farmLand;
     }
+
+    public void harvest(int r, int c){
+        if ((farmLand[r][c] & CLAIMED) == CLAIMED)
+            this.farmLand[r][c] = farmLand[r][c] & ~ALIVE;
+    }
 }
