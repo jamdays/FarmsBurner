@@ -11,6 +11,7 @@ public class Land implements Serializable {
     private boolean isSnowy;
     private boolean claimed;
     private boolean planted;
+    private boolean fertilized;
 
     // constructor
     public Land(Crop crop) {
@@ -19,6 +20,7 @@ public class Land implements Serializable {
         this.isSnowy = false;
         this.planted = true;
         this.claimed = true;
+        this.fertilized = true;
     }
 
     public Land() {
@@ -26,6 +28,7 @@ public class Land implements Serializable {
         this.isSnowy = false;
         this.planted = false;
         this.claimed = false;
+        this.fertilized = false;
     }
 
 
@@ -74,6 +77,14 @@ public class Land implements Serializable {
         this.claimed = claimed;
     }
 
+    public boolean isFertilized() {
+        return fertilized;
+    }
+
+    public void setFertilized(boolean fertilized) {
+        this.fertilized = fertilized;
+    }
+
     public void water(){
         this.isWet = true;
         crop.water();
@@ -83,6 +94,12 @@ public class Land implements Serializable {
         if (claimed && !planted && !isSnowy){
             planted = true;
             setCrop(new Crop());
+        }
+    }
+
+    public void fertilize(){
+        if (!planted && !isSnowy) {
+            fertilized = true;
         }
     }
 }
