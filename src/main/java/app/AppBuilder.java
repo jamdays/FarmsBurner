@@ -47,11 +47,6 @@ public class AppBuilder {
         final PlantOutputBoundary plantOutputBoundary = new FarmPresenter(farmViewModel);
         final WaterOutputBoundary waterOutputBoundary = (WaterOutputBoundary) plantOutputBoundary;
         final ClaimOutputBoundary claimOutputBoundary = (ClaimOutputBoundary) waterOutputBoundary;
-        plantInteractor = new PlantInteractor(plantOutputBoundary);
-        waterInteractor = new WaterInteractor(waterOutputBoundary);
-        claimInteractor = new ClaimInteractor(claimOutputBoundary);
-
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, harvestInteractor);
         final HarvestOutputBoundary harvestOutputBoundary = (HarvestOutputBoundary) claimOutputBoundary;
         final FertilizeOutputBoundary fertilizeOutputBoundary = (FertilizeOutputBoundary) claimOutputBoundary;
         plantInteractor = new PlantInteractor(plantOutputBoundary);
@@ -60,7 +55,9 @@ public class AppBuilder {
         fertilizeInteractor= new FertilizeInteractor(fertilizeOutputBoundary);
         harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
 
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor);
+
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }

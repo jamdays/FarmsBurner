@@ -11,8 +11,8 @@ public class FertilizeInteractor implements FertilizeInputBoundary {
 
     @Override
     public void execute(int r, int c) {
-        outputBoundary.fertilize(r, c);
         FarmSingleton.getInstance().getFarm().fertilize(r, c);
+        outputBoundary.fertilize(r, c);
     }
 
 }
