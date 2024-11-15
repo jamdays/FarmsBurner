@@ -25,6 +25,6 @@ public class FarmsBurnerApplication {
         builder.setFarmDAO(dao)
                 .addFarmView()
                 .addPlantUseCase().build().setVisible(true);
-        System.out.println(dao.allInfoForCity("Toronto"));
+        System.out.println(dao.currentInfoForCity("Toronto"));
     }
 }

@@ -15,7 +15,7 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
         openWeatherMapClient = new OpenWeatherMapClient(apiKey);
     }
 
-    public String allInfoForCity(String city) {
+    public String currentInfoForCity(String city) {
         return openWeatherMapClient
                 .currentWeather()
                 .single()
@@ -27,29 +27,15 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
                 .toString();
     }
 
-    public String temperatureForCity(String city) {
+    public String forecastInfoForCity(String city) {
         return openWeatherMapClient
-                .currentWeather()
-                .single()
+                .forecast5Day3HourStep()
                 .byCityName(city)
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
+                .count(15)
                 .retrieve()
                 .asJava()
-                .getTemperature()
-                .toString();
-    }
-
-    public String rainForCity(String city) {
-        return openWeatherMapClient
-                .currentWeather()
-                .single()
-                .byCityName(city)
-                .language(Language.ENGLISH)
-                .unitSystem(UnitSystem.METRIC)
-                .retrieve()
-                .asJava()
-                .getRain()
                 .toString();
     }
 }

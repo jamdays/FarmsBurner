@@ -10,6 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private final int WET = 0B1;
@@ -39,7 +43,21 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         // TODO: add checkweather use case and implement popup window displaying result of API call
         weather.addActionListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { System.out.println("Open popup with current weather"); }
+            public void actionPerformed(ActionEvent e) {
+                // call API (make this follow Clean Architecture later)
+                var props = new Properties();
+                var envFile = Paths.get(".env");
+                try (var inputStream = Files.newInputStream(envFile)) {
+                    props.load(inputStream);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                String apiKey = props.get("WAK").toString();
+                final main.java.data_access.OpenWeatherAccess dao = new main.java.data_access.OpenWeatherAccess(apiKey);
+                String weather = dao.currentInfoForCity("toronto");
+                // show results
+                JOptionPane.showMessageDialog(null, weather, "Current Weather", JOptionPane.DEFAULT_OPTION);
+                }
         });
         FarmButton sell = new FarmButton("Sell");
         sell.addActionListener(new ActionListener() {
