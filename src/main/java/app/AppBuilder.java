@@ -12,6 +12,8 @@ import main.java.use_case.plant.PlantOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
 import main.java.use_case.water.WaterOutputBoundary;
 import main.java.view.FarmView;
+import main.java.use_case.fertilize.FertilizeInteractor;
+import main.java.use_case.fertilize.FertilizeOutputBoundary;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,6 +30,7 @@ public class AppBuilder {
     private PlantInteractor plantInteractor;
     private WaterInteractor waterInteractor;
     private ClaimInteractor claimInteractor;
+    private FertilizeInteractor fertilizeInteractor;
 
 
     /**
@@ -41,11 +44,13 @@ public class AppBuilder {
         final PlantOutputBoundary plantOutputBoundary = new FarmPresenter(farmViewModel);
         final WaterOutputBoundary waterOutputBoundary = (WaterOutputBoundary) plantOutputBoundary;
         final ClaimOutputBoundary claimOutputBoundary = (ClaimOutputBoundary) waterOutputBoundary;
+        final FertilizeOutputBoundary fertilizeOutputBoundary = (FertilizeOutputBoundary) claimOutputBoundary;
         plantInteractor = new PlantInteractor(plantOutputBoundary);
         waterInteractor = new WaterInteractor(waterOutputBoundary);
         claimInteractor = new ClaimInteractor(claimOutputBoundary);
+        fertilizeInteractor= new FertilizeInteractor(fertilizeOutputBoundary);
 
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor);
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor);
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }

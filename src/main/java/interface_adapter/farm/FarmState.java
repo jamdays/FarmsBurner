@@ -11,6 +11,7 @@ public class FarmState {
     private final int SNOWY = 0B100;
     private final int PLANTED = 0B1000;
     private final int ALIVE = 0B100000;
+    private final int FERTILIZED = 0B1000000;
 
 
     public FarmState() {
@@ -36,5 +37,9 @@ public class FarmState {
 
     public int[][] getFarmLand() {
         return farmLand;
+    }
+
+    public void fertilize(int r, int c) {
+        this.farmLand[r][c] = farmLand[r][c] | FERTILIZED;
     }
 }

@@ -37,7 +37,12 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 System.out.println("Open farm settings");
             }
         });
-        FarmLabel weather = new FarmLabel("Weather:");
+        FarmButton weather = new FarmButton("Weather");
+        // TODO: add checkweather use case and implement popup window displaying result of API call
+        weather.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) { System.out.println("Open popup with current weather"); }
+        });
         FarmButton sell = new FarmButton("Sell");
         sell.addActionListener(new ActionListener() {
             @Override
