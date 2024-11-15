@@ -5,9 +5,12 @@ import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
@@ -23,7 +26,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int ALIVE = 0B100000;
     private final int FERTILIZED = 0B1000000;
     private FarmController farmController;
-    private FarmButton[][] farmLand;
+    private FarmLabel[][] farmLand;
     private FarmViewModel viewModel;
 
     public FarmView(FarmViewModel farmViewModel) {
@@ -32,7 +35,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
-        FarmButton farmSettings = new FarmButton("=");
+        FarmButton farmSettings = new FarmButton("≡");
         farmSettings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -86,20 +89,18 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         landPanel.setSize(new Dimension(1000, 800));
         landPanel.setBackground(new Color(169, 152, 126));
         GridBagConstraints gbc = new GridBagConstraints();
-        farmLand = new FarmButton[8][10];
+        farmLand = new FarmLabel[8][10];
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 10; col++) {
                 final int r = row;
                 final int c = col;
-                FarmButton button = new FarmButton("  ", 20, Color.BLACK);
-                button.setBackground(Color.BLACK);
-                farmLand[r][c] = button;
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        System.out.println(e.getModifiers());
-                        // if plot is clicked while shift is held down, claim plot
-                        if (e.getModifiers() == 17) {
+                FarmLabel cropLabel = new CropLabel("  ", 20, Color.BLACK);
+//                cropLabel.setBorder(new LineBorder(Color.WHITE));
+//                cropLabel.setPreferredSize(new Dimension(25, 25));
+                farmLand[r][c] = cropLabel;
+                cropLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
+                        if ((e.getModifiers() & 1) == 1) {
                             farmController.claim(r, c);
                         }
                         // if plot is clicked while ctrl is held down, plant crop on plot
@@ -116,11 +117,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         }
                     }
                 });
-                button.setSize(new Dimension(80, 80));
+                cropLabel.setSize(new Dimension(80, 80));
                 gbc.anchor = GridBagConstraints.CENTER;
                 gbc.gridx = col;
                 gbc.gridy = row;
-                landPanel.add(button, gbc);
+                landPanel.add(cropLabel, gbc);
             }
         }
 
