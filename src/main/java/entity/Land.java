@@ -35,12 +35,13 @@ public class Land implements Serializable {
         return crop;
     }
 
+
     public void setCrop(Crop crop) {
         this.crop = crop;
     }
 
     // getter and setter for isWet
-    public boolean getIsWet() {
+    public boolean isWet() {
         return isWet;
     }
 
@@ -76,13 +77,14 @@ public class Land implements Serializable {
 
     public void water(){
         this.isWet = true;
-        crop.water();
+        if (planted)
+            crop.water();
     }
 
     public void plant(){
         if (claimed && !planted && !isSnowy){
             planted = true;
-            setCrop(new Crop());
+            this.crop = new Crop();
         }
     }
 }
