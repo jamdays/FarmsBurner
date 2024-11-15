@@ -80,4 +80,11 @@ public class Farm implements Serializable {
     public void claim(int r, int c){
         this.farmLand[r][c].setClaimed(true);
     }
+
+    public void harvest(int r, int c) {
+        this.farmLand[r][c].harvest();
+    }
+    public void fertilize(int r, int c) {
+        this.farmLand[r][c].fertilize();
+    }
 }

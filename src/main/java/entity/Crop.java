@@ -67,4 +67,8 @@ public class Crop implements Serializable {
             isAlive = false;
         }
     }
+
+    public void harvest(){
+        this.isAlive = false;
+    }
 }

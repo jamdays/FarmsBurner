@@ -5,11 +5,18 @@ import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private final int WET = 0B1;
@@ -17,8 +24,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int SNOWY = 0B100;
     private final int PLANTED = 0B1000;
     private final int ALIVE = 0B100000;
+    private final int FERTILIZED = 0B1000000;
     private FarmController farmController;
-    private FarmButton[][] farmLand;
+    private FarmLabel[][] farmLand;
     private FarmViewModel viewModel;
 
     public FarmView(FarmViewModel farmViewModel) {
@@ -27,14 +35,33 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
-        FarmButton farmSettings = new FarmButton("=");
+        FarmButton farmSettings = new FarmButton("≡");
         farmSettings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open farm settings");
             }
         });
-        FarmLabel weather = new FarmLabel("Weather:");
+        FarmButton weather = new FarmButton("Weather");
+        // TODO: add checkweather use case and implement popup window displaying result of API call
+        weather.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // call API (make this follow Clean Architecture later)
+                var props = new Properties();
+                var envFile = Paths.get(".env");
+                try (var inputStream = Files.newInputStream(envFile)) {
+                    props.load(inputStream);
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                String apiKey = props.get("WAK").toString();
+                final main.java.data_access.OpenWeatherAccess dao = new main.java.data_access.OpenWeatherAccess(apiKey);
+                String weather = dao.currentInfoForCity("toronto");
+                // show results
+                JOptionPane.showMessageDialog(null, weather, "Current Weather", JOptionPane.DEFAULT_OPTION);
+                }
+        });
         FarmButton sell = new FarmButton("Sell");
         sell.addActionListener(new ActionListener() {
             @Override
@@ -62,32 +89,39 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         landPanel.setSize(new Dimension(1000, 800));
         landPanel.setBackground(new Color(169, 152, 126));
         GridBagConstraints gbc = new GridBagConstraints();
-        farmLand = new FarmButton[8][10];
+        farmLand = new FarmLabel[8][10];
         for (int row = 0; row < 8; row++) {
             for (int col = 0; col < 10; col++) {
                 final int r = row;
                 final int c = col;
-                FarmButton button = new FarmButton("  ", 20, Color.BLACK);
-                farmLand[r][c] = button;
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
+                FarmLabel cropLabel = new CropLabel("  ", 20, Color.BLACK);
+//                cropLabel.setBorder(new LineBorder(Color.WHITE));
+//                cropLabel.setPreferredSize(new Dimension(25, 25));
+                farmLand[r][c] = cropLabel;
+                cropLabel.addMouseListener(new MouseAdapter() {
+                    public void mouseClicked(MouseEvent e) {
                         if ((e.getModifiers() & 1) == 1) {
                             farmController.claim(r, c);
                         }
-                        else if ((e.getModifiers() & 2) == 2) {
+                        // if plot is clicked while ctrl is held down, plant crop on plot
+                        else if (e.getModifiers() == 18) {
                             farmController.plantCrop(r, c);
                         }
-                        else {
+                        // if plot is clicked while alt is held down, water plot
+                        else if (e.getModifiers() == 24) {
                             farmController.waterCrop(r, c);
+                        }
+                        // if plot is clicked while ctrl and alt are held down, fertilize crop
+                        else if ((e.getModifiers() & (18|24)) == (18|24)) {
+                            farmController.fertilize(r, c);
                         }
                     }
                 });
-                button.setSize(new Dimension(80, 80));
+                cropLabel.setSize(new Dimension(80, 80));
                 gbc.anchor = GridBagConstraints.CENTER;
                 gbc.gridx = col;
                 gbc.gridy = row;
-                landPanel.add(button, gbc);
+                landPanel.add(cropLabel, gbc);
             }
         }
 
@@ -124,19 +158,28 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         final FarmState state = (FarmState) evt.getNewValue();
         for (int r = 0; r < state.getFarmLand().length; r++) {
             for (int c = 0; c < state.getFarmLand()[r].length; c++) {
+                // if farmland is claimed, change button color to dirt
                 if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
+                    System.out.println(state.getFarmLand()[r][c]);
                     farmLand[r][c].setBackground(dirt);
+                    // given the farmland is claimed, if it is wet as well, set color to wetdirt
                     if ((state.getFarmLand()[r][c] & WET) == WET) {
                         farmLand[r][c].setBackground(wetdirt);
 
                     }
+                    // given the farmland is claimed, if a crop has been planted there, make it appear
                     if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
                         farmLand[r][c].setText("T");
                         farmLand[r][c].setForeground(Color.gray);
+                        // set the plant colour to green if and only if it is alive
                         if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
                             farmLand[r][c].setForeground(green);
 
                         }
+                    }
+                    // given the farmland is claimed, if it has been fertilized, set fertilized border around it
+                    if ((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) {
+                        farmLand[r][c].setBorder(BorderFactory.createLineBorder(Color.darkGray));
                     }
                 }
             }
