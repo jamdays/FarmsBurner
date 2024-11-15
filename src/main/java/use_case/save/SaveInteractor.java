@@ -2,6 +2,8 @@ package main.java.use_case.save;
 
 import main.java.entity.FarmSingleton;
 
+import java.io.IOException;
+
 public class SaveInteractor implements SaveInputBoundary{
 
     private final SaveDataAccessInterface saveDataAccessInterface;
@@ -21,7 +23,7 @@ public class SaveInteractor implements SaveInputBoundary{
             saveDataAccessInterface.saveData(FarmSingleton.getInstance().getFarm());
             saveOutputBoundary.saved();
         }
-        catch (DataAccessException e) {
+        catch (DataAccessException | IOException e) {
             System.out.println(e.getMessage());
         }
     }

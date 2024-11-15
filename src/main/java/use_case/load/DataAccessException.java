@@ -1,6 +1,4 @@
-package main.java.use_case.save;
-
-import java.io.IOException;
+package main.java.use_case.load;
 
 /**
  * Exception thrown when there is an error accessing data
