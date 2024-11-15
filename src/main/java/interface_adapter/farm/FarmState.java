@@ -44,6 +44,7 @@ public class FarmState {
             this.farmLand[r][c] = farmLand[r][c] & ~ALIVE;
       
     public void fertilize(int r, int c) {
-        this.farmLand[r][c] = farmLand[r][c] | FERTILIZED;
+        if ((farmLand[r][c] & CLAIMED) == CLAIMED)
+            this.farmLand[r][c] = farmLand[r][c] | FERTILIZED;
     }
 }

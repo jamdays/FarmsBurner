@@ -15,13 +15,25 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
         openWeatherMapClient = new OpenWeatherMapClient(apiKey);
     }
 
-    public String getWeatherForCity(String city) {
+    public String currentInfoForCity(String city) {
         return openWeatherMapClient
                 .currentWeather()
                 .single()
                 .byCityName(city)
                 .language(Language.ENGLISH)
                 .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJava()
+                .toString();
+    }
+
+    public String forecastInfoForCity(String city) {
+        return openWeatherMapClient
+                .forecast5Day3HourStep()
+                .byCityName(city)
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .count(15)
                 .retrieve()
                 .asJava()
                 .toString();

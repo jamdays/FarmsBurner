@@ -31,6 +31,5 @@ public class FarmsBurnerApplication {
         final AppBuilder builder = new AppBuilder();
         builder.addFarmView()
                 .addPlantUseCase().build().setVisible(true);
-//        System.out.println(dao.getWeatherForCity("Toronto"));
     }
 }
