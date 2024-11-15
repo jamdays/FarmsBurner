@@ -33,8 +33,7 @@ public class FarmController {
     }
 
     public void fertilize(int r, int c){
-        claimInteractor.execute(r, c);
-        System.out.println("plot fertilized");
+        fertilizeInteractor.execute(r, c);
     }
 
 

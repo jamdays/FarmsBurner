@@ -17,6 +17,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int SNOWY = 0B100;
     private final int PLANTED = 0B1000;
     private final int ALIVE = 0B100000;
+    private final int FERTILIZED = 0B1000000;
     private FarmController farmController;
     private FarmButton[][] farmLand;
     private FarmViewModel viewModel;
@@ -77,14 +78,22 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if ((e.getModifiers() & 1) == 1) {
+                        System.out.println(e.getModifiers());
+                        // if plot is clicked while shift is held down, claim plot
+                        if (e.getModifiers() == 17) {
                             farmController.claim(r, c);
                         }
-                        else if ((e.getModifiers() & 2) == 2) {
+                        // if plot is clicked while ctrl is held down, plant crop on plot
+                        else if (e.getModifiers() == 18) {
                             farmController.plantCrop(r, c);
                         }
-                        else {
+                        // if plot is clicked while alt is held down, water plot
+                        else if (e.getModifiers() == 24) {
                             farmController.waterCrop(r, c);
+                        }
+                        // if plot is clicked while ctrl and alt are held down, fertilize crop
+                        else if ((e.getModifiers() & (18|24)) == (18|24)) {
+                            farmController.fertilize(r, c);
                         }
                     }
                 });
@@ -129,19 +138,28 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         final FarmState state = (FarmState) evt.getNewValue();
         for (int r = 0; r < state.getFarmLand().length; r++) {
             for (int c = 0; c < state.getFarmLand()[r].length; c++) {
+                // if farmland is claimed, change button color to dirt
                 if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
+                    System.out.println(state.getFarmLand()[r][c]);
                     farmLand[r][c].setBackground(dirt);
+                    // given the farmland is claimed, if it is wet as well, set color to wetdirt
                     if ((state.getFarmLand()[r][c] & WET) == WET) {
                         farmLand[r][c].setBackground(wetdirt);
 
                     }
+                    // given the farmland is claimed, if a crop has been planted there, make it appear
                     if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
                         farmLand[r][c].setText("T");
                         farmLand[r][c].setForeground(Color.gray);
+                        // set the plant colour to green if and only if it is alive
                         if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
                             farmLand[r][c].setForeground(green);
 
                         }
+                    }
+                    // given the farmland is claimed, if it has been fertilized, set fertilized border around it
+                    if ((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) {
+                        farmLand[r][c].setBorder(BorderFactory.createLineBorder(Color.darkGray));
                     }
                 }
             }
