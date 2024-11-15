@@ -8,7 +8,7 @@ public class Info {
         JPanel landInfo = new JPanel();
         landInfo.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.anchor = GridBagConstraints.PAGE_START;
 
 //        JPanel wetLandInfo = new JPanel();
         gbc.gridx = 0;
@@ -41,16 +41,29 @@ public class Info {
         gbc.gridy = 2;
         landInfo.add(new FarmLabel("Sprout", 15), gbc);
 
-//        landInfo.add(wetLandInfo);
-//        landInfo.add(dryLandInfo);
-//        landInfo.add(sproutInfo);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        landInfo.add(new CropLabel(" ", 25, Color.black),gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 3;
+        landInfo.add(new FarmLabel("Unclaimed", 15),gbc);
+
         landInfo.setBackground(new Color(169,152,126));
+
+        JPanel controlInfo = new JPanel();
+        controlInfo.setLayout(new BoxLayout(controlInfo, BoxLayout.Y_AXIS));
+        controlInfo.add(new FarmLabel("Shift + Click to claim land"));
+        controlInfo.add(new FarmLabel("Ctrl + Click to Plant"));
+        controlInfo.add(new FarmLabel("Click to Water"));
+        controlInfo.add(new FarmLabel("Ctrl + Alt to Fertilize"));
+        controlInfo.setBackground(new Color(169,152,126));
 
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(271, 438);
-        frame.setBackground(new Color(169, 152, 126));
+        frame.setSize(271, 250);
         frame.getContentPane().add(landInfo, BorderLayout.CENTER);
+        frame.getContentPane().add(controlInfo, BorderLayout.SOUTH);
         frame.setVisible(true);
     }
 }
