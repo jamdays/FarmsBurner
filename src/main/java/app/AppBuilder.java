@@ -7,6 +7,8 @@ import main.java.interface_adapter.farm.FarmViewModel;
 import main.java.use_case.claim.ClaimInputBoundary;
 import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
+import main.java.use_case.harvest.HarvestInteractor;
+import main.java.use_case.harvest.HarvestOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
@@ -30,6 +32,7 @@ public class AppBuilder {
     private PlantInteractor plantInteractor;
     private WaterInteractor waterInteractor;
     private ClaimInteractor claimInteractor;
+    private HarvestInteractor harvestInteractor;
     private FertilizeInteractor fertilizeInteractor;
 
 
@@ -44,11 +47,18 @@ public class AppBuilder {
         final PlantOutputBoundary plantOutputBoundary = new FarmPresenter(farmViewModel);
         final WaterOutputBoundary waterOutputBoundary = (WaterOutputBoundary) plantOutputBoundary;
         final ClaimOutputBoundary claimOutputBoundary = (ClaimOutputBoundary) waterOutputBoundary;
+        plantInteractor = new PlantInteractor(plantOutputBoundary);
+        waterInteractor = new WaterInteractor(waterOutputBoundary);
+        claimInteractor = new ClaimInteractor(claimOutputBoundary);
+
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, harvestInteractor);
+        final HarvestOutputBoundary harvestOutputBoundary = (HarvestOutputBoundary) claimOutputBoundary;
         final FertilizeOutputBoundary fertilizeOutputBoundary = (FertilizeOutputBoundary) claimOutputBoundary;
         plantInteractor = new PlantInteractor(plantOutputBoundary);
         waterInteractor = new WaterInteractor(waterOutputBoundary);
         claimInteractor = new ClaimInteractor(claimOutputBoundary);
         fertilizeInteractor= new FertilizeInteractor(fertilizeOutputBoundary);
+        harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
 
         final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor);
         if (farmView == null) {
