@@ -3,8 +3,9 @@ package main.java.data_access;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
+import main.java.data_access.OpenWeatherAccessInterface;
 
-public class OpenWeatherAccess {
+public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
 
     private String apiKey;
     private OpenWeatherMapClient openWeatherMapClient;
