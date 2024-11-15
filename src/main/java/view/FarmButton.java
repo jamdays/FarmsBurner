@@ -28,5 +28,4 @@ public class FarmButton extends JButton {
         this.setFocusPainted(false);
     }
 
-
 }

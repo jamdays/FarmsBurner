@@ -97,6 +97,13 @@ public class Land implements Serializable {
         }
     }
 
+    public void harvest() {
+        if (planted && crop.getIsAlive()) {
+            crop.harvest();
+            setCrop(null);
+            planted = false;
+        }
+    }
     public void fertilize(){
         if (!planted && !isSnowy) {
             fertilized = true;
