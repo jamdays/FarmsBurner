@@ -14,7 +14,7 @@ public class FarmController {
     private final FertilizeInputBoundary fertilizeInteractor;
     private final HarvestInputBoundary harvestInteractor;
 
-    public FarmController(PlantInputBoundary plantInteractor, WaterInputBoundary waterInteractor, ClaimInputBoundary claimInteractor, FertilizeInputBoundary fertilizeInteractor) {
+    public FarmController(PlantInputBoundary plantInteractor, WaterInputBoundary waterInteractor, ClaimInputBoundary claimInteractor, FertilizeInputBoundary fertilizeInteractor, HarvestInputBoundary harvestInteractor) {
         this.plantInteractor = plantInteractor;
         this.waterInteractor = waterInteractor;
         this.claimInteractor = claimInteractor;
@@ -37,6 +37,7 @@ public class FarmController {
     public void harvestCrop(int r, int c) {
         harvestInteractor.execute(r, c);
     }
+
     public void fertilize(int r, int c){
         fertilizeInteractor.execute(r, c);
     }
