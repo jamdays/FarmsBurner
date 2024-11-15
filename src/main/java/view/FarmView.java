@@ -75,9 +75,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             for (int col = 0; col < 10; col++) {
                 final int r = row;
                 final int c = col;
-                FarmLabel cropLabel = new FarmLabel("  ", 20, Color.BLACK);
-                cropLabel.setBorder(new LineBorder(Color.WHITE));
-                cropLabel.setPreferredSize(new Dimension(25, 25));
+                FarmLabel cropLabel = new CropLabel("  ", 20, Color.BLACK);
+//                cropLabel.setBorder(new LineBorder(Color.WHITE));
+//                cropLabel.setPreferredSize(new Dimension(25, 25));
                 farmLand[r][c] = cropLabel;
                 cropLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
@@ -141,7 +141,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     }
                     if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
                         farmLand[r][c].setText("T");
-                        farmLand[r][c].setHorizontalAlignment(SwingConstants.CENTER);
                         farmLand[r][c].setForeground(Color.gray);
                         if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
                             farmLand[r][c].setForeground(green);
