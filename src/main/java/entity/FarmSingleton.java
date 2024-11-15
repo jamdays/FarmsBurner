@@ -17,4 +17,8 @@ public class FarmSingleton {
     public Farm getFarm() {
         return farm;
     }
+
+    public void setFarm(Farm farm) {
+        this.farm = farm;
+    }
 }
