@@ -11,7 +11,7 @@ public class WaterInteractor implements WaterInputBoundary{
 
     @Override
     public void execute(int r, int c) {
+        FarmSingleton.getInstance().getFarm().water(r, c);
         outputBoundary.water(r, c);
-        FarmSingleton.getInstance().getFarm().plant(r, c);
     }
 }
