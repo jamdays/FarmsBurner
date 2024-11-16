@@ -3,8 +3,8 @@ package main.java.view;
 import javax.swing.*;
 import java.awt.*;
 
-public class Info {
-    public static void main(String[] args) {
+public class Info extends JPanel {
+    public Info() {
         JPanel landInfo = new JPanel();
         landInfo.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -55,15 +55,19 @@ public class Info {
         controlInfo.setLayout(new BoxLayout(controlInfo, BoxLayout.Y_AXIS));
         controlInfo.add(new FarmLabel("Shift + Click to claim land"));
         controlInfo.add(new FarmLabel("Ctrl + Click to Plant"));
-        controlInfo.add(new FarmLabel("Click to Water"));
+        controlInfo.add(new FarmLabel("Alt + Click to Water"));
         controlInfo.add(new FarmLabel("Ctrl + Alt to Fertilize"));
         controlInfo.setBackground(new Color(169,152,126));
 
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(271, 250);
-        frame.getContentPane().add(landInfo, BorderLayout.CENTER);
-        frame.getContentPane().add(controlInfo, BorderLayout.SOUTH);
-        frame.setVisible(true);
+        this.setBackground(new Color(169,152,126));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(landInfo, BorderLayout.CENTER);
+        this.add(controlInfo);
+//        JFrame frame = new JFrame();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(271, 250);
+//        frame.getContentPane().add(landInfo, BorderLayout.CENTER);
+//        frame.getContentPane().add(controlInfo, BorderLayout.SOUTH);
+//        frame.setVisible(true);
     }
 }
