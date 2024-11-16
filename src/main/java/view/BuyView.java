@@ -27,16 +27,6 @@ public class BuyView {
         topPanel.add(topRightPanel, BorderLayout.EAST);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
 
-        // Purchase Button
-        // TODO: implement purchase button
-        JButton purchaseButton = new JButton("Confirm Purchase");
-        purchaseButton.addActionListener(new ActionListener() {
-                                             @Override
-                                             public void actionPerformed(ActionEvent e) {
-                                                 System.out.println("Purchase button clicked");
-                                             }
-                                         });
-
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
         JPanel itemPanel1 = createItemPanel("Sprinkler", "0", "Automatically waters crops in 1 2x2 area");
@@ -59,8 +49,6 @@ public class BuyView {
         mainPanel.add(itemPanel3, gbc);
         gbc.gridy = 3;
         mainPanel.add(itemPanel4, gbc);
-        gbc.gridy = 4;
-        mainPanel.add(purchaseButton, gbc);
         mainPanel.setBackground(Color.WHITE);
 
         // Background Panel (Brown)
@@ -104,6 +92,7 @@ public class BuyView {
 //                    System.out.println("Not enough barn bucks");
             }
         });
+
         // Item Panel
         JPanel itemPanel = new JPanel(new GridBagLayout());
         itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -175,6 +164,22 @@ public class BuyView {
             }
         });
 
+        // purchaseButton
+        JButton purchaseButton = new JButton("Purchase");
+        purchaseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int priceInt = Integer.parseInt(price);
+                // TODO: access barnBucks and add to tools
+//                if (priceInt < barnBucks) {
+//                    barnBucks -= priceInt;
+//                    updateBarnBucks(barnBucksLabel, barnBucks);
+//                    System.out.println("Purchased " + itemName);
+//                } else {
+//                    System.out.println("Not enough barn bucks");
+            }
+        });
+
         // Item Panel
         JPanel itemPanel = new JPanel(new GridBagLayout());
         itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -203,6 +208,10 @@ public class BuyView {
         // Add Plus Button
         gbc.gridx = 4;
         itemPanel.add(plusButton, gbc);
+
+        // Add Purchase Button
+        gbc.gridx = 5;
+        itemPanel.add(purchaseButton, gbc);
 
         // Add Description
         gbc.gridx = 0;
