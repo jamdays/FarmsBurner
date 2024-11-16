@@ -27,9 +27,16 @@ public class BuyView {
         topPanel.add(topRightPanel, BorderLayout.EAST);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
 
+        // White Background
+        JPanel whitePanel = new JPanel(new BorderLayout());
+        whitePanel.add(topPanel, BorderLayout.NORTH);
+        whitePanel.setBackground(Color.WHITE);
+        whitePanel.setBorder(BorderFactory.createEmptyBorder(320, 700, 20, 20));
+
         // Main Panel
         JPanel mainPanel = new JPanel();
         mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(whitePanel, BorderLayout.CENTER);
 
         // Frame
         JFrame frame = new JFrame("Buy Menu");
