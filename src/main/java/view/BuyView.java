@@ -27,6 +27,16 @@ public class BuyView {
         topPanel.add(topRightPanel, BorderLayout.EAST);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
 
+        // Purchase Button
+        // TODO: implement purchase button
+        JButton purchaseButton = new JButton("Confirm Purchase");
+        purchaseButton.addActionListener(new ActionListener() {
+                                             @Override
+                                             public void actionPerformed(ActionEvent e) {
+                                                 System.out.println("Purchase button clicked");
+                                             }
+                                         });
+
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
         JPanel itemPanel1 = createItemPanel("Sprinkler", "0", 1, "Automatically waters crops in 1 2x2 area");
@@ -49,6 +59,8 @@ public class BuyView {
         mainPanel.add(itemPanel3, gbc);
         gbc.gridy = 3;
         mainPanel.add(itemPanel4, gbc);
+        gbc.gridy = 4;
+        mainPanel.add(purchaseButton, gbc);
         mainPanel.setBackground(Color.WHITE);
 
         // Background Panel (Brown)
