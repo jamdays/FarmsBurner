@@ -39,7 +39,7 @@ public class BuyView {
 
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
-        JPanel itemPanel1 = createItemPanel("Sprinkler", "0", 1, "Automatically waters crops in 1 2x2 area");
+        JPanel itemPanel1 = createItemPanel("Sprinkler", "0", "Automatically waters crops in 1 2x2 area");
 
         // TODO: figure out what else goes on the buy menu
         JPanel itemPanel2 = createItemPanel("item 2", "0", 1, "item 2 description");
@@ -80,6 +80,58 @@ public class BuyView {
     // TODO: implement updateBarnBucks so that it updates with the amount of barnBucks the user has. Not sure if this should be in the BuyView class or the Farm
     public static void updateBarnBucks(FarmLabel label, int amount) {
         label.setText("                   Barn Bucks: " + amount);
+    }
+
+    private static JPanel createItemPanel(String itemName, String price, String description) {
+        // Item Label
+        JLabel itemLabel = new JLabel(itemName);
+
+        // Item Description Label
+        JLabel descriptionLabel = new JLabel(description);
+
+        // purchaseButton
+        JButton purchaseButton = new JButton("Purchase");
+        purchaseButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int priceInt = Integer.parseInt(price);
+                // TODO: access barnBucks and add to tools
+//                if (priceInt < barnBucks) {
+//                    barnBucks -= priceInt;
+//                    updateBarnBucks(barnBucksLabel, barnBucks);
+//                    System.out.println("Purchased " + itemName);
+//                } else {
+//                    System.out.println("Not enough barn bucks");
+            }
+        });
+        // Item Panel
+        JPanel itemPanel = new JPanel(new GridBagLayout());
+        itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        itemPanel.setBackground(Color.WHITE);
+        itemPanel.setBorder(BorderFactory.createEmptyBorder(10, 150, 0, 200));
+        GridBagConstraints gbc = new GridBagConstraints();
+
+        // Add Item Name
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        itemPanel.add(itemLabel, gbc);
+
+        // Add Price
+        gbc.gridx = 1;
+        itemPanel.add(new JLabel("Price: " + price), gbc);
+
+        // Add Purchase Button
+        gbc.gridx = 4;
+        itemPanel.add(descriptionLabel, gbc);
+
+        // Add Description
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 5;
+        itemPanel.add(purchaseButton, gbc);
+
+        return itemPanel;
+
     }
 
     private static JPanel createItemPanel(String itemName, String price, int maxQuantity, String description) {
