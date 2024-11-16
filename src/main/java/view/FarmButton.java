@@ -2,6 +2,7 @@ package main.java.view;
 
 import javax.swing.*;
 import java.awt.*;
+import javax.swing.JFrame;
 
 public class FarmButton extends JButton {
     private static Color cream = new Color(169, 152, 126);

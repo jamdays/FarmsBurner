@@ -1,22 +1,35 @@
 package main.java.view;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class BuyView {
     public static void main(String[] args) {
+
         // Buy Menu
-        JPanel buyPanel = new JPanel();
-        buyPanel.setLayout(new BoxLayout(buyPanel, BoxLayout.Y_AXIS));
-        FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 36);
-        buyPanel.add(buyMenuTitle);
-        buyPanel.setBackground(new java.awt.Color(169, 152, 126));
+        FarmLabel buyMenuTitle = new FarmLabel("Buy Menu                     ", 18);
+        JPanel topLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        topLeftPanel.add(buyMenuTitle);
+        topLeftPanel.setBackground(new java.awt.Color(169, 152, 126));
+
+        // Barn Bucks
+        // TODO: implement barnBucks so that it updates with the amount of barnBucks the user has
+        FarmLabel barnBucks = new FarmLabel("                   Barn Bucks: 0", 18);
+        JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        topRightPanel.add(barnBucks);
+        topRightPanel.setBackground(new java.awt.Color(169, 152, 126));
+
+        // Top Panel
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(topLeftPanel, BorderLayout.WEST);
+        topPanel.add(topRightPanel, BorderLayout.EAST);
+        topPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Main Panel
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(buyPanel);
+        mainPanel.add(topPanel, BorderLayout.NORTH);
 
         // Frame
         JFrame frame = new JFrame("Buy Menu");
