@@ -74,6 +74,12 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Open buy menu");
+                // Create new JFrame for Buy Menu
+                JFrame buyFrame = new JFrame("Buy Menu");
+                // Set size and closeing operations for the frame
+                buyFrame.setSize(400, 300);
+                buyFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                buyFrame.setVisible(true);
             }
         });
         FarmButton help = new FarmButton("i");
