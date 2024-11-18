@@ -7,4 +7,5 @@ public interface ClaimOutputBoundary {
      * @param c, column to be placed at
      */
     void claim(int r, int c);
+
 }
