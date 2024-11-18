@@ -52,6 +52,9 @@ public class Crop implements Serializable {
         this.price = price;
     }
 
+    // getter and setter for waterlevel
+    public int getWaterlevel() {return this.waterlevel;}
+
     public boolean isWatered() {return this.waterlevel >= 0;}
 
     public void setWaterlevel(int level) {
