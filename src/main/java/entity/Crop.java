@@ -72,6 +72,7 @@ public class Crop implements Serializable {
     }
 
     public void harvest(){
+        // TODO: implement harvest so that crop can only be harvested if it is alive and age is greater than some number
         this.isAlive = false;
     }
 }
