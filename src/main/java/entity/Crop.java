@@ -9,7 +9,6 @@ public class Crop implements Serializable {
     private boolean isAlive;
     private int price;
     private int waterlevel;
-    private boolean readyToHarvest;
 
     // constructor
     public Crop(int age, boolean isAlive, int price) {
@@ -17,7 +16,6 @@ public class Crop implements Serializable {
         this.isAlive = isAlive;
         this.price = price;
         this.waterlevel = 0;
-        this.readyToHarvest = false;
     }
 
     public Crop(){
@@ -64,12 +62,8 @@ public class Crop implements Serializable {
         this.waterlevel = level;
     }
 
-    public void setReadyToHarvest(boolean readyToHarvest) {
-        this.readyToHarvest = readyToHarvest;
-    }
-
     public boolean getReadyToHarvest() {
-        return this.readyToHarvest;
+        return this.getAge() > 5;
     }
 
     public void water(){
@@ -85,11 +79,9 @@ public class Crop implements Serializable {
     public void harvest(){
         // Crops are only ready to harvest if age > 5
         if (this.isAlive && this.age >= 5){
-            this.readyToHarvest = true;
             this.isAlive = false;
         }
         else{
-            this.readyToHarvest = false;
             System.out.println("Crop is not ready to harvest");
         }
     }

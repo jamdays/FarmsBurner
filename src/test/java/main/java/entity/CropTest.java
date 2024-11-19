@@ -47,6 +47,9 @@ public class CropTest extends TestCase {
         Crop crop1 = new Crop(5, true, 1);
         crop1.harvest();
         assertFalse(crop1.getIsAlive());
+        Crop crop2 = new Crop(1, false, 1);
+        crop2.harvest();
+        assertFalse(crop2.getIsAlive());
     }
 
     public void testSetIsAlive(){
@@ -84,15 +87,11 @@ public class CropTest extends TestCase {
         assertTrue(crop.isWatered());
     }
 
-    public void testSetReadyToHarvest(){
-        Crop crop = new Crop();
-        crop.setReadyToHarvest(true);
-        assertTrue(crop.getReadyToHarvest());
-    }
-
     public void testGetReadyToHarvest(){
         Crop crop = new Crop();
         assertFalse(crop.getReadyToHarvest());
+        Crop crop1 = new Crop(6, true, 1);
+        assertTrue(crop1.getReadyToHarvest());
     }
 
 }
