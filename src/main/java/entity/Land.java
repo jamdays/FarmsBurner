@@ -85,27 +85,56 @@ public class Land implements Serializable {
         this.fertilized = fertilized;
     }
 
+    // water should only succeed if land is claimed, not snowy, and has a plant,
     public void water(){
-        this.isWet = true;
-        crop.water();
-    }
-
-    public void plant(){
-        if (claimed && !planted && !isSnowy){
-            planted = true;
-            setCrop(new Crop());
+        if (!claimed){
+            System.out.println("Land is not claimed");
+        } else if (isSnowy){
+            System.out.println("Land is snowy");
+        } else if (planted) {
+            System.out.println("No crop is planted");
+        } else{
+            crop.water();
+            isWet = true;
         }
     }
 
+    // plant should only work on claimed land and if it is not snowy and if there isn't already a plant
+    public void plant(){
+        if (!claimed){
+            System.out.println("Land is not claimed");
+        } else if (isSnowy){
+            System.out.println("Land is snowy");
+        } else if (planted){
+            System.out.println("There is already a crop planted");
+        } else{
+            planted = true;
+            setCrop(new Crop());
+        }
+//        if (claimed && !planted && !isSnowy){
+//            planted = true;
+//            setCrop(new Crop());
+//        }
+    }
+
     public void harvest() {
-        if (planted && crop.getIsAlive()) {
+        if (!planted) {
+            System.out.println("Land is not claimed");
+        } else if (!crop.getIsAlive()) {
+            System.out.println("No crop is planted");
+        } else {
             crop.harvest();
             setCrop(null);
             planted = false;
         }
     }
+
     public void fertilize(){
-        if (!planted && !isSnowy) {
+        if (!planted){
+            System.out.println("Land is not claimed");
+        } else if (isSnowy){
+            System.out.println("Land is snowy");
+        } else {
             fertilized = true;
         }
     }
