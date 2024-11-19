@@ -48,6 +48,10 @@ public class HarvestInteractorTest extends TestCase {
         farm.plant(r + 1, c + 1);
         farm.plant(r, c + 1);
         farm.plant(r + 1, c);
+        farm.getFarmLand()[r][c].getCrop().setAge(5);
+        farm.getFarmLand()[r + 1][c + 1].getCrop().setAge(5);
+        farm.getFarmLand()[r][c + 1].getCrop().setAge(5);
+        farm.getFarmLand()[r + 1][c].getCrop().setAge(5);
         farm.harvest(r, c);
         farm.harvest(r + 1, c + 1);
         farm.harvest(r, c + 1);

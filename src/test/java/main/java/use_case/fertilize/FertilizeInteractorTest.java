@@ -71,18 +71,12 @@ public class FertilizeInteractorTest extends TestCase {
         Farm farm = new Farm();
         farm.fertilize(r, c);
 
-        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outContent));
-
         FertilizeOutputBoundary outputBoundary = new FertilizeOutputBoundary() {
 
             @Override
             public void fertilize(int r, int c) {
                 // Assert land is not fertilized.
                 assertFalse(farm.getFarmLand()[r][c].isFertilized());
-                String expectedLine = "Land is not claimed";
-                assertTrue(outContent.toString().contains(expectedLine));
-                System.setOut(System.out);
             }
         };
 

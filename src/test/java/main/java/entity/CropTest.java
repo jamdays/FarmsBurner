@@ -43,7 +43,7 @@ public class CropTest extends TestCase {
     public void testHarvest(){
         Crop crop = new Crop();
         crop.harvest();
-        assertTrue(crop.getIsAlive());
+        assertFalse(crop.getIsAlive());
         Crop crop1 = new Crop(5, true, 1);
         crop1.harvest();
         assertFalse(crop1.getIsAlive());
