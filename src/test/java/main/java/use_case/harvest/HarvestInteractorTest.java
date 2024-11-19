@@ -70,6 +70,7 @@ public class HarvestInteractorTest extends TestCase {
     public void testFailTooYoung() {
         // Create a farm and plant a crop.
         Farm farm = new Farm();
+        farm.claim(r, c);
         farm.plant(r, c);
         FarmSingleton.setInstance(farm);
         farm.harvest(r, c);
