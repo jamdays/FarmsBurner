@@ -77,12 +77,14 @@ public class Crop implements Serializable {
     }
 
     public void harvest(){
-        // Crops are only ready to harvest if age > 5
-        if (this.isAlive && this.age >= 5){
-            this.isAlive = false;
-        }
-        else{
-            System.out.println("Crop is not ready to harvest");
-        }
+        this.isAlive = false;
+
+//        // Crops are only ready to harvest if age > 5
+//        if (this.isAlive && this.age >= 5){
+//            this.isAlive = false;
+//        }
+//        else{
+//            System.out.println("Crop is not ready to harvest");
+//        }
     }
 }

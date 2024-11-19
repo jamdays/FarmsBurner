@@ -14,21 +14,19 @@ public class LandTest extends TestCase {
         assertTrue(land.isClaimed());
 
         // isPlanted tests
-        land.setIsSnowy(false);
+        assertFalse(land.isPlanted());
         land.plant();
         assertTrue(land.isPlanted());
         assertNotNull(land.getCrop());
 
         // isWet tests
         assertFalse(land.getIsWet());
-        land.plant();
         land.water();
         assertTrue(land.getIsWet());
         land.setIsWet(false);
         assertFalse(land.getIsWet());
 
         // isFertilized tests
-        land.setPlanted(false);
         land.setIsSnowy(false);
         land.fertilize();
         assertTrue(land.isFertilized());

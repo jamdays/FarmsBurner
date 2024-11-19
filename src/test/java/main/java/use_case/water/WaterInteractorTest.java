@@ -51,10 +51,10 @@ public class WaterInteractorTest extends TestCase {
             @Override
             public void water(int r, int c) {
                 // Assert if the crop is harvested.
-                assertFalse(farm.getFarmLand()[r][c].getIsWet());
-                assertFalse(farm.getFarmLand()[1][1].getIsWet());
-                assertFalse(farm.getFarmLand()[0][1].getIsWet());
-                assertFalse(farm.getFarmLand()[1][0].getIsWet());
+                assertTrue(farm.getFarmLand()[r][c].getIsWet());
+                assertTrue(farm.getFarmLand()[1][1].getIsWet());
+                assertTrue(farm.getFarmLand()[0][1].getIsWet());
+                assertTrue(farm.getFarmLand()[1][0].getIsWet());
             }
         };
 

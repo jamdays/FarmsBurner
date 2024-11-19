@@ -91,7 +91,7 @@ public class Land implements Serializable {
             System.out.println("Land is not claimed");
         } else if (isSnowy){
             System.out.println("Land is snowy");
-        } else if (planted) {
+        } else if (!planted) {
             System.out.println("No crop is planted");
         } else{
             crop.water();
@@ -119,9 +119,14 @@ public class Land implements Serializable {
 
     public void harvest() {
         if (!planted) {
-            System.out.println("Land is not claimed");
-        } else if (!crop.getIsAlive()) {
             System.out.println("No crop is planted");
+        } else if (!crop.getIsAlive()) {
+            System.out.println("Crop is dead. Crop discarded");
+            crop.harvest();
+            setCrop(null);
+            planted = false;
+        } else if (crop.getAge() < 5) {
+            System.out.println("Crop is not ready to harvest");
         } else {
             crop.harvest();
             setCrop(null);
@@ -131,9 +136,11 @@ public class Land implements Serializable {
 
     public void fertilize(){
         if (!planted){
-            System.out.println("Land is not claimed");
+            System.out.println("There is no plant to fertilize");
         } else if (isSnowy){
             System.out.println("Land is snowy");
+        } else if (fertilized) {
+            System.out.println("Land is already fertilized");
         } else {
             fertilized = true;
         }

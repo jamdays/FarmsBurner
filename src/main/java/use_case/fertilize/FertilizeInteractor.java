@@ -11,7 +11,6 @@ public class FertilizeInteractor implements FertilizeInputBoundary {
 
     @Override
     public void execute(int r, int c) {
-        // TODO: land should only be fertilized if it is claimed and not already fertilized
         FarmSingleton.getInstance().getFarm().fertilize(r, c);
         outputBoundary.fertilize(r, c);
     }

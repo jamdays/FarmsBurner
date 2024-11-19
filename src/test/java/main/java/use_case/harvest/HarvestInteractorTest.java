@@ -5,6 +5,11 @@ import main.java.entity.Farm;
 import main.java.entity.Land;
 import main.java.entity.FarmSingleton;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.Assert.assertTrue;
+
 public class HarvestInteractorTest extends TestCase {
 
     final int r = 0;
@@ -88,22 +93,42 @@ public class HarvestInteractorTest extends TestCase {
         interactor.execute(r, c);
     }
 
-    // TODO: implement so that harvest only works when there is a plant.
-//    public void testNoPlant(){
-//        // Create a farm and harvest a crop.
-//        Farm farm = new Farm();
-//        FarmSingleton.setInstance(farm);
-//
-//        HarvestOutputBoundary outputBoundary = new HarvestOutputBoundary() {
-//
-//            @Override
-//            public void harvestCrop(int r, int c) {
-//                // Assert if the crop is not harvested.
-//                assertFalse(farm.getFarmLand()[r][c].isPlanted());
-//            }
-//        };
-//
-//        HarvestInteractor interactor = new HarvestInteractor(outputBoundary);
-//        interactor.execute(r, c);
-//    }
+    public void testNoPlant(){
+        // Create a farm and harvest a crop.
+        Farm farm = new Farm();
+        farm.claim(r, c);
+        farm.harvest(r, c);
+
+        HarvestOutputBoundary outputBoundary = new HarvestOutputBoundary() {
+
+            @Override
+            public void harvestCrop(int r, int c) {
+                // Assert if the crop is harvested (should not be possible since there was nothing to harvest.)
+                assertFalse(farm.getFarmLand()[r][c].isPlanted());
+            }
+        };
+
+        HarvestInteractor interactor = new HarvestInteractor(outputBoundary);
+        interactor.execute(r, c);
+    }
+
+    public void testDeadCrop(){
+        Farm farm = new Farm();
+        farm.claim(r, c);
+        farm.plant(r, c);
+        farm.getFarmLand()[r][c].getCrop().setIsAlive(false);
+        farm.harvest(r, c);
+
+        HarvestOutputBoundary outputBoundary = new HarvestOutputBoundary() {
+
+            @Override
+            public void harvestCrop(int r, int c) {
+                // Assert if the crop is harvested, even if it is dead.
+                assertFalse(farm.getFarmLand()[r][c].isPlanted());
+            }
+        };
+
+        HarvestInteractor interactor = new HarvestInteractor(outputBoundary);
+        interactor.execute(r, c);
+    }
 }
