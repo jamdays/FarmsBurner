@@ -32,7 +32,7 @@ public class CropTest extends TestCase {
         assertFalse(crop.getIsAlive());
     }
 
-    public void testGetIsDeadFromWater(){
+    public void testTooMuchWater(){
         Crop crop = new Crop();
         for (int i = 0; i < 5; i++) {
             crop.water();
@@ -43,7 +43,10 @@ public class CropTest extends TestCase {
     public void testHarvest(){
         Crop crop = new Crop();
         crop.harvest();
-        assertFalse(crop.getIsAlive());
+        assertTrue(crop.getIsAlive());
+        Crop crop1 = new Crop(5, true, 1);
+        crop1.harvest();
+        assertFalse(crop1.getIsAlive());
     }
 
     public void testSetIsAlive(){
@@ -76,9 +79,20 @@ public class CropTest extends TestCase {
 
     public void testSetWaterlevel(){
         Crop crop = new Crop();
-        assertEquals(0, crop.getWaterlevel());
+        assertFalse(crop.isWatered());
         crop.setWaterlevel(1);
         assertTrue(crop.isWatered());
+    }
+
+    public void testSetReadyToHarvest(){
+        Crop crop = new Crop();
+        crop.setReadyToHarvest(true);
+        assertTrue(crop.getReadyToHarvest());
+    }
+
+    public void testGetReadyToHarvest(){
+        Crop crop = new Crop();
+        assertFalse(crop.getReadyToHarvest());
     }
 
 }
