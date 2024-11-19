@@ -1,11 +1,11 @@
 package main.java.view;
 
+import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,7 +86,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         help.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Open help menu");
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addInfoView(271, 250, new Info()).build().setVisible(true);
             }
         });
 
