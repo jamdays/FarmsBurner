@@ -38,12 +38,13 @@ public class Land implements Serializable {
         return crop;
     }
 
+
     public void setCrop(Crop crop) {
         this.crop = crop;
     }
 
     // getter and setter for isWet
-    public boolean getIsWet() {
+    public boolean isWet() {
         return isWet;
     }
 
@@ -109,7 +110,7 @@ public class Land implements Serializable {
             System.out.println("There is already a crop planted");
         } else{
             planted = true;
-            setCrop(new Crop());
+            this.crop = new Crop();
         }
 //        if (claimed && !planted && !isSnowy){
 //            planted = true;

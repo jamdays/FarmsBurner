@@ -13,8 +13,8 @@ public class ClaimInteractor implements ClaimInputBoundary {
     }
     @Override
     public void execute(int r, int c) {
-        outputBoundary.claim(r, c);
         FarmSingleton.getInstance().getFarm().claim(r, c);
+        outputBoundary.claim(r, c);
     }
 }
 

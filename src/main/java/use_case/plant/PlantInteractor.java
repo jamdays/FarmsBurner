@@ -10,8 +10,8 @@ public class PlantInteractor implements PlantInputBoundary{
     }
     @Override
     public void execute(int r, int c) {
-        outputBoundary.addCrop(r, c);
         FarmSingleton.getInstance().getFarm().plant(r, c);
+        outputBoundary.addCrop(r, c);
     }
 }
 
