@@ -11,6 +11,7 @@ public class HarvestInteractor implements HarvestInputBoundary {
 
     @Override
     public void execute(int r, int c) {
+        // TODO: implement so that harvest only works when there is a plant.
         outputBoundary.harvestCrop(r, c);
         FarmSingleton.getInstance().getFarm().harvest(r, c);
     }

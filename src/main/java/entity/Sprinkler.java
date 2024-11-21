@@ -20,11 +20,16 @@ public class Sprinkler extends FarmTool implements Serializable {
         this.area = (this.getLevel()+1)*(this.getLevel()+1);
     }
 
+    public void setArea(int area) {
+        this.area = area;
+    }
+
     @Override
     public void upgrade() {
         if (getLevel() < 4) {
             this.setLevel(this.getLevel() + 1);
             this.setPower(this.getPower() + 150);
+            this.setArea((this.getLevel() + 1)*(this.getLevel() + 1));
         }
     }
 

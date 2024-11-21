@@ -86,28 +86,63 @@ public class Land implements Serializable {
         this.fertilized = fertilized;
     }
 
+    // water should only succeed if land is claimed, not snowy, and has a plant,
     public void water(){
-        this.isWet = true;
-        if (planted)
+        if (!claimed){
+            System.out.println("Land is not claimed");
+        } else if (isSnowy){
+            System.out.println("Land is snowy");
+        } else if (!planted) {
+            System.out.println("No crop is planted");
+        } else{
             crop.water();
-    }
-
-    public void plant(){
-        if (claimed && !planted && !isSnowy){
-            planted = true;
-            this.crop = new Crop();
+            isWet = true;
         }
     }
 
+    // plant should only work on claimed land and if it is not snowy and if there isn't already a plant
+    public void plant(){
+        if (!claimed){
+            System.out.println("Land is not claimed");
+        } else if (isSnowy){
+            System.out.println("Land is snowy");
+        } else if (planted){
+            System.out.println("There is already a crop planted");
+        } else{
+            planted = true;
+            this.crop = new Crop();
+        }
+//        if (claimed && !planted && !isSnowy){
+//            planted = true;
+//            setCrop(new Crop());
+//        }
+    }
+
     public void harvest() {
-        if (planted && crop.getIsAlive()) {
+        if (!planted) {
+            System.out.println("No crop is planted");
+        } else if (!crop.getIsAlive()) {
+            System.out.println("Crop is dead. Crop discarded");
+            crop.harvest();
+            setCrop(null);
+            planted = false;
+        } else if (crop.getAge() < 5) {
+            System.out.println("Crop is not ready to harvest");
+        } else {
             crop.harvest();
             setCrop(null);
             planted = false;
         }
     }
+
     public void fertilize(){
-        if (!planted && !isSnowy) {
+        if (!planted){
+            System.out.println("There is no plant to fertilize");
+        } else if (isSnowy){
+            System.out.println("Land is snowy");
+        } else if (fertilized) {
+            System.out.println("Land is already fertilized");
+        } else {
             fertilized = true;
         }
     }
