@@ -13,6 +13,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -101,7 +102,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             for (int col = 0; col < 10; col++) {
                 final int r = row;
                 final int c = col;
-                FarmLabel cropLabel = new CropLabel("  ", 20, Color.BLACK);
+                FarmLabel cropLabel = new CropLabel("", 20, Color.BLACK);
+                ImageIcon grass = new ImageIcon("src/main/resources/farmtile1.png");
+                cropLabel.setIcon(new ImageIcon(grass.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
 //                cropLabel.setBorder(new LineBorder(Color.WHITE));
 //                cropLabel.setPreferredSize(new Dimension(25, 25));
                 farmLand[r][c] = cropLabel;
@@ -167,16 +170,22 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             for (int c = 0; c < state.getFarmLand()[r].length; c++) {
                 // if farmland is claimed, change button color to dirt
                 if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
-                    System.out.println(state.getFarmLand()[r][c]);
-                    farmLand[r][c].setBackground(dirt);
-                    // given the farmland is claimed, if it is wet as well, set color to wetdirt
-                    if ((state.getFarmLand()[r][c] & WET) == WET) {
-                        farmLand[r][c].setBackground(wetdirt);
-
+                    ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile2.png");
+                    farmLand[r][c].setIcon(new ImageIcon(dirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                    // given the farmland is claimed, if it is wet as well as fertilized, set label image to wet and fertilized dirt
+                    if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                        ImageIcon wetfertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile5.png");
+                        farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                    }
+                    // given the farmland is claimed, if it is wet but unfertilized, set label image to wet but unfertilized dirt
+                    if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                        ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile3.png");
+                        farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                     }
                     // given the farmland is claimed, if a crop has been planted there, make it appear
                     if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
                         farmLand[r][c].setText("T");
+                        farmLand[r][c].setHorizontalTextPosition(JLabel.CENTER);
                         farmLand[r][c].setForeground(Color.gray);
                         // set the plant colour to green if and only if it is alive
                         if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
@@ -184,9 +193,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
                         }
                     }
-                    // given the farmland is claimed, if it has been fertilized, set fertilized border around it
-                    if ((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) {
-                        farmLand[r][c].setBorder(BorderFactory.createLineBorder(Color.darkGray));
+                    // given the farmland is claimed, if it has been fertilized but is dry, set label image to fertilized but dry dirt
+                    if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
+                        ImageIcon fertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile4.png");
+                        farmLand[r][c].setIcon(new ImageIcon(fertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                     }
                 }
             }
