@@ -126,12 +126,14 @@ public class Land implements Serializable {
             crop.harvest();
             setCrop(null);
             planted = false;
+            fertilized = false;
         } else if (crop.getAge() < 5) {
             System.out.println("Crop is not ready to harvest");
         } else {
             crop.harvest();
             setCrop(null);
             planted = false;
+            fertilized = false;
         }
     }
 
