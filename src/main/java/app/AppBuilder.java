@@ -24,7 +24,7 @@ import java.awt.*;
  * Builder for farms burner
  */
 public class AppBuilder {
-    public static final int HEIGHT = 1000;
+    public static final int HEIGHT = 650;
     public static final int WIDTH = 1000;
     private OpenWeatherAccess farmDAO;
     private FarmViewModel farmViewModel;
