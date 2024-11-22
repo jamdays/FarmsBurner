@@ -52,10 +52,18 @@ public class Crop implements Serializable {
         this.price = price;
     }
 
-    public boolean isWatered() {return this.waterlevel >= 0;}
+    // getter and setter for waterlevel
+    public int getWaterlevel() {return this.waterlevel;}
+
+    // plant is watered if waterlevel > 0. This allows plants to start off not watered.
+    public boolean isWatered() {return this.waterlevel > 0;}
 
     public void setWaterlevel(int level) {
         this.waterlevel = level;
+    }
+
+    public boolean getReadyToHarvest() {
+        return this.getAge() > 5;
     }
 
     public void water(){
@@ -70,5 +78,13 @@ public class Crop implements Serializable {
 
     public void harvest(){
         this.isAlive = false;
+
+//        // Crops are only ready to harvest if age > 5
+//        if (this.isAlive && this.age >= 5){
+//            this.isAlive = false;
+//        }
+//        else{
+//            System.out.println("Crop is not ready to harvest");
+//        }
     }
 }

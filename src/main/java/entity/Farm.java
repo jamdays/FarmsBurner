@@ -26,6 +26,7 @@ public class Farm implements Serializable {
         this.farmLand = farmLand;
         this.barnBucks = 0;
         this.power = 0;
+        // TODO: implement sprinkler so that you don't start with a sprinkler
         this.sprinkler = new Sprinkler();
     }
 
