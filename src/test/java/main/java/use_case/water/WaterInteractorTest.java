@@ -22,7 +22,7 @@ public class WaterInteractorTest extends TestCase {
             @Override
             public void water(int r, int c) {
                 // Assert if the crop is harvested.
-                assertTrue(farm.getFarmLand()[r][c].getIsWet());
+                assertTrue(farm.getFarmLand()[r][c].isWet());
             }
         };
 
@@ -51,10 +51,10 @@ public class WaterInteractorTest extends TestCase {
             @Override
             public void water(int r, int c) {
                 // Assert if the crop is harvested.
-                assertTrue(farm.getFarmLand()[r][c].getIsWet());
-                assertTrue(farm.getFarmLand()[1][1].getIsWet());
-                assertTrue(farm.getFarmLand()[0][1].getIsWet());
-                assertTrue(farm.getFarmLand()[1][0].getIsWet());
+                assertTrue(farm.getFarmLand()[r][c].isWet());
+                assertTrue(farm.getFarmLand()[1][1].isWet());
+                assertTrue(farm.getFarmLand()[0][1].isWet());
+                assertTrue(farm.getFarmLand()[1][0].isWet());
             }
         };
 
@@ -75,7 +75,7 @@ public class WaterInteractorTest extends TestCase {
             @Override
             public void water(int r, int c) {
                 // Assert that land is not wet (cannot water unclaimed land)
-                assertFalse(farm.getFarmLand()[r][c].getIsWet());
+                assertFalse(farm.getFarmLand()[r][c].isWet());
             }
         };
 
@@ -96,7 +96,7 @@ public class WaterInteractorTest extends TestCase {
             @Override
             public void water(int r, int c) {
                 // Assert that land is not wet (cannot water when snowy)
-                assertFalse(farm.getFarmLand()[r][c].getIsWet());
+                assertFalse(farm.getFarmLand()[r][c].isWet());
             }
         };
 
@@ -115,7 +115,7 @@ public class WaterInteractorTest extends TestCase {
             @Override
             public void water(int r, int c) {
                 // Assert that land is not wet (cannot water without crop)
-                assertFalse(farm.getFarmLand()[r][c].getIsWet());
+                assertFalse(farm.getFarmLand()[r][c].isWet());
             }
         };
 
