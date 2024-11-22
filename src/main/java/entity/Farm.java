@@ -20,6 +20,7 @@ public class Farm implements Serializable {
     private int barnBucks;
     private int power;
     private final Sprinkler sprinkler;
+    private String city;
 
     // Constructor
     public Farm(Land[][] farmLand) {
@@ -28,6 +29,8 @@ public class Farm implements Serializable {
         this.power = 0;
         // TODO: implement sprinkler so that you don't start with a sprinkler
         this.sprinkler = new Sprinkler();
+        //Default city for testing
+        this.city = "Toronto";
     }
 
     public Farm(){
@@ -43,6 +46,7 @@ public class Farm implements Serializable {
         this.barnBucks = 0;
         this.power = 0;
         this.sprinkler = new Sprinkler();
+        this.city = "Toronto";
 
     }
 
@@ -87,5 +91,13 @@ public class Farm implements Serializable {
     }
     public void fertilize(int r, int c) {
         this.farmLand[r][c].fertilize();
+    }
+
+    public String getCity(){
+        return this.city;
+    }
+
+    public void setCity(String city){
+        this.city = city;
     }
 }
