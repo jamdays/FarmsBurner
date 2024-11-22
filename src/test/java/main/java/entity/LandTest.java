@@ -20,11 +20,11 @@ public class LandTest extends TestCase {
         assertNotNull(land.getCrop());
 
         // isWet tests
-        assertFalse(land.getIsWet());
+        assertFalse(land.isWet());
         land.water();
-        assertTrue(land.getIsWet());
+        assertTrue(land.isWet());
         land.setIsWet(false);
-        assertFalse(land.getIsWet());
+        assertFalse(land.isWet());
 
         // isFertilized tests
         land.setIsSnowy(false);
@@ -54,7 +54,7 @@ public class LandTest extends TestCase {
         assertTrue(land2.isPlanted());
         assertTrue(land2.isClaimed());
         assertTrue(land2.isFertilized());
-        assertFalse(land2.getIsWet());
+        assertFalse(land2.isWet());
         assertFalse(land2.getIsSnowy());
 
     }
