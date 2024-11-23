@@ -1,19 +1,35 @@
 package main.java.view;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SellView {
-    public static void main(String[] args) {
-        int crops = 5;
-        int barnBucks = 0;
-        int cost = 3;
-        JLabel cropLabel = new JLabel("Crops: " + crops);
-        JLabel barnBucksLabel = new JLabel("Barn Bucks: " + barnBucks);
-        JLabel description = new JLabel("Today you can sell your crops for " + cost + " Barn Bucks");
+public class SellView extends JPanel {
+    int crops;
+    int barnBucks;
+    int cost;
+    public SellView(int crops, int barnBucks, int cost) {
+        this.crops = crops;
+        this.barnBucks = barnBucks;
+        this.cost = cost;
 
+        JLabel cropLabel = new JLabel("Crops: " + crops);
+        cropLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
+
+        JLabel barnBucksLabel = new JLabel("Barn Bucks: " + barnBucks);
+        barnBucksLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(cropLabel, BorderLayout.WEST);
+        topPanel.add(barnBucksLabel, BorderLayout.EAST);
+        topPanel.setBackground(new java.awt.Color(169, 152, 126));
+        topPanel.setPreferredSize(new Dimension(350,50));
+        topPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+
+        JLabel description = new JLabel("Today you can sell your crops for " + cost + " Barn Bucks");
+        description.setFont(new Font("Arial", Font.PLAIN, 18));
         JPanel sellPanel = new JPanel();
+        sellPanel.setBackground(new java.awt.Color(169, 152, 126));
         JLabel sellLabel = new JLabel("Sell crops");
         JButton minusButton = new JButton("-");
         JLabel amountLabel = new JLabel("0");
@@ -26,6 +42,18 @@ public class SellView {
 
         JLabel earningLabel = new JLabel("Total Earnings: " + Integer.parseInt(amountLabel.getText()) * cost);
         JButton confirmButton = new JButton("Confirm Sale");
+
+        JPanel earningPanel = new JPanel();
+        earningPanel.setBackground(new java.awt.Color(169, 152, 126));
+        earningPanel.add(earningLabel);
+        earningPanel.add(confirmButton);
+
+        JPanel contentPanel = new JPanel();
+        contentPanel.setBackground(new java.awt.Color(169, 152, 126));
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.add(description);
+        contentPanel.add(sellPanel);
+        contentPanel.add(earningPanel);
 
         minusButton.addActionListener(new ActionListener() {
             @Override
@@ -62,20 +90,16 @@ public class SellView {
             }
         });
 
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(cropLabel);
-        mainPanel.add(barnBucksLabel);
-        mainPanel.add(description);
-        mainPanel.add(sellPanel);
-        mainPanel.add(earningLabel);
-        mainPanel.add(confirmButton);
+        this.setLayout(new BorderLayout());
+        this.setBackground(new java.awt.Color(169, 152, 126));
+        this.add(topPanel, BorderLayout.NORTH);
+        this.add(contentPanel);
 
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(350, 280);
-        frame.getContentPane().add(mainPanel);
-        frame.setVisible(true);
+//        JFrame frame = new JFrame();
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.setSize(350, 280);
+//        frame.getContentPane().add(mainPanel);
+//        frame.setVisible(true);
 
     }
 }

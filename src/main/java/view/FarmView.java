@@ -67,7 +67,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         sell.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Open sell menu");
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addInfoView(350, 280, new SellView(5, 0, 3)).build().setVisible(true);
             }
         });
         FarmButton buy = new FarmButton("Buy");
