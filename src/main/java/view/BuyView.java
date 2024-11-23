@@ -55,7 +55,7 @@ public class BuyView extends JPanel {
 
     // TODO: implement updateBarnBucks so that it updates with the amount of barnBucks the user has. Not sure if this should be in the BuyView class or the Farm
     public static void updateBarnBucks(FarmLabel label, int amount) {
-        label.setText("                   Barn Bucks: " + amount);
+        label.setText("Barn Bucks: " + amount);
     }
 
     private static JPanel createItemPanel(String itemName, String price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
