@@ -30,6 +30,45 @@ public class HarvestInteractorTest extends TestCase {
 
     }
 
+    public void testHarvestSuccessMultiple() throws PlantingException {
+        // Create a farm and plant a crop.
+        Farm farm = new Farm();
+        farm.claim(1, 1);
+        farm.claim(2, 2);
+        farm.claim(1, 2);
+        farm.claim(2, 1);
+        farm.plant(1, 1);
+        farm.plant(2, 2);
+        farm.plant(1, 2);
+        farm.plant(2, 1);
+        farm.getFarmLand()[1][1].getCrop().setAge(5);
+        farm.getFarmLand()[2][2].getCrop().setAge(5);
+        farm.getFarmLand()[1][2].getCrop().setAge(5);
+        farm.getFarmLand()[2][1].getCrop().setAge(5);
+        farm.harvest(1, 1);
+        farm.harvest(2, 2);
+        farm.harvest(1, 2);
+        farm.harvest(2, 1);
+
+        HarvestOutputBoundary outputBoundary = new HarvestOutputBoundary() {
+
+            @Override
+            public void harvestCrop(int r, int c) {
+                // Assert if the crop is harvested.
+                assertFalse(farm.getFarmLand()[r][c].isPlanted());
+                assertFalse(farm.getFarmLand()[1][1].isPlanted());
+                assertFalse(farm.getFarmLand()[0][1].isPlanted());
+                assertFalse(farm.getFarmLand()[1][0].isPlanted());
+            }
+        };
+
+        HarvestInteractor interactor = new HarvestInteractor(outputBoundary);
+        interactor.execute(0, 0);
+        interactor.execute(1, 1);
+        interactor.execute(0,  1);
+        interactor.execute(1, 0);
+    }
+
     @Test
     public void testNotReady() throws PlantingException, HarvestException {
         Farm farm = FarmSingleton.getInstance().getFarm();
