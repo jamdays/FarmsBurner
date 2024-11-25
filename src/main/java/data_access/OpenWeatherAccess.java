@@ -40,14 +40,13 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
         }
 
         // parse currentInfoJSON string using Jackson to get details regarding city name, temperature, conditions and cloud coverage
-        String title = "Current Weather for " + parent.get("name").textValue();
         String temp = "Temperature: " + parent.get("main").get("temp").toString() + "°C";
         String conditions = "Conditions: " + parent.get("weather").get(0).get("description").textValue();
         String cloudCoverage = "Cloud Coverage: " + parent.get("clouds").get("all").toString() + "%";
 
         // return list containing city name, temperature, current conditions and cloud coverage %, in that order
         List<String> list = new ArrayList<>();
-        list.add(title);
+        list.add(city);
         list.add(temp);
         list.add(conditions);
         list.add(cloudCoverage);
