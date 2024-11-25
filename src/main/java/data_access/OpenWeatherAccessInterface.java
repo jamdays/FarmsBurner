@@ -14,7 +14,7 @@ public interface OpenWeatherAccessInterface {
      * @param city, the city to get weather information for
      * @return the current weather info for the city
      */
-    String currentInfoForCity(String city);
+    List<String> currentInfoForCity(String city);
 
     /**
      * executes code for calling the OpenWeatherMap API to get forecast information for a city
