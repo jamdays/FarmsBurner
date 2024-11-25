@@ -71,7 +71,7 @@ public class HarvestInteractorTest extends TestCase {
 
     @Test
     public void testNotReady() throws PlantingException, HarvestException {
-        Farm farm = FarmSingleton.getInstance().getFarm();
+        Farm farm = new Farm();
         farm.claim(1, 1);
         farm.plant(1, 1);
         farm.getFarmLand()[1][1].getCrop().setAge(1);

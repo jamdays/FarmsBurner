@@ -6,6 +6,8 @@ import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
 
 import org.junit.Test;
+
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class ClaimInteractorTest {

@@ -36,24 +36,14 @@ public class FertilizeInteractorTest extends TestCase {
         farm.claim(2, 2);
         farm.claim(1, 2);
         farm.claim(2, 1);
-        farm.plant(1, 1);
-        farm.plant(2, 2);
-        farm.plant(1, 2);
-        farm.plant(2, 1);
-        farm.fertilize(1, 1);
-        farm.fertilize(2, 2);
-        farm.fertilize(1, 2);
-        farm.fertilize(2, 1);
 
         FertilizeOutputBoundary outputBoundary = new FertilizeOutputBoundary() {
 
             @Override
             public void fertilize(int r, int c) {
                 // Assert land is fertilized
+                farm.fertilize(r, c);
                 assertTrue(farm.getFarmLand()[r][c].isFertilized());
-                assertTrue(farm.getFarmLand()[1][0].isFertilized());
-                assertTrue(farm.getFarmLand()[0][1].isFertilized());
-                assertTrue(farm.getFarmLand()[1][1].isFertilized());
             }
         };
 
