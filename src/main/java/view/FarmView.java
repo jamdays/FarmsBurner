@@ -1,9 +1,13 @@
 package main.java.view;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
+import view.WeatherView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +22,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private final int WET = 0B1;
@@ -58,9 +65,14 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 }
                 String apiKey = props.get("WAK").toString();
                 final main.java.data_access.OpenWeatherAccess dao = new main.java.data_access.OpenWeatherAccess(apiKey);
-                String weather = dao.currentInfoForCity("toronto");
+                List<String> currWeatherForCity = dao.currentInfoForCity("toronto");
+                String title = currWeatherForCity.get(0);
+                String temp = currWeatherForCity.get(1);
+                String conditions = currWeatherForCity.get(2);
+                String cloudCoverage = currWeatherForCity.get(3);
+                String display = temp + "\n" + conditions + "\n" + cloudCoverage;
                 // show results
-                JOptionPane.showMessageDialog(null, weather, "Current Weather", JOptionPane.DEFAULT_OPTION);
+                JOptionPane.showMessageDialog(null, display, title, JOptionPane.DEFAULT_OPTION);
                 }
         });
         FarmButton sell = new FarmButton("Sell");
