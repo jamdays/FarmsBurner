@@ -19,7 +19,7 @@ public class Farm implements Serializable {
     private final Land[][] farmLand;
     private int barnBucks;
     private int power;
-    private final Sprinkler sprinkler;
+    private Sprinkler sprinkler;
     private String city;
 
     // Constructor
@@ -87,6 +87,13 @@ public class Farm implements Serializable {
     }
 
     public void harvest(int r, int c) {
+        Land land  = this.farmLand[r][c];
+        // TODO add so that the age impacts if you make money or not
+        if (land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
+            this.barnBucks += 5;
+        } else if (!land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
+            this.barnBucks += 3;
+        }
         this.farmLand[r][c].harvest();
     }
     public void fertilize(int r, int c) {
@@ -99,5 +106,9 @@ public class Farm implements Serializable {
 
     public void setCity(String city){
         this.city = city;
+    }
+
+    public void setSprinkler(Sprinkler sprinkler){
+        this.sprinkler = sprinkler;
     }
 }
