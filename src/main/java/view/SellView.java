@@ -26,14 +26,22 @@ public class SellView extends JPanel {
         topPanel.setPreferredSize(new Dimension(350,50));
         topPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        JLabel description = new JLabel("Today you can sell your crops for " + cost + " Barn Bucks");
+        JPanel descriptionPanel = new JPanel();
+        descriptionPanel.setBackground(new java.awt.Color(169, 152, 126));
+        JLabel description = new JLabel("You can sell your crops for ");
         description.setFont(new Font("Arial", Font.PLAIN, 18));
+        JLabel costLabel = new JLabel(cost + " Barn Bucks");
+        costLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        descriptionPanel.add(description);
+        descriptionPanel.add(costLabel);
         JPanel sellPanel = new JPanel();
         sellPanel.setBackground(new java.awt.Color(169, 152, 126));
-        JLabel sellLabel = new JLabel("Sell crops");
+        JLabel sellLabel = new JLabel("Sell crops:");
+        sellLabel.setFont(new Font("Arial", Font.BOLD, 18));
         JButton minusButton = new JButton("-");
         JLabel amountLabel = new JLabel("0");
         JButton plusButton = new JButton("+");
+        amountLabel.setFont(new Font("Arial", Font.PLAIN, 15));
 
         sellPanel.add(sellLabel);
         sellPanel.add(minusButton);
@@ -41,6 +49,7 @@ public class SellView extends JPanel {
         sellPanel.add(plusButton);
 
         JLabel earningLabel = new JLabel("Total Earnings: " + Integer.parseInt(amountLabel.getText()) * cost);
+        earningLabel.setFont(new Font("Arial", Font.BOLD, 18));
         JButton confirmButton = new JButton("Confirm Sale");
 
         JPanel earningPanel = new JPanel();
@@ -51,7 +60,7 @@ public class SellView extends JPanel {
         JPanel contentPanel = new JPanel();
         contentPanel.setBackground(new java.awt.Color(169, 152, 126));
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-        contentPanel.add(description);
+        contentPanel.add(descriptionPanel);
         contentPanel.add(sellPanel);
         contentPanel.add(earningPanel);
 
