@@ -2,10 +2,11 @@ package main.java.entity;
 
 import junit.framework.TestCase;
 import main.java.entity.Land;
+import main.java.use_case.plant.PlantingException;
 
 public class LandTest extends TestCase {
 
-    public void testLand() {
+    public void testLand() throws PlantingException {
         Land land = new Land();
 
         // isClaimed tests
@@ -41,7 +42,6 @@ public class LandTest extends TestCase {
         // harvest tests
         land.setClaimed(true);
         land.setIsSnowy(false);
-        land.plant();
         land.getCrop().setAge(5);
         assertTrue(land.isPlanted());
         assertTrue(land.getCrop().getIsAlive());

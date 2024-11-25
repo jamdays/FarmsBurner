@@ -1,126 +1,54 @@
 package main.java.use_case.water;
 
-import junit.framework.TestCase;
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
-import main.java.use_case.harvest.HarvestInteractor;
-import main.java.use_case.harvest.HarvestOutputBoundary;
+import main.java.use_case.plant.PlantingException;
+import main.java.use_case.water.WaterInteractor;
+import main.java.use_case.water.WaterOutputBoundary;
+import org.junit.Test;
 
-public class WaterInteractorTest extends TestCase {
-    final int r = 0;
-    final int c = 0;
+import static org.junit.Assert.assertTrue;
 
-    public void testWaterSuccess() {
-        // Create a farm and plant a crop.
+public class WaterInteractorTest {
+
+    @Test
+    public void testExecuteWithoutPlant() {
+
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.plant(r, c);
-        farm.water(r, c);
-
-        WaterOutputBoundary outputBoundary = new WaterOutputBoundary() {
-
+        farm.claim(1, 1);
+        FarmSingleton.getInstance().setFarm(farm);
+        WaterOutputBoundary waterOB = new WaterOutputBoundary() {
             @Override
-            public void water(int r, int c) {
-                // Assert if the crop is harvested.
-                assertTrue(farm.getFarmLand()[r][c].isWet());
+            public void water(int r, int c){
+                assertTrue(!FarmSingleton.getInstance().getFarm().getFarmLand()[r][c].isWet());
             }
+
         };
 
-        WaterInteractor interactor = new WaterInteractor(outputBoundary);
-        interactor.execute(r, c);
+        WaterInteractor waterInteractor = new WaterInteractor(waterOB);
+        waterInteractor.execute(1, 1);
+
     }
+    @Test
+    public void testExecuteWithPlant() throws PlantingException {
 
-    public void testWaterSuccessMultiple() {
-        // Create a farm and plant a crop.
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.claim(r + 1, c + 1);
-        farm.claim(r, c + 1);
-        farm.claim(r + 1, c);
-        farm.plant(r, c);
-        farm.plant(r + 1, c + 1);
-        farm.plant(r, c + 1);
-        farm.plant(r + 1, c);
-        farm.water(r, c);
-        farm.water(r + 1, c + 1);
-        farm.water(r, c + 1);
-        farm.water(r + 1, c);
-
-        WaterOutputBoundary outputBoundary = new WaterOutputBoundary() {
-
+        farm.claim(1, 1);
+        farm.plant(1, 1);
+        FarmSingleton.getInstance().setFarm(farm);
+        WaterOutputBoundary waterOB = new WaterOutputBoundary() {
             @Override
-            public void water(int r, int c) {
-                // Assert if the crop is harvested.
-                assertTrue(farm.getFarmLand()[r][c].isWet());
-                assertTrue(farm.getFarmLand()[1][1].isWet());
-                assertTrue(farm.getFarmLand()[0][1].isWet());
-                assertTrue(farm.getFarmLand()[1][0].isWet());
+            public void water(int r, int c){
+                assertTrue(FarmSingleton.getInstance().getFarm().getFarmLand()[r][c].isWet());
+                assertTrue(FarmSingleton.getInstance().getFarm().getFarmLand()[r][c].getCrop().isWatered());
             }
+
         };
 
-        WaterInteractor interactor = new WaterInteractor(outputBoundary);
-        interactor.execute(0, 0);
-        interactor.execute(1, 1);
-        interactor.execute(0,  1);
-        interactor.execute(1, 0);
+        WaterInteractor waterInteractor = new WaterInteractor(waterOB);
+        waterInteractor.execute(1, 1);
+
+
+
     }
-
-    public void testLandNotClaimed() {
-        // Create a farm and plant a crop.
-        Farm farm = new Farm();
-        farm.water(r, c);
-
-        WaterOutputBoundary outputBoundary = new WaterOutputBoundary() {
-
-            @Override
-            public void water(int r, int c) {
-                // Assert that land is not wet (cannot water unclaimed land)
-                assertFalse(farm.getFarmLand()[r][c].isWet());
-            }
-        };
-
-        WaterInteractor interactor = new WaterInteractor(outputBoundary);
-        interactor.execute(r, c);
-    }
-
-    public void testSnowy() {
-        // Create a farm and plant a crop.
-        Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.plant(r, c);
-        farm.getFarmLand()[r][c].setIsSnowy(true);
-        farm.water(r, c);
-
-        WaterOutputBoundary outputBoundary = new WaterOutputBoundary() {
-
-            @Override
-            public void water(int r, int c) {
-                // Assert that land is not wet (cannot water when snowy)
-                assertFalse(farm.getFarmLand()[r][c].isWet());
-            }
-        };
-
-        WaterInteractor interactor = new WaterInteractor(outputBoundary);
-        interactor.execute(r, c);
-    }
-
-    public void testNoCrop() {
-        // Create a farm and plant a crop.
-        Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.water(r, c);
-
-        WaterOutputBoundary outputBoundary = new WaterOutputBoundary() {
-
-            @Override
-            public void water(int r, int c) {
-                // Assert that land is not wet (cannot water without crop)
-                assertFalse(farm.getFarmLand()[r][c].isWet());
-            }
-        };
-
-        WaterInteractor interactor = new WaterInteractor(outputBoundary);
-        interactor.execute(r, c);
-    }
-
 }

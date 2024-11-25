@@ -1,4 +1,6 @@
 package main.java.entity;
+import main.java.use_case.plant.PlantingException;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -74,7 +76,7 @@ public class Farm implements Serializable {
         this.farmLand[r][c].water();
     }
 
-    public void plant(int r, int c){
+    public void plant(int r, int c) throws PlantingException {
         this.farmLand[r][c].plant();
     }
 

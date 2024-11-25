@@ -1,10 +1,11 @@
-package use_case.load;
+package main.java.use_case.load;
 
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
 import main.java.use_case.load.LoadDataAccessInterface;
 import main.java.use_case.load.LoadInteractor;
 import main.java.use_case.load.LoadOutputBoundary;
+import main.java.use_case.plant.PlantingException;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -12,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 
 public class LoadInteractorTest {
     @Test
-    public void testLoad() {
+    public void testLoad() throws PlantingException {
 
         Farm testfarm = new Farm();
         testfarm.claim(1, 1);

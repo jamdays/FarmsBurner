@@ -22,9 +22,8 @@ public class SaveInteractor implements SaveInputBoundary{
         try {
             saveDataAccessInterface.saveData(FarmSingleton.getInstance().getFarm());
             saveOutputBoundary.saved();
-        }
-        catch (DataAccessException | IOException e) {
-            System.out.println(e.getMessage());
+        } catch (main.java.use_case.load.DataAccessException | IOException | main.java.use_case.save.DataAccessException e) {
+            throw new RuntimeException(e);
         }
     }
 }

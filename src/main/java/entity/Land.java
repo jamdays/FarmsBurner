@@ -1,7 +1,9 @@
 package main.java.entity;
+import main.java.use_case.fertilize.FertilizeException;
+import main.java.use_case.harvest.HarvestException;
+import main.java.use_case.plant.PlantingException;
+
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Land implements Serializable {
 
@@ -66,10 +68,6 @@ public class Land implements Serializable {
         return planted;
     }
 
-    public void setPlanted(boolean planted) {
-        this.planted = planted;
-    }
-
     public boolean isClaimed() {
         return claimed;
     }
@@ -101,13 +99,13 @@ public class Land implements Serializable {
     }
 
     // plant should only work on claimed land and if it is not snowy and if there isn't already a plant
-    public void plant(){
+    public void plant() throws PlantingException {
         if (!claimed){
-            System.out.println("Land is not claimed");
+            throw new PlantingException("Land is not claimed");
         } else if (isSnowy){
-            System.out.println("Land is snowy");
+            throw new PlantingException("Land is snowy");
         } else if (planted){
-            System.out.println("There is already a crop planted");
+            throw new PlantingException("There is already a plant here");
         } else{
             planted = true;
             this.crop = new Crop();
@@ -122,12 +120,11 @@ public class Land implements Serializable {
         if (!planted) {
             System.out.println("No crop is planted");
         } else if (!crop.getIsAlive()) {
-            System.out.println("Crop is dead. Crop discarded");
-            crop.harvest();
             setCrop(null);
             planted = false;
+            throw new HarvestException("Crop is dead");
         } else if (crop.getAge() < 5) {
-            System.out.println("Crop is not ready to harvest");
+            throw new HarvestException("Crop is not ready to harvest");
         } else {
             crop.harvest();
             setCrop(null);
@@ -136,12 +133,10 @@ public class Land implements Serializable {
     }
 
     public void fertilize(){
-        if (!planted){
-            System.out.println("There is no plant to fertilize");
-        } else if (isSnowy){
-            System.out.println("Land is snowy");
+        if (isSnowy){
+            throw new FertilizeException("Land is snowy");
         } else if (fertilized) {
-            System.out.println("Land is already fertilized");
+            throw new FertilizeException("Land is already fertilized");
         } else {
             fertilized = true;
         }
