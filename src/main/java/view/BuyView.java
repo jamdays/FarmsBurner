@@ -5,20 +5,23 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BuyView {
-    public static void main(String[] args) {
+public class BuyView extends JPanel {
+    int barnBucks;
 
+    public BuyView(int barnBucks) {
+        this.barnBucks = barnBucks;
         // Buy Menu
-        FarmLabel buyMenuTitle = new FarmLabel("Buy Menu                     ", 18);
+        FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
+        buyMenuTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
         JPanel topLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topLeftPanel.add(buyMenuTitle);
         topLeftPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Barn Bucks
         // TODO: implement barnBucks so that it updates with the amount of barnBucks the user has
-        FarmLabel barnBucks = new FarmLabel("                   Barn Bucks: 0", 18);
+        FarmLabel barnBucksLabel = new FarmLabel("         Barn Bucks: " + this.barnBucks, 18);
         JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        topRightPanel.add(barnBucks);
+        topRightPanel.add(barnBucksLabel);
         topRightPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Top Panel
@@ -27,55 +30,42 @@ public class BuyView {
         topPanel.add(topRightPanel, BorderLayout.EAST);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
 
-        // Item Panel for Sprinkler
-        // TODO: how much area does the sprinkler water?
-        JPanel itemPanel1 = createItemPanel("Sprinkler", "0", "Automatically waters crops in 1 2x2 area");
-
-        // TODO: figure out what else goes on the buy menu
-        JPanel itemPanel2 = createItemPanel("item 2", "0", 1, "item 2 description");
-        JPanel itemPanel3 = createItemPanel("item 3", "0", 1, "item 3 description");
-        JPanel itemPanel4 = createItemPanel("item 4", "0", 1, "item 4 description");
-
-        // Main Panel (White Background)
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.NORTH;
-        mainPanel.add(itemPanel1, gbc);
-        gbc.gridy = 1;
-        mainPanel.add(itemPanel2, gbc);
-        gbc.gridy = 2;
-        mainPanel.add(itemPanel3, gbc);
-        gbc.gridy = 3;
-        mainPanel.add(itemPanel4, gbc);
-        mainPanel.setBackground(Color.WHITE);
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.setSize(new Dimension(500, 300));
+        mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        // Background Panel (Brown)
-        JPanel backgroundPanel = new JPanel();
-        backgroundPanel.add(topPanel, BorderLayout.NORTH);
-        backgroundPanel.add(mainPanel, BorderLayout.CENTER);
+        // Item Panel for Sprinkler
+        // TODO: how much area does the sprinkler water?
+        createItemPanel("Sprinkler ", "3","Automatically waters crops in 1 2x2 area", mainPanel, gbc, 0);
 
-        // Frame
-        JFrame frame = new JFrame("Buy Menu");
-        frame.setSize(741, 420);
-        frame.setContentPane(backgroundPanel);
-        frame.getContentPane().setBackground(new java.awt.Color(169, 152, 126));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        // TODO: figure out what else goes on the buy menu
+        createItemPanel("Item 2 ", "0", "Item 2 description", mainPanel, gbc, 1);
+        createItemPanel("Item 3 ", "0", "Item 3 description", mainPanel, gbc, 2);
+        createItemPanel("Item 4 ", "0", "Item 4 description", mainPanel, gbc, 3);
+
+        mainPanel.setBackground(new java.awt.Color(169, 152, 126));
+
+        this.setBackground(new java.awt.Color(169, 152, 126));
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(topPanel, BorderLayout.NORTH);
+        this.add(mainPanel, BorderLayout.CENTER);
     }
 
     // TODO: implement updateBarnBucks so that it updates with the amount of barnBucks the user has. Not sure if this should be in the BuyView class or the Farm
     public static void updateBarnBucks(FarmLabel label, int amount) {
-        label.setText("                   Barn Bucks: " + amount);
+        label.setText("Barn Bucks: " + amount);
     }
 
-    private static JPanel createItemPanel(String itemName, String price, String description) {
+    private static JPanel createItemPanel(String itemName, String price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
         // Item Label
         JLabel itemLabel = new JLabel(itemName);
+        itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         // Item Description Label
         JLabel descriptionLabel = new JLabel(description);
+        descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 
         // purchaseButton
         JButton purchaseButton = new JButton("Purchase");
@@ -93,132 +83,30 @@ public class BuyView {
             }
         });
 
-        // Item Panel
-        JPanel itemPanel = new JPanel(new GridBagLayout());
-        itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        itemPanel.setBackground(Color.WHITE);
-        itemPanel.setBorder(BorderFactory.createEmptyBorder(10, 150, 0, 200));
-        GridBagConstraints gbc = new GridBagConstraints();
-
         // Add Item Name
         gbc.gridx = 0;
-        gbc.gridy = 0;
-        itemPanel.add(itemLabel, gbc);
+        gbc.gridy = startY * 2;
+        gbc.gridwidth = 1;
+        panel.add(itemLabel, gbc);
 
         // Add Price
         gbc.gridx = 1;
-        itemPanel.add(new JLabel("Price: " + price), gbc);
+        JLabel priceLabel = new JLabel("Price: " + price);
+        priceLabel.setFont(new Font("Arial", Font.PLAIN, 18));
+        panel.add(priceLabel, gbc);
 
         // Add Purchase Button
-        gbc.gridx = 4;
-        itemPanel.add(descriptionLabel, gbc);
-
-        // Add Description
-        gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 5;
-        itemPanel.add(purchaseButton, gbc);
-
-        return itemPanel;
-
-    }
-
-    private static JPanel createItemPanel(String itemName, String price, int maxQuantity, String description) {
-        // Item Label
-        JLabel itemLabel = new JLabel(itemName);
-
-        // Price Label
-        JLabel priceLabel = new JLabel("price: " + price);
-
-        // Quantity Label
-        JLabel quantityLabel = new JLabel("0");
-        quantityLabel.setPreferredSize(new Dimension(30, 20));
-        quantityLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        // Item Description Label
-        JLabel descriptionLabel = new JLabel(description);
-
-        // Buttons
-        JButton minusButton = new JButton("-");
-        JButton plusButton = new JButton("+");
-
-        // ActionListener for minus button
-        minusButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int currentQuantity = Integer.parseInt(quantityLabel.getText());
-                if (currentQuantity > 0) {
-                    quantityLabel.setText(String.valueOf(currentQuantity - 1));
-                }
-            }
-        });
-
-        // ActionListener for plus button
-        plusButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int currentQuantity = Integer.parseInt(quantityLabel.getText());
-                if (currentQuantity < maxQuantity) {
-                    quantityLabel.setText(String.valueOf(currentQuantity + 1));
-                }
-            }
-        });
-
-        // purchaseButton
-        JButton purchaseButton = new JButton("Purchase");
-        purchaseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int priceInt = Integer.parseInt(price);
-                // TODO: access barnBucks and add to tools
-//                if (priceInt < barnBucks) {
-//                    barnBucks -= priceInt;
-//                    updateBarnBucks(barnBucksLabel, barnBucks);
-//                    System.out.println("Purchased " + itemName);
-//                } else {
-//                    System.out.println("Not enough barn bucks");
-            }
-        });
-
-        // Item Panel
-        JPanel itemPanel = new JPanel(new GridBagLayout());
-        itemPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        itemPanel.setBackground(Color.WHITE);
-        itemPanel.setBorder(BorderFactory.createEmptyBorder(10, 150, 0, 200));
-        GridBagConstraints gbc = new GridBagConstraints();
-
-        // Add Item Name
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        itemPanel.add(new JLabel(itemName), gbc);
-
-        // Add Price
-        gbc.gridx = 1;
-        itemPanel.add(new JLabel("Price: " + price), gbc);
-
-        // Add Minus Button
-        gbc.gridx = 2;
-        itemPanel.add(minusButton, gbc);
-
-        // Add Quantity Label
         gbc.gridx = 3;
-        quantityLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        itemPanel.add(quantityLabel, gbc);
-
-        // Add Plus Button
-        gbc.gridx = 4;
-        itemPanel.add(plusButton, gbc);
-
-        // Add Purchase Button
-        gbc.gridx = 5;
-        itemPanel.add(purchaseButton, gbc);
+        panel.add(purchaseButton, gbc);
 
         // Add Description
         gbc.gridx = 0;
-        gbc.gridy = 1;
-        gbc.gridwidth = 5;
-        itemPanel.add(new JLabel(description), gbc);
+        gbc.gridy = startY * 2 + 1;
+        gbc.gridwidth = 3;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel.add(descriptionLabel, gbc);
 
-        return itemPanel;
+        return panel;
+
     }
 }

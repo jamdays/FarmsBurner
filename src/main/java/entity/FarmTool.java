@@ -6,13 +6,13 @@ import java.io.Serializable;
 /**
  * Abstract class for farm tools
  */
-abstract class FarmTool implements Serializable{
+public abstract class FarmTool implements Serializable{
     //power per use
     private int power;
     //level of tool
     private int level;
     //constructor with power and level
-    FarmTool(int power, int level) {
+    public FarmTool(int power, int level) {
         this.power = power;
         this.level = level;
     }

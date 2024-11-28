@@ -122,6 +122,7 @@ public class Land implements Serializable {
         } else if (!crop.getIsAlive()) {
             setCrop(null);
             planted = false;
+            fertilized = false;
             throw new HarvestException("Crop is dead");
         } else if (crop.getAge() < 5) {
             throw new HarvestException("Crop is not ready to harvest");
@@ -129,6 +130,7 @@ public class Land implements Serializable {
             crop.harvest();
             setCrop(null);
             planted = false;
+            fertilized = false;
         }
     }
 

@@ -1,9 +1,13 @@
 package main.java.view;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
+import view.WeatherView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +22,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private final int WET = 0B1;
@@ -58,29 +65,31 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 }
                 String apiKey = props.get("WAK").toString();
                 final main.java.data_access.OpenWeatherAccess dao = new main.java.data_access.OpenWeatherAccess(apiKey);
-                String weather = dao.currentInfoForCity("toronto");
-                // show results
-                JOptionPane.showMessageDialog(null, weather, "Current Weather", JOptionPane.DEFAULT_OPTION);
+                List<String> currWeatherForCity = dao.currentInfoForCity("Toronto");
+                String city = currWeatherForCity.get(0);
+                String temp = currWeatherForCity.get(1);
+                String conditions = currWeatherForCity.get(2);
+                String cloudCoverage = currWeatherForCity.get(3);
+                String display = temp + "\n" + conditions + "\n" + cloudCoverage;
+                // test show results
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addInfoView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
                 }
         });
         FarmButton sell = new FarmButton("Sell");
         sell.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Open sell menu");
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addInfoView(350, 280, new SellView(5, 0, 3)).build().setVisible(true);
             }
         });
         FarmButton buy = new FarmButton("Buy");
         buy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Open buy menu");
-                // Create new JFrame for Buy Menu
-                JFrame buyFrame = new JFrame("Buy Menu");
-                // Set size and closeing operations for the frame
-                buyFrame.setSize(400, 300);
-                buyFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                buyFrame.setVisible(true);
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addInfoView(350, 280, new BuyView(10)).build().setVisible(true);
             }
         });
         FarmButton help = new FarmButton("i");
