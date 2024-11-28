@@ -7,12 +7,12 @@ public class Storage implements Serializable {
 
     // instance variables
     private int capacity;
-    private ArrayList<Crate> crates;
+    private ArrayList<Crop> crops;
 
     // constructor
     public Storage(int capacity) {
         this.capacity = capacity;
-        this.crates = new ArrayList<Crate>();
+        this.crops = new ArrayList<Crop>();
     }
 
     // getter and setter for capacity
@@ -25,11 +25,11 @@ public class Storage implements Serializable {
     }
 
     // getter and setter for crates
-    public ArrayList<Crate> getCrates() {
-        return crates;
+    public ArrayList<Crop> getCrops() {
+        return crops;
     }
 
-    public void setCrates(ArrayList<Crate> crates) {
-        this.crates = crates;
+    public void setCrops(ArrayList<Crop> crates) {
+        this.crops = crates;
     }
 }
