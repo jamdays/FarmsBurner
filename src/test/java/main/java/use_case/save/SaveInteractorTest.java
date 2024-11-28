@@ -1,17 +1,21 @@
-package use_case.save;
+package main.java.use_case.save;
 
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
+import main.java.use_case.plant.PlantingException;
 import main.java.use_case.save.SaveDataAccessInterface;
 import main.java.use_case.save.SaveInteractor;
 import main.java.use_case.save.SaveOutputBoundary;
 import org.junit.Test;
 
+import java.io.IOException;
+
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 public class SaveInteractorTest {
     @Test
-    public void testSave() {
+    public void testSave() throws PlantingException {
 
         Farm farm = new Farm();
         farm.claim(1, 1);
@@ -40,7 +44,6 @@ public class SaveInteractorTest {
         SaveInteractor saveInteractor = new SaveInteractor(saveDAO, saveOB);
 
         saveInteractor.save();
-
 
     }
 }

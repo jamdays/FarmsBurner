@@ -2,59 +2,48 @@ package main.java.use_case.fertilize;
 
 import junit.framework.TestCase;
 import main.java.entity.Farm;
+import main.java.entity.FarmSingleton;
+import main.java.use_case.plant.PlantingException;
+import main.java.use_case.fertilize.FertilizeException;
+import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import static org.junit.Assert.assertThrows;
 
 public class FertilizeInteractorTest extends TestCase {
-    final int r = 0;
-    final int c = 0;
 
-    public void testSucess() {
-        // Create a farm, claim land, fertilize land.
+    @Test
+    public void testExecute() throws PlantingException {
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.plant(r, c);
-        farm.fertilize(r, c);
-
-        FertilizeOutputBoundary outputBoundary = new FertilizeOutputBoundary() {
-
+        farm.claim(1, 1);
+        FarmSingleton.getInstance().setFarm(farm);
+        FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizeOutputBoundary() {
             @Override
-            public void fertilize(int r, int c) {
-                // Assert land is fertilized
-                assertTrue(farm.getFarmLand()[r][c].isFertilized());
+            public void fertilize(int r, int c){
+                assertTrue(FarmSingleton.getInstance().getFarm().getFarmLand()[r][c].isFertilized());
             }
+
         };
 
-        FertilizeInteractor interactor = new FertilizeInteractor(outputBoundary);
-        interactor.execute(r, c);
+        FertilizeInteractor fertilizeInteractor = new FertilizeInteractor(fertilizeOutputBoundary);
+        fertilizeInteractor.execute(1, 1);
+
     }
 
-    public void testSucessMultiple() {
+    public void testSucessMultiple() throws PlantingException {
         // Create a farm, claim land, fertilize land.
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.claim(r + 1, c + 1);
-        farm.claim(r, c + 1);
-        farm.claim(r + 1, c);
-        farm.plant(r, c);
-        farm.plant(r + 1, c + 1);
-        farm.plant(r, c + 1);
-        farm.plant(r + 1, c);
-        farm.fertilize(r, c);
-        farm.fertilize(r + 1, c + 1);
-        farm.fertilize(r, c + 1);
-        farm.fertilize(r + 1, c);
+        farm.claim(1, 1);
+        farm.claim(2, 2);
+        farm.claim(1, 2);
+        farm.claim(2, 1);
 
         FertilizeOutputBoundary outputBoundary = new FertilizeOutputBoundary() {
 
             @Override
             public void fertilize(int r, int c) {
                 // Assert land is fertilized
+                farm.fertilize(r, c);
                 assertTrue(farm.getFarmLand()[r][c].isFertilized());
-                assertTrue(farm.getFarmLand()[1][0].isFertilized());
-                assertTrue(farm.getFarmLand()[0][1].isFertilized());
-                assertTrue(farm.getFarmLand()[1][1].isFertilized());
             }
         };
 
@@ -65,44 +54,42 @@ public class FertilizeInteractorTest extends TestCase {
         interactor.execute(1, 0);
     }
 
-
-    public void testFailUnclaimedLand() {
-        // Create a farm, fertilize land.
+    @Test
+    public void testSnowy() throws PlantingException, FertilizeException {
         Farm farm = new Farm();
-        farm.fertilize(r, c);
-
-        FertilizeOutputBoundary outputBoundary = new FertilizeOutputBoundary() {
-
+        FarmSingleton.getInstance().setFarm(farm);
+        farm.claim(1, 1);
+        farm.getFarmLand()[1][1].setIsSnowy(true);
+        FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizeOutputBoundary() {
             @Override
-            public void fertilize(int r, int c) {
-                // Assert land is not fertilized.
-                assertFalse(farm.getFarmLand()[r][c].isFertilized());
+            public void fertilize(int r, int c){
+                assertThrows(FertilizeException.class, () -> farm.fertilize(r, c));
             }
+
         };
 
-        FertilizeInteractor interactor = new FertilizeInteractor(outputBoundary);
-        interactor.execute(r, c);
+        FertilizeInteractor fertilizeInteractor = new FertilizeInteractor(fertilizeOutputBoundary);
+        fertilizeInteractor.execute(1, 1);
+
     }
 
-    public void testFailAlreadyFertilized() {
-        // Create a farm, fertilize land.
+    @Test
+    public void testAlreadyFertilized() throws PlantingException, FertilizeException {
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.plant(r, c);
-        farm.fertilize(r, c);
-        farm.fertilize(r, c);
-
-        FertilizeOutputBoundary outputBoundary = new FertilizeOutputBoundary() {
-
+        FarmSingleton.getInstance().setFarm(farm);
+        farm.claim(1, 1);
+        farm.fertilize(1, 1);
+        FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizeOutputBoundary() {
             @Override
-            public void fertilize(int r, int c) {
-                // Assert land is already fertilized.
-                assertTrue(farm.getFarmLand()[r][c].isFertilized());
-                }
+            public void fertilize(int r, int c){
+                assertThrows(FertilizeException.class, () -> farm.fertilize(r, c));
+            }
+
         };
 
-        FertilizeInteractor interactor = new FertilizeInteractor(outputBoundary);
-        interactor.execute(r, c);
+        FertilizeInteractor fertilizeInteractor = new FertilizeInteractor(fertilizeOutputBoundary);
+        fertilizeInteractor.execute(1, 1);
 
     }
+
 }

@@ -2,6 +2,8 @@ package main.java.use_case.plant;
 
 import main.java.entity.FarmSingleton;
 
+import java.io.IOException;
+
 public class PlantInteractor implements PlantInputBoundary{
     private final PlantOutputBoundary outputBoundary;
 
@@ -10,8 +12,13 @@ public class PlantInteractor implements PlantInputBoundary{
     }
     @Override
     public void execute(int r, int c) {
-        FarmSingleton.getInstance().getFarm().plant(r, c);
-        outputBoundary.addCrop(r, c);
+        try {
+            FarmSingleton.getInstance().getFarm().plant(r, c);
+            outputBoundary.addCrop(r, c);
+        }
+        catch (PlantingException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
 

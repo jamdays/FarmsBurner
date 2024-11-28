@@ -1,9 +1,14 @@
 package main.java.use_case.claim;
 
 import main.java.entity.Farm;
+import main.java.entity.FarmSingleton;
+import main.java.use_case.claim.ClaimInteractor;
+import main.java.use_case.claim.ClaimOutputBoundary;
+
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class ClaimInteractorTest {
 
@@ -55,7 +60,7 @@ public class ClaimInteractorTest {
         ClaimInteractor interactor = new ClaimInteractor(outputBoundary);
         interactor.execute(0, 0);
         interactor.execute(1, 1);
-        interactor.execute(0,  1);
+        interactor.execute(0, 1);
         interactor.execute(1, 0);
     }
 
@@ -76,7 +81,4 @@ public class ClaimInteractorTest {
         ClaimInputBoundary interactor = new ClaimInteractor(outputBoundary);
         interactor.execute(r, c);
     }
-
-    // TODO: implement testFailAlreadyClaimed
-
 }

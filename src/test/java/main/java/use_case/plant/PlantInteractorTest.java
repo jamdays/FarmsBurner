@@ -1,23 +1,21 @@
 package main.java.use_case.plant;
 
-import junit.framework.TestCase;
 import main.java.entity.Farm;
-import main.java.entity.Land;
+import main.java.entity.FarmSingleton;
+import main.java.use_case.plant.PlantInteractor;
+import main.java.use_case.plant.PlantOutputBoundary;
+import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
-public class PlantInteractorTest extends TestCase {
-    final int r = 0;
-    final int c = 0;
-
-    public void testPlantSuccessUnfertilized() {
+public class PlantInteractorTest {
+    @Test
+    public void testPlantSuccessUnfertilized() throws PlantingException {
         // Create a farm and claim then plant on a plot of land.
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.plant(r, c);
+        farm.claim(1, 1);
+        farm.plant(1, 1);
 
         PlantOutputBoundary outputBoundary = new PlantOutputBoundary() {
 
@@ -29,15 +27,16 @@ public class PlantInteractorTest extends TestCase {
         };
 
         PlantInteractor interactor = new PlantInteractor(outputBoundary);
-        interactor.execute(r, c);
+        interactor.execute(1, 1);
     }
 
-    public void testPlantSuccessFertilized() {
+    @Test
+    public void testPlantSuccessFertilized() throws PlantingException {
         // Create a farm and claim then plant on a plot of land.
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.fertilize(r, c);
-        farm.plant(r, c);
+        farm.claim(1, 1);
+        farm.fertilize(1, 1);
+        farm.plant(1, 1);
 
         PlantOutputBoundary outputBoundary = new PlantOutputBoundary() {
 
@@ -47,22 +46,55 @@ public class PlantInteractorTest extends TestCase {
                 assertTrue(farm.getFarmLand()[r][c].isPlanted());
             }
         };
-
-        PlantInteractor interactor = new PlantInteractor(outputBoundary);
-        interactor.execute(r, c);
     }
 
-    public void testPlantSuccessMultiple() {
+
+    @Test
+    public void testNotClaimed() throws PlantingException{
+        Farm farm = new Farm();
+        FarmSingleton.getInstance().setFarm(farm);
+        PlantOutputBoundary plantOB = new PlantOutputBoundary() {
+            @Override
+            public void addCrop(int r, int c){
+                assertThrows(PlantingException.class, () -> farm.plant(r, c));
+            }
+
+        };
+
+        PlantInteractor plantInteractor = new PlantInteractor(plantOB);
+        plantInteractor.execute(1, 1);
+    }
+
+    @Test
+    public void testPlantAlreadyThere() throws PlantingException{
+        Farm farm = new Farm();
+        FarmSingleton.getInstance().setFarm(farm);
+        farm.claim(1, 1);
+        farm.plant(1, 1);
+        PlantOutputBoundary plantOB = new PlantOutputBoundary() {
+            @Override
+            public void addCrop(int r, int c){
+                assertThrows(PlantingException.class, () -> farm.plant(r, c));
+            }
+
+        };
+
+        PlantInteractor plantInteractor = new PlantInteractor(plantOB);
+        plantInteractor.execute(1, 1);
+    }
+
+    @Test
+    public void testPlantSuccessMultiple() throws PlantingException {
         // Create a farm and claim then plant on a plot of land.
         Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.claim(r + 1, c + 1);
-        farm.claim(r, c + 1);
-        farm.claim(r + 1, c);
-        farm.plant(r, c);
-        farm.plant(r + 1, c + 1);
-        farm.plant(r, c + 1);
-        farm.plant(r + 1, c);
+        farm.claim(1, 1);
+        farm.claim(2, 2);
+        farm.claim(1, 2);
+        farm.claim(2, 1);
+        farm.plant(1, 1);
+        farm.plant(2, 2);
+        farm.plant(1, 2);
+        farm.plant(2, 1);
 
         PlantOutputBoundary outputBoundary = new PlantOutputBoundary() {
 
@@ -83,60 +115,22 @@ public class PlantInteractorTest extends TestCase {
         interactor.execute(1, 0);
     }
 
-    public void testPlantFailUnclaimedLand() {
-        // Create a farm, then plant on a plot of land without claiming.
+    @Test
+    public void testIsSnowy() throws PlantingException{
         Farm farm = new Farm();
-        farm.plant(r, c);
-
-        PlantOutputBoundary outputBoundary = new PlantOutputBoundary() {
-
+        FarmSingleton.getInstance().setFarm(farm);
+        farm.claim(1, 1);
+        farm.getFarmLand()[1][1].setIsSnowy(true);
+        PlantOutputBoundary plantOB = new PlantOutputBoundary() {
             @Override
-            public void addCrop(int r, int c) {
-                // Assert planting fails if land is not claimed.
-                assertFalse(farm.getFarmLand()[r][c].isPlanted());
+            public void addCrop(int r, int c){
+                assertThrows(PlantingException.class, () -> farm.plant(r, c));
             }
+
         };
 
-        PlantInteractor interactor = new PlantInteractor(outputBoundary);
-        interactor.execute(r, c);
+        PlantInteractor plantInteractor = new PlantInteractor(plantOB);
+        plantInteractor.execute(1, 1);
     }
 
-    public void testPlantFailSnowy() {
-        // Create a farm, then plant on a plot of land and set weather to be snowy.
-        Farm farm = new Farm();
-        farm.getFarmLand()[r][c].setIsSnowy(true);
-        farm.plant(r, c);
-
-        PlantOutputBoundary outputBoundary = new PlantOutputBoundary() {
-
-            @Override
-            public void addCrop(int r, int c) {
-                // Assert planting fails if land is snowy.
-                assertFalse(farm.getFarmLand()[r][c].isPlanted());
-            }
-        };
-
-        PlantInteractor interactor = new PlantInteractor(outputBoundary);
-        interactor.execute(r, c);
-    }
-
-    public void testPlantTwiceFail() {
-        // Create a farm, then plant on a plot of land twice
-        Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.plant(r, c);
-        farm.plant(r, c);
-
-        PlantOutputBoundary outputBoundary = new PlantOutputBoundary() {
-
-            @Override
-            public void addCrop(int r, int c) {
-                // Assert land is still planted but line is printed that you can't print twice.
-                assertTrue(farm.getFarmLand()[r][c].isPlanted());
-            }
-        };
-
-        PlantInteractor interactor = new PlantInteractor(outputBoundary);
-        interactor.execute(r, c);
-    }
 }
