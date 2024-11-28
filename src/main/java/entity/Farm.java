@@ -21,6 +21,7 @@ public class Farm implements Serializable {
     private int power;
     private Sprinkler sprinkler;
     private String city;
+    private Storage storage;
 
     // Constructor
     public Farm(Land[][] farmLand) {
@@ -29,8 +30,10 @@ public class Farm implements Serializable {
         this.power = 0;
         // TODO: implement sprinkler so that you don't start with a sprinkler
         this.sprinkler = new Sprinkler();
-        //Default city for testing
+        // Default city for testing
         this.city = "Toronto";
+        // give farm some storage (can store up to 100 crops)
+        this.storage = new Storage(100);
     }
 
     public Farm(){
@@ -47,6 +50,7 @@ public class Farm implements Serializable {
         this.power = 0;
         this.sprinkler = new Sprinkler();
         this.city = "Toronto";
+        this.storage = new Storage(100);
 
     }
 
@@ -87,15 +91,49 @@ public class Farm implements Serializable {
     }
 
     public void harvest(int r, int c) {
-        Land land  = this.farmLand[r][c];
+        Land land = this.farmLand[r][c];
         // TODO add so that the age impacts if you make money or not
         if (land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
-            this.barnBucks += 5;
+            // add the crop into storage and store its high price, given that there is space in storage
+            if (this.getStorage().getCrops().size() < this.getStorage().getCapacity()) {
+                land.getCrop().setPrice(5);
+                this.getStorage().getCrops().add(land.getCrop());
+            }
+            else {
+                System.out.println("not enough space in storage");
+            }
         } else if (!land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
-            this.barnBucks += 3;
+            // add the crop into storage and store its regular price, given that there is space in storage
+            if (this.getStorage().getCrops().size() < this.getStorage().getCapacity()) {
+                land.getCrop().setPrice(3);
+                this.getStorage().getCrops().add(land.getCrop());
+            }
+            else {
+                System.out.println("not enough space in storage");
+            }
         }
         this.farmLand[r][c].harvest();
     }
+
+    public void sell(int quantity) {
+        // if you have enough crops in storage, sell them
+        if (quantity <= this.getStorage().getCrops().size()) {
+            for (int i = 0; i < quantity; i++) {
+                // get the value of the current crop and add the value to barnBucks total
+                // note: I'm treating storage as a queue (first crop in --> first crop out)
+                int value = this.getStorage().getCrops().get(0).getPrice();
+                this.barnBucks += value;
+                // remove the crop from storage, now that it has been sold
+                this.getStorage().getCrops().remove(i);
+            }
+        }
+        // otherwise, don't sell them
+        else {
+            // TODO make a popup for the user that tells them that they cannot sell crops they don't have
+            System.out.println("you don't have enough crops in storage.");
+        }
+    }
+
     public void fertilize(int r, int c) {
         this.farmLand[r][c].fertilize();
     }
@@ -110,5 +148,13 @@ public class Farm implements Serializable {
 
     public void setSprinkler(Sprinkler sprinkler){
         this.sprinkler = sprinkler;
+    }
+
+    public void setStorage(Storage storage){
+        this.storage = storage;
+    }
+
+    public Storage getStorage() {
+        return this.storage;
     }
 }
