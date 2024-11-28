@@ -1,8 +1,5 @@
 package main.java.view;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmState;
@@ -17,13 +14,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Properties;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -73,7 +68,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 String display = temp + "\n" + conditions + "\n" + cloudCoverage;
                 // test show results
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
+                builder.addView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
                 }
         });
         FarmButton sell = new FarmButton("Sell");
@@ -81,7 +76,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new SellView(5, 0, 3)).build().setVisible(true);
+                builder.addView(350, 280, new SellView(5, 0, 3)).build().setVisible(true);
             }
         });
         FarmButton buy = new FarmButton("Buy");
@@ -89,7 +84,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new BuyView(10)).build().setVisible(true);
+                builder.addView(350, 280, new BuyView(10)).build().setVisible(true);
             }
         });
         FarmButton help = new FarmButton("i");
@@ -97,7 +92,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(271, 250, new Info()).build().setVisible(true);
+                builder.addView(271, 250, new Info()).build().setVisible(true);
             }
         });
 

@@ -1,12 +1,18 @@
 package main.java.view;
 
+import main.java.interface_adapter.toolmenu.ToolMenuController;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.use_case.buytool.BuyToolInteractor;
+import main.java.use_case.buytool.BuyToolOutputBoundary;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BuyView extends JPanel {
+public class BuyView extends JPanel{
     int barnBucks;
+    private ToolMenuController toolMenuController;
 
     public BuyView(int barnBucks) {
         this.barnBucks = barnBucks;
@@ -58,7 +64,7 @@ public class BuyView extends JPanel {
         label.setText("Barn Bucks: " + amount);
     }
 
-    private static JPanel createItemPanel(String itemName, String price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
+    private JPanel createItemPanel(String itemName, String price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
         // Item Label
         JLabel itemLabel = new JLabel(itemName);
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -72,14 +78,8 @@ public class BuyView extends JPanel {
         purchaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int priceInt = Integer.parseInt(price);
-                // TODO: access barnBucks and add to tools
-//                if (priceInt < barnBucks) {
-//                    barnBucks -= priceInt;
-//                    updateBarnBucks(barnBucksLabel, barnBucks);
-//                    System.out.println("Purchased " + itemName);
-//                } else {
-//                    System.out.println("Not enough barn bucks");
+                //TODO Make this work
+                toolMenuController.buy("sprinkler");
             }
         });
 
@@ -109,4 +109,6 @@ public class BuyView extends JPanel {
         return panel;
 
     }
+
+    public void setToolMenuController(ToolMenuController toolMenuController) {this.toolMenuController = toolMenuController;}
 }
