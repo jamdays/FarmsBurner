@@ -2,14 +2,76 @@
 
 Created by Maximillian Djaya, Punnawit Payapvattanavong, Aayush Karki, and Melody Mo.
 
-## Project overview
+## Table of Contents
 
-Farms burner is a farming game that is affected by real world weather data. 
+- [About](#about)
+- [Software Features](#software-features)
+- [Installation Instructions](#installation-instructions)
+- [Usage Guide](#usage-guide)
+- [Feedback](#feedback)
+- [Contributions](#contributions)
 
-## User story
+## About
 
-- Aayush is bored because his test starts at 1pm and it is only 12pm. He decides to finally play his new game Farms Burner. He plants some of his crops. Then water them. He checks the time and realizes that he was wrong! His test is at 12 and he’s already wasted 10 mins!
-- Aayush finally got back from his test (he failed), but to cheer himself up he decides to enjoy the Calgary weather in his new favorite game, Farms Burner. It is nighttime now, and raining slightly in Calgary. The plants on his farm get a growth boost for a while and the ground is softer so he can plant more crops that day. But since it is night none of his farm vehicles work. So after planting his seeds, he logs off for the day, saving his progress for next time!
-- Aayush wakes up the next day and is feeling hungry,🫄 so instead of talking about it he goes and eats some breakfast 😋. While he is sitting down to eat breakfast, he decides to check on his Farms Burner, some of his crops have grown! They look so good he wishes he could eat them😋 (he is hungry 🫄). It is a cloudy day in Calgary, so he only has limited power, he uses his power to process his crops and gain some points. He can’t process all his crops because of the limited power, but he still has enough points to upgrade one vehicle. He upgrades his processor so he can process even more crops tomorrow. He logs off and saves his progress for later.
-- Aayush just deleted Clash Royale from his phone because he was losing way too much. After losing that badly and that often he needs a calming break, he feels like the Flames 🔥. So he decides to open up his favorite game, Farms Burner! He just saw a text from his parents that it already snowed in Calgary, and can’t wait to see his snowy farm and crops. Everything looks so white and beautiful! A couple of his small crops die from the snow, but his storages last a couple days longer because of the cold weather. The people of Calgary are willing to pay more for his crops in the cold weather so he processes what he can and sells it for the extra points! Then he logs off and saves his progress.
-- Aayush, visiting Calgary for reading week, sees that there is a thunderstorm, he quickly hops off from duos to check on his farm. A couple of his crops died to the storm but he gets infinite power and harvests and plants as many crops as he can with his fully upgraded crop planting machine. He logs off and saves his progress, waiting until a snowy day to sell his crops, for the extra points.
+### Overview
+
+Farms Burner is an idle farming game in which the in-game weather is dependent on real world weather data, based on a user-chosen location.
+
+### What does Farms Burner do?
+
+- In Farms Burner, players get the full farming simulation game experience
+- Choose a starting city to base your in-game weather off of
+- Till open grassland, and plant numerous different types of crops on these tilled areas
+- Water and fertilize your crops, and log off to give them ample time to grow and mature
+- Harvest and sell matured crops, earning BarnBucks that can be used to buy powerful farming tools
+- Use these tools to make your farm more efficient, and develop your Agro-Empire! 
+
+### Why was Farms Burner created?
+
+- As a video game, Farms Burner was ultimately created for the purposes of user enjoyment 
+- We wanted to craft an overall experience that captures the comfort of an idle farming sim, while also being innovative through features like incorporating real world weather data
+- We hope that users of Farms Burner find the game satisfying and rewarding to play, and a good (but temporary, don't get addicted) escape from the perils of the modern day world
+
+### What problem does Farms Burner solve? Is Farms Burner right for me?
+
+- Although many farming games exist on the market today, none of them incorporate real world weather data in their gameplay
+- The experience of playing Farms Burner is one that allows for the lines between the virtual and physical world to be blurred
+- Farms Burner is right for users who want the experience of starting a farm in their hometown, but don't actually have the ridiculous sums of money required to buy any sort of property these days
+- Moreover, the game is great for players who want to experience what different climates are like through the comfort of their own home (and once again without spending ridiculous amounts of money to travel)
+
+## Software Features
+
+- TODO: add documentation for software features
+
+## Installation Instructions
+
+- TODO: add documentation for installation instructions
+
+## Usage Guide
+
+- TODO: add a usage guide
+
+## Feedback
+
+### How to Reach Us
+
+- Although it is pretty great, Farms Burner isn't perfect; it is still a work in progress
+- On that note, we'd love to hear your feedback on how to make Farms Burner the best farming simulator it can be!
+- If you notice any bugs during gameplay, we'd love to hear from you to try and quash them as soon as possible
+- Before reaching out to us, however, make sure that the bug isn't already in the "Known Issues" section below
+- To allow for user feedback on bugs, we have opened a <a href="https://forms.gle/apAuS73jUmUxH4126">google form</a>
+- When submitting a request, please make sure to provide a good description on when and how the bug occurs, so that we can replicate it ourselves
+- If we are able to replicate your bug successfully and verify that it is an issue, it will be added to the list of known issues below
+
+### Known Issues
+
+- There are currently no known issues to report
+
+## Contributions
+
+- If you're looking to make a contribution to Farms Burner, we would be happy to take a look at what you can do!
+- To contribute, begin by forking this repository (for a tutorial on how, click <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">here</a>) and make your desired changes
+- Once done, create a pull request by following the instructions <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork">here</a>
+- After doing this, give us some time to take a look at your pull request and review it
+- We'll respond with some feedback on the pull request, as well as a decision regarding whether it is going to be approved or denied
+- If denied, don't fret! You can always improve upon your code and resubmit when its ready for another look
