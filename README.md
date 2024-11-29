@@ -41,7 +41,29 @@ Farms Burner is an idle farming game in which the in-game weather is dependent o
 
 ## Software Features
 
-- TODO: add documentation for software features
+### Choose Game Location
+
+- You can set your city within the welcome screen
+- Doing this syncs the real-world weather in that city with the in-game weather of your Farms Burner save file
+- Weather has impacts on the growth rate of crops, the accumulation of power as well as the sell price of crops
+
+### Claim, Water and Fertilize Plots of Land
+
+- The game allows you to claim plots of land to get them ready for farming
+- Once tilled, the land can be watered or fertilized, both of which will update its appearance and effect on crops
+- Plots of land must be tilled before plants can be planted there
+
+### Grow, Harvest and Sell Crops
+
+- Tilled pieces of land can have crops grown on them; what you choose to grow is totally up to you!
+- Different crops have different attributes, and will grow better in some climates than others
+- Once mature, crops can be harvested and sent to your farm storage
+- Crops in farm storage can be sold for BarnBucks
+
+### Use BarnBucks to Purchase Powerful Farm Upgrades
+
+- Selling crops provides you with the currency of Farms Burner, BarnBucks
+- This currency can be used to purchase farm upgrades such as sprinklers, which help to make the farming process more efficient
 
 ## Installation Instructions
 
@@ -49,7 +71,44 @@ Farms Burner is an idle farming game in which the in-game weather is dependent o
 
 ## Usage Guide
 
-- TODO: add a usage guide
+### Welcome Screen
+
+- When first loading the game, you'll find yourself at the welcome screen, where you'll have the option to start a new game or load one from a save file
+- If beginning a new game, simply type in the name of the city whose weather you wish to sync your in-game weather to
+- If loading from a save file, you'll find that your chosen city, as well as progress you previously made on your farm, will be ready for you once the game loads in
+
+### Working the Land
+
+- To claim a piece of land, hold down shift and then click on the plot
+- To water a piece of land that has been claimed, hold down alt and then click on the plot
+- To fertilize a piece of land that has been claimed, hold down ctrl + alt and then click on the plot
+
+### Planting Crops
+
+- To select a crop type to plant, click on the button labelled "Select Crop Type" and choose from the available options
+- To plant a chosen crop on a piece of claimed land, hold down ctrl and then click on the plot
+
+### Harvesting Crops
+
+- TODO: add instructions for how to harvest crop (once we have the harvest use case updating the view)
+
+### Selling Crops
+
+- To sell your crops that have been harvested, click on the sell button on the top of the screen to access the sell crop interface
+
+### Buying Tools
+
+- To buy farm tools, click on the buy button on the top of the screen to access the buy crop interface
+
+### Using Tools
+
+- To select a tool to use, click on the button labelled "Select Tool" and choose from the available options
+- To use a chosen tool on a piece of claimed land, simply use the input that the tool corresponds to (ex. to use sprinkler, hold down alt and click on a plot to water a larger area)
+
+### Check the Weather
+
+- To check the current weather at anytime, click on the weather button on the top of the screen to access the weather interface
+- Similarly, you can find the forecast weather for 3 hours in the future by clicking on this same weather button
 
 ## Feedback
 

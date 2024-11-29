@@ -36,4 +36,4 @@ When considering how to market Farms Burner, we would want to focus primarily on
 
 # 3. Consideration of User Demographics
 
-- TODO: discuss how Farms Burner is more/less likely to be used by certain demographics
+After considering the implementation of Farms Burner, we concluded that there are certain demographics that are less likely to be able to successfully use our software, and as a result our program does unfortunately exacerbate some existing societal inequalities. One of the demographics that would have trouble utilizing our software successfully would be those who are visually impaired, as the lack of sound effects in Farms Burner would prevent them from having a good user experience, or even being able to have a user experience at all. In addition to this, we also concluded that individuals with dyslexia may have trouble playing our game effectively, as much of our user interface is based on written instructions and labels (we do also have a lot of symbols/visuals in our UI that help to ease this issue quite a bit, but the issue still stands).
