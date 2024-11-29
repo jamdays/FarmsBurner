@@ -1,4 +1,10 @@
 package main.java.interface_adapter.sell;
 
-public class SellViewModel {
+import main.java.interface_adapter.ViewModel;
+
+public class SellViewModel extends ViewModel {
+    public SellViewModel(){
+        super("sell menu");
+        setState(new SellState());
+    }
 }

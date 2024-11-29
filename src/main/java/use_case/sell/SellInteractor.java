@@ -1,4 +1,4 @@
-package use_case.sell;
+package main.java.use_case.sell;
 
 import main.java.entity.Crop;
 import main.java.entity.FarmSingleton;
