@@ -1,7 +1,7 @@
 package main.java.app;
 
 import javax.swing.UIManager;
-import main.java.data_access.OpenWeatherAccess;
+import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.app.AppBuilder;
 
 import java.io.IOException;

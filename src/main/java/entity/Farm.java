@@ -126,7 +126,7 @@ public class Farm implements Serializable {
                 int value = this.getStorage().getCrops().get(0).getPrice();
                 this.barnBucks += value;
                 // remove the crop from storage, now that it has been sold
-                this.getStorage().getCrops().remove(i);
+                this.getStorage().getCrops().remove(0);
             }
         }
         // otherwise, don't sell them
