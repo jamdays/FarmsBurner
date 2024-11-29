@@ -41,9 +41,15 @@ Farms Burner is an idle farming game in which the in-game weather is dependent o
 
 ## Software Features
 
+- TODO: add documentation for software features
+
 ## Installation Instructions
 
+- TODO: add documentation for installation instructions
+
 ## Usage Guide
+
+- TODO: add a usage guide
 
 ## Feedback
 
