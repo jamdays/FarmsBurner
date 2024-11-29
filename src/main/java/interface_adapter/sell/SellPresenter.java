@@ -12,7 +12,7 @@ public class SellPresenter implements SellOutputBoundary {
     }
     @Override
     public void sell(int quantity) {
-        ((SellState)(viewModel.getState())).sell();
+        ((SellState)(viewModel.getState())).sell(quantity);
         viewModel.firePropertyChanged("upgrade");
     }
 }

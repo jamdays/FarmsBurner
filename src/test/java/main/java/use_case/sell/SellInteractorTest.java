@@ -5,8 +5,8 @@ import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
 import main.java.entity.Storage;
 import org.junit.Test;
-import use_case.sell.SellInteractor;
-import use_case.sell.SellOutputBoundary;
+import main.java.use_case.sell.SellInteractor;
+import main.java.use_case.sell.SellOutputBoundary;
 
 import static org.junit.Assert.assertEquals;
 
