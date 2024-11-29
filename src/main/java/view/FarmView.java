@@ -60,12 +60,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 }
                 String apiKey = props.get("WAK").toString();
                 final main.java.data_access.OpenWeatherAccess dao = new main.java.data_access.OpenWeatherAccess(apiKey);
-                List<String> currWeatherForCity = dao.currentInfoForCity("Toronto");
+                List<String> currWeatherForCity = dao.currentDisplayInfoForCity("Toronto");
                 String city = currWeatherForCity.get(0);
                 String temp = currWeatherForCity.get(1);
                 String conditions = currWeatherForCity.get(2);
                 String cloudCoverage = currWeatherForCity.get(3);
-                String display = temp + "\n" + conditions + "\n" + cloudCoverage;
                 // test show results
                 final WindowBuilder builder = new WindowBuilder();
                 builder.addView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);

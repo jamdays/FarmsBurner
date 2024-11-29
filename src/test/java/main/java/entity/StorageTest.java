@@ -18,16 +18,16 @@ public class StorageTest extends TestCase {
         assertEquals(storage.getCapacity(), 20);
     }
 
-    public void testGetCrates() {
+    public void testGetCrops() {
         Storage storage = new Storage(10);
-        assertEquals(storage.getCrates().size(), 0);
+        assertEquals(storage.getCrops().size(), 0);
     }
 
-    public void testSetCrates() {
+    public void testSetCrops() {
         Storage storage = new Storage(10);
-        ArrayList<Crate> crates = new ArrayList<Crate>();
-        crates.add(new Crate(5, new Crop[1]));
-        storage.setCrates(crates);
-        assertEquals(storage.getCrates().size(), 1);
+        ArrayList<Crop> crops = new ArrayList<Crop>();
+        crops.add(new Crop());
+        storage.setCrops(crops);
+        assertEquals(storage.getCrops().size(), 1);
     }
 }

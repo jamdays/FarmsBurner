@@ -22,7 +22,7 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
     }
 
     // returns a list of 4 strings, containing (in order) the city name, temperature, conditions and cloud coverage %
-    public List<String> currentInfoForCity(String city) {
+    public List<String> currentDisplayInfoForCity(String city) {
         String currentInfoJSON = openWeatherMapClient
                 .currentWeather()
                 .single()
@@ -55,6 +55,28 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
 
     }
 
+    public String currentWeatherTypeForCity(String city) {
+        String currentInfoJSON = openWeatherMapClient
+                .currentWeather()
+                .single()
+                .byCityName(city)
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJSON();
+
+        JsonNode parent = null;
+        try {
+            parent = new ObjectMapper().readTree(currentInfoJSON);
+        } catch (JsonProcessingException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        // parse JSON to get and return the current weather type
+        String weatherType = parent.get("weather").get(0).get("main").textValue();
+        return weatherType;
+    }
+
     public String forecastInfoForCity(String city) {
         return openWeatherMapClient
                 .forecast5Day3HourStep()
@@ -65,5 +87,17 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
                 .retrieve()
                 .asJava()
                 .toString();
+    }
+
+    // for testing
+    public String JSONForCity(String city) {
+        return openWeatherMapClient
+                .currentWeather()
+                .single()
+                .byCityName(city)
+                .language(Language.ENGLISH)
+                .unitSystem(UnitSystem.METRIC)
+                .retrieve()
+                .asJSON();
     }
 }
