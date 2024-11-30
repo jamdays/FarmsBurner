@@ -2,21 +2,28 @@ package main.java.view;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.app.WindowBuilder;
 
-import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
+import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.interface_adapter.toolmenu.BuyController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.farm.FertilizeController;
+import main.java.interface_adapter.farm.PlantController;
+import main.java.interface_adapter.farm.WaterController;
+import main.java.interface_adapter.farm.HarvestController;
+import main.java.interface_adapter.farm.ClaimController;
+import main.java.interface_adapter.selecttool.SelectToolViewModel;
 
-import view.SelectCropView;
-import view.SelectToolView;
-import view.WeatherView;
+
+
+import main.java.view.SelectCropView;
+import main.java.view.SelectToolView;
+import main.java.view.WeatherView;
 
 
 import javax.swing.*;
@@ -53,12 +60,15 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private UpgradeController upgradeController;
     private SellViewModel  sellViewModel;
     private SellController sellController;
+    private SelectToolViewModel selectToolViewModel;
+    private SelectToolController selectToolController;
 
-    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel) {
+    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel) {
         // Navigation Bar
         JPanel navBar = new JPanel();
         this.toolMenuViewModel = toolMenuViewModel;
         this.sellViewModel = sellViewModel;
+        this.selectToolViewModel = selectToolViewModel;
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
@@ -289,6 +299,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setSellController(SellController sellController){
         this.sellController = sellController;
+    }
+
+    public void setSelectToolController(SelectToolController selectToolController) {
+        this.selectToolController = selectToolController;
     }
 
     public void actionPerformed(ActionEvent evt) {
