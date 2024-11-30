@@ -9,5 +9,9 @@ public class BuyController {
         this.buyToolInputBoundary = buyToolInputBoundary;
     }
 
+    public void buy(String tool){
+        buyToolInputBoundary.buy(tool);
+    }
+
 
 }

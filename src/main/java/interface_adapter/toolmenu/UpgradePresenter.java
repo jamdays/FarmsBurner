@@ -1,8 +1,9 @@
 package main.java.interface_adapter.toolmenu;
 
 import main.java.use_case.upgradetool.UpgradeToolInputBoundary;
+import main.java.use_case.upgradetool.UpgradeToolOutputBoundary;
 
-public class UpgradePresenter implements UpgradeToolInputBoundary {
+public class UpgradePresenter implements UpgradeToolOutputBoundary {
     private final ToolMenuViewModel viewModel;
 
     public UpgradePresenter(ToolMenuViewModel viewModel) {

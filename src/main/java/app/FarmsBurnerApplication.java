@@ -37,6 +37,8 @@ public class FarmsBurnerApplication {
                 .addSetCityUseCase()
                 .addLoadUseCase()
                 .addFarmView()
+                .addBuyToolUseCase()
+                .addUpgradeUseCase()
                 .addPlantUseCase().
                 addClaimUseCase().
                 addFertilizeUseCase().
