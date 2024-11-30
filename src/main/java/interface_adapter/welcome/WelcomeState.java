@@ -16,7 +16,7 @@ public class WelcomeState {
     }
 
     public void loaded(){
-        view = "farm";
+        this.view = "farm";
         this.loaded = true;
     }
 

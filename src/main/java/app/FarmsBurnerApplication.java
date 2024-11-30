@@ -3,6 +3,7 @@ package main.java.app;
 import javax.swing.UIManager;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.app.AppBuilder;
+import main.java.data_access.SaveFileAccess;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,7 +30,9 @@ public class FarmsBurnerApplication {
         }
 
         final AppBuilder builder = new AppBuilder();
-        builder.addViewManager()
+        builder.
+                adSaveDAO(new SaveFileAccess()).
+                addViewManager()
                 .addWelcomeView()
                 .addSetCityUseCase()
                 .addLoadUseCase()
@@ -38,6 +41,7 @@ public class FarmsBurnerApplication {
                 addClaimUseCase().
                 addFertilizeUseCase().
                 addHarvestUseCase().
-                addWaterUseCase().build().setVisible(true);
+                addWaterUseCase().
+                build().setVisible(true);
     }
 }

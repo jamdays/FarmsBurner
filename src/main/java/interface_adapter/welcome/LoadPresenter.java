@@ -11,6 +11,6 @@ public class LoadPresenter implements LoadOutputBoundary {
     @Override
     public void loaded() {
         ((WelcomeState)(welcomeViewModel.getState())).loaded();
-        welcomeViewModel.firePropertyChanged("loaded");
+        welcomeViewModel.firePropertyChanged("view");
     }
 }

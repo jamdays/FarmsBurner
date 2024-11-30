@@ -46,6 +46,7 @@ public class AppBuilder {
     private SetCityInteractor setCityInteractor;
     private LoadInteractor loadInteractor;
     private CardLayout cardLayout;
+    private ViewManager viewManager;
 
 
     /**
@@ -87,6 +88,7 @@ public class AppBuilder {
         farmView.setFarmController(controller);
         return this;
     }
+
     /**
      * Creates the objects for the Claim Use Case and connects the FarmView to its
      * controller.
@@ -105,6 +107,7 @@ public class AppBuilder {
         farmView.setFarmController(controller);
         return this;
     }
+
     /**
      * Creates the objects for the Fertilize Use Case and connects the FarmView to its
      * controller.
@@ -123,6 +126,7 @@ public class AppBuilder {
         farmView.setFarmController(controller);
         return this;
     }
+
     /**
      * Creates the objects for the Harvest Use Case and connects the FarmView to its
      * controller.
@@ -141,12 +145,23 @@ public class AppBuilder {
         farmView.setFarmController(controller);
         return this;
     }
+
     /**
      * Creates the DAO
      * @return this builder
      */
     public AppBuilder setFarmDAO(OpenWeatherAccess farmDAO) {
         this.farmDAO = farmDAO;
+        return this;
+    }
+
+    /**
+     * Creates the Save DAO
+     * MUST BE CALLED BEFORE LOAD USE CASE
+     * @return this builder
+     */
+    public AppBuilder adSaveDAO(SaveFileAccess saveDAO) {
+        this.saveFileAccess = saveDAO;
         return this;
     }
 
@@ -208,12 +223,13 @@ public class AppBuilder {
 
 
         if (welcomeView == null) {
-            throw new RuntimeException("addFarmView must be called before addUseCase");
+            throw new RuntimeException("addWelcomeView must be called before addUseCase");
         }
 
         welcomeView.setLoadController(loadController);
         return this;
     }
+
     /**
      * Creates and adds the View Manager
      * Should be called first
@@ -222,10 +238,8 @@ public class AppBuilder {
     public AppBuilder addViewManager() {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
-        JFrame application = new JFrame("FarmsBurner");
         cardLayout = new CardLayout();
         views = new JPanel(cardLayout);
-        application.add(views);
 
         // The data for the views. This
         // will be changed by a presenter object that is reporting the
@@ -239,9 +253,10 @@ public class AppBuilder {
          is showing. This is an anonymous object because we don't need to
          refer to it later.
         */
-        new ViewManager(views, cardLayout, welcomeViewModel);
+        viewManager = new ViewManager(views, cardLayout, welcomeViewModel);
         return this;
     }
+
     /**
      * Builds the application.
      * @return the JFrame for the application
@@ -251,8 +266,8 @@ public class AppBuilder {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Farms Burner");
         frame.setSize(WIDTH, HEIGHT);
-        frame.add(farmView);
-
+        frame.add(views);
+        frame.pack();
         return frame;
 
     }

@@ -18,12 +18,15 @@ public class ViewManager implements PropertyChangeListener {
     public ViewManager(JPanel views, CardLayout cardLayout, WelcomeViewModel welcomeViewModel) {
         this.views = views;
         this.cardLayout = cardLayout;
-        welcomeViewModel.addPropertyChangeListener(this);
+        viewModel = welcomeViewModel;
+        viewModel.addPropertyChangeListener(this);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("welcome")) {
+        System.out.println("PROP CHANGED");
+        System.out.println(evt.getPropertyName());
+        if (evt.getPropertyName().equals("view")) {
             WelcomeState newValue = (WelcomeState) evt.getNewValue();
             if (newValue.getView().equals(WELCOME)) {
                 cardLayout.show(views, WELCOME);

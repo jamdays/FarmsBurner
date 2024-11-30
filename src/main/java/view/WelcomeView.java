@@ -19,27 +19,28 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
     public WelcomeView(WelcomeViewModel viewModel) {
         this.viewModel = viewModel;
         // Welcome panel
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        JPanel welcomePanel = new JPanel();
+        welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
         FarmLabel welcome = new FarmLabel("Welcome to", 24);
         FarmLabel title = new FarmLabel("Farms Burner", 36);
-        this.add(welcome);
-        this.add(title);
-        this.setBackground(new java.awt.Color(169, 152, 126));
+        welcomePanel.add(welcome);
+        welcomePanel.add(title);
+        welcomePanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Start button
         FarmButton start = new FarmButton("Start",12);
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                loadController.load();
                 System.out.println("Start");
             }
         });
 
         FarmButton load = new FarmButton("Load",12);
-        start.addActionListener(new ActionListener() {
+        load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadController.load();
                 System.out.println("Load");
             }
         });
@@ -59,19 +60,18 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         locationPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Main Panel
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(this);
-        mainPanel.add(start);
-        mainPanel.add(locationPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(welcomePanel);
+        this.add(start);
+        this.add(locationPanel);
+        this.setBackground(new java.awt.Color(169, 152, 126));
 
         // Frame
-        JFrame frame = new JFrame("Farms Burner");
-        frame.setSize(741, 420);
-        frame.setContentPane(mainPanel);
-        frame.getContentPane().setBackground(new java.awt.Color(169, 152, 126));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        //JFrame frame = new JFrame("Farms Burner");
+        //frame.setSize(741, 420);
+        //frame.setContentPane(mainPanel);
+        //frame.getContentPane().setBackground(new java.awt.Color(169, 152, 126));
+        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
