@@ -1,15 +1,25 @@
 package main.java.view;
 
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class BuyView extends JPanel {
-    int barnBucks;
+public class BuyView extends JPanel implements ActionListener, PropertyChangeListener {
+    private ToolMenuViewModel viewModel;
+    private BuyController buyController;
+    private UpgradeController upgradeController;
+    private int barnBucks;
 
-    public BuyView(int barnBucks) {
-        this.barnBucks = barnBucks;
+    public BuyView(ToolMenuViewModel viewModel) {
+        this.viewModel = viewModel;
+        this.barnBucks = 10;
         // Buy Menu
         FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
         buyMenuTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -58,7 +68,7 @@ public class BuyView extends JPanel {
         label.setText("Barn Bucks: " + amount);
     }
 
-    private static JPanel createItemPanel(String itemName, String price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
+    private JPanel createItemPanel(String itemName, String price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
         // Item Label
         JLabel itemLabel = new JLabel(itemName);
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -73,6 +83,7 @@ public class BuyView extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int priceInt = Integer.parseInt(price);
+                buyController.buy(itemName);
                 // TODO: access barnBucks and add to tools
 //                if (priceInt < barnBucks) {
 //                    barnBucks -= priceInt;
@@ -107,6 +118,24 @@ public class BuyView extends JPanel {
         panel.add(descriptionLabel, gbc);
 
         return panel;
+
+    }
+
+    public void setBuyController(BuyController buyController) {
+        this.buyController = buyController;
+    }
+
+    public void setUpgradeController(UpgradeController upgradeController) {
+        this.upgradeController = upgradeController;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
 
     }
 }

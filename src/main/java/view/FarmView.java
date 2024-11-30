@@ -2,6 +2,9 @@ package main.java.view;
 
 import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,10 +35,14 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private WaterController waterController;
     private FarmLabel[][] farmLand;
     private FarmViewModel viewModel;
+    private ToolMenuViewModel toolMenuViewModel;
+    private BuyController buyController;
+    private UpgradeController upgradeController;
 
-    public FarmView(FarmViewModel farmViewModel) {
+    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel) {
         // Navigation Bar
         JPanel navBar = new JPanel();
+        this.toolMenuViewModel = toolMenuViewModel;
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
@@ -84,7 +91,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new BuyView(10)).build().setVisible(true);
+                BuyView buyView = new BuyView(toolMenuViewModel);
+                builder.addInfoView(350, 280, buyView).build().setVisible(true);
+                buyView.setBuyController(buyController);
+                buyView.setUpgradeController(upgradeController);
+
             }
         });
         FarmButton help = new FarmButton("i");
@@ -215,6 +226,13 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         this.fertilizeController = fertilizeController;
     }
 
+    public void setBuyController(BuyController buyController){
+        this.buyController = buyController;
+    }
+
+    public void setUpgradeController(UpgradeController upgradeController){
+        this.upgradeController = upgradeController;
+    }
     public void setHarvestController(HarvestController harvestController) {
         this.harvestController = harvestController;
     }
