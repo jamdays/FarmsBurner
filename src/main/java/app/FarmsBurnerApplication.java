@@ -30,6 +30,10 @@ public class FarmsBurnerApplication {
 
         final AppBuilder builder = new AppBuilder();
         builder.addFarmView()
-                .addPlantUseCase().build().setVisible(true);
+                .addPlantUseCase().
+                addClaimUseCase().
+                addFertilizeUseCase().
+                addHarvestUseCase().
+                addWaterUseCase().build().setVisible(true);
     }
 }

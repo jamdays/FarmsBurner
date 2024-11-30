@@ -1,10 +1,7 @@
 package main.java.app;
 
 import main.java.data_access.OpenWeatherAccess;
-import main.java.interface_adapter.farm.FarmController;
-import main.java.interface_adapter.farm.FarmPresenter;
-import main.java.interface_adapter.farm.FarmViewModel;
-import main.java.use_case.claim.ClaimInputBoundary;
+import main.java.interface_adapter.farm.*;
 import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
 import main.java.use_case.harvest.HarvestInteractor;
@@ -18,7 +15,6 @@ import main.java.use_case.fertilize.FertilizeInteractor;
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Builder for farms burner
@@ -44,16 +40,8 @@ public class AppBuilder {
      * @throws RuntimeException if this method is called before addFarmView
      */
     public AppBuilder addPlantUseCase() {
-        final PlantOutputBoundary plantOutputBoundary = new FarmPresenter(farmViewModel);
-        final WaterOutputBoundary waterOutputBoundary = (WaterOutputBoundary) plantOutputBoundary;
-        final ClaimOutputBoundary claimOutputBoundary = (ClaimOutputBoundary) waterOutputBoundary;
-        final HarvestOutputBoundary harvestOutputBoundary = (HarvestOutputBoundary) claimOutputBoundary;
-        final FertilizeOutputBoundary fertilizeOutputBoundary = (FertilizeOutputBoundary) claimOutputBoundary;
+        final PlantOutputBoundary plantOutputBoundary = new PlantPresenter(farmViewModel);
         plantInteractor = new PlantInteractor(plantOutputBoundary);
-        waterInteractor = new WaterInteractor(waterOutputBoundary);
-        claimInteractor = new ClaimInteractor(claimOutputBoundary);
-        fertilizeInteractor= new FertilizeInteractor(fertilizeOutputBoundary);
-        harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
 
 
         final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
@@ -65,6 +53,78 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Creates the objects for the Water Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addWaterUseCase() {
+        final WaterOutputBoundary waterOutputBoundary = new WaterPresenter(farmViewModel);
+        waterInteractor = new WaterInteractor(waterOutputBoundary);
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setFarmController(controller);
+        return this;
+    }
+    /**
+     * Creates the objects for the Claim Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addClaimUseCase() {
+        final ClaimOutputBoundary claimOutputBoundary = new ClaimPresenter(farmViewModel);
+        claimInteractor = new ClaimInteractor(claimOutputBoundary);
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setFarmController(controller);
+        return this;
+    }
+    /**
+     * Creates the objects for the Fertilize Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addFertilizeUseCase() {
+        final FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizePresenter(farmViewModel);
+        fertilizeInteractor = new FertilizeInteractor(fertilizeOutputBoundary);
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setFarmController(controller);
+        return this;
+    }
+    /**
+     * Creates the objects for the Harvest Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addHarvestUseCase() {
+        final HarvestOutputBoundary harvestOutputBoundary = new HarvestPresenter(farmViewModel);
+        harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
+        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setFarmController(controller);
+        return this;
+    }
     /**
      * Creates the DAO
      * @return this builder

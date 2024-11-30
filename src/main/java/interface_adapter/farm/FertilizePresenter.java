@@ -2,10 +2,10 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
 
-public class FertitilizePresenter implements FertilizeOutputBoundary{
+public class FertilizePresenter implements FertilizeOutputBoundary{
     private final FarmViewModel farmViewModel;
 
-    public FertitilizePresenter(FarmViewModel farmViewModel) {
+    public FertilizePresenter(FarmViewModel farmViewModel) {
         this.farmViewModel = farmViewModel;
     }
 
