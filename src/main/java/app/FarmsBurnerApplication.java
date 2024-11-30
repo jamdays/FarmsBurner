@@ -29,7 +29,11 @@ public class FarmsBurnerApplication {
         }
 
         final AppBuilder builder = new AppBuilder();
-        builder.addFarmView()
+        builder.addViewManager()
+                .addWelcomeView()
+                .addSetCityUseCase()
+                .addLoadUseCase()
+                .addFarmView()
                 .addPlantUseCase().
                 addClaimUseCase().
                 addFertilizeUseCase().

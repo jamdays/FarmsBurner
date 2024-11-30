@@ -7,7 +7,7 @@ import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
-import view.WeatherView;
+import main.java.view.WeatherView;
 
 import javax.swing.*;
 import java.awt.*;

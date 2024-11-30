@@ -1,20 +1,29 @@
 package main.java.app;
 
 import main.java.data_access.OpenWeatherAccess;
+import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.welcome.*;
 import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
 import main.java.use_case.harvest.HarvestInteractor;
 import main.java.use_case.harvest.HarvestOutputBoundary;
+import main.java.use_case.load.LoadInteractor;
+import main.java.use_case.load.LoadOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import main.java.use_case.setcity.SetCityInteractor;
+import main.java.use_case.setcity.SetCityOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
 import main.java.use_case.water.WaterOutputBoundary;
 import main.java.view.FarmView;
 import main.java.use_case.fertilize.FertilizeInteractor;
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
+import main.java.view.ViewManager;
+import main.java.view.WelcomeView;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Builder for farms burner
@@ -23,13 +32,19 @@ public class AppBuilder {
     public static final int HEIGHT = 650;
     public static final int WIDTH = 1000;
     private OpenWeatherAccess farmDAO;
+    private SaveFileAccess saveFileAccess;
     private FarmViewModel farmViewModel;
     private FarmView farmView;
+    private JPanel views;
+    private WelcomeViewModel welcomeViewModel;
+    private WelcomeView welcomeView;
     private PlantInteractor plantInteractor;
     private WaterInteractor waterInteractor;
     private ClaimInteractor claimInteractor;
     private HarvestInteractor harvestInteractor;
     private FertilizeInteractor fertilizeInteractor;
+    private SetCityInteractor setCityInteractor;
+    private LoadInteractor loadInteractor;
 
 
     /**
@@ -136,11 +151,91 @@ public class AppBuilder {
 
     /**
      * Creates the FarmView and underlying FarmViewModel.
+     * CALL SET VIEW MANAGER FIRST
      * @return this builder
      */
     public AppBuilder addFarmView() {
         farmViewModel = new FarmViewModel();
         farmView = new FarmView(farmViewModel);
+        views.add(farmView);
+        return this;
+    }
+
+    /**
+     * Creates the WelcomeView and underlying WelcomeViewModel.
+     * CALL SET VIEW MANAGER FIRST
+     * @return this builder
+     */
+    public AppBuilder addWelcomeView() {
+        welcomeView = new WelcomeView(welcomeViewModel);
+        views.add(welcomeView);
+        return this;
+    }
+
+    /**
+     * Adds the SetCity Use Case
+     * The controllers are seperated for WelcomeView
+     * @return this builder
+     */
+    public AppBuilder addSetCityUseCase() {
+        final SetCityOutputBoundary setCityOutputBoundary = new SetCityPresenter(welcomeViewModel);
+        setCityInteractor = new SetCityInteractor(setCityOutputBoundary);
+
+        final SetCityController setCityController = new SetCityController(setCityInteractor);
+
+        if (welcomeView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        welcomeView.setSetCityController(setCityController);
+        return this;
+    }
+
+    /**
+     * Adds the Load Use Case
+     * The controllers are seperated for WelcomeView
+     * @return this builder
+     */
+    public AppBuilder addLoadUseCase() {
+        final LoadOutputBoundary loadOutputBoundary = new LoadPresenter(welcomeViewModel);
+        loadInteractor = new LoadInteractor(saveFileAccess, loadOutputBoundary);
+
+        final LoadController loadController = new LoadController(loadInteractor);
+
+
+        if (welcomeView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        welcomeView.setLoadController(loadController);
+        return this;
+    }
+    /**
+     * Creates and adds the View Manager
+     * Should be called first
+     * @return this builder
+     */
+    public AppBuilder addViewManager() {
+        // Build the main program window, the main panel containing the
+        // various cards, and the layout, and stitch them together.
+        JFrame application = new JFrame("FarmsBurner");
+        CardLayout cardLayout = new CardLayout();
+        views = new JPanel(cardLayout);
+        application.add(views);
+
+        // The data for the views. This
+        // will be changed by a presenter object that is reporting the
+        // results from the use case. This is an observable, and will
+        // be observed by the layout manager.
+        welcomeViewModel = new WelcomeViewModel();
+
+        /*
+         The observer watching for changes in the welcomeViewModel. It will
+         react to changes in application state by changing which view
+         is showing. This is an anonymous object because we don't need to
+         refer to it later.
+        */
+        new ViewManager(views, cardLayout, welcomeViewModel);
         return this;
     }
     /**

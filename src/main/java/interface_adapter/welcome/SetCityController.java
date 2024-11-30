@@ -6,7 +6,7 @@ import main.java.use_case.setcity.SetCityInputBoundary;
 public class SetCityController {
     private final SetCityInputBoundary setCityInputBoundary;
 
-    public SetCityController(SetCityInputBoundary setCityInputBoundary, LoadInputBoundary loadInputBoundary) {
+    public SetCityController(SetCityInputBoundary setCityInputBoundary) {
         this.setCityInputBoundary = setCityInputBoundary;
     }
 
