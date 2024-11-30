@@ -1,8 +1,9 @@
 package main.java.interface_adapter.toolmenu;
 
 import main.java.use_case.buytool.BuyToolInputBoundary;
+import main.java.use_case.buytool.BuyToolOutputBoundary;
 
-public class BuyPresenter implements BuyToolInputBoundary {
+public class BuyPresenter implements BuyToolOutputBoundary {
     private final ToolMenuViewModel viewModel;
 
     public BuyPresenter(ToolMenuViewModel viewModel) {

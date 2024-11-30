@@ -3,7 +3,10 @@ package main.java.app;
 import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.toolmenu.*;
 import main.java.interface_adapter.welcome.*;
+import main.java.use_case.buytool.BuyToolInteractor;
+import main.java.use_case.buytool.BuyToolOutputBoundary;
 import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
 import main.java.use_case.harvest.HarvestInteractor;
@@ -14,6 +17,8 @@ import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
 import main.java.use_case.setcity.SetCityInteractor;
 import main.java.use_case.setcity.SetCityOutputBoundary;
+import main.java.use_case.upgradetool.UpgradeToolInteractor;
+import main.java.use_case.upgradetool.UpgradeToolOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
 import main.java.use_case.water.WaterOutputBoundary;
 import main.java.view.FarmView;
@@ -47,6 +52,9 @@ public class AppBuilder {
     private LoadInteractor loadInteractor;
     private CardLayout cardLayout;
     private ViewManager viewManager;
+    private ToolMenuViewModel toolMenuViewModel;
+    private BuyToolInteractor buyToolInteractor;
+    private UpgradeToolInteractor upgradeToolInteractor;
 
 
     /**
@@ -172,7 +180,8 @@ public class AppBuilder {
      */
     public AppBuilder addFarmView() {
         farmViewModel = new FarmViewModel();
-        farmView = new FarmView(farmViewModel);
+        toolMenuViewModel = new ToolMenuViewModel();
+        farmView = new FarmView(farmViewModel, toolMenuViewModel);
         views.add(farmView, ViewManager.FARM);
 
         return this;
@@ -203,10 +212,47 @@ public class AppBuilder {
         final SetCityController setCityController = new SetCityController(setCityInteractor);
 
         if (welcomeView == null) {
-            throw new RuntimeException("addFarmView must be called before addUseCase");
+            throw new RuntimeException("addWelcomeView must be called before addUseCase");
         }
 
         welcomeView.setSetCityController(setCityController);
+        return this;
+    }
+
+    /**
+     * Adds the Buy Controller Use Case
+     * @return this builder
+     */
+    public AppBuilder addBuyToolUseCase() {
+        final BuyToolOutputBoundary buyToolOutputBoundary = new BuyPresenter(toolMenuViewModel);
+        buyToolInteractor = new BuyToolInteractor(buyToolOutputBoundary);
+
+        final BuyController buyController = new BuyController(buyToolInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setBuyController(buyController);
+        return this;
+    }
+
+
+    /**
+     * Adds the Upgrade Controller Use Case
+     * @return this builder
+     */
+    public AppBuilder addUpgradeUseCase() {
+        final UpgradeToolOutputBoundary upgradeToolOutputBoundary = new UpgradePresenter(toolMenuViewModel);
+        upgradeToolInteractor = new UpgradeToolInteractor(upgradeToolOutputBoundary);
+
+        final UpgradeController uogradeController = new UpgradeController(upgradeToolInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setUpgradeController(uogradeController);
         return this;
     }
 
