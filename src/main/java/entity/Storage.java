@@ -2,6 +2,7 @@ package main.java.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import main.java.entity.Crop;
 
 public class Storage implements Serializable {
 
