@@ -1,18 +1,28 @@
 package main.java.view;
 
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellState;
+import main.java.interface_adapter.sell.SellViewModel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class SellView extends JPanel {
+public class SellView extends JPanel implements ActionListener, PropertyChangeListener {
     int crops;
     int barnBucks;
     int cost;
-    public SellView(int crops, int barnBucks, int cost) {
-        this.crops = crops;
-        this.barnBucks = barnBucks;
-        this.cost = cost;
+    private SellViewModel sellViewModel;
+    private SellController sellController;
+
+    public SellView(SellViewModel sellViewModel) {
+        this.sellViewModel = sellViewModel;
+        this.crops = 10000;
+        this.barnBucks = 0;
+        this.cost = 15;
 
         JLabel cropLabel = new JLabel("Crops: " + crops);
         cropLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -96,6 +106,7 @@ public class SellView extends JPanel {
                 barnBucksLabel.setText("Barn Bucks: " + (barnBucks + Integer.parseInt(amountLabel.getText()) * cost));
                 amountLabel.setText("0");
                 earningLabel.setText("Total Earnings: 0");
+                sellController.sell(currentQuantity);
             }
         });
 
@@ -110,5 +121,30 @@ public class SellView extends JPanel {
 //        frame.getContentPane().add(mainPanel);
 //        frame.setVisible(true);
 
+    }
+
+    /**
+     * @param e the event to be processed
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    /**
+     * @param evt A PropertyChangeEvent object describing the event source
+     *            and the property that has changed.
+     */
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
+
+    /**
+     * Sets the sellController, CALL BEFORE ANY BUTTONS CAN BE PRESSED
+     * @param sellController the sellController
+     */
+    public void setSellController(SellController sellController) {
+        this.sellController = sellController;
     }
 }
