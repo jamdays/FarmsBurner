@@ -3,6 +3,9 @@ package main.java.app;
 import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.selecttool.SelectToolController;
+import main.java.interface_adapter.selecttool.SelectToolPresenter;
+import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellPresenter;
 import main.java.interface_adapter.sell.SellViewModel;
@@ -18,6 +21,8 @@ import main.java.use_case.load.LoadInteractor;
 import main.java.use_case.load.LoadOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import main.java.use_case.selecttool.SelectToolInteractor;
+import main.java.use_case.selecttool.SelectToolOutputBoundary;
 import main.java.use_case.sell.SellInteractor;
 import main.java.use_case.sell.SellOutputBoundary;
 import main.java.use_case.setcity.SetCityInteractor;
@@ -62,6 +67,8 @@ public class AppBuilder {
     private UpgradeToolInteractor upgradeToolInteractor;
     private SellViewModel sellViewModel;
     private SellInteractor sellInteractor;
+    private SelectToolViewModel selectToolViewModel;
+    private SelectToolInteractor selectToolInteractor;
 
 
     /**
@@ -76,12 +83,12 @@ public class AppBuilder {
         plantInteractor = new PlantInteractor(plantOutputBoundary);
 
 
-        final PlantController controller = new PlantController(plantInteractor);
+        final PlantController plantController = new PlantController(plantInteractor);
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
-        farmView.setPlantController(controller);
+        farmView.setPlantController(plantController);
         return this;
     }
 
@@ -189,7 +196,8 @@ public class AppBuilder {
         farmViewModel = new FarmViewModel();
         toolMenuViewModel = new ToolMenuViewModel();
         sellViewModel = new SellViewModel();
-        farmView = new FarmView(farmViewModel, toolMenuViewModel, sellViewModel);
+        selectToolViewModel = new SelectToolViewModel();
+        farmView = new FarmView(farmViewModel, toolMenuViewModel, sellViewModel, selectToolViewModel);
         views.add(farmView, ViewManager.FARM);
 
         return this;
@@ -281,6 +289,7 @@ public class AppBuilder {
         farmView.setSellController(sellController);
         return this;
     }
+
     /**
      * Adds the Load Use Case
      * The controllers are seperated for WelcomeView
@@ -298,6 +307,26 @@ public class AppBuilder {
         }
 
         welcomeView.setLoadController(loadController);
+        return this;
+    }
+
+
+    /**
+     * Adds the Select Tool Use Case
+     * @return this builder
+     */
+    public AppBuilder addSelectToolUseCase() {
+        final SelectToolOutputBoundary selectToolOutputBoundary = new SelectToolPresenter(selectToolViewModel);
+        selectToolInteractor = new SelectToolInteractor(selectToolOutputBoundary);
+
+        final SelectToolController selectToolController = new SelectToolController(selectToolInteractor);
+
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setSelectToolController(selectToolController);
         return this;
     }
 

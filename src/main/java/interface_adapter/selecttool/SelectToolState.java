@@ -1,4 +1,4 @@
-package interface_adapter.selecttool;
+package main.java.interface_adapter.selecttool;
 
 public class SelectToolState {
 

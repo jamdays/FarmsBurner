@@ -1,4 +1,4 @@
-package view;
+package main.java.view;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import interface_adapter.selecttool.SelectToolController;
-import interface_adapter.selecttool.SelectToolState;
-import interface_adapter.selecttool.SelectToolViewModel;
+import main.java.interface_adapter.selecttool.SelectToolController;
+import main.java.interface_adapter.selecttool.SelectToolState;
+import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.view.FarmButton;
 
 public class SelectToolView extends JPanel implements ActionListener, PropertyChangeListener {

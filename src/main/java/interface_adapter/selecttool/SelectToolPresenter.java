@@ -1,6 +1,6 @@
-package interface_adapter.selecttool;
+package main.java.interface_adapter.selecttool;
 
-import use_case.selecttool.SelectToolOutputBoundary;
+import main.java.use_case.selecttool.SelectToolOutputBoundary;
 
 public class SelectToolPresenter implements SelectToolOutputBoundary {
     private final SelectToolViewModel viewModel;

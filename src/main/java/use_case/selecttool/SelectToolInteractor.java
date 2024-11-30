@@ -1,4 +1,4 @@
-package use_case.selecttool;
+package main.java.use_case.selecttool;
 
 public class SelectToolInteractor implements SelectToolInputBoundary{
 
