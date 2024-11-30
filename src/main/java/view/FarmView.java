@@ -1,12 +1,23 @@
 package main.java.view;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.app.WindowBuilder;
-import main.java.interface_adapter.farm.*;
+
+import main.java.interface_adapter.farm.FarmController;
+import main.java.interface_adapter.farm.FarmState;
+import main.java.interface_adapter.farm.FarmViewModel;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.interface_adapter.toolmenu.BuyController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
+
+import view.SelectCropView;
+import view.SelectToolView;
+import view.WeatherView;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -157,11 +168,35 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             }
         }
 
+        // Tool and Plant Selector Panel
         JPanel footerPanel = new JPanel();
-        FarmLabel power = new FarmLabel("Power: 0");
-        FarmLabel barnBucks = new FarmLabel("Barn Bucks: 0");
-        footerPanel.add(power);
-        footerPanel.add(barnBucks);
+        // FarmLabel power = new FarmLabel("Power: 0");
+        // FarmLabel barnBucks = new FarmLabel("Barn Bucks: 0");
+        //footerPanel.add(power);
+        // footerPanel.add(barnBucks);
+        FarmButton cropSelector = new FarmButton("Choose Crop");
+
+        cropSelector.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addInfoView(271, 250, new SelectCropView()).build().setVisible(true);
+            }
+        });
+
+        FarmButton toolSelector = new FarmButton("Choose Tool");
+
+        toolSelector.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addInfoView(271, 250, new SelectToolView(new SelectToolViewModel())).build().setVisible(true);
+            }
+        });
+
+        footerPanel.add(cropSelector);
+        footerPanel.add(toolSelector);
         footerPanel.setBackground(new Color(169, 152, 126));
 
         navBar.add(farmSettings);
