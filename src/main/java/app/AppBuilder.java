@@ -45,6 +45,7 @@ public class AppBuilder {
     private FertilizeInteractor fertilizeInteractor;
     private SetCityInteractor setCityInteractor;
     private LoadInteractor loadInteractor;
+    private CardLayout cardLayout;
 
 
     /**
@@ -157,7 +158,8 @@ public class AppBuilder {
     public AppBuilder addFarmView() {
         farmViewModel = new FarmViewModel();
         farmView = new FarmView(farmViewModel);
-        views.add(farmView);
+        views.add(farmView, ViewManager.FARM);
+
         return this;
     }
 
@@ -168,7 +170,9 @@ public class AppBuilder {
      */
     public AppBuilder addWelcomeView() {
         welcomeView = new WelcomeView(welcomeViewModel);
-        views.add(welcomeView);
+        views.add(welcomeView, ViewManager.WELCOME);
+        cardLayout.show(views, "welcome");
+
         return this;
     }
 
@@ -219,7 +223,7 @@ public class AppBuilder {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
         JFrame application = new JFrame("FarmsBurner");
-        CardLayout cardLayout = new CardLayout();
+        cardLayout = new CardLayout();
         views = new JPanel(cardLayout);
         application.add(views);
 
