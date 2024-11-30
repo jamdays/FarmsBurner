@@ -61,12 +61,12 @@ public class AppBuilder {
         plantInteractor = new PlantInteractor(plantOutputBoundary);
 
 
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+        final PlantController controller = new PlantController(plantInteractor);
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
-        farmView.setFarmController(controller);
+        farmView.setPlantController(controller);
         return this;
     }
 
@@ -80,12 +80,12 @@ public class AppBuilder {
     public AppBuilder addWaterUseCase() {
         final WaterOutputBoundary waterOutputBoundary = new WaterPresenter(farmViewModel);
         waterInteractor = new WaterInteractor(waterOutputBoundary);
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+        final WaterController controller = new WaterController(waterInteractor);
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
-        farmView.setFarmController(controller);
+        farmView.setWaterController(controller);
         return this;
     }
 
@@ -99,12 +99,12 @@ public class AppBuilder {
     public AppBuilder addClaimUseCase() {
         final ClaimOutputBoundary claimOutputBoundary = new ClaimPresenter(farmViewModel);
         claimInteractor = new ClaimInteractor(claimOutputBoundary);
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+        final ClaimController controller = new ClaimController(claimInteractor);
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
-        farmView.setFarmController(controller);
+        farmView.setClaimController(controller);
         return this;
     }
 
@@ -118,12 +118,12 @@ public class AppBuilder {
     public AppBuilder addFertilizeUseCase() {
         final FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizePresenter(farmViewModel);
         fertilizeInteractor = new FertilizeInteractor(fertilizeOutputBoundary);
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+        final FertilizeController controller = new FertilizeController(fertilizeInteractor);
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
-        farmView.setFarmController(controller);
+        farmView.setFertilizeController(controller);
         return this;
     }
 
@@ -137,12 +137,12 @@ public class AppBuilder {
     public AppBuilder addHarvestUseCase() {
         final HarvestOutputBoundary harvestOutputBoundary = new HarvestPresenter(farmViewModel);
         harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
-        final FarmController controller = new FarmController(plantInteractor, waterInteractor, claimInteractor, fertilizeInteractor, harvestInteractor);
+        final HarvestController controller = new HarvestController(harvestInteractor);
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
-        farmView.setFarmController(controller);
+        farmView.setHarvestController(controller);
         return this;
     }
 
