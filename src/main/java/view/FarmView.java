@@ -11,6 +11,7 @@ import view.SelectCropView;
 import view.SelectToolView;
 import view.WeatherView;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -33,13 +34,21 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int PLANTED = 0B1000;
     private final int ALIVE = 0B100000;
     private final int FERTILIZED = 0B1000000;
-    private FarmController farmController;
+    private ClaimController claimController;
+    private FertilizeController fertilizeController;
+    private HarvestController harvestController;
+    private PlantController plantController;
+    private WaterController waterController;
     private FarmLabel[][] farmLand;
     private FarmViewModel viewModel;
+    private ToolMenuViewModel toolMenuViewModel;
+    private BuyController buyController;
+    private UpgradeController upgradeController;
 
-    public FarmView(FarmViewModel farmViewModel) {
+    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel) {
         // Navigation Bar
         JPanel navBar = new JPanel();
+        this.toolMenuViewModel = toolMenuViewModel;
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
@@ -88,7 +97,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new BuyView(10)).build().setVisible(true);
+                BuyView buyView = new BuyView(toolMenuViewModel);
+                builder.addInfoView(350, 280, buyView).build().setVisible(true);
+                buyView.setBuyController(buyController);
+                buyView.setUpgradeController(upgradeController);
+
             }
         });
         FarmButton help = new FarmButton("i");
@@ -119,19 +132,19 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 cropLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
                         if ((e.getModifiers() & 1) == 1) {
-                            farmController.claim(r, c);
+                            claimController.claim(r, c);
                         }
                         // if plot is clicked while ctrl is held down, plant crop on plot
                         else if (e.getModifiers() == 18) {
-                            farmController.plantCrop(r, c);
+                            plantController.plantCrop(r, c);
                         }
                         // if plot is clicked while alt is held down, water plot
                         else if (e.getModifiers() == 24) {
-                            farmController.waterCrop(r, c);
+                            waterController.waterCrop(r, c);
                         }
                         // if plot is clicked while ctrl and alt are held down, fertilize crop
                         else if ((e.getModifiers() & (18|24)) == (18|24)) {
-                            farmController.fertilize(r, c);
+                            fertilizeController.fertilize(r, c);
                         }
                     }
                 });
@@ -235,8 +248,31 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         }
     }
 
-    public void setFarmController(FarmController controller) {
-        this.farmController = controller;
+    public void setClaimController(ClaimController claimController) {
+        this.claimController = claimController;
+    }
+
+    public void setFertilizeController(FertilizeController fertilizeController) {
+        this.fertilizeController = fertilizeController;
+    }
+
+    public void setBuyController(BuyController buyController){
+        this.buyController = buyController;
+    }
+
+    public void setUpgradeController(UpgradeController upgradeController){
+        this.upgradeController = upgradeController;
+    }
+    public void setHarvestController(HarvestController harvestController) {
+        this.harvestController = harvestController;
+    }
+
+    public void setPlantController(PlantController plantController) {
+        this.plantController = plantController;
+    }
+
+    public void setWaterController(WaterController waterController) {
+        this.waterController = waterController;
     }
 
     public void actionPerformed(ActionEvent evt) {
