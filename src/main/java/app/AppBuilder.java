@@ -3,6 +3,9 @@ package main.java.app;
 import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellPresenter;
+import main.java.interface_adapter.sell.SellViewModel;
 import main.java.interface_adapter.toolmenu.*;
 import main.java.interface_adapter.welcome.*;
 import main.java.use_case.buytool.BuyToolInteractor;
@@ -15,6 +18,8 @@ import main.java.use_case.load.LoadInteractor;
 import main.java.use_case.load.LoadOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import main.java.use_case.sell.SellInteractor;
+import main.java.use_case.sell.SellOutputBoundary;
 import main.java.use_case.setcity.SetCityInteractor;
 import main.java.use_case.setcity.SetCityOutputBoundary;
 import main.java.use_case.upgradetool.UpgradeToolInteractor;
@@ -55,6 +60,8 @@ public class AppBuilder {
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
     private UpgradeToolInteractor upgradeToolInteractor;
+    private SellViewModel sellViewModel;
+    private SellInteractor sellInteractor;
 
 
     /**
@@ -181,7 +188,8 @@ public class AppBuilder {
     public AppBuilder addFarmView() {
         farmViewModel = new FarmViewModel();
         toolMenuViewModel = new ToolMenuViewModel();
-        farmView = new FarmView(farmViewModel, toolMenuViewModel);
+        sellViewModel = new SellViewModel();
+        farmView = new FarmView(farmViewModel, toolMenuViewModel, sellViewModel);
         views.add(farmView, ViewManager.FARM);
 
         return this;
@@ -256,6 +264,23 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the Sell Use Case
+     * @return this builder
+     */
+    public AppBuilder addSellUseCase() {
+        final SellOutputBoundary sellOutputBoundary = new SellPresenter(sellViewModel);
+        sellInteractor = new SellInteractor(sellOutputBoundary);
+
+        final SellController sellController = new SellController(sellInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setSellController(sellController);
+        return this;
+    }
     /**
      * Adds the Load Use Case
      * The controllers are seperated for WelcomeView

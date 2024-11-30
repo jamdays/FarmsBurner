@@ -2,11 +2,18 @@ package main.java.view;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import interface_adapter.selecttool.SelectToolViewModel;
+import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.app.WindowBuilder;
+
 import main.java.interface_adapter.farm.FarmController;
 import main.java.interface_adapter.farm.FarmState;
 import main.java.interface_adapter.farm.FarmViewModel;
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellViewModel;
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
+
 import view.SelectCropView;
 import view.SelectToolView;
 import view.WeatherView;
@@ -44,11 +51,14 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private ToolMenuViewModel toolMenuViewModel;
     private BuyController buyController;
     private UpgradeController upgradeController;
+    private SellViewModel  sellViewModel;
+    private SellController sellController;
 
-    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel) {
+    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel) {
         // Navigation Bar
         JPanel navBar = new JPanel();
         this.toolMenuViewModel = toolMenuViewModel;
+        this.sellViewModel = sellViewModel;
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
@@ -89,7 +99,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new SellView(5, 0, 3)).build().setVisible(true);
+                SellView sellView = new SellView(sellViewModel);
+                builder.addInfoView(350, 280, sellView).build().setVisible(true);
+                sellView.setSellController(sellController);
             }
         });
         FarmButton buy = new FarmButton("Buy");
@@ -273,6 +285,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setWaterController(WaterController waterController) {
         this.waterController = waterController;
+    }
+
+    public void setSellController(SellController sellController){
+        this.sellController = sellController;
     }
 
     public void actionPerformed(ActionEvent evt) {
