@@ -1,0 +1,39 @@
+package main.java.view;
+
+import main.java.interface_adapter.welcome.WelcomeState;
+import main.java.interface_adapter.welcome.WelcomeViewModel;
+
+import javax.swing.*;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+public class ViewManager implements PropertyChangeListener {
+    public static final String WELCOME = "welcome";
+    public static final String FARM = "farm";
+    private final CardLayout cardLayout;
+    private final JPanel views;
+    WelcomeViewModel viewModel;
+
+    public ViewManager(JPanel views, CardLayout cardLayout, WelcomeViewModel welcomeViewModel) {
+        this.views = views;
+        this.cardLayout = cardLayout;
+        viewModel = welcomeViewModel;
+        viewModel.addPropertyChangeListener(this);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        System.out.println("PROP CHANGED");
+        System.out.println(evt.getPropertyName());
+        if (evt.getPropertyName().equals("view")) {
+            WelcomeState newValue = (WelcomeState) evt.getNewValue();
+            if (newValue.getView().equals(WELCOME)) {
+                cardLayout.show(views, WELCOME);
+            }
+            else if (newValue.getView().equals(FARM)) {
+                cardLayout.show(views, FARM);
+            }
+        }
+    }
+}

@@ -1,9 +1,6 @@
 package main.java.use_case.claim;
 
 import main.java.entity.FarmSingleton;
-import main.java.interface_adapter.farm.FarmPresenter;
-import main.java.use_case.plant.PlantInputBoundary;
-import main.java.use_case.plant.PlantOutputBoundary;
 
 public class ClaimInteractor implements ClaimInputBoundary {
     private final ClaimOutputBoundary outputBoundary;

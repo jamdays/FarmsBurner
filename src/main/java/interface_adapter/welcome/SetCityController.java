@@ -3,21 +3,16 @@ package main.java.interface_adapter.welcome;
 import main.java.use_case.load.LoadInputBoundary;
 import main.java.use_case.setcity.SetCityInputBoundary;
 
-public class WelcomeController {
+public class SetCityController {
     private final SetCityInputBoundary setCityInputBoundary;
-    private final LoadInputBoundary loadInputBoundary;
 
-    public WelcomeController(SetCityInputBoundary setCityInputBoundary, LoadInputBoundary loadInputBoundary) {
+    public SetCityController(SetCityInputBoundary setCityInputBoundary) {
         this.setCityInputBoundary = setCityInputBoundary;
-        this.loadInputBoundary = loadInputBoundary;
     }
 
     public void setCity(String city){
         setCityInputBoundary.execute(city);
     }
 
-    public void load(){
-        loadInputBoundary.load();
-    }
 
 }

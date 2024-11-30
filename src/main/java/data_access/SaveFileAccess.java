@@ -8,6 +8,10 @@ import java.io.*;
 
 public class SaveFileAccess implements SaveDataAccessInterface, LoadDataAccessInterface{
 
+    public SaveFileAccess(){
+
+    }
+
     @Override
     public void saveData(Farm farm) throws IOException {
         FileOutputStream fileOutputStream
