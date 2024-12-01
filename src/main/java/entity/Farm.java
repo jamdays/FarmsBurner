@@ -33,6 +33,14 @@ public class Farm implements Serializable {
     private boolean cloudy;
     private boolean clear;
 
+    // activeTool and activeCrop instance variables
+
+    private boolean sprinklerPurchased;
+    private boolean harvesterPurchased;
+
+    private String activeTool;
+    private String activeCrop;
+
     // Constructor
     public Farm(Land[][] farmLand) {
         this.farmLand = farmLand;
@@ -44,6 +52,9 @@ public class Farm implements Serializable {
         this.city = "Toronto";
         // give farm some storage (can store up to 100 crops)
         this.storage = new Storage(100);
+        // initialize so that you don't start with any tools
+        this.sprinklerPurchased = true;
+        this.harvesterPurchased = true;
     }
 
     public Farm(){
@@ -61,6 +72,9 @@ public class Farm implements Serializable {
         this.sprinkler = new Sprinkler();
         this.city = "Toronto";
         this.storage = new Storage(100);
+        // initialize so that you don't start with any tools
+        this.sprinklerPurchased = false;
+        this.harvesterPurchased = false;
 
     }
 
@@ -86,6 +100,30 @@ public class Farm implements Serializable {
 
     public void setPower(int power) {
         this.power = power;
+    }
+
+    public boolean getSprinklerPurchased() {
+        return this.sprinklerPurchased;
+    }
+
+    public void setSprinklerPurchased(boolean sprinklerPurchased) {
+        this.sprinklerPurchased = sprinklerPurchased;
+    }
+
+    public boolean getHarvesterPurchased() {
+        return this.harvesterPurchased;
+    }
+
+    public void setHarvesterPurchased(boolean harvesterPurchased) {
+        this.harvesterPurchased = harvesterPurchased;
+    }
+
+    public String getActiveTool() {
+        return this.activeTool;
+    }
+
+    public void setActiveTool(String activeTool) {
+        this.activeTool = activeTool;
     }
 
     public void water(int r, int c){

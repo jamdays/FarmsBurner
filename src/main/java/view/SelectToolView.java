@@ -17,14 +17,14 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
     // instance variables
 
     private SelectToolViewModel viewModel;
-    private String currTool;
+    private String currTool = "none";
     private SelectToolController controller;
 
     // constructor
     public SelectToolView(SelectToolViewModel viewModel) {
         // initialize instance variables
-        this.currTool = "none";
         this.viewModel = viewModel;
+        viewModel.addPropertyChangeListener(this);
         // show the view
         JLabel title = new JLabel("Select a Tool");
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -55,7 +55,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
                 // currSelected.setText("Current Tool: " + currTool);
 
                 // haven't connected to controller yet, so temporarily just print out harvester
-                currSelected.setText("Current Tool: Sprinkler");
+                currSelected.setText("Current Tool: " + currTool);
             }
         });
 
@@ -69,7 +69,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
                 // currSelected.setText("Current Tool: " + currTool);
 
                 // haven't connected to controller yet, so temporarily just print out harvester
-                currSelected.setText("Current Tool: Harvester");
+                currSelected.setText("Current Tool: " + currTool);
             }
         });
 

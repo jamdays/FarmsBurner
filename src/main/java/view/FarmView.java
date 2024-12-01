@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import main.java.app.WindowBuilder;
 
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.selectcrop.SelectCropController;
+import main.java.interface_adapter.selectcrop.SelectCropViewModel;
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
@@ -57,8 +59,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SelectToolViewModel selectToolViewModel;
     private SelectToolController selectToolController;
     private WeatherController weatherController;
+    private SelectCropViewModel selectCropViewModel;
+    private SelectCropController selectCropController;
 
-    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel) {
+    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         //Add background as JLABEL to set images
         backgroundLabel = new JLabel();
         this.setLayout(new BorderLayout());
@@ -181,7 +185,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
 
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(271, 250, new SelectCropView()).build().setVisible(true);
+                SelectCropView selectCropView = new SelectCropView(selectCropViewModel);
+                selectCropView.setController(selectCropController);
+                builder.addInfoView(271, 250, selectCropView).build().setVisible(true);
             }
         });
 
@@ -339,6 +345,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setSelectToolController(SelectToolController selectToolController) {
         this.selectToolController = selectToolController;
+    }
+
+    public void setSelectCropController(SelectCropController selectCropController) {
+        this.selectCropController = selectCropController;
     }
 
     public void setWeatherController(WeatherController weatherController) {

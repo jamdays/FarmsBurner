@@ -10,7 +10,6 @@ public class SelectToolState {
         this.currTool = "none";
     }
 
-    // TODO: make it so that you can only select the tool if you have bought it
     public void setCurrTool(String tool) {
         this.currTool = tool;
     }

@@ -51,6 +51,7 @@ public class FarmsBurnerApplication {
                 addHarvestUseCase().
                 addWaterUseCase().
                 addSelectToolUseCase().
+                addSelectCropUseCase().
                 build().setVisible(true);
     }
 }
