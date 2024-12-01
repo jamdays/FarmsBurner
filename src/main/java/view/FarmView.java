@@ -1,7 +1,5 @@
 package main.java.view;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import main.java.app.WindowBuilder;
 
 import main.java.interface_adapter.farm.*;
@@ -16,12 +14,6 @@ import main.java.interface_adapter.toolmenu.UpgradeController;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
 
 
-
-import main.java.view.SelectCropView;
-import main.java.view.SelectToolView;
-import main.java.view.WeatherView;
-
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -30,10 +22,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
 import java.util.List;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -96,7 +84,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 String cloudCoverage = currWeatherForCity.get(3);
                 // test show results
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
+                builder.addView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
                 }
         });
         FarmButton sell = new FarmButton("Sell");
@@ -105,7 +93,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 SellView sellView = new SellView(sellViewModel);
-                builder.addInfoView(350, 280, sellView).build().setVisible(true);
+                builder.addView(350, 280, sellView).build().setVisible(true);
                 sellView.setSellController(sellController);
             }
         });
@@ -115,7 +103,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 BuyView buyView = new BuyView(toolMenuViewModel);
-                builder.addInfoView(350, 280, buyView).build().setVisible(true);
+                builder.addView(350, 280, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
@@ -126,7 +114,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(271, 250, new Info()).build().setVisible(true);
+                builder.addView(271, 250, new Info()).build().setVisible(true);
             }
         });
 
@@ -188,7 +176,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 final WindowBuilder builder = new WindowBuilder();
                 SelectCropView selectCropView = new SelectCropView(selectCropViewModel);
                 selectCropView.setController(selectCropController);
-                builder.addInfoView(271, 250, selectCropView).build().setVisible(true);
+                builder.addView(271, 250, selectCropView).build().setVisible(true);
             }
         });
 
@@ -200,7 +188,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 final WindowBuilder builder = new WindowBuilder();
                 SelectToolView selectToolView = new SelectToolView(selectToolViewModel);
                 selectToolView.setController(selectToolController);
-                builder.addInfoView(271, 250, selectToolView).build().setVisible(true);
+                builder.addView(271, 250, selectToolView).build().setVisible(true);
             }
         });
 
