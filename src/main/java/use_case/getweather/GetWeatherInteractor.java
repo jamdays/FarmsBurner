@@ -18,14 +18,25 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
     public List<String> execute() {
         FarmSingleton farmSingleton = FarmSingleton.getInstance();
         String weather = openWeatherAccess.currentWeatherTypeForCity(farmSingleton.getFarm().getCity());
-        System.out.println(farmSingleton.getFarm().getCity());
+        List<Integer> times = openWeatherAccess.getTimesForCity(farmSingleton.getFarm().getCity());
+        //0 is current, 1 sunrise, 2 sunset
+        //30 minutes before or after sunrise/sunset will show sunrise screen
+        //1800 = 30 minutes (60*30)
+        int day = 1;
+        if ((times.get(0) - times.get(1) < 1800 &&
+            times.get(0) - times.get(1) > -1800 )||
+                (times.get(0) - times.get(2) < 1800 &&
+            times.get(0) - times.get(2) > -1800)) {
+            day = 2;
+        } else if (times.get(0) < times.get(1) || times.get(0) > times.get(2) ) {
+            day = 0;
+        }
         boolean cloudy = weather.equals("Clouds") | weather.equals("Drizzle");
         boolean rainy = weather.equals("Rain");
         boolean snowy = weather.equals("Snow");
         boolean thunderstorm = weather.equals("Thunderstorm");
         boolean clear = weather.equals("Clear");
         boolean foggy = weather.equals("Atmosphere");
-        boolean day = true;
         farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear);
         outputBoundary.weather(weather, day);
         return openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity());
