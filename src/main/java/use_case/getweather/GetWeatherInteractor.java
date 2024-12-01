@@ -18,7 +18,7 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
     public List<String> execute() {
         FarmSingleton farmSingleton = FarmSingleton.getInstance();
         String weather = openWeatherAccess.currentWeatherTypeForCity(farmSingleton.getFarm().getCity());
-        List<Integer> times = openWeatherAccess.getTimesForCity(farmSingleton.getFarm().getCity());
+        List<Long> times = openWeatherAccess.getTimesForCity(farmSingleton.getFarm().getCity());
         //0 is current, 1 sunrise, 2 sunset
         //30 minutes before or after sunrise/sunset will show sunrise screen
         //1800 = 30 minutes (60*30)
