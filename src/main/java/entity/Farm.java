@@ -25,13 +25,14 @@ public class Farm implements Serializable {
     private Sprinkler sprinkler;
     private String city;
     private Storage storage;
-    private boolean day;
+    private int day;
     private boolean rainy;
     private boolean fog;
     private boolean thunderstorm;
     private boolean snowy;
     private boolean cloudy;
     private boolean clear;
+    private Long logOutTime;
 
     // Constructor
     public Farm(Land[][] farmLand) {
@@ -146,7 +147,7 @@ public class Farm implements Serializable {
 
     /**
      * Sets the weather for the farm
-     * @param day true if day, false if not
+     * @param day 0 if night, 1 if day, 2 if dawn/dusk
      * @param rainy true if rainy, false if not
      * @param fog true if foggy, false if not
      * @param thunderstorm true if thunderstorm, false if not
@@ -154,7 +155,7 @@ public class Farm implements Serializable {
      * @param cloudy true if cloudy, false if not
      * @param clear, true if clear, false if not
      */
-    public void setWeather(boolean day, boolean rainy, boolean fog, boolean thunderstorm, boolean snowy, boolean cloudy, boolean clear) {
+    public void setWeather(int day, boolean rainy, boolean fog, boolean thunderstorm, boolean snowy, boolean cloudy, boolean clear) {
         this.day = day;
         this.rainy = rainy;
         this.fog = fog;
@@ -186,5 +187,13 @@ public class Farm implements Serializable {
 
     public Storage getStorage() {
         return this.storage;
+    }
+
+    public void setLogOutTime(Long time){
+        this.logOutTime = time;
+    }
+
+    public Long getLogOutTime(){
+        return logOutTime;
     }
 }

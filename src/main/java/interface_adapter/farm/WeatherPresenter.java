@@ -10,7 +10,7 @@ public class WeatherPresenter implements GetWeatherOutputBoundary {
     }
 
     @Override
-    public void weather(String weather, boolean day){
+    public void weather(String weather, int day){
         ((FarmState) (farmViewModel.getState())).setWeather(weather, day);
         farmViewModel.firePropertyChanged("weather");
     }

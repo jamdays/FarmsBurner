@@ -57,6 +57,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SelectToolViewModel selectToolViewModel;
     private SelectToolController selectToolController;
     private WeatherController weatherController;
+    private SaveController saveController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel) {
         //Add background as JLABEL to set images
@@ -225,11 +226,17 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         //TODO add default background in case it doesn't exist
         if (evt.getPropertyName().equals("weather")) {
             String background = "src/main/resources/background-";
-            if (state.getDay()){
+            if (state.getDay() == 0){
+                background += "night";
+            } else if (state.getDay() == 1){
                 background += "day";
             }
             else{
-                background += "night";
+                background += "dawndusk.png";
+                ImageIcon backgroundIMG = new ImageIcon(background);
+                System.out.println(background);
+                this.backgroundLabel.setIcon(new ImageIcon(backgroundIMG.getImage()));
+                return;
             }
             switch(state.getWeather()){
                 case "Clear":
@@ -345,6 +352,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         this. weatherController = weatherController;
     }
 
+    public void setSaveController(SaveController saveController) {
+        this.saveController = saveController;
+    }
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }

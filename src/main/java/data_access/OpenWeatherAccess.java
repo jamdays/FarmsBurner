@@ -90,7 +90,7 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
     }
 
     @Override
-    public List<Integer> getTimesForCity(String city) {
+    public List<Long> getTimesForCity(String city) {
 
         String JSON = JSONForCity(city);
 
@@ -103,13 +103,13 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
 
         // parse JSON using Jackson to get current time, sunrise time and sunset time for the city
         String currentTimeString = parent.get("dt").toString();
-        Integer currentTime = Integer.valueOf(currentTimeString);
+        Long currentTime = Long.valueOf(currentTimeString);
         String sunriseTimeString = parent.get("sys").get("sunrise").toString();
-        Integer sunriseTime = Integer.valueOf(sunriseTimeString);
+        Long sunriseTime = Long.valueOf(sunriseTimeString);
         String sunsetTimeString = parent.get("sys").get("sunset").toString();
-        Integer sunsetTime = Integer.valueOf(sunsetTimeString);
+        Long sunsetTime = Long.valueOf(sunsetTimeString);
 
-        List<Integer> returnList = new ArrayList<>();
+        List<Long> returnList = new ArrayList<>();
         returnList.add(currentTime);
         returnList.add(sunriseTime);
         returnList.add(sunsetTime);
