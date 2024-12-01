@@ -16,6 +16,7 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
     public void execute() {
         FarmSingleton farmSingleton = FarmSingleton.getInstance();
         String weather = openWeatherAccess.currentWeatherTypeForCity(farmSingleton.getFarm().getCity());
+        System.out.println(farmSingleton.getFarm().getCity());
         boolean cloudy = weather.equals("Clouds") | weather.equals("Drizzle");
         boolean rainy = weather.equals("Rain");
         boolean snowy = weather.equals("Snow");
