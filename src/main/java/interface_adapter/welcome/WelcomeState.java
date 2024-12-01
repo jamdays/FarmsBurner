@@ -27,4 +27,7 @@ public class WelcomeState {
     public String getView(){
         return view;
     }
+    public String getCity(){
+        return city;
+    }
 }

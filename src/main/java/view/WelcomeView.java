@@ -1,10 +1,7 @@
 package main.java.view;
 
 
-import main.java.interface_adapter.welcome.LoadController;
-import main.java.interface_adapter.welcome.SetCityController;
-import main.java.interface_adapter.welcome.StartController;
-import main.java.interface_adapter.welcome.WelcomeViewModel;
+import main.java.interface_adapter.welcome.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -16,23 +13,25 @@ import java.beans.PropertyChangeListener;
 
 public class WelcomeView extends JPanel implements ActionListener, PropertyChangeListener {
     private WelcomeViewModel viewModel;
+    FarmLabel title;
     private LoadController loadController;
     private SetCityController setCityController;
     private StartController startController;
 
     public WelcomeView(WelcomeViewModel viewModel) {
         this.viewModel = viewModel;
+        this.viewModel.addPropertyChangeListener(this);
         // Welcome panel
         JPanel welcomePanel = new JPanel();
         welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
         FarmLabel welcome = new FarmLabel("Welcome to", 24);
-        FarmLabel title = new FarmLabel("Farms Burner", 36);
+        title = new FarmLabel("Farms Burner (Toronto)", 36);
         welcomePanel.add(welcome);
         welcomePanel.add(title);
         welcomePanel.setBackground(new java.awt.Color(169, 152, 126));
-
         // Start button
         FarmButton start = new FarmButton("Start",12);
+        start.setHorizontalAlignment(SwingConstants.CENTER);
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -98,7 +97,10 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        if (evt.getPropertyName().equals("city")) {
+            String city = ((WelcomeState)(evt.getNewValue())).getCity();
+            this.title.setText("Farms Burner (" + city + ")");
+        }
     }
 
     public void setSetCityController(SetCityController setCityController) {
