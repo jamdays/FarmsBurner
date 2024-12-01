@@ -18,7 +18,9 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     private int barnBucks;
 
     public BuyView(ToolMenuViewModel viewModel) {
+        // initialize instance variables
         this.viewModel = viewModel;
+        viewModel.addPropertyChangeListener(this);
         this.barnBucks = 10;
         // Buy Menu
         FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
@@ -48,12 +50,12 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
-        createItemPanel("Sprinkler ", "3","Automatically waters crops in 1 2x2 area", mainPanel, gbc, 0);
+        createItemPanel("Sprinkler", "5","Waters crops in a large area.", mainPanel, gbc, 0);
 
         // TODO: figure out what else goes on the buy menu
-        createItemPanel("Harvester ", "5", "Harvester description", mainPanel, gbc, 1);
-        createItemPanel("Item 3 ", "0", "Item 3 description", mainPanel, gbc, 2);
-        createItemPanel("Item 4 ", "0", "Item 4 description", mainPanel, gbc, 3);
+        createItemPanel("Harvester", "5", "Harvests crops in a large area.", mainPanel, gbc, 1);
+        createItemPanel("Tiller", "5", "Claims land in a large area.", mainPanel, gbc, 2);
+        createItemPanel("Fertilizer", "5", "Fertilizes a large area of tilled land.", mainPanel, gbc, 3);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -91,6 +93,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 //                    System.out.println("Purchased " + itemName);
 //                } else {
 //                    System.out.println("Not enough barn bucks");
+                purchaseButton.setText("Purchased");
             }
         });
 
