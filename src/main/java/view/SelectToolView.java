@@ -50,7 +50,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void actionPerformed(ActionEvent e) {
                 // notify the controller to start the use case (clean architecture)
-                // controller.selectTool("Sprinkler");
+                controller.selectTool("Sprinkler");
                 // update the current tool to sprinkler, once the use case has executed
                 // currSelected.setText("Current Tool: " + currTool);
 
@@ -64,7 +64,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void actionPerformed(ActionEvent e) {
                 // notify the controller to start the use case (clean architecture)
-                // controller.selectTool("Harvester");
+                controller.selectTool("Harvester");
                 // update the current tool to harvester, once the use case has executed
                 // currSelected.setText("Current Tool: " + currTool);
 
@@ -87,8 +87,8 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
     }
 
     // change the currently selected tool when a new tool is clicked
-    // @Override
-    public void PropertyChange(PropertyChangeEvent evt) {
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
         final SelectToolState state = (SelectToolState) evt.getNewValue();
         this.currTool = state.getCurrTool();
     }
@@ -97,9 +97,6 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
         System.out.println("Click " + evt.getActionCommand());
     }
 
-    public void propertyChange(PropertyChangeEvent evt) {
-
-    }
 
     public void setController(SelectToolController controller) {
         this.controller = controller;
