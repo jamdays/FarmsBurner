@@ -7,7 +7,7 @@ public class WindowBuilder {
     public int WIDTH;
     public JPanel panel;
 
-    public WindowBuilder addView(int width, int height, JPanel panel) {
+    public WindowBuilder addInfoView(int width, int height, JPanel panel) {
         this.WIDTH = width;
         this.HEIGHT = height;
         this.panel = panel;
