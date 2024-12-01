@@ -1,21 +1,25 @@
 package main.java.view;
 
-import main.java.interface_adapter.toolmenu.ToolMenuController;
+import main.java.interface_adapter.toolmenu.BuyController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.use_case.buytool.BuyToolInteractor;
-import main.java.use_case.buytool.BuyToolOutputBoundary;
+import main.java.interface_adapter.toolmenu.UpgradeController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
-public class BuyView extends JPanel{
-    int barnBucks;
-    private ToolMenuController toolMenuController;
+public class BuyView extends JPanel implements ActionListener, PropertyChangeListener {
+    private ToolMenuViewModel viewModel;
+    private BuyController buyController;
+    private UpgradeController upgradeController;
+    private int barnBucks;
 
-    public BuyView(int barnBucks) {
-        this.barnBucks = barnBucks;
+    public BuyView(ToolMenuViewModel viewModel) {
+        this.viewModel = viewModel;
+        this.barnBucks = 10;
         // Buy Menu
         FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
         buyMenuTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -78,8 +82,15 @@ public class BuyView extends JPanel{
         purchaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO Make this work
-                toolMenuController.buy("sprinkler");
+                int priceInt = Integer.parseInt(price);
+                buyController.buy(itemName);
+                // TODO: access barnBucks and add to tools
+//                if (priceInt < barnBucks) {
+//                    barnBucks -= priceInt;
+//                    updateBarnBucks(barnBucksLabel, barnBucks);
+//                    System.out.println("Purchased " + itemName);
+//                } else {
+//                    System.out.println("Not enough barn bucks");
             }
         });
 
@@ -110,5 +121,21 @@ public class BuyView extends JPanel{
 
     }
 
-    public void setToolMenuController(ToolMenuController toolMenuController) {this.toolMenuController = toolMenuController;}
+    public void setBuyController(BuyController buyController) {
+        this.buyController = buyController;
+    }
+
+    public void setUpgradeController(UpgradeController upgradeController) {
+        this.upgradeController = upgradeController;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+
+    }
 }

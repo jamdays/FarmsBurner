@@ -23,9 +23,10 @@ public class LoadInteractor implements LoadInputBoundary {
      */
     @Override
     public void load(){
+        //TODO MOVE THIS LATER
+        loadOutputBoundary.loaded();
         try {
             FarmSingleton.getInstance().setFarm(loadDataAccessInterface.loadData());
-            loadOutputBoundary.loaded();
         }
         catch (DataAccessException | IOException | ClassNotFoundException e) {
             System.out.println(e.getMessage());

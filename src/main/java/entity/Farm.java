@@ -1,4 +1,5 @@
 package main.java.entity;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import main.java.use_case.plant.PlantingException;
 
 import java.io.Serializable;
@@ -24,6 +25,13 @@ public class Farm implements Serializable {
     private Sprinkler sprinkler;
     private String city;
     private Storage storage;
+    private boolean day;
+    private boolean rainy;
+    private boolean fog;
+    private boolean thunderstorm;
+    private boolean snowy;
+    private boolean cloudy;
+    private boolean clear;
 
     // Constructor
     public Farm(Land[][] farmLand) {
@@ -134,6 +142,26 @@ public class Farm implements Serializable {
             // TODO make a popup for the user that tells them that they cannot sell crops they don't have
             System.out.println("you don't have enough crops in storage.");
         }
+    }
+
+    /**
+     * Sets the weather for the farm
+     * @param day true if day, false if not
+     * @param rainy true if rainy, false if not
+     * @param fog true if foggy, false if not
+     * @param thunderstorm true if thunderstorm, false if not
+     * @param snowy true if snowy, false if not
+     * @param cloudy true if cloudy, false if not
+     * @param clear, true if clear, false if not
+     */
+    public void setWeather(boolean day, boolean rainy, boolean fog, boolean thunderstorm, boolean snowy, boolean cloudy, boolean clear) {
+        this.day = day;
+        this.rainy = rainy;
+        this.fog = fog;
+        this.thunderstorm = thunderstorm;
+        this.snowy = snowy;
+        this.cloudy = cloudy;
+        this.clear = clear;
     }
 
     public void fertilize(int r, int c) {

@@ -12,6 +12,8 @@ public class FarmState {
     private final int PLANTED = 0B1000;
     private final int ALIVE = 0B100000;
     private final int FERTILIZED = 0B1000000;
+    private boolean day;
+    private String weather;
 
 
     public FarmState() {
@@ -48,6 +50,19 @@ public class FarmState {
         if ((farmLand[r][c] & CLAIMED) == CLAIMED) {
             this.farmLand[r][c] = farmLand[r][c] | FERTILIZED;
         }
+    }
+
+    public void setWeather(String weather, boolean day) {
+        this.weather = weather;
+        this.day = day;
+    }
+
+    public String getWeather(){
+        return weather;
+    }
+
+    public boolean getDay(){
+        return day;
     }
 }
 
