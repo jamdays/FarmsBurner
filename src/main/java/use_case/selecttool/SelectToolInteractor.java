@@ -27,5 +27,21 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
                 outputBoundary.selectTool("harvester");
             }
         }
+
+        if (tool.equalsIgnoreCase("tiller")) {
+            // only select tiller if it is purchased
+            if (FarmSingleton.getInstance().getFarm().getTillerPurchased()) {
+                FarmSingleton.getInstance().getFarm().setActiveTool("tiller");
+                outputBoundary.selectTool("tiller");
+            }
+        }
+
+        if (tool.equalsIgnoreCase("fertilizer")) {
+            // only select tiller if it is purchased
+            if (FarmSingleton.getInstance().getFarm().getFertilizerPurchased()) {
+                FarmSingleton.getInstance().getFarm().setActiveTool("fertilizer");
+                outputBoundary.selectTool("fertilizer");
+            }
+        }
     }
 }
