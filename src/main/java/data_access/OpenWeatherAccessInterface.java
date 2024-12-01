@@ -22,7 +22,8 @@ public interface OpenWeatherAccessInterface {
      *
      * @param city, the city to get weather information for
      * @return the current weather info for the city
-     * the return value is guaranteed to be one of: "Clear", "Clouds", "Atmosphere", "Snow", "Rain", "Drizzle" or "Thunderstorm"
+     * the return value is guaranteed to be one of: "Clear", "Clouds", "Snow", "Rain", "Drizzle" or "Thunderstorm"
+     * or an Atmosphere condition (Mist, Fog, Sand, Haze, Ash, etc.)
      */
     String currentWeatherTypeForCity(String city);
 
