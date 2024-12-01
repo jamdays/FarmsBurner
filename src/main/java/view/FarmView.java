@@ -201,7 +201,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(271, 250, new SelectToolView(new SelectToolViewModel())).build().setVisible(true);
+                SelectToolView selectToolView = new SelectToolView(selectToolViewModel);
+                selectToolView.setController(selectToolController);
+                builder.addInfoView(271, 250, selectToolView).build().setVisible(true);
             }
         });
 
