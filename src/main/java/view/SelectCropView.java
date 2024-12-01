@@ -1,4 +1,4 @@
-package view;
+package main.java.view;
 
 import main.java.interface_adapter.selectcrop.SelectCropState;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
