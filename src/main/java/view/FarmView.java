@@ -84,18 +84,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         weather.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                weatherController.weather();
-                //TODO: call API (make this follow Clean Architecture later)
-                var props = new Properties();
-                var envFile = Paths.get(".env");
-                try (var inputStream = Files.newInputStream(envFile)) {
-                    props.load(inputStream);
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
-                String apiKey = props.get("WAK").toString();
-                final main.java.data_access.OpenWeatherAccess dao = new main.java.data_access.OpenWeatherAccess(apiKey);
-                List<String> currWeatherForCity = dao.currentDisplayInfoForCity("Toronto");
+                List<String> currWeatherForCity = weatherController.weather();
                 String city = currWeatherForCity.get(0);
                 String temp = currWeatherForCity.get(1);
                 String conditions = currWeatherForCity.get(2);
