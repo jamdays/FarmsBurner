@@ -3,6 +3,8 @@ package main.java.use_case.getweather;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.entity.FarmSingleton;
 
+import java.util.List;
+
 
 public class GetWeatherInteractor implements GetWeatherInputBoundary {
     private final GetWeatherOutputBoundary outputBoundary;
@@ -13,7 +15,7 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
         this.openWeatherAccess = openWeatherAccess;
     }
 
-    public void execute() {
+    public List<String> execute() {
         FarmSingleton farmSingleton = FarmSingleton.getInstance();
         String weather = openWeatherAccess.currentWeatherTypeForCity(farmSingleton.getFarm().getCity());
         System.out.println(farmSingleton.getFarm().getCity());
@@ -26,6 +28,7 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
         boolean day = true;
         farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear);
         outputBoundary.weather(weather, day);
+        return openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity());
 
     }
 }
