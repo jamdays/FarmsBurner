@@ -45,6 +45,7 @@ public class FarmsBurnerApplication {
                 addFertilizeUseCase().
                 addHarvestUseCase().
                 addWaterUseCase().
+                addSelectToolUseCase().
                 build().setVisible(true);
     }
 }
