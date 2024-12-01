@@ -4,19 +4,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import main.java.app.WindowBuilder;
 
-import main.java.interface_adapter.farm.FarmState;
-import main.java.interface_adapter.farm.FarmViewModel;
+import main.java.interface_adapter.farm.*;
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.interface_adapter.toolmenu.BuyController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
-import main.java.interface_adapter.farm.FertilizeController;
-import main.java.interface_adapter.farm.PlantController;
-import main.java.interface_adapter.farm.WaterController;
-import main.java.interface_adapter.farm.HarvestController;
-import main.java.interface_adapter.farm.ClaimController;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
 
 
@@ -37,11 +31,11 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Properties;
-
+import java.util.*;
 import java.util.List;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
+    private JLabel backgroundLabel;
     private final int WET = 0B1;
     private final int CLAIMED = 0B10;
     private final int SNOWY = 0B100;
@@ -62,9 +56,15 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SellController sellController;
     private SelectToolViewModel selectToolViewModel;
     private SelectToolController selectToolController;
+    private WeatherController weatherController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel) {
+        //Add background as JLABEL to set images
+        backgroundLabel = new JLabel();
+        this.setLayout(new BorderLayout());
+        this.add(backgroundLabel);
         // Navigation Bar
+
         JPanel navBar = new JPanel();
         this.toolMenuViewModel = toolMenuViewModel;
         this.sellViewModel = sellViewModel;
@@ -84,7 +84,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         weather.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // call API (make this follow Clean Architecture later)
+                weatherController.weather();
+                //TODO: call API (make this follow Clean Architecture later)
                 var props = new Properties();
                 var envFile = Paths.get(".env");
                 try (var inputStream = Files.newInputStream(envFile)) {
@@ -138,7 +139,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         JPanel landPanel = new JPanel();
         landPanel.setLayout(new GridBagLayout());
         landPanel.setSize(new Dimension(1000, 800));
-        landPanel.setBackground(new Color(169, 152, 126));
+        landPanel.setBackground(new Color(169, 152, 126, 0));
         GridBagConstraints gbc = new GridBagConstraints();
         farmLand = new FarmLabel[8][10];
         for (int row = 0; row < 8; row++) {
@@ -207,19 +208,19 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
         footerPanel.add(cropSelector);
         footerPanel.add(toolSelector);
-        footerPanel.setBackground(new Color(169, 152, 126));
+        footerPanel.setBackground(new Color(169, 152, 126,0 ));
 
         navBar.add(farmSettings);
         navBar.add(weather);
         navBar.add(sell);
         navBar.add(buy);
         navBar.add(help);
-        navBar.setBackground(new Color(169, 152, 126));
+        navBar.setBackground(new Color(169, 152, 126, 0));
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(navBar);
-        this.add(landPanel);
-        this.add(footerPanel);
+        backgroundLabel.setLayout(new BoxLayout(backgroundLabel, BoxLayout.Y_AXIS));
+        backgroundLabel.add(navBar);
+        backgroundLabel.add(landPanel);
+        backgroundLabel.add(footerPanel);
         // JFrame frame = new JFrame("Farm View");
         // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // frame.setSize(741, 420);
@@ -229,41 +230,85 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        Color green =new Color(20,130,50);
-        Color dirt =new Color(75,40,40);
-        Color wetdirt =new Color(50,20,20);
         final FarmState state = (FarmState) evt.getNewValue();
-        for (int r = 0; r < state.getFarmLand().length; r++) {
-            for (int c = 0; c < state.getFarmLand()[r].length; c++) {
-                // if farmland is claimed, change button color to dirt
-                if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
-                    ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile2.png");
-                    farmLand[r][c].setIcon(new ImageIcon(dirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                    // given the farmland is claimed, if it is wet as well as fertilized, set label image to wet and fertilized dirt
-                    if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
-                        ImageIcon wetfertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile5.png");
-                        farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                    }
-                    // given the farmland is claimed, if it is wet but unfertilized, set label image to wet but unfertilized dirt
-                    if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
-                        ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile3.png");
-                        farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                    }
-                    // given the farmland is claimed, if a crop has been planted there, make it appear
-                    if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
-                        farmLand[r][c].setText("T");
-                        farmLand[r][c].setHorizontalTextPosition(JLabel.CENTER);
-                        farmLand[r][c].setForeground(Color.gray);
-                        // set the plant colour to green if and only if it is alive
-                        if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
-                            farmLand[r][c].setForeground(green);
+        //TODO add default background in case it doesn't exist
+        if (evt.getPropertyName().equals("weather")) {
+            String background = "src/main/resources/background-";
+            if (state.getDay()){
+                background += "day";
+            }
+            else{
+                background += "night";
+            }
+            switch(state.getWeather()){
+                case "Clear":
+                    background += "clear";
+                    break;
+                case "Rain":
+                case "Drizzle":
+                    background += "rainy";
+                    break;
+                case "Snow":
+                    background += "snowy";
+                    break;
+                case "Fog":
+                case "Mist":
+                case "Smoke":
+                case "Haze":
+                case "Dust":
+                case "Sand":
+                case "Squall":
+                case "Ash":
+                    background += "fog";
+                    break;
+                case "Thunderstorm":
+                    background = "src/main/resources/background-thunderstorm";
+                    break;
+                default:
+                    background += "cloudy";
+            }
+            background += ".png";
+            ImageIcon backgroundIMG = new ImageIcon(background);
+            System.out.println(background);
+            this.backgroundLabel.setIcon(new ImageIcon(backgroundIMG.getImage()));
 
+        }
+        else {
+            Color green = new Color(20, 130, 50);
+            Color dirt = new Color(75, 40, 40);
+            Color wetdirt = new Color(50, 20, 20);
+            for (int r = 0; r < state.getFarmLand().length; r++) {
+                for (int c = 0; c < state.getFarmLand()[r].length; c++) {
+                    // if farmland is claimed, change button color to dirt
+                    if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
+                        ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile2.png");
+                        farmLand[r][c].setIcon(new ImageIcon(dirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        // given the farmland is claimed, if it is wet as well as fertilized, set label image to wet and fertilized dirt
+                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                            ImageIcon wetfertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile5.png");
+                            farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                    }
-                    // given the farmland is claimed, if it has been fertilized but is dry, set label image to fertilized but dry dirt
-                    if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
-                        ImageIcon fertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile4.png");
-                        farmLand[r][c].setIcon(new ImageIcon(fertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        // given the farmland is claimed, if it is wet but unfertilized, set label image to wet but unfertilized dirt
+                        if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                            ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile3.png");
+                            farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        }
+                        // given the farmland is claimed, if a crop has been planted there, make it appear
+                        if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
+                            farmLand[r][c].setText("T");
+                            farmLand[r][c].setHorizontalTextPosition(JLabel.CENTER);
+                            farmLand[r][c].setForeground(Color.gray);
+                            // set the plant colour to green if and only if it is alive
+                            if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
+                                farmLand[r][c].setForeground(green);
+
+                            }
+                        }
+                        // given the farmland is claimed, if it has been fertilized but is dry, set label image to fertilized but dry dirt
+                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
+                            ImageIcon fertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile4.png");
+                            farmLand[r][c].setIcon(new ImageIcon(fertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        }
                     }
                 }
             }
@@ -305,7 +350,12 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         this.selectToolController = selectToolController;
     }
 
+    public void setWeatherController(WeatherController weatherController) {
+        this. weatherController = weatherController;
+    }
+
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
+
 }

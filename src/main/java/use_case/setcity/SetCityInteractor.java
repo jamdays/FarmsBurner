@@ -12,5 +12,7 @@ public class SetCityInteractor implements SetCityInputBoundary{
     @Override
     public void execute(String city) {
         setCityOutputBoundary.setCity(city);
+        FarmSingleton.getInstance().getFarm().setCity(city);
     }
+
 }

@@ -56,5 +56,13 @@ public class FarmState {
         this.weather = weather;
         this.day = day;
     }
+
+    public String getWeather(){
+        return weather;
+    }
+
+    public boolean getDay(){
+        return day;
+    }
 }
 

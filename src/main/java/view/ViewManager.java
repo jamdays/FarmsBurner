@@ -24,7 +24,6 @@ public class ViewManager implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        System.out.println(evt.getPropertyName());
         if (evt.getPropertyName().equals("view")) {
             WelcomeState newValue = (WelcomeState) evt.getNewValue();
             if (newValue.getView().equals(WELCOME)) {

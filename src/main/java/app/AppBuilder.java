@@ -15,6 +15,8 @@ import main.java.use_case.buytool.BuyToolInteractor;
 import main.java.use_case.buytool.BuyToolOutputBoundary;
 import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
+import main.java.use_case.getweather.GetWeatherInteractor;
+import main.java.use_case.getweather.GetWeatherOutputBoundary;
 import main.java.use_case.harvest.HarvestInteractor;
 import main.java.use_case.harvest.HarvestOutputBoundary;
 import main.java.use_case.load.LoadInteractor;
@@ -44,7 +46,7 @@ import java.awt.*;
  * Builder for farms burner
  */
 public class AppBuilder {
-    public static final int HEIGHT = 650;
+    public static final int HEIGHT = 675;
     public static final int WIDTH = 1000;
     private OpenWeatherAccess farmDAO;
     private SaveFileAccess saveFileAccess;
@@ -58,6 +60,7 @@ public class AppBuilder {
     private ClaimInteractor claimInteractor;
     private HarvestInteractor harvestInteractor;
     private FertilizeInteractor fertilizeInteractor;
+    private GetWeatherInteractor weatherInteractor;
     private SetCityInteractor setCityInteractor;
     private LoadInteractor loadInteractor;
     private CardLayout cardLayout;
@@ -150,6 +153,24 @@ public class AppBuilder {
     }
 
     /**
+     * Creates the objects for the Weather Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addWeatherUseCase() {
+        final GetWeatherOutputBoundary weatherOutputBoundary = new WeatherPresenter(farmViewModel);
+        weatherInteractor = new GetWeatherInteractor(weatherOutputBoundary, farmDAO);
+        final WeatherController controller = new WeatherController(weatherInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setWeatherController(controller);
+        return this;
+    }
+    /**
      * Creates the objects for the Harvest Use Case and connects the FarmView to its
      * controller.
      * <p>This method must be called after addFarmView!</p>
@@ -172,7 +193,7 @@ public class AppBuilder {
      * Creates the DAO
      * @return this builder
      */
-    public AppBuilder setFarmDAO(OpenWeatherAccess farmDAO) {
+    public AppBuilder addFarmDAO(OpenWeatherAccess farmDAO) {
         this.farmDAO = farmDAO;
         return this;
     }
@@ -182,7 +203,7 @@ public class AppBuilder {
      * MUST BE CALLED BEFORE LOAD USE CASE
      * @return this builder
      */
-    public AppBuilder adSaveDAO(SaveFileAccess saveDAO) {
+    public AppBuilder addSaveDAO(SaveFileAccess saveDAO) {
         this.saveFileAccess = saveDAO;
         return this;
     }
@@ -365,9 +386,9 @@ public class AppBuilder {
         final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setTitle("Farms Burner");
-        frame.setSize(WIDTH, HEIGHT);
         frame.add(views);
         frame.pack();
+        frame.setSize(WIDTH, HEIGHT);
         return frame;
 
     }
