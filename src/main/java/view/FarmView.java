@@ -65,11 +65,13 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
-        FarmButton farmSettings = new FarmButton("≡");
-        farmSettings.addActionListener(new ActionListener() {
+        //FarmButton farmSettings = new FarmButton("≡");
+        FarmButton save = new FarmButton("Save");
+        save.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Open farm settings");
+                saveController.save();
+                System.out.println("Save");
             }
         });
         FarmButton weather = new FarmButton("Weather");
@@ -196,7 +198,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         footerPanel.add(toolSelector);
         footerPanel.setBackground(new Color(169, 152, 126,0 ));
 
-        navBar.add(farmSettings);
+        navBar.add(save);
         navBar.add(weather);
         navBar.add(sell);
         navBar.add(buy);
