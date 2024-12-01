@@ -24,6 +24,8 @@ import main.java.use_case.harvest.HarvestInteractor;
 import main.java.use_case.harvest.HarvestOutputBoundary;
 import main.java.use_case.load.LoadInteractor;
 import main.java.use_case.load.LoadOutputBoundary;
+import main.java.use_case.loadFarm.LoadFarmInteractor;
+import main.java.use_case.loadFarm.LoadFarmOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
 import main.java.use_case.selectcrop.SelectCropInteractor;
@@ -81,6 +83,7 @@ public class AppBuilder {
     private FertilizeInteractor fertilizeInteractor;
     private GetWeatherInteractor weatherInteractor;
     private SaveInteractor saveInteractor;
+    private LoadFarmInteractor loadFarmInteractor;
     //TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -282,6 +285,27 @@ public class AppBuilder {
         views.add(welcomeView, ViewManager.WELCOME);
         cardLayout.show(views, "welcome");
 
+        return this;
+    }
+
+
+    /**
+     * Creates the objects for the LoadFarm Use Case and connects the WelcomeView to its
+     * controller.
+     * <p>This method must be called after addWelcomeView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addWelcomeView
+     */
+    public AppBuilder addLoadFarmUseCase() {
+        final LoadFarmOutputBoundary loadFarmOutputBoundary = new LoadFarmPresenter(farmViewModel);
+        loadFarmInteractor = new LoadFarmInteractor(loadFarmOutputBoundary);
+        final LoadFarmController controller = new LoadFarmController(loadFarmInteractor);
+
+        if (welcomeView == null) {
+            throw new RuntimeException("addWelcomeView must be called before addUseCase");
+        }
+
+        welcomeView.setLoadFarmController(controller);
         return this;
     }
 
