@@ -38,6 +38,7 @@ public class FarmsBurnerApplication {
                 addSaveDAO(new SaveFileAccess()).
                 addViewManager()
                 .addWelcomeView()
+                .addStartUseCase()
                 .addSetCityUseCase()
                 .addLoadUseCase()
                 .addFarmView()

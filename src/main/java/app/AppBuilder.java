@@ -28,12 +28,16 @@ import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
 import main.java.use_case.selectcrop.SelectCropInteractor;
 import main.java.use_case.selectcrop.SelectCropOutputBoundary;
+import main.java.use_case.save.SaveInteractor;
+import main.java.use_case.save.SaveOutputBoundary;
 import main.java.use_case.selecttool.SelectToolInteractor;
 import main.java.use_case.selecttool.SelectToolOutputBoundary;
 import main.java.use_case.sell.SellInteractor;
 import main.java.use_case.sell.SellOutputBoundary;
 import main.java.use_case.setcity.SetCityInteractor;
 import main.java.use_case.setcity.SetCityOutputBoundary;
+import main.java.use_case.start.StartInteractor;
+import main.java.use_case.start.StartOutputBoundary;
 import main.java.use_case.upgradetool.UpgradeToolInteractor;
 import main.java.use_case.upgradetool.UpgradeToolOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
@@ -51,35 +55,65 @@ import java.awt.*;
  * Builder for farms burner
  */
 public class AppBuilder {
+    //CONSTANTS
     public static final int HEIGHT = 675;
     public static final int WIDTH = 1000;
+    //PANELS
+    private JPanel views;
+    private CardLayout cardLayout;
+    private ViewManager viewManager;
+    //DAOS
     private OpenWeatherAccess farmDAO;
     private SaveFileAccess saveFileAccess;
-    private FarmViewModel farmViewModel;
-    private FarmView farmView;
-    private JPanel views;
-    private WelcomeViewModel welcomeViewModel;
+    //THE WELCOME VIEW, MODEL, AND INTERACTORS
     private WelcomeView welcomeView;
+    private WelcomeViewModel welcomeViewModel;
+    private SetCityInteractor setCityInteractor;
+    private LoadInteractor loadInteractor;
+    private StartInteractor startInteractor;
+    //FARM VIEW, MODEL, AND INTERACTORS
+    private FarmView farmView;
+    private FarmViewModel farmViewModel;
     private PlantInteractor plantInteractor;
     private WaterInteractor waterInteractor;
     private ClaimInteractor claimInteractor;
     private HarvestInteractor harvestInteractor;
     private FertilizeInteractor fertilizeInteractor;
     private GetWeatherInteractor weatherInteractor;
-    private SetCityInteractor setCityInteractor;
-    private LoadInteractor loadInteractor;
-    private CardLayout cardLayout;
-    private ViewManager viewManager;
+    private SaveInteractor saveInteractor;
+    //TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
     private UpgradeToolInteractor upgradeToolInteractor;
+    //SELL MENU VIEW, MODEL, AND INTERACTORS
     private SellViewModel sellViewModel;
-    private SellInteractor sellInteractor;
     private SelectToolViewModel selectToolViewModel;
+    private SellInteractor sellInteractor;
     private SelectToolInteractor selectToolInteractor;
     private SelectCropViewModel selectCropViewModel;
     private SelectCropInteractor selectCropInteractor;
 
+    /**
+     * Creates the objects for the Save Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addSaveUseCase() {
+        final SaveOutputBoundary saveOutputBoundary = new SavePresenter(farmViewModel);
+        saveInteractor = new SaveInteractor(saveFileAccess, saveOutputBoundary, farmDAO);
+
+
+        final SaveController saveController = new SaveController(saveInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setSaveController(saveController);
+        return this;
+    }
 
     /**
      * Creates the objects for the Plant Use Case and connects the FarmView to its
@@ -174,9 +208,15 @@ public class AppBuilder {
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
+        if (welcomeView == null) {
+            throw new RuntimeException("addWelcomeView must be called before addUseCase");
+        }
+
         farmView.setWeatherController(controller);
+        welcomeView.setWeatherController(controller);
         return this;
     }
+
     /**
      * Creates the objects for the Harvest Use Case and connects the FarmView to its
      * controller.
@@ -279,6 +319,26 @@ public class AppBuilder {
         }
 
         farmView.setBuyController(buyController);
+        return this;
+    }
+
+
+    /**
+     * Creates the objects for the Start Use Case and connects the WelcomeView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addWelcomeView
+     */
+    public AppBuilder addStartUseCase() {
+        final StartOutputBoundary startOutputBoundary = new StartPresenter(welcomeViewModel);
+        startInteractor = new StartInteractor(startOutputBoundary);
+        final StartController controller = new StartController(startInteractor);
+
+        if (welcomeView == null) {
+            throw new RuntimeException("addWelcomeView must be called before addUseCase");
+        }
+        welcomeView.setStartController(controller);
         return this;
     }
 
