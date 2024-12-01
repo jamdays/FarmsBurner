@@ -63,9 +63,6 @@ public class Farm implements Serializable {
         for (int i = 0; i < 16; i++) {
             for (int j = 0; j < 20; j++) {
                 farmLand[i][j] = new Land();
-                if ((i == 3 || i == 4) && (j == 4 || j == 5)){
-                    farmLand[i][j].setClaimed(true);
-                }
             }
         }
         this.barnBucks = 0;
