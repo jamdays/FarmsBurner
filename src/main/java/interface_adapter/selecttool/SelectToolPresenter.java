@@ -1,6 +1,6 @@
-package interface_adapter.selecttool;
+package main.java.interface_adapter.selecttool;
 
-import use_case.selecttool.SelectToolOutputBoundary;
+import main.java.use_case.selecttool.SelectToolOutputBoundary;
 
 public class SelectToolPresenter implements SelectToolOutputBoundary {
     private final SelectToolViewModel viewModel;
@@ -11,7 +11,7 @@ public class SelectToolPresenter implements SelectToolOutputBoundary {
 
     @Override
     public void selectTool(String tool) {
-        ((SelectToolState) (viewModel.getState())).selectTool(tool);
+        ((SelectToolState) (viewModel.getState())).setCurrTool(tool);
         viewModel.firePropertyChanged("selectTool");
     }
 }

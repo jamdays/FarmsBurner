@@ -1,4 +1,4 @@
-package interface_adapter.selecttool;
+package main.java.interface_adapter.selecttool;
 
 public class SelectToolState {
 
@@ -11,7 +11,7 @@ public class SelectToolState {
     }
 
     // TODO: make it so that you can only select the tool if you have bought it
-    public void selectTool(String tool) {
+    public void setCurrTool(String tool) {
         this.currTool = tool;
     }
 

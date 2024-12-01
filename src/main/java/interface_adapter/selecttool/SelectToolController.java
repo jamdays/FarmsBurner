@@ -1,6 +1,6 @@
-package interface_adapter.selecttool;
+package main.java.interface_adapter.selecttool;
 
-import use_case.selecttool.SelectToolInputBoundary;
+import main.java.use_case.selecttool.SelectToolInputBoundary;
 
 public class SelectToolController {
     private final SelectToolInputBoundary inputBoundary;

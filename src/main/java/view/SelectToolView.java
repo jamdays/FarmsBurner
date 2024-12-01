@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import interface_adapter.selecttool.SelectToolController;
-import interface_adapter.selecttool.SelectToolState;
-import interface_adapter.selecttool.SelectToolViewModel;
+import main.java.interface_adapter.selecttool.SelectToolController;
+import main.java.interface_adapter.selecttool.SelectToolState;
+import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.view.FarmButton;
 
 public class SelectToolView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -87,18 +87,14 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
     }
 
     // change the currently selected tool when a new tool is clicked
-    // @Override
-    public void PropertyChange(PropertyChangeEvent evt) {
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
         final SelectToolState state = (SelectToolState) evt.getNewValue();
         this.currTool = state.getCurrTool();
     }
 
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
-    }
-
-    public void propertyChange(PropertyChangeEvent evt) {
-
     }
 
     public void setController(SelectToolController controller) {
