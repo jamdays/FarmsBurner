@@ -34,6 +34,14 @@ public interface OpenWeatherAccessInterface {
     String forecastInfoForCity(String city);
 
     /**
+     * executes code for calling the OpenWeatherMap API to get time information for a city
+     * @param city, the city to get weather information for
+     * @return the current time, sunrise time and sunset time for the city (in unix epoch time)
+     * the returned list has 3 elements; at index 0 is the current time, at index 1 is the sunrise time and at index 2 is the sunset time
+     */
+    List<Integer> getTimesForCity(String city);
+
+    /**
      * executes code for calling the OpenWeatherMap API to get JSON
      * @param city, the city to get weather information in JSON format for
      * @return the JSON with the weather for the city
