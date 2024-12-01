@@ -3,6 +3,7 @@ package main.java.view;
 
 import main.java.interface_adapter.farm.WeatherController;
 import main.java.interface_adapter.welcome.*;
+import main.java.use_case.getweather.InvalidCityException;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -62,19 +63,32 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             @Override
             public void keyPressed(KeyEvent e){
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    setCityController.setCity(locationText.getText());
-                    weatherController.weather();
-                    System.out.println("Set location to " + locationText.getText());
-                    locationText.setText("");
+                    try {
+                        setCityController.setCity(locationText.getText());
+                        weatherController.weather();
+                        locationText.setText("");
+                    }
+                    catch (InvalidCityException exception) {
+                        setCityController.setCity("Toronto");
+                        System.out.println("InvalidCityException");
+                        locationText.setText("");
+                    }
                 }
             }
         });
         location.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setCityController.setCity(locationText.getText());
-                weatherController.weather();
-                System.out.println("Set location to " + locationText.getText());
+                try {
+                    setCityController.setCity(locationText.getText());
+                    weatherController.weather();
+                    locationText.setText("");
+                }
+                catch (InvalidCityException exception) {
+                    setCityController.setCity("Toronto");
+                    System.out.println("InvalidCityException");
+                    locationText.setText("");
+                }
             }
         });
         locationPanel.add(locationText);
