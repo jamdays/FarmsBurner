@@ -57,6 +57,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SelectToolViewModel selectToolViewModel;
     private SelectToolController selectToolController;
     private WeatherController weatherController;
+    private SaveController saveController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel) {
         //Add background as JLABEL to set images
@@ -351,6 +352,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         this. weatherController = weatherController;
     }
 
+    public void setSaveController(SaveController saveController) {
+        this.saveController = saveController;
+    }
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }

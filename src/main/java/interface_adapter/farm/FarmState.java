@@ -65,5 +65,6 @@ public class FarmState {
     public int getDay(){
         return day;
     }
+
 }
 

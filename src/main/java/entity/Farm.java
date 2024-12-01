@@ -32,6 +32,7 @@ public class Farm implements Serializable {
     private boolean snowy;
     private boolean cloudy;
     private boolean clear;
+    private Long logOutTime;
 
     // Constructor
     public Farm(Land[][] farmLand) {
@@ -186,5 +187,13 @@ public class Farm implements Serializable {
 
     public Storage getStorage() {
         return this.storage;
+    }
+
+    public void setLogOutTime(Long time){
+        this.logOutTime = time;
+    }
+
+    public Long getLogOutTime(){
+        return logOutTime;
     }
 }

@@ -23,6 +23,8 @@ import main.java.use_case.load.LoadInteractor;
 import main.java.use_case.load.LoadOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import main.java.use_case.save.SaveInteractor;
+import main.java.use_case.save.SaveOutputBoundary;
 import main.java.use_case.selecttool.SelectToolInteractor;
 import main.java.use_case.selecttool.SelectToolOutputBoundary;
 import main.java.use_case.sell.SellInteractor;
@@ -73,6 +75,7 @@ public class AppBuilder {
     private HarvestInteractor harvestInteractor;
     private FertilizeInteractor fertilizeInteractor;
     private GetWeatherInteractor weatherInteractor;
+    private SaveInteractor saveInteractor;
     //TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -83,6 +86,27 @@ public class AppBuilder {
     private SellInteractor sellInteractor;
     private SelectToolInteractor selectToolInteractor;
 
+    /**
+     * Creates the objects for the Save Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addSaveUseCase() {
+        final SaveOutputBoundary saveOutputBoundary = new SavePresenter(farmViewModel);
+        saveInteractor = new SaveInteractor(saveFileAccess, saveOutputBoundary, farmDAO);
+
+
+        final SaveController saveController = new SaveController(saveInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setSaveController(saveController);
+        return this;
+    }
 
     /**
      * Creates the objects for the Plant Use Case and connects the FarmView to its
