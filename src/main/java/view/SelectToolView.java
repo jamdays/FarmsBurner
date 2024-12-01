@@ -97,7 +97,6 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
         System.out.println("Click " + evt.getActionCommand());
     }
 
-
     public void setController(SelectToolController controller) {
         this.controller = controller;
     }

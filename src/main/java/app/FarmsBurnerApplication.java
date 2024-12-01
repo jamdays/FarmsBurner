@@ -50,6 +50,7 @@ public class FarmsBurnerApplication {
                 addWeatherUseCase().
                 addHarvestUseCase().
                 addWaterUseCase().
+                addSelectToolUseCase().
                 build().setVisible(true);
     }
 }
