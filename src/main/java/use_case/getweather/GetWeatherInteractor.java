@@ -15,9 +15,10 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
         this.openWeatherAccess = openWeatherAccess;
     }
 
-    public List<String> execute() {
+    public List<String> execute() throws InvalidCityException{
         FarmSingleton farmSingleton = FarmSingleton.getInstance();
-        String weather = openWeatherAccess.currentWeatherTypeForCity(farmSingleton.getFarm().getCity());
+        try {
+            String weather = openWeatherAccess.currentWeatherTypeForCity(farmSingleton.getFarm().getCity());
         List<Long> times = openWeatherAccess.getTimesForCity(farmSingleton.getFarm().getCity());
         //0 is current, 1 sunrise, 2 sunset
         //30 minutes before or after sunrise/sunset will show sunrise screen
@@ -40,5 +41,8 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
         farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear);
         outputBoundary.weather(weather, day);
         return openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity());
+        } catch (Exception e) {
+            throw new InvalidCityException(e.getMessage());
+        }
     }
 }

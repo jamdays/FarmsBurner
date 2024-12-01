@@ -6,6 +6,8 @@ public interface GetWeatherInputBoundary {
 
     /**
      * executes code for get weather use case and returns current weather
+     * @return the weather conditions at the city
+     * @throws InvalidCityException if the city is invalid
      */
-    List<String> execute();
+    List<String> execute() throws InvalidCityException;
 }
