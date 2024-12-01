@@ -177,7 +177,12 @@ public class AppBuilder {
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
+        if (welcomeView == null) {
+            throw new RuntimeException("addWelcomeView must be called before addUseCase");
+        }
+
         farmView.setWeatherController(controller);
+        welcomeView.setWeatherController(controller);
         return this;
     }
 

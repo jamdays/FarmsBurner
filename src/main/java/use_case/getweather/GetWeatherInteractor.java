@@ -40,6 +40,5 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
         farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear);
         outputBoundary.weather(weather, day);
         return openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity());
-
     }
 }

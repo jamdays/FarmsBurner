@@ -1,6 +1,7 @@
 package main.java.view;
 
 
+import main.java.interface_adapter.farm.WeatherController;
 import main.java.interface_adapter.welcome.*;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
     private LoadController loadController;
     private SetCityController setCityController;
     private StartController startController;
+    private WeatherController weatherController;
 
     public WelcomeView(WelcomeViewModel viewModel) {
         this.viewModel = viewModel;
@@ -36,6 +38,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             @Override
             public void actionPerformed(ActionEvent e) {
                 startController.start();
+                weatherController.weather();
                 System.out.println("Start");
             }
         });
@@ -45,6 +48,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadController.load();
+                weatherController.weather();
                 System.out.println("Load");
             }
         });
@@ -59,6 +63,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             public void keyPressed(KeyEvent e){
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     setCityController.setCity(locationText.getText());
+                    weatherController.weather();
                     System.out.println("Set location to " + locationText.getText());
                     locationText.setText("");
                 }
@@ -68,6 +73,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             @Override
             public void actionPerformed(ActionEvent e) {
                 setCityController.setCity(locationText.getText());
+                weatherController.weather();
                 System.out.println("Set location to " + locationText.getText());
             }
         });
@@ -113,6 +119,11 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
 
     public void setStartController(StartController startController) {
         this.startController = startController;
+    }
+
+
+    public void setWeatherController(WeatherController weatherController) {
+        this.weatherController = weatherController;
     }
 
     public static void main(String[] args) {
