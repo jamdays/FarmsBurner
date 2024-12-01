@@ -3,6 +3,9 @@ package main.java.app;
 import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.selectcrop.SelectCropController;
+import main.java.interface_adapter.selectcrop.SelectCropPresenter;
+import main.java.interface_adapter.selectcrop.SelectCropViewModel;
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolPresenter;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
@@ -25,6 +28,8 @@ import main.java.use_case.loadFarm.LoadFarmInteractor;
 import main.java.use_case.loadFarm.LoadFarmOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import main.java.use_case.selectcrop.SelectCropInteractor;
+import main.java.use_case.selectcrop.SelectCropOutputBoundary;
 import main.java.use_case.save.SaveInteractor;
 import main.java.use_case.save.SaveOutputBoundary;
 import main.java.use_case.selecttool.SelectToolInteractor;
@@ -88,6 +93,8 @@ public class AppBuilder {
     private SelectToolViewModel selectToolViewModel;
     private SellInteractor sellInteractor;
     private SelectToolInteractor selectToolInteractor;
+    private SelectCropViewModel selectCropViewModel;
+    private SelectCropInteractor selectCropInteractor;
 
     /**
      * Creates the objects for the Save Use Case and connects the FarmView to its
@@ -261,7 +268,8 @@ public class AppBuilder {
         toolMenuViewModel = new ToolMenuViewModel();
         sellViewModel = new SellViewModel();
         selectToolViewModel = new SelectToolViewModel();
-        farmView = new FarmView(farmViewModel, toolMenuViewModel, sellViewModel, selectToolViewModel);
+        selectCropViewModel = new SelectCropViewModel();
+        farmView = new FarmView(farmViewModel, toolMenuViewModel, sellViewModel, selectToolViewModel, selectCropViewModel);
         views.add(farmView, ViewManager.FARM);
 
         return this;
@@ -432,6 +440,25 @@ public class AppBuilder {
         }
 
         farmView.setSelectToolController(selectToolController);
+        return this;
+    }
+
+    /**
+     * Adds the Select Crop Use Case
+     * @return this builder
+     */
+    public AppBuilder addSelectCropUseCase() {
+        final SelectCropOutputBoundary selectCropOutputBoundary = new SelectCropPresenter(selectCropViewModel);
+        selectCropInteractor = new SelectCropInteractor(selectCropOutputBoundary);
+
+        final SelectCropController selectCropController = new SelectCropController(selectCropInteractor);
+
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setSelectCropController(selectCropController);
         return this;
     }
 

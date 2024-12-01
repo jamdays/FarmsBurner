@@ -1,10 +1,10 @@
 package main.java.view;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import main.java.app.WindowBuilder;
 
 import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.selectcrop.SelectCropController;
+import main.java.interface_adapter.selectcrop.SelectCropViewModel;
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
@@ -12,12 +12,6 @@ import main.java.interface_adapter.toolmenu.BuyController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
-
-
-
-import main.java.view.SelectCropView;
-import main.java.view.SelectToolView;
-import main.java.view.WeatherView;
 
 
 import javax.swing.*;
@@ -28,10 +22,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
 import java.util.List;
 
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
@@ -57,9 +47,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SelectToolViewModel selectToolViewModel;
     private SelectToolController selectToolController;
     private WeatherController weatherController;
+    private SelectCropViewModel selectCropViewModel;
+    private SelectCropController selectCropController;
     private SaveController saveController;
 
-    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel) {
+    public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         //Add background as JLABEL to set images
         backgroundLabel = new JLabel();
         this.setLayout(new BorderLayout());
@@ -94,7 +86,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 String cloudCoverage = currWeatherForCity.get(3);
                 // test show results
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
+                builder.addView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
                 }
         });
         FarmButton sell = new FarmButton("Sell");
@@ -103,7 +95,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 SellView sellView = new SellView(sellViewModel);
-                builder.addInfoView(350, 280, sellView).build().setVisible(true);
+                builder.addView(350, 280, sellView).build().setVisible(true);
                 sellView.setSellController(sellController);
             }
         });
@@ -113,7 +105,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 BuyView buyView = new BuyView(toolMenuViewModel);
-                builder.addInfoView(350, 280, buyView).build().setVisible(true);
+                builder.addView(350, 280, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
@@ -124,7 +116,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(271, 250, new Info()).build().setVisible(true);
+                builder.addView(271, 250, new Info()).build().setVisible(true);
             }
         });
 
@@ -133,9 +125,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         landPanel.setSize(new Dimension(1000, 800));
         landPanel.setBackground(new Color(169, 152, 126, 0));
         GridBagConstraints gbc = new GridBagConstraints();
-        farmLand = new FarmLabel[8][10];
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 10; col++) {
+        farmLand = new FarmLabel[16][20];
+        for (int row = 0; row < 16; row++) {
+            for (int col = 0; col < 20; col++) {
                 final int r = row;
                 final int c = col;
                 FarmLabel cropLabel = new CropLabel("", 20, Color.BLACK);
@@ -184,7 +176,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
 
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addInfoView(271, 250, new SelectCropView()).build().setVisible(true);
+                SelectCropView selectCropView = new SelectCropView(selectCropViewModel);
+                selectCropView.setController(selectCropController);
+                builder.addView(271, 250, selectCropView).build().setVisible(true);
             }
         });
 
@@ -196,7 +190,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 final WindowBuilder builder = new WindowBuilder();
                 SelectToolView selectToolView = new SelectToolView(selectToolViewModel);
                 selectToolView.setController(selectToolController);
-                builder.addInfoView(271, 250, selectToolView).build().setVisible(true);
+                builder.addView(271, 250, selectToolView).build().setVisible(true);
             }
         });
 
@@ -348,6 +342,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setSelectToolController(SelectToolController selectToolController) {
         this.selectToolController = selectToolController;
+    }
+
+    public void setSelectCropController(SelectCropController selectCropController) {
+        this.selectCropController = selectCropController;
     }
 
     public void setWeatherController(WeatherController weatherController) {

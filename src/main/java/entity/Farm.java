@@ -34,6 +34,14 @@ public class Farm implements Serializable {
     private boolean clear;
     private Long logOutTime;
 
+    // activeTool and activeCrop instance variables
+
+    private boolean sprinklerPurchased;
+    private boolean harvesterPurchased;
+
+    private String activeTool;
+    private String activeCrop;
+
     // Constructor
     public Farm(Land[][] farmLand) {
         this.farmLand = farmLand;
@@ -45,12 +53,15 @@ public class Farm implements Serializable {
         this.city = "Toronto";
         // give farm some storage (can store up to 100 crops)
         this.storage = new Storage(100);
+        // initialize so that you don't start with any tools
+        this.sprinklerPurchased = true;
+        this.harvesterPurchased = true;
     }
 
     public Farm(){
-        this.farmLand = new Land[8][10];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 10; j++) {
+        this.farmLand = new Land[16][20];
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 20; j++) {
                 farmLand[i][j] = new Land();
                 if ((i == 3 || i == 4) && (j == 4 || j == 5)){
                     farmLand[i][j].setClaimed(true);
@@ -62,6 +73,9 @@ public class Farm implements Serializable {
         this.sprinkler = new Sprinkler();
         this.city = "Toronto";
         this.storage = new Storage(100);
+        // initialize so that you don't start with any tools
+        this.sprinklerPurchased = false;
+        this.harvesterPurchased = false;
 
     }
 
@@ -87,6 +101,30 @@ public class Farm implements Serializable {
 
     public void setPower(int power) {
         this.power = power;
+    }
+
+    public boolean getSprinklerPurchased() {
+        return this.sprinklerPurchased;
+    }
+
+    public void setSprinklerPurchased(boolean sprinklerPurchased) {
+        this.sprinklerPurchased = sprinklerPurchased;
+    }
+
+    public boolean getHarvesterPurchased() {
+        return this.harvesterPurchased;
+    }
+
+    public void setHarvesterPurchased(boolean harvesterPurchased) {
+        this.harvesterPurchased = harvesterPurchased;
+    }
+
+    public String getActiveTool() {
+        return this.activeTool;
+    }
+
+    public void setActiveTool(String activeTool) {
+        this.activeTool = activeTool;
     }
 
     public void water(int r, int c){

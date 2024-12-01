@@ -18,7 +18,7 @@ public class FarmState {
 
 
     public FarmState() {
-         farmLand = new int[8][10];
+         farmLand = new int[16][20];
     }
 
     public void setLand(int[][] farmLand) {

@@ -51,7 +51,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         createItemPanel("Sprinkler ", "3","Automatically waters crops in 1 2x2 area", mainPanel, gbc, 0);
 
         // TODO: figure out what else goes on the buy menu
-        createItemPanel("Item 2 ", "0", "Item 2 description", mainPanel, gbc, 1);
+        createItemPanel("Harvester ", "5", "Harvester description", mainPanel, gbc, 1);
         createItemPanel("Item 3 ", "0", "Item 3 description", mainPanel, gbc, 2);
         createItemPanel("Item 4 ", "0", "Item 4 description", mainPanel, gbc, 3);
 

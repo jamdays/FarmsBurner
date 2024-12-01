@@ -7,7 +7,7 @@ public class WindowBuilder {
     public int WIDTH;
     public JPanel panel;
 
-    public WindowBuilder addInfoView(int width, int height, JPanel panel) {
+    public WindowBuilder addView(int width, int height, JPanel panel) {
         this.WIDTH = width;
         this.HEIGHT = height;
         this.panel = panel;
@@ -18,6 +18,7 @@ public class WindowBuilder {
         final JFrame frame = new JFrame();
         frame.setSize(WIDTH, HEIGHT);
         frame.add(this.panel);
+        frame.setAlwaysOnTop( true );
         return frame;
     }
 }

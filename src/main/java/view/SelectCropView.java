@@ -1,7 +1,9 @@
 package main.java.view;
 
+import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropState;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
+import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolState;
 import main.java.view.FarmButton;
 
@@ -16,13 +18,15 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
 
     // instance variables
 
-    private String currCrop;
+    private String currCrop = "none";
     private SelectCropViewModel viewModel;
+    private SelectCropController controller;
 
     // constructor
-    public SelectCropView() {
+    public SelectCropView(SelectCropViewModel viewModel) {
         // initialize instance variables
-
+        this.viewModel = viewModel;
+        viewModel.addPropertyChangeListener(this);
         // show the view
         JLabel title = new JLabel("Select a Crop");
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -49,8 +53,10 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         chooseSnowberry.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // haven't connected to controller yet, so temporarily just print out snowberry
-                currSelected.setText("Current Crop: Snowberry");
+                // notify the controller to begin the use case
+                controller.selectCrop("snowberry");
+                // update the currently selected crop
+                currSelected.setText("Current Crop: " + currCrop);
             }
         });
 
@@ -60,8 +66,10 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         chooseRice.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // haven't connected to controller yet, so temporarily just print out rice
-                currSelected.setText("Current Crop: Rice");
+                // notify the controller to begin the use case
+                controller.selectCrop("rice");
+                // update the currently selected crop
+                currSelected.setText("Current Crop: " + currCrop);
             }
         });
 
@@ -71,8 +79,10 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         chooseWheat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // haven't connected to controller yet, so temporarily just print out wheat
-                currSelected.setText("Current Crop: Wheat");
+                // notify the controller to begin the use case
+                controller.selectCrop("wheat");
+                // update the currently selected crop
+                currSelected.setText("Current Crop: " + currCrop);
             }
         });
 
@@ -82,8 +92,10 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         chooseCorn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // haven't connected to controller yet, so temporarily just print out harvester
-                currSelected.setText("Current Crop: Corn");
+                // notify the controller to begin the use case
+                controller.selectCrop("corn");
+                // update the currently selected crop
+                currSelected.setText("Current Crop: " + currCrop);
             }
         });
 
@@ -120,5 +132,9 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
     public void propertyChange(PropertyChangeEvent evt) {
         final SelectCropState state = (SelectCropState) evt.getNewValue();
         this.currCrop = state.getCurrCrop();
+    }
+
+    public void setController(SelectCropController controller) {
+        this.controller = controller;
     }
 }
