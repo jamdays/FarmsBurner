@@ -123,9 +123,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         landPanel.setSize(new Dimension(1000, 800));
         landPanel.setBackground(new Color(169, 152, 126, 0));
         GridBagConstraints gbc = new GridBagConstraints();
-        farmLand = new FarmLabel[8][10];
-        for (int row = 0; row < 8; row++) {
-            for (int col = 0; col < 10; col++) {
+        farmLand = new FarmLabel[16][20];
+        for (int row = 0; row < 16; row++) {
+            for (int col = 0; col < 20; col++) {
                 final int r = row;
                 final int c = col;
                 FarmLabel cropLabel = new CropLabel("", 20, Color.BLACK);
