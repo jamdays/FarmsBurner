@@ -31,6 +31,7 @@ public class ViewManager implements PropertyChangeListener {
             }
             else if (newValue.getView().equals(FARM)) {
                 cardLayout.show(views, FARM);
+
             }
         }
     }

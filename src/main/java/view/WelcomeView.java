@@ -1,6 +1,7 @@
 package main.java.view;
 
 
+import main.java.interface_adapter.farm.LoadFarmController;
 import main.java.interface_adapter.farm.WeatherController;
 import main.java.interface_adapter.welcome.*;
 import main.java.use_case.getweather.InvalidCityException;
@@ -20,6 +21,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
     private SetCityController setCityController;
     private StartController startController;
     private WeatherController weatherController;
+    private LoadFarmController loadFarmController;
 
     public WelcomeView(WelcomeViewModel viewModel) {
         this.viewModel = viewModel;
@@ -49,6 +51,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             @Override
             public void actionPerformed(ActionEvent e) {
                 loadController.load();
+                loadFarmController.load();
                 weatherController.weather();
                 System.out.println("Load");
             }
@@ -140,6 +143,10 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         this.weatherController = weatherController;
     }
 
+    public void setLoadFarmController(LoadFarmController loadFarmController) {
+        this.loadFarmController = loadFarmController;
+    }
+
     public static void main(String[] args) {
         // Welcome panel
         JPanel welcomePanel = new JPanel();
@@ -188,4 +195,5 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
+
 }

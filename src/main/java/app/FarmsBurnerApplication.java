@@ -25,7 +25,6 @@ public class FarmsBurnerApplication {
         String apiKey = props.get("WAK").toString();
         //TODO MAKE A GENERAL DATA ACCESS FOR TESTING ETC
         final OpenWeatherAccess dao = new OpenWeatherAccess(apiKey);
-
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         } catch (Exception e) {
@@ -42,6 +41,7 @@ public class FarmsBurnerApplication {
                 .addSetCityUseCase()
                 .addLoadUseCase()
                 .addFarmView()
+                .addSaveUseCase()
                 .addSellUseCase()
                 .addBuyToolUseCase()
                 .addUpgradeUseCase()
@@ -52,6 +52,7 @@ public class FarmsBurnerApplication {
                 addHarvestUseCase().
                 addWaterUseCase().
                 addSelectToolUseCase().
+                addLoadFarmUseCase().
                 build().setVisible(true);
     }
 }

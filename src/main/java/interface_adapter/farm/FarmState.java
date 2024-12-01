@@ -5,7 +5,7 @@ import main.java.entity.Farm;
 import main.java.entity.Land;
 
 public class FarmState {
-    private final int[][] farmLand;
+    private int[][] farmLand;
     private final int WET = 0B1;
     private final int CLAIMED = 0B10;
     private final int SNOWY = 0B100;
@@ -19,6 +19,10 @@ public class FarmState {
 
     public FarmState() {
          farmLand = new int[8][10];
+    }
+
+    public void setLand(int[][] farmLand) {
+        this.farmLand = farmLand;
     }
 
 
