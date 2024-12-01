@@ -29,6 +29,8 @@ import main.java.use_case.sell.SellInteractor;
 import main.java.use_case.sell.SellOutputBoundary;
 import main.java.use_case.setcity.SetCityInteractor;
 import main.java.use_case.setcity.SetCityOutputBoundary;
+import main.java.use_case.start.StartInteractor;
+import main.java.use_case.start.StartOutputBoundary;
 import main.java.use_case.upgradetool.UpgradeToolInteractor;
 import main.java.use_case.upgradetool.UpgradeToolOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
@@ -46,31 +48,39 @@ import java.awt.*;
  * Builder for farms burner
  */
 public class AppBuilder {
+    //CONSTANTS
     public static final int HEIGHT = 675;
     public static final int WIDTH = 1000;
+    //PANELS
+    private JPanel views;
+    private CardLayout cardLayout;
+    private ViewManager viewManager;
+    //DAOS
     private OpenWeatherAccess farmDAO;
     private SaveFileAccess saveFileAccess;
-    private FarmViewModel farmViewModel;
-    private FarmView farmView;
-    private JPanel views;
-    private WelcomeViewModel welcomeViewModel;
+    //THE WELCOME VIEW, MODEL, AND INTERACTORS
     private WelcomeView welcomeView;
+    private WelcomeViewModel welcomeViewModel;
+    private SetCityInteractor setCityInteractor;
+    private LoadInteractor loadInteractor;
+    private StartInteractor startInteractor;
+    //FARM VIEW, MODEL, AND INTERACTORS
+    private FarmView farmView;
+    private FarmViewModel farmViewModel;
     private PlantInteractor plantInteractor;
     private WaterInteractor waterInteractor;
     private ClaimInteractor claimInteractor;
     private HarvestInteractor harvestInteractor;
     private FertilizeInteractor fertilizeInteractor;
     private GetWeatherInteractor weatherInteractor;
-    private SetCityInteractor setCityInteractor;
-    private LoadInteractor loadInteractor;
-    private CardLayout cardLayout;
-    private ViewManager viewManager;
+    //TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
     private UpgradeToolInteractor upgradeToolInteractor;
+    //SELL MENU VIEW, MODEL, AND INTERACTORS
     private SellViewModel sellViewModel;
-    private SellInteractor sellInteractor;
     private SelectToolViewModel selectToolViewModel;
+    private SellInteractor sellInteractor;
     private SelectToolInteractor selectToolInteractor;
 
 
@@ -170,6 +180,7 @@ public class AppBuilder {
         farmView.setWeatherController(controller);
         return this;
     }
+
     /**
      * Creates the objects for the Harvest Use Case and connects the FarmView to its
      * controller.
@@ -271,6 +282,26 @@ public class AppBuilder {
         }
 
         farmView.setBuyController(buyController);
+        return this;
+    }
+
+
+    /**
+     * Creates the objects for the Start Use Case and connects the WelcomeView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addWelcomeView
+     */
+    public AppBuilder addStartUseCase() {
+        final StartOutputBoundary startOutputBoundary = new StartPresenter(welcomeViewModel);
+        startInteractor = new StartInteractor(startOutputBoundary);
+        final StartController controller = new StartController(startInteractor);
+
+        if (welcomeView == null) {
+            throw new RuntimeException("addWelcomeView must be called before addUseCase");
+        }
+        welcomeView.setStartController(controller);
         return this;
     }
 

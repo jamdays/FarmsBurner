@@ -3,11 +3,14 @@ package main.java.view;
 
 import main.java.interface_adapter.welcome.LoadController;
 import main.java.interface_adapter.welcome.SetCityController;
+import main.java.interface_adapter.welcome.StartController;
 import main.java.interface_adapter.welcome.WelcomeViewModel;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -15,6 +18,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
     private WelcomeViewModel viewModel;
     private LoadController loadController;
     private SetCityController setCityController;
+    private StartController startController;
 
     public WelcomeView(WelcomeViewModel viewModel) {
         this.viewModel = viewModel;
@@ -32,7 +36,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                loadController.load();
+                startController.start();
                 System.out.println("Start");
             }
         });
@@ -41,6 +45,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                loadController.load();
                 System.out.println("Load");
             }
         });
@@ -49,6 +54,17 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         FarmButton location = (new FarmButton("Set Location:", 12));
         locationPanel.add(location);
         JTextField locationText = new JTextField(20);
+        locationText.addKeyListener(new KeyAdapter()
+        {
+            @Override
+            public void keyPressed(KeyEvent e){
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    setCityController.setCity(locationText.getText());
+                    System.out.println("Set location to " + locationText.getText());
+                    locationText.setText("");
+                }
+            }
+        });
         location.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,6 +79,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(welcomePanel);
         this.add(start);
+        this.add(load);
         this.add(locationPanel);
         this.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -90,6 +107,10 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
 
     public void setLoadController(LoadController loadController) {
         this.loadController = loadController;
+    }
+
+    public void setStartController(StartController startController) {
+        this.startController = startController;
     }
 
     public static void main(String[] args) {

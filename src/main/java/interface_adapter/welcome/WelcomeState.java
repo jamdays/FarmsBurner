@@ -20,6 +20,10 @@ public class WelcomeState {
         this.loaded = true;
     }
 
+    public void start(){
+        this.view = "farm";
+    }
+
     public String getView(){
         return view;
     }
