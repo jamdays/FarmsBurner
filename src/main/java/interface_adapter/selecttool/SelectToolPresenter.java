@@ -11,7 +11,7 @@ public class SelectToolPresenter implements SelectToolOutputBoundary {
 
     @Override
     public void selectTool(String tool) {
-        ((SelectToolState) (viewModel.getState())).selectTool(tool);
+        ((SelectToolState) (viewModel.getState())).setCurrTool(tool);
         viewModel.firePropertyChanged("selectTool");
     }
 }
