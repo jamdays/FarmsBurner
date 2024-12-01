@@ -89,6 +89,33 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
                 .toString();
     }
 
+    @Override
+    public List<Long> getTimesForCity(String city) {
+
+        String JSON = JSONForCity(city);
+
+        JsonNode parent = null;
+        try {
+            parent = new ObjectMapper().readTree(JSON);
+        } catch (JsonProcessingException ex) {
+            throw new RuntimeException(ex);
+        }
+
+        // parse JSON using Jackson to get current time, sunrise time and sunset time for the city
+        String currentTimeString = parent.get("dt").toString();
+        Long currentTime = Long.valueOf(currentTimeString);
+        String sunriseTimeString = parent.get("sys").get("sunrise").toString();
+        Long sunriseTime = Long.valueOf(sunriseTimeString);
+        String sunsetTimeString = parent.get("sys").get("sunset").toString();
+        Long sunsetTime = Long.valueOf(sunsetTimeString);
+
+        List<Long> returnList = new ArrayList<>();
+        returnList.add(currentTime);
+        returnList.add(sunriseTime);
+        returnList.add(sunsetTime);
+        return returnList;
+    }
+
     // for testing
     public String JSONForCity(String city) {
         return openWeatherMapClient
