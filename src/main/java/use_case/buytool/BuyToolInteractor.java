@@ -44,5 +44,9 @@ public class BuyToolInteractor implements BuyToolInputBoundary {
                 FarmSingleton.getInstance().getFarm().setSprinklerLevel(currFertilizerLevel + 1);
             }
         }
+        if (tool.equalsIgnoreCase("planter")){
+            outputBoundary.buy("planter");
+            FarmSingleton.getInstance().getFarm().setPlanterPurchased(true);
+        }
     }
 }
