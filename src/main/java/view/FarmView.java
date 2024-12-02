@@ -32,6 +32,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int PLANTED = 0B1000;
     private final int ALIVE = 0B100000;
     private final int FERTILIZED = 0B1000000;
+    private final int WINTER_WHEAT = 0B10000000000;
+    private final int RICE = 0B00100000000;
+    private final int SNOWBERRY = 0B00000000000;
+    private final int CORN = 0B01100000000;
+    private final int WHEAT = 0B01000000000;
     private ClaimController claimController;
     private FertilizeController fertilizeController;
     private HarvestController harvestController;
@@ -50,6 +55,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SelectCropViewModel selectCropViewModel;
     private SelectCropController selectCropController;
     private SaveController saveController;
+    private UseToolController useToolController;
+    private GetActiveToolController getActiveToolController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         //Add background as JLABEL to set images
@@ -138,20 +145,42 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 farmLand[r][c] = cropLabel;
                 cropLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
+                        // if plot is clicked while shift is held down, claim land
                         if ((e.getModifiers() & 1) == 1) {
-                            claimController.claim(r, c);
+                            // make it so that if tiller is active, you till an area
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
+                                useToolController.useTool("tiller", r, c);
+                            }
+                            else {
+                                claimController.claim(r, c);
+                            }
                         }
                         // if plot is clicked while ctrl is held down, plant crop on plot
                         else if (e.getModifiers() == 18) {
-                            plantController.plantCrop(r, c);
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
+                                useToolController.useTool("planter", r, c);
+                            }
+                            else {
+                                plantController.plantCrop(r, c);
+                            }
                         }
                         // if plot is clicked while alt is held down, water plot
                         else if (e.getModifiers() == 24) {
-                            waterController.waterCrop(r, c);
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
+                                useToolController.useTool("sprinkler", r, c);
+                            }
+                            else {
+                                waterController.waterCrop(r, c);
+                            }
                         }
                         // if plot is clicked while ctrl and alt are held down, fertilize crop
                         else if ((e.getModifiers() & (18|24)) == (18|24)) {
-                            fertilizeController.fertilize(r, c);
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
+                                useToolController.useTool("fertilizer", r, c);
+                            }
+                            else {
+                                fertilizeController.fertilize(r, c);
+                            }
                         }
                     }
                 });
@@ -273,40 +302,91 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             Color wetdirt = new Color(50, 20, 20);
             for (int r = 0; r < state.getFarmLand().length; r++) {
                 for (int c = 0; c < state.getFarmLand()[r].length; c++) {
+                    ImageIcon dirtImg = null;
                     // if farmland is claimed, change button color to dirt
                     if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
+                        dirtImg = new ImageIcon("src/main/resources/farmtile2.png");
                         ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile2.png");
                         farmLand[r][c].setIcon(new ImageIcon(dirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         // given the farmland is claimed, if it is wet as well as fertilized, set label image to wet and fertilized dirt
                         if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                            dirtImg = new ImageIcon("src/main/resources/farmtile5.png");
                             ImageIcon wetfertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile5.png");
                             farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
                         // given the farmland is claimed, if it is wet but unfertilized, set label image to wet but unfertilized dirt
                         if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                            dirtImg = new ImageIcon("src/main/resources/farmtile3.png");
                             ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile3.png");
                             farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                        // given the farmland is claimed, if a crop has been planted there, make it appear
-                        if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
-                            farmLand[r][c].setText("T");
-                            farmLand[r][c].setHorizontalTextPosition(JLabel.CENTER);
-                            farmLand[r][c].setForeground(Color.gray);
-                            // set the plant colour to green if and only if it is alive
-                            if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
-                                farmLand[r][c].setForeground(green);
-
-                            }
-                        }
                         // given the farmland is claimed, if it has been fertilized but is dry, set label image to fertilized but dry dirt
                         if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
+                            dirtImg = new ImageIcon("src/main/resources/farmtile4.png");
                             ImageIcon fertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile4.png");
                             farmLand[r][c].setIcon(new ImageIcon(fertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
                     }
+                    // given the farmland is claimed, if a crop has been planted there, make it appear
+                    if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
+                        ImageIcon cropImg = null;
+                        if (state.getCrop() == RICE) {
+                            cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
+
+//                            ImageIcon riceImg = new ImageIcon("src/main/resources/RiceUnready.png");
+//                            farmLand[r][c].setIcon(new ImageIcon(riceImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        } else if (state.getCrop() == CORN) {
+                            cropImg = new ImageIcon("src/main/resources/CornUnready.png");
+
+//                            ImageIcon cornImg = new ImageIcon("src/main/resources/CornUnready.png");
+//                            farmLand[r][c].setIcon(new ImageIcon(cornImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        } else if (state.getCrop() == WHEAT) {
+                            cropImg = new ImageIcon("src/main/resources/WheatUnready.png");
+
+//                            ImageIcon wheatImg = new ImageIcon("src/main/resources/WheatUnready.png");
+//                            farmLand[r][c].setIcon(new ImageIcon(wheatImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        } else if (state.getCrop() == SNOWBERRY) {
+                            cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
+
+//                            ImageIcon snowberryImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
+//                            farmLand[r][c].setIcon(new ImageIcon(snowberryImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        }
+                        if (cropImg != null) {
+                            setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
+                        }
+//                            farmLand[r][c].setText("T");
+//                            farmLand[r][c].setHorizontalTextPosition(JLabel.CENTER);
+//                            farmLand[r][c].setForeground(Color.gray);
+//                            // set the plant colour to green if and only if it is alive
+//                            if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
+//                                farmLand[r][c].setForeground(green);
+//                            }
+                    }
+//                    // given the farmland is claimed, if it has been fertilized but is dry, set label image to fertilized but dry dirt
+//                    if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
+//                        ImageIcon fertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile4.png");
+//                        farmLand[r][c].setIcon(new ImageIcon(fertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+//                    }
                 }
             }
         }
+    }
+
+    private void setLayeredIcons(JLabel label, ImageIcon baseIcon, ImageIcon overlayIcon) {
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setPreferredSize(label.getSize());
+
+        JLabel baseLabel = new JLabel(new ImageIcon(baseIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        baseLabel.setBounds(0, 0, 25, 25);
+        layeredPane.add(baseLabel, JLayeredPane.DEFAULT_LAYER);
+
+        JLabel overlayLabel = new JLabel(new ImageIcon(overlayIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        overlayLabel.setBounds(0, 0, 25, 25);
+        layeredPane.add(overlayLabel, JLayeredPane.PALETTE_LAYER);
+
+        label.setIcon(null); // Clear the existing icon
+        label.setLayout(new BorderLayout());
+        label.add(layeredPane, BorderLayout.CENTER);
     }
 
     public void setClaimController(ClaimController claimController) {
@@ -350,6 +430,14 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setWeatherController(WeatherController weatherController) {
         this. weatherController = weatherController;
+    }
+
+    public void setUseToolController(UseToolController useToolController) {
+        this.useToolController = useToolController;
+    }
+
+    public void setGetActiveToolController(GetActiveToolController getActiveToolController) {
+        this.getActiveToolController = getActiveToolController;
     }
 
     public void setSaveController(SaveController saveController) {

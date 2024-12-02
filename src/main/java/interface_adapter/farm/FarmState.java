@@ -15,6 +15,7 @@ public class FarmState {
     // 0 is night, 1 is day, 2 is sunrise/sunset
     private int day;
     private String weather;
+    private String currTool;
 
 
     public FarmState() {
@@ -60,6 +61,14 @@ public class FarmState {
     public void setWeather(String weather, int day) {
         this.weather = weather;
         this.day = day;
+    }
+
+    public void setActiveTool(String currTool) {
+        this.currTool = currTool;
+    }
+
+    public int getCrop(){
+        return crop;
     }
 
     public String getWeather(){

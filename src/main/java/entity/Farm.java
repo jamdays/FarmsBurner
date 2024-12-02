@@ -1,9 +1,8 @@
 package main.java.entity;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import main.java.use_case.plant.PlantingException;
 
+import javax.swing.*;
 import java.io.Serializable;
-import java.util.List;
 
 /*
 int size
@@ -12,9 +11,6 @@ boolean isDry
 boolean isWet
 boolean isSnowy
  */
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Farm implements Serializable {
 
@@ -32,7 +28,7 @@ public class Farm implements Serializable {
     private boolean snowy;
     private boolean cloudy;
     private boolean clear;
-    private Long logOutTime;
+    private long time;
 
     // activeTool and activeCrop instance variables
 
@@ -44,6 +40,8 @@ public class Farm implements Serializable {
     private int tillerLevel;
     private boolean fertilizerPurchased;
     private int fertilizerLevel;
+    private boolean planterPurchased;
+    private int planterLevel;
 
     private String activeTool;
     private String activeCrop;
@@ -67,6 +65,10 @@ public class Farm implements Serializable {
         this.tillerLevel = 2;
         this.fertilizerPurchased = false;
         this.fertilizerLevel = 2;
+        this.planterPurchased = false;
+        this.planterLevel = 2;
+        this.activeCrop = "none";
+        this.activeTool = "none";
     }
 
     public Farm(){
@@ -89,6 +91,10 @@ public class Farm implements Serializable {
         this.tillerLevel = 2;
         this.fertilizerPurchased = false;
         this.fertilizerLevel = 2;
+        this.planterPurchased = false;
+        this.planterLevel = 2;
+        this.activeCrop = "none";
+        this.activeTool = "none";
 
     }
 
@@ -200,8 +206,15 @@ public class Farm implements Serializable {
         this.farmLand[r][c].water();
     }
 
-    public void plant(int r, int c) throws PlantingException {
-        this.farmLand[r][c].plant();
+    /**
+     * Plants a crop and sets its planting time
+     * @param r row to plant at
+     * @param c column to plant at
+     * @param time time of planting
+     * @throws PlantingException if there is already a plant there
+     */
+    public void plant(int r, int c, Long time) throws PlantingException {
+        this.farmLand[r][c].plant(time);
     }
 
     public void claim(int r, int c){
@@ -247,7 +260,7 @@ public class Farm implements Serializable {
         }
         // otherwise, don't sell them
         else {
-            // TODO make a popup for the user that tells them that they cannot sell crops they don't have
+            JOptionPane.showMessageDialog(null, "You don't have enough crops in storage.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("you don't have enough crops in storage.");
         }
     }
@@ -297,10 +310,60 @@ public class Farm implements Serializable {
     }
 
     public void setLogOutTime(Long time){
-        this.logOutTime = time;
+        this.time = time;
+        for (Land[] lands : farmLand) {
+            for (Land land : lands) {
+                if (land.getCrop() != null)
+                    land.getCrop().update(time);
+            }
+        }
     }
 
-    public Long getLogOutTime(){
-        return logOutTime;
+    public Long getTime(){
+        return time;
+    }
+
+    public boolean isClear() {
+        return clear;
+    }
+
+    public boolean isCloudy() {
+        return cloudy;
+    }
+
+    public boolean isFog() {
+        return fog;
+    }
+
+    public boolean isThunderstorm() {
+        return thunderstorm;
+    }
+
+    public boolean isSnowy() {
+        return snowy;
+    }
+
+    public boolean isRainy() {
+        return rainy;
+    }
+
+    public int getDay(){
+        return day;
+    }
+
+    public boolean getPlanterPurchased() {
+        return this.planterPurchased;
+    }
+
+    public void setPlanterPurchased(boolean planterPurchased) {
+        this.planterPurchased = planterPurchased;
+    }
+
+    public int getPlanterLevel() {
+        return this.planterLevel;
+    }
+
+    public void setPlanterLevel(int planterLevel) {
+        this.planterLevel = planterLevel;
     }
 }

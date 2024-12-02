@@ -3,6 +3,7 @@ package main.java.view;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellState;
 import main.java.interface_adapter.sell.SellViewModel;
+import main.java.entity.FarmSingleton;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,9 +21,9 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
 
     public SellView(SellViewModel sellViewModel) {
         this.sellViewModel = sellViewModel;
-        this.crops = 10000;
-        this.barnBucks = 0;
-        this.cost = 15;
+        this.crops = FarmSingleton.getInstance().getFarm().getStorage().getCrops().size();
+        this.barnBucks = FarmSingleton.getInstance().getFarm().getBarnBucks();
+        // TODO: Add actual cost of crops
 
         JLabel cropLabel = new JLabel("Crops: " + crops);
         cropLabel.setFont(new Font("Tahoma", Font.BOLD, 20));

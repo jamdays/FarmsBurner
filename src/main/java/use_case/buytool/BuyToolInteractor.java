@@ -12,7 +12,6 @@ public class BuyToolInteractor implements BuyToolInputBoundary {
 
     @Override
     public void buy(String tool) {
-        //TODO add other cases later
         if (tool.equalsIgnoreCase("sprinkler")){
             outputBoundary.buy("sprinkler");
             FarmSingleton.getInstance().getFarm().setSprinklerPurchased(true);
@@ -28,6 +27,10 @@ public class BuyToolInteractor implements BuyToolInputBoundary {
         if (tool.equalsIgnoreCase("fertilizer")){
             outputBoundary.buy("fertilizer");
             FarmSingleton.getInstance().getFarm().setFertilizerPurchased(true);
+        }
+        if (tool.equalsIgnoreCase("planter")){
+            outputBoundary.buy("planter");
+            FarmSingleton.getInstance().getFarm().setPlanterPurchased(true);
         }
     }
 }

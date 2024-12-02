@@ -5,7 +5,7 @@ public class SelectCropState {
     private String currCrop;
 
     public void selectCropState() {
-        this.currCrop = "none";
+        this.currCrop = "None";
     }
 
     public void setCurrCrop(String crop) {
