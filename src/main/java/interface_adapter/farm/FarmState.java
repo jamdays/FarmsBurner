@@ -11,9 +11,16 @@ public class FarmState {
     private final int ALIVE = 0B100000;
     private final int FERTILIZED = 0B1000000;
     private final int READY = 0B10000000;
+    private final int CROP_MASK = 0B11100000000;
+    private final int WINTER_WHEAT = 0B10000000000;
+    private final int RICE = 0B00100000000;
+    private final int SNOWBERRY = 0B00000000000;
+    private final int CORN = 0B01100000000;
+    private final int WHEAT = 0B01000000000;
     // 0 is night, 1 is day, 2 is sunrise/sunset
     private int day;
     private String weather;
+    private int crop;
 
 
     public FarmState() {
@@ -33,7 +40,7 @@ public class FarmState {
         //if claimed and not planted set time and update little guy
         if ((farmLand[r][c] & CLAIMED) == CLAIMED && (farmLand[r][c] & PLANTED) != PLANTED) {
             this.cropTimes[r][c] = time;
-            this.farmLand[r][c] = farmLand[r][c] | PLANTED | ALIVE;
+            this.farmLand[r][c] = farmLand[r][c] | PLANTED | ALIVE | crop;
         }
         
     }
@@ -82,6 +89,27 @@ public class FarmState {
                     }
                 }
             }
+        }
+    }
+
+    public void setCrop(String crop){
+        if (crop.equalsIgnoreCase("snowberry")) {
+            this.crop = SNOWBERRY;
+        }
+        // rainy crop
+        else if (crop.equalsIgnoreCase("rice")) {
+            this.crop = RICE;
+        }
+        // dry crop
+        else if (crop.equalsIgnoreCase("wheat")) {
+            this.crop = WHEAT;
+        }
+        // regular crop
+        else if (crop.equalsIgnoreCase("corn")) {
+            this.crop = CORN;
+        }
+        else if (crop.equalsIgnoreCase("winter wheat")){
+            this.crop = WINTER_WHEAT;
         }
     }
 
