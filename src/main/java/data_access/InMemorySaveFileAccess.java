@@ -53,7 +53,7 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
                 farmLand[i][j].setClaimed(land.isClaimed());
                 farmLand[i][j].setFertilized(land.isFertilized());
                 if (land.getCrop() != null) {
-                    Crop crop = new Crop(land.getCrop().getTime(), farmLand[i][j]);
+                    Crop crop = new Corn(land.getCrop().getTime(), farmLand[i][j]);
                     crop.setAge(land.getCrop().getAge());
                     crop.setPrice(land.getCrop().getPrice());
                     crop.setIsAlive(land.getCrop().getIsAlive());

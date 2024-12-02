@@ -2,7 +2,7 @@ package main.java.entity;
 
 import java.io.Serializable;
 
-public class Crop implements Serializable {
+public abstract class Crop implements Serializable {
 
     // instance variables
     private int age;

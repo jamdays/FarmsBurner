@@ -108,7 +108,7 @@ public class Land implements Serializable {
             throw new PlantingException("There is already a plant here");
         } else{
             planted = true;
-            this.crop = new Crop(time, this);
+            this.crop = new Corn(time, this);
         }
 //        if (claimed && !planted && !isSnowy){
 //            planted = true;
