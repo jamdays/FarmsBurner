@@ -50,10 +50,10 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
-        createItemPanel("Sprinkler ", 5,"Waters crops in a large area.", mainPanel, gbc, 0);
-        createItemPanel("Harvester ", 10, "Harvests crops in a large area.", mainPanel, gbc, 1);
-        createItemPanel("Tiller ", 15, "Claims land in a large area.", mainPanel, gbc, 2);
-        createItemPanel("Fertilizer ", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 3);
+        createItemPanel("Sprinkler", 5,"Waters crops in a large area.", mainPanel, gbc, 0);
+        createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 1);
+        createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 2);
+        createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 3);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -70,7 +70,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
         // Item Label
-        JLabel itemLabel = new JLabel("Level 1 " + itemName);
+        JLabel itemLabel = new JLabel("Level 1 " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         // Item Description Label
@@ -92,7 +92,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 //                    System.out.println("Not enough barn bucks");
                 purchaseButton.setText("Upgrade");
                 barnBucks -= price;
-                itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName);
+                itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
             }
         });
 
