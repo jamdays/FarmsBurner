@@ -108,7 +108,7 @@ public class Land implements Serializable {
             throw new PlantingException("There is already a plant here");
         } else{
             planted = true;
-            this.crop = new Crop(time);
+            this.crop = new Crop(time, this);
         }
 //        if (claimed && !planted && !isSnowy){
 //            planted = true;
@@ -141,6 +141,10 @@ public class Land implements Serializable {
             throw new FertilizeException("Land is already fertilized");
         } else {
             fertilized = true;
+            // If the crop is not null set it to fertilized
+            if (crop != null){
+                crop.fertilize();
+            }
         }
     }
 }

@@ -18,7 +18,7 @@ public class PlantInteractor implements PlantInputBoundary{
         try {
             Long time = openWeatherAccess.getTimesForCity(FarmSingleton.getInstance().getFarm().getCity()).get(0);
             FarmSingleton.getInstance().getFarm().plant(r, c, time);
-            outputBoundary.addCrop(r, c);
+            outputBoundary.addCrop(r, c, time);
         }
         catch (PlantingException e) {
             System.out.println(e.getMessage());

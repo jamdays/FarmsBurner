@@ -1,9 +1,7 @@
 package main.java.entity;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import main.java.use_case.plant.PlantingException;
 
 import java.io.Serializable;
-import java.util.List;
 
 /*
 int size
@@ -12,9 +10,6 @@ boolean isDry
 boolean isWet
 boolean isSnowy
  */
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Farm implements Serializable {
 
@@ -32,7 +27,7 @@ public class Farm implements Serializable {
     private boolean snowy;
     private boolean cloudy;
     private boolean clear;
-    private Long logOutTime;
+    private long time;
 
     // activeTool and activeCrop instance variables
 
@@ -304,11 +299,17 @@ public class Farm implements Serializable {
     }
 
     public void setLogOutTime(Long time){
-        this.logOutTime = time;
+        this.time = time;
+        for (Land[] lands : farmLand) {
+            for (Land land : lands) {
+                if (land.getCrop() != null)
+                    land.getCrop().update(time);
+            }
+        }
     }
 
-    public Long getLogOutTime(){
-        return logOutTime;
+    public Long getTime(){
+        return time;
     }
 
     public boolean isClear() {
