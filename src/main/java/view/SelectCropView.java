@@ -1,5 +1,6 @@
 package main.java.view;
 
+import main.java.interface_adapter.farm.SetCropController;
 import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropState;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
@@ -21,6 +22,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
     private String currCrop = "none";
     private SelectCropViewModel viewModel;
     private SelectCropController controller;
+    private SetCropController cropController;
 
     // constructor
     public SelectCropView(SelectCropViewModel viewModel) {
@@ -55,6 +57,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent e) {
                 // notify the controller to begin the use case
                 controller.selectCrop("snowberry");
+                cropController.selectCrop("snowberry");
                 // update the currently selected crop
                 currSelected.setText("Current Crop: " + currCrop);
             }
@@ -68,6 +71,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent e) {
                 // notify the controller to begin the use case
                 controller.selectCrop("rice");
+                cropController.selectCrop("rice");
                 // update the currently selected crop
                 currSelected.setText("Current Crop: " + currCrop);
             }
@@ -81,6 +85,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent e) {
                 // notify the controller to begin the use case
                 controller.selectCrop("wheat");
+                cropController.selectCrop("wheat");
                 // update the currently selected crop
                 currSelected.setText("Current Crop: " + currCrop);
             }
@@ -94,6 +99,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
             public void actionPerformed(ActionEvent e) {
                 // notify the controller to begin the use case
                 controller.selectCrop("corn");
+                cropController.selectCrop("corn");
                 // update the currently selected crop
                 currSelected.setText("Current Crop: " + currCrop);
             }
@@ -136,5 +142,9 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
 
     public void setController(SelectCropController controller) {
         this.controller = controller;
+    }
+
+    public void setCropController(SetCropController cropController) {
+        this.cropController = cropController;
     }
 }
