@@ -12,6 +12,7 @@ public abstract class Crop implements Serializable {
     private Long time;
     private Land land;
     private boolean fertilized;
+    private String name;
 
     // constructor
     public Crop(int age, boolean isAlive, int price, Long time, Land land) {
@@ -57,6 +58,27 @@ public abstract class Crop implements Serializable {
     public void setPrice(int price) {
         this.price = price;
     }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public Land getLand() {
+        return this.land;
+    }
+
+    public void setLand(Land land){
+        this.land = land;
+    }
+
+    public void setTime(long time){
+        this.time = time;
+    }
+
 
     // getter and setter for waterlevel
     public int getWaterlevel() {return this.waterlevel;}
