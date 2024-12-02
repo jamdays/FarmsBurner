@@ -303,4 +303,32 @@ public class Farm implements Serializable {
     public Long getLogOutTime(){
         return logOutTime;
     }
+
+    public boolean isClear() {
+        return clear;
+    }
+
+    public boolean isCloudy() {
+        return cloudy;
+    }
+
+    public boolean isFog() {
+        return fog;
+    }
+
+    public boolean isThunderstorm() {
+        return thunderstorm;
+    }
+
+    public boolean isSnowy() {
+        return snowy;
+    }
+
+    public boolean isRainy() {
+        return rainy;
+    }
+
+    public int getDay(){
+        return day;
+    }
 }
