@@ -14,23 +14,23 @@ public class SelectCropInteractor implements SelectCropInputBoundary {
     public void selectCrop(String crop) {
         // cold weather crop
         if (crop.equalsIgnoreCase("snowberry")) {
-            outputBoundary.selectCrop("snowberry");
-            FarmSingleton.getInstance().getFarm().setActiveCrop("snowberry");
+            outputBoundary.selectCrop("Snowberry");
+            FarmSingleton.getInstance().getFarm().setActiveCrop("Snowberry");
         }
         // rainy crop
         else if (crop.equalsIgnoreCase("rice")) {
-            outputBoundary.selectCrop("rice");
-            FarmSingleton.getInstance().getFarm().setActiveCrop("rice");
+            outputBoundary.selectCrop("Rice");
+            FarmSingleton.getInstance().getFarm().setActiveCrop("Rice");
         }
         // dry crop
         else if (crop.equalsIgnoreCase("wheat")) {
-            outputBoundary.selectCrop("wheat");
-            FarmSingleton.getInstance().getFarm().setActiveCrop("wheat");
+            outputBoundary.selectCrop("Wheat");
+            FarmSingleton.getInstance().getFarm().setActiveCrop("Wheat");
         }
         // regular crop
         else if (crop.equalsIgnoreCase("corn")) {
-            outputBoundary.selectCrop("corn");
-            FarmSingleton.getInstance().getFarm().setActiveCrop("corn");
+            outputBoundary.selectCrop("Corn");
+            FarmSingleton.getInstance().getFarm().setActiveCrop("Corn");
         }
     }
 }
