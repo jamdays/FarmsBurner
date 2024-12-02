@@ -60,6 +60,8 @@ import main.java.use_case.fertilize.FertilizeInteractor;
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
+import main.java.use_case.gettoolbought.GetToolBoughtInteractor;
+import main.java.use_case.gettoolbought.GetToolBoughtOutputBoundary;
 import main.java.use_case.getweather.GetWeatherInteractor;
 import main.java.use_case.getweather.GetWeatherOutputBoundary;
 import main.java.use_case.harvest.HarvestInteractor;
@@ -132,7 +134,8 @@ public class AppBuilder {
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
     private UpgradeToolInteractor upgradeToolInteractor;
-    // SELL MENU VIEW, MODEL, AND INTERACTORS
+    private GetToolBoughtInteractor getToolBoughtInteractor;
+    //SELL MENU VIEW, MODEL, AND INTERACTORS
     private SellViewModel sellViewModel;
     private SelectToolViewModel selectToolViewModel;
     private SellInteractor sellInteractor;
@@ -410,6 +413,23 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the GetToolBought Use Case
+     * @return this builder
+     */
+    public AppBuilder addGetToolBoughtUseCase() {
+        final GetToolBoughtOutputBoundary getToolBoughtOutputBoundary = new GetToolBoughtPresenter(toolMenuViewModel);
+        getToolBoughtInteractor = new GetToolBoughtInteractor(getToolBoughtOutputBoundary);
+
+        final GetToolBoughtController getToolBoughtController = new GetToolBoughtController(getToolBoughtInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setGetToolBoughtController(getToolBoughtController);
+        return this;
+    }
     /**
      * Creates the objects for the Start Use Case and connects the WelcomeView to its
      * controller.
