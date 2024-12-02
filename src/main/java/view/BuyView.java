@@ -92,6 +92,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 //                    System.out.println("Not enough barn bucks");
                 purchaseButton.setText("Upgrade");
                 barnBucks -= price;
+                itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName);
             }
         });
 
