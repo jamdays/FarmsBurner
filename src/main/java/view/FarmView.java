@@ -122,7 +122,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addView(271, 250, new Info()).build().setVisible(true);
+                builder.addView(300, 500, new Info()).build().setVisible(true);
             }
         });
 
