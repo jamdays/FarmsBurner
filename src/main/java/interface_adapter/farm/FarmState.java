@@ -118,6 +118,14 @@ public class FarmState {
         this.currTool = currTool;
     }
 
+    // public int getCrop(){
+    //    return crop;
+    // }
+
+    // public void setActiveTool(String currTool) {
+    //   this.currTool = currTool;
+    // }
+
     public String getWeather(){
         return weather;
     }

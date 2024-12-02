@@ -12,7 +12,7 @@ public class UseToolPresenter implements UseToolOutputBoundary {
     }
 
     @Override
-    public void useTool(String tool, int rStart, int cStart, int amount) {
+    public void useTool(String tool, int rStart, int cStart, int amount, long time) {
         if (tool.equalsIgnoreCase("sprinkler")) {
             for (int i = 0; i < amount; i++) {
                 for (int j = 0; j < amount; j++) {
@@ -48,7 +48,7 @@ public class UseToolPresenter implements UseToolOutputBoundary {
         if (tool.equalsIgnoreCase("planter")) {
             for (int i = 0; i < amount; i++) {
                 for (int j = 0; j < amount; j++) {
-                    ((FarmState) (viewModel.getState())).plantCrop(rStart + i, cStart + j);
+                    ((FarmState) (viewModel.getState())).plantCrop(rStart + i, cStart + j, time);
                 }
             }
             viewModel.firePropertyChanged("planterUsed");

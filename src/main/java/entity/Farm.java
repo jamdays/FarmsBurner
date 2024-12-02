@@ -366,4 +366,5 @@ public class Farm implements Serializable {
     public void setPlanterLevel(int planterLevel) {
         this.planterLevel = planterLevel;
     }
+
 }

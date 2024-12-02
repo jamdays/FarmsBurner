@@ -52,7 +52,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         // TODO: how much area does the sprinkler water?
       
         createItemPanel("Sprinkler", 5,"Waters crops in a large area.", mainPanel, gbc, 0);
-        createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1)
+        createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1);
         createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 2);
         createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 3);
         createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
