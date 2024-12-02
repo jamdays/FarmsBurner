@@ -200,8 +200,15 @@ public class Farm implements Serializable {
         this.farmLand[r][c].water();
     }
 
-    public void plant(int r, int c) throws PlantingException {
-        this.farmLand[r][c].plant();
+    /**
+     * Plants a crop and sets its planting time
+     * @param r row to plant at
+     * @param c column to plant at
+     * @param time time of planting
+     * @throws PlantingException if there is already a plant there
+     */
+    public void plant(int r, int c, Long time) throws PlantingException {
+        this.farmLand[r][c].plant(time);
     }
 
     public void claim(int r, int c){

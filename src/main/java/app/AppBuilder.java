@@ -127,7 +127,7 @@ public class AppBuilder {
      */
     public AppBuilder addPlantUseCase() {
         final PlantOutputBoundary plantOutputBoundary = new PlantPresenter(farmViewModel);
-        plantInteractor = new PlantInteractor(plantOutputBoundary);
+        plantInteractor = new PlantInteractor(plantOutputBoundary, farmDAO);
 
 
         final PlantController plantController = new PlantController(plantInteractor);

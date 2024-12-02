@@ -21,7 +21,7 @@ public class SaveInteractorTest {
         farm.claim(1, 1);
         farm.claim(2, 2);
         farm.claim(3, 1);
-        farm.plant(1, 1);
+        farm.plant(1, 1, 1L);
         FarmSingleton.getInstance().setFarm(farm);
         SaveDataAccessInterface saveDAO = new SaveDataAccessInterface() {
 
