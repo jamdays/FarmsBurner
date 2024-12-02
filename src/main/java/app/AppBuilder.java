@@ -18,6 +18,8 @@ import main.java.use_case.buytool.BuyToolInteractor;
 import main.java.use_case.buytool.BuyToolOutputBoundary;
 import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
+import main.java.use_case.getactivetool.GetActiveToolInteractor;
+import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
 import main.java.use_case.getweather.GetWeatherInteractor;
 import main.java.use_case.getweather.GetWeatherOutputBoundary;
 import main.java.use_case.harvest.HarvestInteractor;
@@ -44,6 +46,8 @@ import main.java.use_case.start.StartInteractor;
 import main.java.use_case.start.StartOutputBoundary;
 import main.java.use_case.upgradetool.UpgradeToolInteractor;
 import main.java.use_case.upgradetool.UpgradeToolOutputBoundary;
+import main.java.use_case.usetool.UseToolInteractor;
+import main.java.use_case.usetool.UseToolOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
 import main.java.use_case.water.WaterOutputBoundary;
 import main.java.view.FarmView;
@@ -86,6 +90,8 @@ public class AppBuilder {
     private GetWeatherInteractor weatherInteractor;
     private SaveInteractor saveInteractor;
     private LoadFarmInteractor loadFarmInteractor;
+    private GetActiveToolInteractor getActiveToolInteractor;
+    private UseToolInteractor useToolInteractor;
     private SetCropInteractor setCropInteractor;
     //TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
@@ -461,6 +467,38 @@ public class AppBuilder {
         }
 
         farmView.setSelectToolController(selectToolController);
+        return this;
+    }
+
+    /**
+     * Adds the get active Tool Use Case
+     * @return this builder
+     */
+    public AppBuilder addGetActiveToolUseCase() {
+        final GetActiveToolOutputBoundary getActiveToolOutputBoundary = new GetActiveToolPresenter(farmViewModel);
+        getActiveToolInteractor = new GetActiveToolInteractor(getActiveToolOutputBoundary);
+        final GetActiveToolController controller = new GetActiveToolController(getActiveToolInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setGetActiveToolController(controller);
+        return this;
+    }
+
+    /**
+     * Adds the useTool Use Case
+     * @return this builder
+     */
+    public AppBuilder addUseToolUseCase() {
+        final UseToolOutputBoundary useToolOutputBoundary = new UseToolPresenter(farmViewModel);
+        useToolInteractor = new UseToolInteractor(useToolOutputBoundary);
+        final UseToolController controller = new UseToolController(useToolInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setUseToolController(controller);
         return this;
     }
 

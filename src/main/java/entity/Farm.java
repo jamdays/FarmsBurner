@@ -40,6 +40,8 @@ public class Farm implements Serializable {
     private int tillerLevel;
     private boolean fertilizerPurchased;
     private int fertilizerLevel;
+    private boolean planterPurchased;
+    private int planterLevel;
 
     private String activeTool;
     private String activeCrop;
@@ -63,6 +65,10 @@ public class Farm implements Serializable {
         this.tillerLevel = 2;
         this.fertilizerPurchased = false;
         this.fertilizerLevel = 2;
+        this.planterPurchased = false;
+        this.planterLevel = 2;
+        this.activeCrop = "none";
+        this.activeTool = "none";
     }
 
     public Farm(){
@@ -85,6 +91,10 @@ public class Farm implements Serializable {
         this.tillerLevel = 2;
         this.fertilizerPurchased = false;
         this.fertilizerLevel = 2;
+        this.planterPurchased = false;
+        this.planterLevel = 2;
+        this.activeCrop = "none";
+        this.activeTool = "none";
 
     }
 
@@ -339,5 +349,21 @@ public class Farm implements Serializable {
 
     public int getDay(){
         return day;
+    }
+
+    public boolean getPlanterPurchased() {
+        return this.planterPurchased;
+    }
+
+    public void setPlanterPurchased(boolean planterPurchased) {
+        this.planterPurchased = planterPurchased;
+    }
+
+    public int getPlanterLevel() {
+        return this.planterLevel;
+    }
+
+    public void setPlanterLevel(int planterLevel) {
+        this.planterLevel = planterLevel;
     }
 }
