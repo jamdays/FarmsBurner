@@ -136,6 +136,8 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        if (evt.getPropertyName().equals("buy")){
+            System.out.println("Property Change fired (Buying)");
+        }
     }
 }
