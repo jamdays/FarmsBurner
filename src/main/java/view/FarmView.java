@@ -257,7 +257,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final FarmState state = (FarmState) evt.getNewValue();
-        // TODO add default background in case it doesn't exist
         if (evt.getPropertyName().equals("weather")) {
             String background = "src/main/resources/background-";
             if (state.getDay() == 0) {
@@ -329,7 +328,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
                             // Snowy & Wet & Fertilized
                             if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
-                                dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
+                                dirtImg = new ImageIcon("src/main/resources/snowytiles5.png");
                                 ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles2.png");
                                 farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             } else {
@@ -351,7 +350,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             }
                         }
-                        if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
                             // Snowy & Fertilized
                             if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");
@@ -366,7 +365,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     }
 
                     // Snowy & Unclaimed
-                    if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                    else if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
                         dirtImg = new ImageIcon("src/main/resources/snowytiles1.png");
                         ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles1.png");
                         farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));

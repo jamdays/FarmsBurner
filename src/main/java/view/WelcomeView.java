@@ -39,7 +39,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
 
         // Welcome panel
 //        FarmLabel welcome = new FarmLabel("Welcome to", 24);
-//        title = new FarmLabel("Farms Burner (Toronto)", 36);
+         title = new FarmLabel("(Toronto)", 36);
 //        welcomePanel.add(welcome);
 //        welcomePanel.add(title);
 //        welcomePanel.setBackground(new java.awt.Color(169, 152, 126));
@@ -116,15 +116,17 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         spacerLabel.setFont(new Font("Arial", Font.PLAIN, 350));
 
         // Buttons Panel
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        JPanel buttonsPanel = new JPanel();
         buttonsPanel.setOpaque(false);
         buttonsPanel.add(start);
         buttonsPanel.add(load);
 
-
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        buttonsPanel.add(title);
         // Main Panel
         backgroundLabel.setLayout(new BoxLayout(backgroundLabel, BoxLayout.Y_AXIS));
         backgroundLabel.add(spacerLabel);
+        backgroundLabel.add(title);
         backgroundLabel.add(start);
         backgroundLabel.add(load);
 //        backgroundLabel.add(buttonsPanel);
@@ -157,7 +159,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("city")) {
             String city = ((WelcomeState) (evt.getNewValue())).getCity();
-            this.title.setText("Farms Burner (" + city + ")");
+            this.title.setText("(" + city + ")");
         }
     }
 
