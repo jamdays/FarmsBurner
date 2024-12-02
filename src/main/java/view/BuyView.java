@@ -70,7 +70,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
         // Item Label
-        JLabel itemLabel = new JLabel("Level 1 " + itemName + " ");
+        JLabel itemLabel = new JLabel("Level 0 " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         // Item Description Label
