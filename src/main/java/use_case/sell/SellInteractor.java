@@ -1,7 +1,12 @@
 package main.java.use_case.sell;
 
 import main.java.entity.Crop;
+import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
+import main.java.entity.Storage;
+
+import java.util.ArrayList;
+
 
 public class SellInteractor implements SellInputBoundary {
 
@@ -13,7 +18,9 @@ public class SellInteractor implements SellInputBoundary {
 
     @Override
     public void execute(int quantity) {
-        FarmSingleton.getInstance().getFarm().sell(quantity);
+        Farm farm = FarmSingleton.getInstance().getFarm();
+        farm.sell(quantity);
         outputBoundary.sell(quantity);
     }
+
 }
