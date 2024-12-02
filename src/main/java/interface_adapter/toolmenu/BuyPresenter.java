@@ -13,7 +13,6 @@ public class BuyPresenter implements BuyToolOutputBoundary {
     @Override
     public void buy(String tool) {
         ((ToolMenuState)(viewModel.getState())).buy(tool);
-        ((ToolMenuState)(viewModel.getState())).upgrade(tool);
         viewModel.firePropertyChanged("buy");
 
     }

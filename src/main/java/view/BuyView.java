@@ -1,9 +1,6 @@
 package main.java.view;
 
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.ToolMenuState;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,13 +13,16 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     private ToolMenuViewModel viewModel;
     private BuyController buyController;
     private UpgradeController upgradeController;
+    private GetToolBoughtController getToolBoughtController;
     private int barnBucks;
 
-    public BuyView(ToolMenuViewModel viewModel) {
+    public BuyView(ToolMenuViewModel viewModel, GetToolBoughtController getToolBoughtController) {
         // initialize instance variables
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
         this.barnBucks = 10;
+        this.getToolBoughtController = getToolBoughtController;
+
         // Buy Menu
         FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
         buyMenuTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -73,19 +73,41 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
         // Item Label
-        JLabel itemLabel = new JLabel("Level 0 " + itemName + " ");
+        int level = (int)getToolBoughtController.getToolBought(itemName).get(1);
+        JLabel itemLabel = new JLabel("Level" + " " + (level - 1) + " " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         // Item Description Label
         JLabel descriptionLabel = new JLabel(description);
         descriptionLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 
+        JButton purchaseButton = new JButton();
         // purchaseButton
-        JButton purchaseButton = new JButton("Purchase");
+        if (!(boolean)getToolBoughtController.getToolBought(itemName).get(0)) {
+            purchaseButton.setText("Purchase");
+        }
+        else if ((int)getToolBoughtController.getToolBought(itemName).get(1) < 5) {
+            purchaseButton.setText("Upgrade");
+        }
+        else {
+            purchaseButton.setText("Max Level");
+        }
         purchaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                buyController.buy(itemName);
+                // buy tool if unpurchased
+                if (!(boolean)getToolBoughtController.getToolBought(itemName).get(0)) {
+                    buyController.buy(itemName);
+                    purchaseButton.setText("Upgrade");
+                }
+                // upgrade tool if purchased and not maxed out
+                else if ((int)getToolBoughtController.getToolBought(itemName).get(1) < 5) {
+                    upgradeController.upgrade(itemName);
+                    itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
+                    if ((int)getToolBoughtController.getToolBought(itemName).get(1) == 5) {
+                        purchaseButton.setText("Max Level");
+                    }
+                }
                 // TODO: access barnBucks and add to tools
 //                if (priceInt < barnBucks) {
 //                    barnBucks -= priceInt;
@@ -93,9 +115,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 //                    System.out.println("Purchased " + itemName);
 //                } else {
 //                    System.out.println("Not enough barn bucks");
-                purchaseButton.setText("Upgrade");
                 barnBucks -= price;
-                itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
             }
         });
 
@@ -132,6 +152,10 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         this.upgradeController = upgradeController;
     }
 
+    public void setGetToolBoughtController(GetToolBoughtController getToolBoughtController) {
+        this.getToolBoughtController = getToolBoughtController;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
@@ -140,5 +164,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Change the level and Barnbucks somehow
+        System.out.println("property change fired");
     }
 }

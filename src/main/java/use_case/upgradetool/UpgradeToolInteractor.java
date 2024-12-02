@@ -18,6 +18,14 @@ public class UpgradeToolInteractor implements UpgradeToolInputBoundary{
                 FarmSingleton.getInstance().getFarm().setSprinklerLevel(currSprinklerLevel + 1);
             }
         }
+        if (tool.equalsIgnoreCase("planter")){
+            outputBoundary.upgrade("planter");
+            int currPlanterLevel = FarmSingleton.getInstance().getFarm().getPlanterLevel();
+            if (currPlanterLevel < 5) {
+                FarmSingleton.getInstance().getFarm().setPlanterLevel(currPlanterLevel + 1);
+            }
+
+        }
         if (tool.equalsIgnoreCase("harvester")){
             outputBoundary.upgrade("harvester");
             int currHarvesterLevel = FarmSingleton.getInstance().getFarm().getHarvesterLevel();

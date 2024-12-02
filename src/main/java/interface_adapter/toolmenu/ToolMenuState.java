@@ -3,6 +3,8 @@ package main.java.interface_adapter.toolmenu;
 public class ToolMenuState {
     int sprinklerLevel;
     boolean sprinklerPurchased;
+    int planterLevel;
+    boolean planterPurchased;
     int harvesterLevel;
     boolean harvesterPurchased;
     int tillerLevel;
@@ -11,13 +13,15 @@ public class ToolMenuState {
     boolean fertilizerPurchased;
 
     public ToolMenuState() {
-        this.sprinklerLevel = 1;
+        this.sprinklerLevel = 2;
         this.sprinklerPurchased = false;
-        this.harvesterLevel = 1;
+        this.planterLevel = 2;
+        this.planterPurchased = false;
+        this.harvesterLevel = 2;
         this.harvesterPurchased = false;
-        this.tillerLevel = 1;
+        this.tillerLevel = 2;
         this.tillerPurchased = false;
-        this.fertilizerLevel = 1;
+        this.fertilizerLevel = 2;
         this.fertilizerPurchased = false;
     }
 
@@ -25,6 +29,11 @@ public class ToolMenuState {
         if (tool.equalsIgnoreCase("sprinkler")) {
             if (sprinklerPurchased == false) {
                 sprinklerPurchased = true;
+            }
+        }
+        if (tool.equalsIgnoreCase("planter")) {
+            if (planterPurchased == false) {
+                planterPurchased = true;
             }
         }
         if (tool.equalsIgnoreCase("harvester")) {
@@ -44,10 +53,38 @@ public class ToolMenuState {
         }
     }
 
+    public void setToolPurchased(String tool, boolean bought, int level) {
+        if (tool.equalsIgnoreCase("sprinkler")) {
+            sprinklerPurchased = bought;
+            sprinklerLevel = level;
+        }
+        if (tool.equalsIgnoreCase("planter")) {
+            planterPurchased = bought;
+            planterLevel = level;
+        }
+        if (tool.equalsIgnoreCase("harvester")) {
+            harvesterPurchased = bought;
+            harvesterLevel = level;
+        }
+        if (tool.equalsIgnoreCase("tiller")) {
+            tillerPurchased = bought;
+            tillerLevel = level;
+        }
+        if (tool.equalsIgnoreCase("fertilizer")) {
+            fertilizerPurchased = bought;
+            fertilizerLevel = level;
+        }
+    }
+
     public void upgrade(String tool){
         if (tool.equalsIgnoreCase("sprinkler")) {
             if (sprinklerLevel < 5) {
                 sprinklerLevel += 1;
+            }
+        }
+        if (tool.equalsIgnoreCase("planter")) {
+            if (planterLevel < 5) {
+                planterLevel += 1;
             }
         }
         if (tool.equalsIgnoreCase("harvester")) {
