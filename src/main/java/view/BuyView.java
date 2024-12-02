@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.ToolMenuState;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
 
@@ -138,8 +139,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("buy")){
-            System.out.println("Property Change fired (Buying)");
-        }
+        // Change the level and Barnbucks somehow
     }
 }

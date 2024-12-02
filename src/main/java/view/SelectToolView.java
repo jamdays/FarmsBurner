@@ -17,7 +17,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
     // instance variables
 
     private SelectToolViewModel viewModel;
-    private String currTool = "none";
+    private String currTool = "None";
     private SelectToolController controller;
 
     // constructor
