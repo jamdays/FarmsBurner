@@ -52,19 +52,19 @@ public class FarmsBurnerApplication {
                 .addSellUseCase()
                 .addBuyToolUseCase()
                 .addUpgradeUseCase()
-                .addPlantUseCase().
-                addClaimUseCase().
-                addFertilizeUseCase().
-                addWeatherUseCase().
-                addHarvestUseCase().
-                addWaterUseCase().
-                addSelectToolUseCase().
-                addLoadFarmUseCase().
-                addSelectCropUseCase().
-                addGetActiveToolUseCase().
-                addUseToolUseCase().
-                addSetCropUseCase().
-                addGetToolBoughtUseCase().
-                build().setVisible(true);
+                .addPlantUseCase()
+                .addClaimUseCase()
+                .addFertilizeUseCase()
+                .addWeatherUseCase()
+                .addHarvestUseCase()
+                .addWaterUseCase()
+                .addSelectToolUseCase()
+                .addLoadFarmUseCase()
+                .addSelectCropUseCase()
+                .addGetActiveToolUseCase()
+                .addUseToolUseCase()
+                .addSetCropUseCase()
+                .addGetToolBoughtUseCase()
+                .build().setVisible(true);
     }
 }

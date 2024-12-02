@@ -40,7 +40,13 @@ import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellPresenter;
 import main.java.interface_adapter.sell.SellViewModel;
-import main.java.interface_adapter.toolmenu.*;
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.BuyPresenter;
+import main.java.interface_adapter.toolmenu.GetToolBoughtController;
+import main.java.interface_adapter.toolmenu.GetToolBoughtPresenter;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.UpgradePresenter;
 import main.java.interface_adapter.welcome.LoadController;
 import main.java.interface_adapter.welcome.LoadPresenter;
 import main.java.interface_adapter.welcome.SetCityController;
@@ -131,7 +137,7 @@ public class AppBuilder {
     private BuyToolInteractor buyToolInteractor;
     private UpgradeToolInteractor upgradeToolInteractor;
     private GetToolBoughtInteractor getToolBoughtInteractor;
-    //SELL MENU VIEW, MODEL, AND INTERACTORS
+    // SELL MENU VIEW, MODEL, AND INTERACTORS
     private SellViewModel sellViewModel;
     private SelectToolViewModel selectToolViewModel;
     private SellInteractor sellInteractor;
@@ -410,8 +416,9 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the GetToolBought Use Case
+     * Adds the GetToolBought Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addGetToolBoughtUseCase() {
         final GetToolBoughtOutputBoundary getToolBoughtOutputBoundary = new GetToolBoughtPresenter(toolMenuViewModel);
@@ -433,6 +440,7 @@ public class AppBuilder {
      * @return this builder
      * @throws RuntimeException if this method is called before addWelcomeView
      */
+
     public AppBuilder addStartUseCase() {
         final StartOutputBoundary startOutputBoundary = new StartPresenter(welcomeViewModel);
         startInteractor = new StartInteractor(startOutputBoundary);

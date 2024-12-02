@@ -16,7 +16,7 @@ public class LandTest extends TestCase {
 
         // isPlanted tests
         assertFalse(land.isPlanted());
-        land.plant();
+//        land.plant();
         assertTrue(land.isPlanted());
         assertNotNull(land.getCrop());
 
@@ -50,12 +50,12 @@ public class LandTest extends TestCase {
         assertNull(land.getCrop());
 
         // Land with parameters tests
-        Land land2 = new Land(new AbstractCrop());
-        assertTrue(land2.isPlanted());
-        assertTrue(land2.isClaimed());
-        assertTrue(land2.isFertilized());
-        assertFalse(land2.isWet());
-        assertFalse(land2.getIsSnowy());
+//        Land land2 = new Land(new AbstractCrop());
+//        assertTrue(land2.isPlanted());
+//        assertTrue(land2.isClaimed());
+//        assertTrue(land2.isFertilized());
+//        assertFalse(land2.isWet());
+//        assertFalse(land2.getIsSnowy());
 
     }
      */
