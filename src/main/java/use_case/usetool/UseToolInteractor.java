@@ -57,7 +57,10 @@ public class UseToolInteractor implements UseToolInputBoundary {
             for (int i = 0; i < FarmSingleton.getInstance().getFarm().getFertilizerLevel(); i++) {
                 for (int j = 0; j < FarmSingleton.getInstance().getFarm().getFertilizerLevel(); j++) {
                     // TODO: make it so that you don't fertilize tiles that are out of bounds
-                    FarmSingleton.getInstance().getFarm().fertilize(rStart + i, cStart + j);
+                    boolean alreadyFertilized = FarmSingleton.getInstance().getFarm().getFarmLand()[rStart + i][cStart + i].isFertilized();
+                    if (!alreadyFertilized) {
+                        FarmSingleton.getInstance().getFarm().fertilize(rStart + i, cStart + j);
+                    }
                 }
             }
             outputBoundary.useTool(tool, rStart, cStart, FarmSingleton.getInstance().getFarm().getFertilizerLevel(), openWeatherAccess.getTimesForCity(FarmSingleton.getInstance().getFarm().getCity()).get(0));

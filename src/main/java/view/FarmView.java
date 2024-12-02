@@ -25,6 +25,7 @@ import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.GetToolBoughtController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
 
@@ -67,6 +68,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private UseToolController useToolController;
     private GetActiveToolController getActiveToolController;
     private SetCropController setCropController;
+    private GetToolBoughtController getToolBoughtController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         // Add background as JLABEL to set images
@@ -120,8 +122,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                BuyView buyView = new BuyView(toolMenuViewModel);
-                builder.addView(380, 300, buyView).build().setVisible(true);
+                System.out.println(getToolBoughtController.toString());
+                BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController);
+                builder.addView(380, 280, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
@@ -257,7 +260,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final FarmState state = (FarmState) evt.getNewValue();
-        // TODO add default background in case it doesn't exist
         if (evt.getPropertyName().equals("weather")) {
             String background = "src/main/resources/background-";
             if (state.getDay() == 0) {
@@ -313,7 +315,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             for (int r = 0; r < state.getFarmLand().length; r++) {
                 for (int c = 0; c < state.getFarmLand()[r].length; c++) {
                     ImageIcon dirtImg = null;
-                    // if farmland is claimed, change button color to dirt  
+                    // if farmland is claimed, change button color to dirt
                     if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
                         // Snowy & Claimed
                         if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
@@ -329,7 +331,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
                             // Snowy & Wet & Fertilized
                             if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
-                                dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
+                                dirtImg = new ImageIcon("src/main/resources/snowytiles5.png");
                                 ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles2.png");
                                 farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             } else {
@@ -351,7 +353,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             }
                         }
-                        if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
                             // Snowy & Fertilized
                             if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");
@@ -366,7 +368,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     }
 
                     // Snowy & Unclaimed
-                    if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                    else if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
                         dirtImg = new ImageIcon("src/main/resources/snowytiles1.png");
                         ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles1.png");
                         farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
@@ -536,6 +538,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
      */
     public void setSaveController(SaveController saveController) {
         this.saveController = saveController;
+    }
+
+    public void setGetToolBoughtController(GetToolBoughtController getToolBoughtController) {
+        this.getToolBoughtController = getToolBoughtController;
     }
 
     /**

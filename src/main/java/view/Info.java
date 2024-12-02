@@ -165,6 +165,18 @@ public class Info extends JPanel {
         gbc.gridy = 12;
         landInfo.add(new FarmLabel("Ready to harvest snowberry", 15), gbc);
 
+        gbc.gridx = 0;
+        gbc.gridy = 13;
+        FarmLabel deadPlantLabel = new CropLabel("", 20, new Color(169,152,126));
+        ImageIcon deadPlantImg = new ImageIcon("src/main/resources/deadPlant.png");
+        deadPlantLabel.setIcon(new ImageIcon(deadPlantImg.getImage().getScaledInstance(25, 25,
+                Image.SCALE_SMOOTH)));
+        landInfo.add(deadPlantLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 13;
+        landInfo.add(new FarmLabel("Dead Plant", 15), gbc);
+
         landInfo.setBackground(new Color(169,152,126));
 
         JPanel controlInfo = new JPanel();
