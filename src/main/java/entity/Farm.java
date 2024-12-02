@@ -2,6 +2,7 @@ package main.java.entity;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import main.java.use_case.plant.PlantingException;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -178,7 +179,7 @@ public class Farm implements Serializable {
         }
         // otherwise, don't sell them
         else {
-            // TODO make a popup for the user that tells them that they cannot sell crops they don't have
+            JOptionPane.showMessageDialog(null, "You don't have enough crops in storage.", "Error", JOptionPane.ERROR_MESSAGE);
             System.out.println("you don't have enough crops in storage.");
         }
     }
