@@ -7,6 +7,7 @@ import main.java.interface_adapter.welcome.*;
 import main.java.use_case.getweather.InvalidCityException;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;

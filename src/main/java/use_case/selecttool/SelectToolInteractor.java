@@ -16,7 +16,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             // only select sprinkler if it is purchased
             if (FarmSingleton.getInstance().getFarm().getSprinklerPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("sprinkler");
-                outputBoundary.selectTool("sprinkler");
+                outputBoundary.selectTool("Sprinkler");
             }
         }
 
@@ -24,7 +24,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             // only select harvester if it is purchased
             if (FarmSingleton.getInstance().getFarm().getHarvesterPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("harvester");
-                outputBoundary.selectTool("harvester");
+                outputBoundary.selectTool("Harvester");
             }
         }
 
@@ -32,7 +32,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             // only select tiller if it is purchased
             if (FarmSingleton.getInstance().getFarm().getTillerPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("tiller");
-                outputBoundary.selectTool("tiller");
+                outputBoundary.selectTool("Tiller");
             }
         }
 
@@ -40,7 +40,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             // only select tiller if it is purchased
             if (FarmSingleton.getInstance().getFarm().getFertilizerPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("fertilizer");
-                outputBoundary.selectTool("fertilizer");
+                outputBoundary.selectTool("Fertilizer");
             }
         }
     }
