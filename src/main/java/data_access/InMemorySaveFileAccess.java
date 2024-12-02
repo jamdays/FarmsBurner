@@ -3,7 +3,7 @@ package main.java.data_access;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import main.java.entity.Crop;
+import main.java.entity.AbstractCrop;
 import main.java.entity.CropFactory;
 import main.java.entity.Farm;
 import main.java.entity.Land;
@@ -67,12 +67,12 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
                 farmLand[i][j].setClaimed(land.isClaimed());
                 farmLand[i][j].setFertilized(land.isFertilized());
                 if (land.getCrop() != null) {
-                    Crop crop = cropFactory.createCrop(land.getCrop().getName(), land.getCrop().getTime(),
+                    AbstractCrop crop = cropFactory.createCrop(land.getCrop().getName(), land.getCrop().getTime(),
                             farmLand[i][j]);
                     crop.setAge(land.getCrop().getAge());
                     crop.setPrice(land.getCrop().getPrice());
                     crop.setIsAlive(land.getCrop().getIsAlive());
-                    crop.setWaterlevel(land.getCrop().getWaterlevel());
+                    crop.setWaterLevel(land.getCrop().getWaterlevel());
                     farmLand[i][j].setCrop(crop);
                 }
 

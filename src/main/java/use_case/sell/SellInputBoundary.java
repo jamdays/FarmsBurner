@@ -1,7 +1,5 @@
 package main.java.use_case.sell;
 
-import main.java.entity.Crop;
-
 /**
  * Interface for selling a crop that has been harvested and is currently in storage
  */

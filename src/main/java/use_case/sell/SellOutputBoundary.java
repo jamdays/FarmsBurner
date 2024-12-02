@@ -1,7 +1,5 @@
 package main.java.use_case.sell;
 
-import main.java.entity.Crop;
-
 public interface SellOutputBoundary {
     /**
      * updates the state so that the crops are sold

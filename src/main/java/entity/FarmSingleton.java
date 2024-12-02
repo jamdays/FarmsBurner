@@ -1,13 +1,18 @@
 package main.java.entity;
 
-public class FarmSingleton {
-    private static final FarmSingleton instance = new FarmSingleton();
+/**
+ * Farm Singleton.
+ */
+public final class FarmSingleton {
+    private static final FarmSingleton INSTANCE = new FarmSingleton();
     private Farm farm;
+
     private FarmSingleton() {
         this.farm = new Farm();
     }
+
     public static FarmSingleton getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public static void setInstance(Farm farm) {

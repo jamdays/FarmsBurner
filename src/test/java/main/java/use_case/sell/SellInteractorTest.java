@@ -1,12 +1,8 @@
 package main.java.use_case.sell;
 
-import main.java.entity.Crop;
+import main.java.entity.AbstractCrop;
 import main.java.entity.Farm;
-import main.java.entity.FarmSingleton;
-import main.java.entity.Storage;
 import org.junit.Test;
-import main.java.use_case.sell.SellInteractor;
-import main.java.use_case.sell.SellOutputBoundary;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,7 +12,7 @@ public class SellInteractorTest {
     @Test
     public void testBarnBucksRegularCrop() {
         Farm farm = new Farm();
-        Crop regularCrop = new Crop(5, true, 3);
+        AbstractCrop regularCrop = new AbstractCrop(5, true, 3);
         farm.getStorage().getCrops().add(regularCrop);
 
         SellOutputBoundary outputBoundary = new SellOutputBoundary() {
@@ -40,7 +36,7 @@ public class SellInteractorTest {
     @Test
     public void testBarnBucksHighValueCrop() {
         Farm farm = new Farm();
-        Crop highValueCrop = new Crop(5, true, 5);
+        AbstractCrop highValueCrop = new AbstractCrop(5, true, 5);
         farm.getStorage().getCrops().add(highValueCrop);
 
         SellOutputBoundary outputBoundary = new SellOutputBoundary() {
@@ -65,8 +61,8 @@ public class SellInteractorTest {
     @Test
     public void testStorageUpdate() {
         Farm farm = new Farm();
-        Crop regularCrop = new Crop(5, true, 3);
-        Crop highValueCrop = new Crop(5, true, 5);
+        AbstractCrop regularCrop = new AbstractCrop(5, true, 3);
+        AbstractCrop highValueCrop = new AbstractCrop(5, true, 5);
         farm.getStorage().getCrops().add(regularCrop);
         farm.getStorage().getCrops().add(highValueCrop);
 

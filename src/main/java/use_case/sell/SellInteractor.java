@@ -1,11 +1,7 @@
 package main.java.use_case.sell;
 
-import main.java.entity.Crop;
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
-import main.java.entity.Storage;
-
-import java.util.ArrayList;
 
 
 public class SellInteractor implements SellInputBoundary {

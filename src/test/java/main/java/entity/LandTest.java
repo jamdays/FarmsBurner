@@ -1,7 +1,6 @@
 package main.java.entity;
 
 import junit.framework.TestCase;
-import main.java.entity.Land;
 import main.java.use_case.plant.PlantingException;
 
 public class LandTest extends TestCase {
@@ -50,7 +49,7 @@ public class LandTest extends TestCase {
         assertNull(land.getCrop());
 
         // Land with parameters tests
-        Land land2 = new Land(new Crop());
+        Land land2 = new Land(new AbstractCrop());
         assertTrue(land2.isPlanted());
         assertTrue(land2.isClaimed());
         assertTrue(land2.isFertilized());
