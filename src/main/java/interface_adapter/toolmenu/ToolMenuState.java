@@ -11,13 +11,13 @@ public class ToolMenuState {
     boolean fertilizerPurchased;
 
     public ToolMenuState() {
-        this.sprinklerLevel = 2;
+        this.sprinklerLevel = 1;
         this.sprinklerPurchased = false;
-        this.harvesterLevel = 2;
+        this.harvesterLevel = 1;
         this.harvesterPurchased = false;
-        this.tillerLevel = 2;
+        this.tillerLevel = 1;
         this.tillerPurchased = false;
-        this.fertilizerLevel = 2;
+        this.fertilizerLevel = 1;
         this.fertilizerPurchased = false;
     }
 
