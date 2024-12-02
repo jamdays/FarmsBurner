@@ -18,7 +18,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
 
     // instance variables
 
-    private String currCrop = "none";
+    private String currCrop = "None";
     private SelectCropViewModel viewModel;
     private SelectCropController controller;
 
@@ -67,7 +67,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
             @Override
             public void actionPerformed(ActionEvent e) {
                 // notify the controller to begin the use case
-                controller.selectCrop("rice");
+                controller.selectCrop("Rice");
                 // update the currently selected crop
                 currSelected.setText("Current Crop: " + currCrop);
             }
