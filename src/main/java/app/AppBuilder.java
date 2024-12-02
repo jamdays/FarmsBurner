@@ -492,7 +492,7 @@ public class AppBuilder {
      */
     public AppBuilder addUseToolUseCase() {
         final UseToolOutputBoundary useToolOutputBoundary = new UseToolPresenter(farmViewModel);
-        useToolInteractor = new UseToolInteractor(useToolOutputBoundary);
+        useToolInteractor = new UseToolInteractor(useToolOutputBoundary, farmDAO);
         final UseToolController controller = new UseToolController(useToolInteractor);
 
         if (farmView == null) {

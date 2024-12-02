@@ -9,5 +9,5 @@ public interface UseToolOutputBoundary {
      * @param cStart, starting column
      * @param amount, the side length of the square area that the tool will be used on
      */
-    void useTool(String tool, int rStart, int cStart, int amount);
+    void useTool(String tool, int rStart, int cStart, int amount, long time);
 }

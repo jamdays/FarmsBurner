@@ -59,8 +59,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private UseToolController useToolController;
     private GetActiveToolController getActiveToolController;
     private SetCropController setCropController;
-    private UseToolController useToolController;
-    private GetActiveToolController getActiveToolController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         //Add background as JLABEL to set images
