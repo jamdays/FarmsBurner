@@ -105,7 +105,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 BuyView buyView = new BuyView(toolMenuViewModel);
-                builder.addView(350, 280, buyView).build().setVisible(true);
+                builder.addView(380, 280, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
