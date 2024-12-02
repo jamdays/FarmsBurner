@@ -1,22 +1,30 @@
 package main.java.view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+
+/**
+ * Info view.
+ */
 public class Info extends JPanel {
     public Info() {
         JPanel landInfo = new JPanel();
         landInfo.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.PAGE_START;
-
-//        JPanel wetLandInfo = new JPanel();
         gbc.gridx = 0;
         gbc.gridy = 0;
         FarmLabel wetLandLabel = new CropLabel("", 20, Color.BLACK);
-        ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile3.png");
-        wetLandLabel.setIcon(new ImageIcon(dirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-        landInfo.add(wetLandLabel,gbc);
+        ImageIcon dirtImage = new ImageIcon("src/main/resources/farmtile3.png");
+        wetLandLabel.setIcon(new ImageIcon(dirtImage.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        landInfo.add(wetLandLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -26,14 +34,13 @@ public class Info extends JPanel {
         gbc.gridy = 1;
         FarmLabel wetFertilizedLandLabel = new CropLabel("", 20, Color.BLACK);
         ImageIcon wetAndFertilizedImg = new ImageIcon("src/main/resources/farmtile5.png");
-        wetFertilizedLandLabel.setIcon(new ImageIcon(wetAndFertilizedImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-        landInfo.add(wetFertilizedLandLabel,gbc);
+        wetFertilizedLandLabel.setIcon(new ImageIcon(wetAndFertilizedImg.getImage().getScaledInstance(25, 25,
+                Image.SCALE_SMOOTH)));
+        landInfo.add(wetFertilizedLandLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         landInfo.add(new FarmLabel("Wet and Fertilized Land", 15), gbc);
-
-//        JPanel dryLandInfo = new JPanel();
 
         gbc.gridx = 0;
         gbc.gridy = 2;
@@ -44,30 +51,26 @@ public class Info extends JPanel {
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        landInfo.add(new FarmLabel("Dry Land", 15),gbc);
-
+        landInfo.add(new FarmLabel("Dry Land", 15), gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 3;
         FarmLabel dryLandFertilizedLabel = new CropLabel("", 20, Color.BLACK);
         ImageIcon dryLandFertilizedImg = new ImageIcon("src/main/resources/farmtile4.png");
-        dryLandFertilizedLabel.setIcon(new ImageIcon(dryLandFertilizedImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-        landInfo.add(dryLandFertilizedLabel,gbc);
+        dryLandFertilizedLabel.setIcon(new ImageIcon(dryLandFertilizedImg.getImage().getScaledInstance(25,
+                25, Image.SCALE_SMOOTH)));
+        landInfo.add(dryLandFertilizedLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 3;
-        landInfo.add(new FarmLabel("Dry and Fertilized Land", 15),gbc);
-//
-//        CropLabel sprout = new CropLabel("T", 25, new Color(75,40,40));
-//        sprout.setForeground(new Color(20,130,50));
-//        sprout.setHorizontalAlignment(SwingConstants.CENTER);
+        landInfo.add(new FarmLabel("Dry and Fertilized Land", 15), gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
         FarmLabel unclaimedLabel = new CropLabel("", 20, Color.BLACK);
         ImageIcon grass = new ImageIcon("src/main/resources/farmtile1.png");
         unclaimedLabel.setIcon(new ImageIcon(grass.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-        landInfo.add(unclaimedLabel,gbc);
+        landInfo.add(unclaimedLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 4;
@@ -154,12 +157,25 @@ public class Info extends JPanel {
         gbc.gridy = 12;
         FarmLabel snowberryReadyLabel = new CropLabel("", 20, new Color(169,152,126));
         ImageIcon snowberryReadyImg = new ImageIcon("src/main/resources/SnowberryReady.png");
-        snowberryReadyLabel.setIcon(new ImageIcon(snowberryReadyImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        snowberryReadyLabel.setIcon(new ImageIcon(snowberryReadyImg.getImage().getScaledInstance(25, 25,
+                Image.SCALE_SMOOTH)));
         landInfo.add(snowberryReadyLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 12;
         landInfo.add(new FarmLabel("Ready to harvest snowberry", 15), gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 13;
+        FarmLabel deadPlantLabel = new CropLabel("", 20, new Color(169,152,126));
+        ImageIcon deadPlantImg = new ImageIcon("src/main/resources/deadPlant.png");
+        deadPlantLabel.setIcon(new ImageIcon(deadPlantImg.getImage().getScaledInstance(25, 25,
+                Image.SCALE_SMOOTH)));
+        landInfo.add(deadPlantLabel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 13;
+        landInfo.add(new FarmLabel("Dead Plant", 15), gbc);
 
         landInfo.setBackground(new Color(169,152,126));
 
@@ -175,11 +191,5 @@ public class Info extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(landInfo, BorderLayout.WEST);
         this.add(controlInfo);
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(271, 250);
-//        frame.getContentPane().add(landInfo, BorderLayout.CENTER);
-//        frame.getContentPane().add(controlInfo, BorderLayout.SOUTH);
-//        frame.setVisible(true);
     }
 }

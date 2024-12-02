@@ -1,24 +1,39 @@
 package main.java.app;
 
-import javax.swing.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+/**
+ * Window Builder.
+ */
 public class WindowBuilder {
-    public int HEIGHT;
-    public int WIDTH;
-    public JPanel panel;
+    private int height;
+    private int width;
+    private JPanel panel;
 
+    /**
+     * Class Window Builder.
+     * @param width .
+     * @param height .
+     * @param panel .
+     * @return this.
+     */
     public WindowBuilder addView(int width, int height, JPanel panel) {
-        this.WIDTH = width;
-        this.HEIGHT = height;
+        this.width = width;
+        this.height = height;
         this.panel = panel;
         return this;
     }
 
+    /**
+     * Build method.
+     * @return frame.
+     */
     public JFrame build() {
         final JFrame frame = new JFrame();
-        frame.setSize(WIDTH, HEIGHT);
+        frame.setSize(width, height);
         frame.add(this.panel);
-        frame.setAlwaysOnTop( true );
+        frame.setAlwaysOnTop(true);
         return frame;
     }
 }
