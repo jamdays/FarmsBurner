@@ -56,6 +56,7 @@ public class FarmsBurnerApplication {
                 addSelectCropUseCase().
                 addGetActiveToolUseCase().
                 addUseToolUseCase().
+                addSetCropUseCase().
                 build().setVisible(true);
     }
 }

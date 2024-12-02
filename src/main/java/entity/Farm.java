@@ -345,6 +345,41 @@ public class Farm implements Serializable {
 
     public boolean isRainy() {
         return rainy;
+        this.time = time;
+        for (Land[] lands : farmLand) {
+            for (Land land : lands) {
+                if (land.getCrop() != null)
+                    land.getCrop().update(time);
+            }
+        }
+    }
+
+    public Long getTime(){
+        return time;
+    }
+
+    public boolean isClear() {
+        return clear;
+    }
+
+    public boolean isCloudy() {
+        return cloudy;
+    }
+
+    public boolean isFog() {
+        return fog;
+    }
+
+    public boolean isThunderstorm() {
+        return thunderstorm;
+    }
+
+    public boolean isSnowy() {
+        return snowy;
+    }
+
+    public boolean isRainy() {
+        return rainy;
     }
 
     public int getDay(){
@@ -359,6 +394,8 @@ public class Farm implements Serializable {
         this.planterPurchased = planterPurchased;
     }
 
+    public int getDay(){
+        return day;
     public int getPlanterLevel() {
         return this.planterLevel;
     }
