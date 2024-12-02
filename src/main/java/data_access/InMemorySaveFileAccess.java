@@ -44,6 +44,7 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
         this.farm.setStorage(storage);
 
         Land[][] farmLand = new Land[farm.getFarmLand().length][farm.getFarmLand()[0].length];
+        CropFactory cropFactory = new CropFactory();
         for (int i = 0; i < farm.getFarmLand().length; i++) {
             for (int j = 0; j < farm.getFarmLand()[0].length; j++) {
                 farmLand[i][j] = new Land();
@@ -53,7 +54,7 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
                 farmLand[i][j].setClaimed(land.isClaimed());
                 farmLand[i][j].setFertilized(land.isFertilized());
                 if (land.getCrop() != null) {
-                    Crop crop = new Crop(land.getCrop().getTime(), farmLand[i][j]);
+                    Crop crop = cropFactory.createCrop(land.getCrop().getName(), land.getCrop().getTime(), farmLand[i][j]);
                     crop.setAge(land.getCrop().getAge());
                     crop.setPrice(land.getCrop().getPrice());
                     crop.setIsAlive(land.getCrop().getIsAlive());

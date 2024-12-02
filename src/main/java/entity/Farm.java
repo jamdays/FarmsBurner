@@ -327,7 +327,8 @@ public class Farm implements Serializable {
      * @throws PlantingException if there is already a plant there
      */
     public void plant(int row, int col, Long time) throws PlantingException {
-        this.farmLand[row][col].plant(time);
+        this.farmLand[row][col].plant(time, activeCrop);
+
     }
 
     /**
