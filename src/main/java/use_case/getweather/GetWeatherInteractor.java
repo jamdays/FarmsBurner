@@ -32,14 +32,14 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
         } else if (times.get(0) < times.get(1) || times.get(0) > times.get(2) ) {
             day = 0;
         }
-        boolean cloudy = weather.equals("Clouds") | weather.equals("Drizzle");
+        boolean cloudy = weather.equals("Clouds") || weather.equals("Drizzle");
         boolean rainy = weather.equals("Rain");
         boolean snowy = weather.equals("Snow");
         boolean thunderstorm = weather.equals("Thunderstorm");
         boolean clear = weather.equals("Clear");
-        boolean foggy = weather.equals("Atmosphere");
+        boolean foggy = weather.equals("Fog") || weather.equals("Mist") || weather.equals("Haze");
         farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear);
-        outputBoundary.weather(weather, day);
+        outputBoundary.weather(weather, day, times.get(0));
         return openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity());
         } catch (Exception e) {
             throw new InvalidCityException(e.getMessage());
