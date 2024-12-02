@@ -1,9 +1,5 @@
 package main.java.data_access;
 
-import com.github.prominence.openweathermap.api.model.forecast.Forecast;
-import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
-import com.github.prominence.openweathermap.api.model.weather.Weather;
-
 import java.util.List;
 
 public interface OpenWeatherAccessInterface {
@@ -47,6 +43,6 @@ public interface OpenWeatherAccessInterface {
      * @param city, the city to get weather information in JSON format for
      * @return the JSON with the weather for the city
      */
-    String JSONForCity(String city);
+    String jsonforcity(String city);
 
 }

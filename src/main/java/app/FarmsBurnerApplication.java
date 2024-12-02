@@ -40,8 +40,8 @@ public class FarmsBurnerApplication {
 
         final AppBuilder builder = new AppBuilder();
         builder
-                .addFarmDAO(dao)
-                .addSaveDAO(new SaveFileAccess())
+                .addFarmDataAccessObject(dao)
+                .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
                 .addWelcomeView()
                 .addStartUseCase()
@@ -52,18 +52,19 @@ public class FarmsBurnerApplication {
                 .addSellUseCase()
                 .addBuyToolUseCase()
                 .addUpgradeUseCase()
-                .addPlantUseCase()
-                .addClaimUseCase()
-                .addFertilizeUseCase()
-                .addWeatherUseCase()
-                .addHarvestUseCase()
-                .addWaterUseCase()
-                .addSelectToolUseCase()
-                .addLoadFarmUseCase()
-                .addSelectCropUseCase()
-                .addGetActiveToolUseCase()
-                .addUseToolUseCase()
-                .addSetCropUseCase()
-                .build().setVisible(true);
+                .addPlantUseCase().
+                addClaimUseCase().
+                addFertilizeUseCase().
+                addWeatherUseCase().
+                addHarvestUseCase().
+                addWaterUseCase().
+                addSelectToolUseCase().
+                addLoadFarmUseCase().
+                addSelectCropUseCase().
+                addGetActiveToolUseCase().
+                addUseToolUseCase().
+                addSetCropUseCase().
+                addGetToolBoughtUseCase().
+                build().setVisible(true);
     }
 }

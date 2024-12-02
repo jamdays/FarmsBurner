@@ -1,17 +1,19 @@
 package main.java.data_access;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
-import com.github.prominence.openweathermap.api.enums.Language;
-import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import main.java.data_access.OpenWeatherAccessInterface;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
+import com.github.prominence.openweathermap.api.enums.Language;
+import com.github.prominence.openweathermap.api.enums.UnitSystem;
+
+/**
+ * Open weather access.
+ */
+public class OpenWeatherAccess implements OpenWeatherAccessInterface {
 
     private String apiKey;
     private OpenWeatherMapClient openWeatherMapClient;
@@ -35,11 +37,13 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
         JsonNode parent = null;
         try {
             parent = new ObjectMapper().readTree(currentInfoJSON);
-        } catch (JsonProcessingException ex) {
+        }
+        catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
 
-        // parse currentInfoJSON string using Jackson to get details regarding city name, temperature, conditions and cloud coverage
+        // parse currentInfoJSON string using Jackson to get details regarding city name,
+        // temperature, conditions and cloud coverage
         String temp = "Temperature: " + parent.get("main").get("temp").toString() + "°C";
         String conditions = "Conditions: " + parent.get("weather").get(0).get("description").textValue();
         String cloudCoverage = "Cloud Coverage: " + parent.get("clouds").get("all").toString() + "%";
@@ -55,6 +59,12 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
 
     }
 
+    /**
+     * Current weather type for city.
+     * @param city .
+     * @return weather type.
+     * @throws RuntimeException .
+     */
     public String currentWeatherTypeForCity(String city) {
         String currentInfoJSON = openWeatherMapClient
                 .currentWeather()
@@ -68,7 +78,8 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
         JsonNode parent = null;
         try {
             parent = new ObjectMapper().readTree(currentInfoJSON);
-        } catch (JsonProcessingException ex) {
+        }
+        catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -77,6 +88,11 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
         return weatherType;
     }
 
+    /**
+     * Forecast info for city.
+     * @param city .
+     * @return forecast.
+     */
     public String forecastInfoForCity(String city) {
         return openWeatherMapClient
                 .forecast5Day3HourStep()
@@ -92,12 +108,13 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
     @Override
     public List<Long> getTimesForCity(String city) {
 
-        String JSON = JSONForCity(city);
+        String json = jsonforcity(city);
 
         JsonNode parent = null;
         try {
-            parent = new ObjectMapper().readTree(JSON);
-        } catch (JsonProcessingException ex) {
+            parent = new ObjectMapper().readTree(json);
+        }
+        catch (JsonProcessingException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -117,7 +134,13 @@ public class OpenWeatherAccess  implements OpenWeatherAccessInterface {
     }
 
     // for testing
-    public String JSONForCity(String city) {
+
+    /**
+     * JSON for city.
+     * @param city .
+     * @return JSON.
+     */
+    public String jsonforcity(String city) {
         return openWeatherMapClient
                 .currentWeather()
                 .single()
