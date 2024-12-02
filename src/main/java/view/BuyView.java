@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.GetToolBoughtController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
 

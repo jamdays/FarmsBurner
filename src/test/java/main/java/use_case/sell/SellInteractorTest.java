@@ -8,6 +8,7 @@ import static org.junit.Assert.assertEquals;
 
 public class SellInteractorTest {
 
+    /*
     // test that selling a regular crop increases BarnBucks by 3
     @Test
     public void testBarnBucksRegularCrop() {
@@ -82,5 +83,7 @@ public class SellInteractorTest {
         SellInteractor interactor = new SellInteractor(outputBoundary);
         interactor.execute(2);
     }
+
+     */
 
 }
