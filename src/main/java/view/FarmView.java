@@ -313,7 +313,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             for (int r = 0; r < state.getFarmLand().length; r++) {
                 for (int c = 0; c < state.getFarmLand()[r].length; c++) {
                     ImageIcon dirtImg = null;
-                    // if farmland is claimed, change button color to dirt  
+                    // if farmland is claimed, change button color to dirt
                     if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
                         // Snowy & Claimed
                         if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
@@ -363,10 +363,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             }
                         }
-                    }
-
-                    // Snowy & Unclaimed
-                    if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                    } else if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                        // SNOWY and UNCLAIMED
                         dirtImg = new ImageIcon("src/main/resources/snowytiles1.png");
                         ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles1.png");
                         farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
