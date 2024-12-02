@@ -56,6 +56,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
 
                 // haven't connected to controller yet, so temporarily just print out harvester
                 currSelected.setText("Current Tool: " + currTool);
+                System.out.println(currTool);
             }
         });
 
@@ -70,6 +71,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
 
                 // haven't connected to controller yet, so temporarily just print out harvester
                 currSelected.setText("Current Tool: " + currTool);
+                System.out.println(currTool);
             }
         });
 
@@ -84,6 +86,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
 
                 // haven't connected to controller yet, so temporarily just print out harvester
                 currSelected.setText("Current Tool: " + currTool);
+                System.out.println(currTool);
             }
         });
 
@@ -98,13 +101,29 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
 
                 // haven't connected to controller yet, so temporarily just print out harvester
                 currSelected.setText("Current Tool: " + currTool);
+                System.out.println(currTool);
+            }
+        });
+
+        FarmButton choosePlanter = new FarmButton("Planter");
+        choosePlanter.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // notify the controller to start the use case (clean architecture)
+                controller.selectTool("Planter");
+                // update the current tool to sprinkler, once the use case has executed
+                // currSelected.setText("Current Tool: " + currTool);
+
+                // haven't connected to controller yet, so temporarily just print out harvester
+                currSelected.setText("Current Tool: " + currTool);
+                System.out.println(currTool);
             }
         });
 
         JPanel bottomPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         bottomPanel.setBackground(new java.awt.Color(169, 152, 126));
-        bottomPanel.setPreferredSize(new Dimension(350,100));
+        bottomPanel.setPreferredSize(new Dimension(350,125));
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -117,6 +136,9 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
         gbc.gridx = 1;
         gbc.gridy = 1;
         bottomPanel.add(chooseFertilizer, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        bottomPanel.add(choosePlanter, gbc);
 
         this.setLayout(new BorderLayout());
         this.setBackground(new java.awt.Color(169, 152, 126));

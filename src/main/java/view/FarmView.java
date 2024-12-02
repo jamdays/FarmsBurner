@@ -50,6 +50,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SelectCropViewModel selectCropViewModel;
     private SelectCropController selectCropController;
     private SaveController saveController;
+    private UseToolController useToolController;
+    private GetActiveToolController getActiveToolController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         //Add background as JLABEL to set images
@@ -138,20 +140,42 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 farmLand[r][c] = cropLabel;
                 cropLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
+                        // if plot is clicked while shift is held down, claim land
                         if ((e.getModifiers() & 1) == 1) {
-                            claimController.claim(r, c);
+                            // make it so that if tiller is active, you till an area
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
+                                useToolController.useTool("tiller", r, c);
+                            }
+                            else {
+                                claimController.claim(r, c);
+                            }
                         }
                         // if plot is clicked while ctrl is held down, plant crop on plot
                         else if (e.getModifiers() == 18) {
-                            plantController.plantCrop(r, c);
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
+                                useToolController.useTool("planter", r, c);
+                            }
+                            else {
+                                plantController.plantCrop(r, c);
+                            }
                         }
                         // if plot is clicked while alt is held down, water plot
                         else if (e.getModifiers() == 24) {
-                            waterController.waterCrop(r, c);
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
+                                useToolController.useTool("sprinkler", r, c);
+                            }
+                            else {
+                                waterController.waterCrop(r, c);
+                            }
                         }
                         // if plot is clicked while ctrl and alt are held down, fertilize crop
                         else if ((e.getModifiers() & (18|24)) == (18|24)) {
-                            fertilizeController.fertilize(r, c);
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
+                                useToolController.useTool("fertilizer", r, c);
+                            }
+                            else {
+                                fertilizeController.fertilize(r, c);
+                            }
                         }
                     }
                 });
@@ -350,6 +374,14 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setWeatherController(WeatherController weatherController) {
         this. weatherController = weatherController;
+    }
+
+    public void setUseToolController(UseToolController useToolController) {
+        this.useToolController = useToolController;
+    }
+
+    public void setGetActiveToolController(GetActiveToolController getActiveToolController) {
+        this.getActiveToolController = getActiveToolController;
     }
 
     public void setSaveController(SaveController saveController) {

@@ -45,7 +45,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.setSize(new Dimension(500, 300));
+        mainPanel.setSize(new Dimension(500, 400));
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         // Item Panel for Sprinkler
@@ -56,6 +56,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         createItemPanel("Harvester", "5", "Harvests crops in a large area.", mainPanel, gbc, 1);
         createItemPanel("Tiller", "5", "Claims land in a large area.", mainPanel, gbc, 2);
         createItemPanel("Fertilizer", "5", "Fertilizes a large area of tilled land.", mainPanel, gbc, 3);
+        createItemPanel("Planter", "5", "Plants crops in a large area", mainPanel, gbc, 4);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
