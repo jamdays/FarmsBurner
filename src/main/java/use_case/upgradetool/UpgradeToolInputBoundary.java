@@ -1,7 +1,5 @@
 package main.java.use_case.upgradetool;
 
-import main.java.entity.FarmTool;
-
 public interface UpgradeToolInputBoundary {
     /**
      * upgrades tool selected

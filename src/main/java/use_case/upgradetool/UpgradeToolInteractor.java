@@ -1,7 +1,6 @@
 package main.java.use_case.upgradetool;
 
 import main.java.entity.FarmSingleton;
-import main.java.entity.FarmTool;
 
 public class UpgradeToolInteractor implements UpgradeToolInputBoundary{
     UpgradeToolOutputBoundary outputBoundary;

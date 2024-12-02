@@ -1,7 +1,17 @@
 package main.java.entity;
 
+/**
+ * Crop Factory.
+ */
 public class CropFactory {
-    public Crop createCrop(String cropName, long time, Land land) {
+    /**
+     * Create crop.
+     * @param cropName .
+     * @param time .
+     * @param land .
+     * @return null.
+     */
+    public AbstractCrop createCrop(String cropName, long time, Land land) {
         switch (cropName) {
             case "Snowberry":
                 return new Snowberry(time, land);

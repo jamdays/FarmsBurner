@@ -1,14 +1,18 @@
 package main.java.entity;
+
+import java.io.Serializable;
+
 import main.java.use_case.fertilize.FertilizeException;
 import main.java.use_case.harvest.HarvestException;
 import main.java.use_case.plant.PlantingException;
 
-import java.io.Serializable;
-
+/**
+ * Land class.
+ */
 public class Land implements Serializable {
 
     // instance variables
-    private Crop crop;
+    private AbstractCrop crop;
     private boolean isWet;
     private boolean isSnowy;
     private boolean claimed;
@@ -16,7 +20,7 @@ public class Land implements Serializable {
     private boolean fertilized;
 
     // constructor
-    public Land(Crop crop) {
+    public Land(AbstractCrop crop) {
         this.crop = crop;
         this.isWet = false;
         this.isSnowy = false;
@@ -33,101 +37,154 @@ public class Land implements Serializable {
         this.fertilized = false;
     }
 
-
-
-    // getter and setter for crops
-    public Crop getCrop() {
+    /**
+     * Get crop.
+     * @return crop.
+     */
+    public AbstractCrop getCrop() {
         return crop;
     }
 
-
-    public void setCrop(Crop crop) {
+    /**
+     * Set crop.
+     * @param crop .
+     */
+    public void setCrop(AbstractCrop crop) {
         this.crop = crop;
     }
 
-    // getter and setter for isWet
+    /**
+     * Check if wet.
+     * @return isWet.
+     */
     public boolean isWet() {
         return isWet;
     }
 
+    /**
+     * Set isWet.
+     * @param isWet .
+     */
     public void setIsWet(boolean isWet) {
         this.isWet = isWet;
     }
 
-    // getter and setter for isSnowy
-
+    /**
+     * Check if snowy.
+     * @return isSnowy.
+     */
     public boolean getIsSnowy() {
         return isSnowy;
     }
 
+    /**
+     * Set isSnowy.
+     * @param isSnowy .
+     */
     public void setIsSnowy(boolean isSnowy) {
         this.isSnowy = isSnowy;
     }
 
+    /**
+     * Check if planted.
+     * @return isPlanted.
+     */
     public boolean isPlanted() {
         return planted;
     }
 
+    /**
+     * Check is claimed.
+     * @return isClaimed.
+     */
     public boolean isClaimed() {
         return claimed;
     }
 
+    /**
+     * Set claimed.
+     * @param claimed .
+     */
     public void setClaimed(boolean claimed) {
         this.claimed = claimed;
     }
 
+    /**
+     * Check if fertilized.
+     * @return fertilized.
+     */
     public boolean isFertilized() {
         return fertilized;
     }
 
+    /**
+     * Set fertilized.
+     * @param fertilized .
+     */
     public void setFertilized(boolean fertilized) {
         this.fertilized = fertilized;
     }
 
-    // water should only succeed if land is claimed, not snowy, and has a plant,
-    public void water(){
-        if (!claimed){
+    /**
+     * Water should only succeed if land is claimed, not snowy, and has a plant.
+     */
+    public void water() {
+        if (!claimed) {
             System.out.println("Land is not claimed");
-        } else if (isSnowy){
+        }
+        else if (isSnowy) {
             System.out.println("Land is snowy");
-        } else if (!planted) {
+        }
+        else if (!planted) {
             System.out.println("No crop is planted");
-        } else{
+        }
+        else {
             crop.water();
             isWet = true;
         }
     }
 
-    // plant should only work on claimed land and if it is not snowy and if there isn't already a plant
+    /**
+     * Plant should only work on claimed land and if it is not snowy and if there isn't already a plant.
+     * @param time .
+     * @param crop .
+     * @throws PlantingException .
+     */
     public void plant(Long time, String crop) throws PlantingException {
-        if (!claimed){
+        if (!claimed) {
             throw new PlantingException("Land is not claimed");
-        } else if (isSnowy){
+        }
+        else if (isSnowy) {
             throw new PlantingException("Land is snowy");
-        } else if (planted){
+        }
+        else if (planted) {
             throw new PlantingException("There is already a plant here");
-        } else{
+        }
+        else {
             CropFactory cropFactory = new CropFactory();
             planted = true;
             this.crop = cropFactory.createCrop(crop, time, this);
         }
-//        if (claimed && !planted && !isSnowy){
-//            planted = true;
-//            setCrop(new Crop());
-//        }
     }
 
+    /**
+     * Harvest.
+     * @throws HarvestException .
+     */
     public void harvest() {
         if (!planted) {
             System.out.println("No crop is planted");
-        } else if (!crop.getIsAlive()) {
+        }
+        else if (!crop.getIsAlive()) {
             setCrop(null);
             planted = false;
             fertilized = false;
             throw new HarvestException("Crop is dead");
-        } else if (crop.getAge() < 5) {
+        }
+        else if (crop.getAge() < 5) {
             throw new HarvestException("Crop is not ready to harvest");
-        } else {
+        }
+        else {
             crop.harvest();
             setCrop(null);
             planted = false;
@@ -135,15 +192,21 @@ public class Land implements Serializable {
         }
     }
 
-    public void fertilize(){
-        if (isSnowy){
+    /**
+     * Fertilize.
+     * @throws FertilizeException .
+     */
+    public void fertilize() {
+        if (isSnowy) {
             throw new FertilizeException("Land is snowy");
-        } else if (fertilized) {
+        }
+        else if (fertilized) {
             throw new FertilizeException("Land is already fertilized");
-        } else {
+        }
+        else {
             fertilized = true;
             // If the crop is not null set it to fertilized
-            if (crop != null){
+            if (crop != null) {
                 crop.fertilize();
             }
         }

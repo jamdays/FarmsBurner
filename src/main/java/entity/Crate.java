@@ -2,33 +2,50 @@ package main.java.entity;
 
 import java.io.Serializable;
 
+/**
+ * Crate class.
+ */
 public class Crate implements Serializable {
 
     // instance variables
     private int daysLeft;
-    private Crop[] crops;
+    private AbstractCrop[] crops;
 
     // constructor
-    public Crate(int daysLeft, Crop[] crops) {
+    public Crate(int daysLeft, AbstractCrop[] crops) {
         this.daysLeft = daysLeft;
         this.crops = crops;
     }
 
-    // getter and setter for daysLeft
+    /**
+     * Getter for daysLeft.
+     * @return days left.
+     */
     public int getDaysLeft() {
         return daysLeft;
     }
 
+    /**
+     * Set days left.
+     * @param daysLeft .
+     */
     public void setDaysLeft(int daysLeft) {
         this.daysLeft = daysLeft;
     }
 
-    // getter and setter for crops
-    public Crop[] getCrops() {
+    /**
+     * Get crops.
+     * @return crops.
+     */
+    public AbstractCrop[] getCrops() {
         return crops;
     }
 
-    public void setCrops(Crop[] crops) {
+    /**
+     * Set crops.
+     * @param crops .
+     */
+    public void setCrops(AbstractCrop[] crops) {
         this.crops = crops;
     }
 

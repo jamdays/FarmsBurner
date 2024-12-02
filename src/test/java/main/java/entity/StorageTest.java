@@ -2,8 +2,6 @@ package main.java.entity;
 
 import junit.framework.TestCase;
 import java.util.ArrayList;
-import main.java.entity.Crate;
-import main.java.entity.Crop;
 
 public class StorageTest extends TestCase {
 
@@ -25,8 +23,8 @@ public class StorageTest extends TestCase {
 
     public void testSetCrops() {
         Storage storage = new Storage(10);
-        ArrayList<Crop> crops = new ArrayList<Crop>();
-        crops.add(new Crop());
+        ArrayList<AbstractCrop> crops = new ArrayList<AbstractCrop>();
+        crops.add(new AbstractCrop());
         storage.setCrops(crops);
         assertEquals(storage.getCrops().size(), 1);
     }

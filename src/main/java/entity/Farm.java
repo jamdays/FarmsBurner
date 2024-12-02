@@ -2,7 +2,7 @@ package main.java.entity;
 
 import java.io.Serializable;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 import main.java.use_case.plant.PlantingException;
 
@@ -468,7 +468,7 @@ public class Farm implements Serializable {
      * Set logout time.
      * @param time .
      */
-    public void setLogOutTime(Long time) {
+    public void setLogOutTime(long time) {
         this.time = time;
         for (Land[] lands : farmLand) {
             for (Land land : lands) {
