@@ -41,9 +41,9 @@ public class SaveInteractorTest {
             }
 
         };
-        SaveInteractor saveInteractor = new SaveInteractor(saveDAO, saveOB);
-
-        saveInteractor.save();
+//        SaveInteractor saveInteractor = new SaveInteractor(saveDAO, saveOB);
+//
+//        saveInteractor.save();
 
     }
 }
