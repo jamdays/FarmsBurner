@@ -13,6 +13,8 @@ public abstract class Crop implements Serializable {
     private Land land;
     private boolean fertilized;
     private String name;
+    private String weather;
+    private int temp;
 
     // constructor
     public Crop(int age, boolean isAlive, int price, Long time, Land land) {
@@ -37,8 +39,32 @@ public abstract class Crop implements Serializable {
         return this.age;
     }
 
+
+    /**
+     * Sets the age and set prices accordingly.
+     * @param age the age to be set to
+     */
     public void setAge(int age) {
         this.age = age;
+        if (this.getAge() == 3){
+            this.setPrice(5);
+            if (this.getLand().isFertilized()){
+                this.setPrice(this.getPrice()*2);
+            }
+
+        }
+        if (this.getAge() < 3){
+            this.setPrice(0);
+        }
+        if (this.getAge() > 3 && this.getAge() < 6){
+            this.setPrice(this.getPrice() + 1);
+        }
+        if (this.getAge() > 7){
+            this.setPrice(this.getPrice()-1);
+        }
+        if (this.getPrice() == 0){
+            this.setIsAlive(false);
+        }
     }
 
     // getter and setter for alive
@@ -112,6 +138,24 @@ public abstract class Crop implements Serializable {
         }
     }
 
+    public void setWeather(String weather) {
+        this.weather = weather;
+    }
+
+    public String getWeather() {
+        return this.weather;
+    }
+
+    public int getTemp() {
+        return this.temp;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
+    }
+
+
+
     /**
      * Updates the state of the plant based on the time
      * @param time the current time
@@ -120,7 +164,7 @@ public abstract class Crop implements Serializable {
         //this.time is very different from time
         long diff = time - this.time;
         long days = diff/86400;
-        if (days == 1 && this.waterlevel != 0){
+        if (days >= 1 && this.waterlevel != 0){
             this.waterlevel = 0;
             land.setIsWet(false);
             age += 1;

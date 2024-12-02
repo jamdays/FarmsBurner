@@ -17,27 +17,22 @@ public class Wheat extends Crop{
      */
     @Override
     public void update(long time){
-        //this.time is very different from time
         long diff = time - this.getTime();
         long days = diff/86400;
-        if (days == 1 && this.getWaterlevel() != 0){
+        if (days >= 1 && this.getWaterlevel() != 0){
             this.setWaterlevel(0);
             this.getLand().setIsWet(false);
             this.setAge(this.getAge() + 1);
-            if (this.getAge() == 3){
-                this.setPrice(5);
-                if (this.getLand().isFertilized()){
-                    this.setPrice(this.getPrice()*2);
+            if (this.getTemp() < 3) {
+                this.setAge(this.getAge() - 1);
+            }
+            else if (this.getTemp() > 15){
+                this.setAge(this.getAge() + 1);
+                if (!this.getWeather().equalsIgnoreCase("Rain")
+                        && !this.getWeather().equalsIgnoreCase("Drizzle")
+                && !this.getWeather().equalsIgnoreCase("Thunderstorm")){
+                    this.setAge(this.getAge() + 1);
                 }
-            }
-            if (this.getAge() > 3 && this.getAge() < 6){
-                this.setPrice(this.getPrice() + 1);
-            }
-            if (this.getAge() > 5){
-                this.setPrice(this.getPrice()-1);
-            }
-            if (this.getPrice() == 0){
-                this.setIsAlive(false);
             }
         }
     }
