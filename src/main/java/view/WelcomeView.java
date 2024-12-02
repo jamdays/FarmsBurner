@@ -17,6 +17,7 @@ import java.beans.PropertyChangeListener;
 
 public class WelcomeView extends JPanel implements ActionListener, PropertyChangeListener {
     private WelcomeViewModel viewModel;
+    private JLabel backgroundLabel;
     FarmLabel title;
     private LoadController loadController;
     private SetCityController setCityController;
@@ -27,17 +28,26 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
     public WelcomeView(WelcomeViewModel viewModel) {
         this.viewModel = viewModel;
         this.viewModel.addPropertyChangeListener(this);
+
+        this.setLayout(new BorderLayout());
+
+        // Main Panel with background image
+        backgroundLabel = new JLabel();
+        ImageIcon backgroundImg = new ImageIcon("src/main/resources/welcomeBg.png");
+        backgroundLabel.setIcon(new ImageIcon(backgroundImg.getImage().getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
+        this.add(backgroundLabel);
+
         // Welcome panel
-        JPanel welcomePanel = new JPanel();
-        welcomePanel.setLayout(new BoxLayout(welcomePanel, BoxLayout.Y_AXIS));
-        FarmLabel welcome = new FarmLabel("Welcome to", 24);
-        title = new FarmLabel("Farms Burner (Toronto)", 36);
-        welcomePanel.add(welcome);
-        welcomePanel.add(title);
-        welcomePanel.setBackground(new java.awt.Color(169, 152, 126));
+//        FarmLabel welcome = new FarmLabel("Welcome to", 24);
+//        title = new FarmLabel("Farms Burner (Toronto)", 36);
+//        welcomePanel.add(welcome);
+//        welcomePanel.add(title);
+//        welcomePanel.setBackground(new java.awt.Color(169, 152, 126));
+
         // Start button
         FarmButton start = new FarmButton("Start", 12);
         start.setHorizontalAlignment(SwingConstants.CENTER);
+        start.setOpaque(false);
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -48,6 +58,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         });
 
         FarmButton load = new FarmButton("Load", 12);
+        load.setOpaque(false);
         load.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -61,6 +72,8 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         JPanel locationPanel = new JPanel();
         FarmButton location = (new FarmButton("Set Location:", 12));
         locationPanel.add(location);
+        locationPanel.setOpaque(false);
+        locationPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
         JTextField locationText = new JTextField(20);
         locationText.addKeyListener(new KeyAdapter() {
             @Override
@@ -95,15 +108,37 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             }
         });
         locationPanel.add(locationText);
-        locationPanel.setBackground(new java.awt.Color(169, 152, 126));
+//        locationPanel.setBackground(new java.awt.Color(169, 152, 126));
+
+        // Spacer
+        JLabel spacerLabel = new JLabel(" ");
+        spacerLabel.setOpaque(false);
+        spacerLabel.setFont(new Font("Arial", Font.PLAIN, 350));
+
+        // Buttons Panel
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        buttonsPanel.setOpaque(false);
+        buttonsPanel.add(start);
+        buttonsPanel.add(load);
+
 
         // Main Panel
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(welcomePanel);
-        this.add(start);
-        this.add(load);
-        this.add(locationPanel);
-        this.setBackground(new java.awt.Color(169, 152, 126));
+        backgroundLabel.setLayout(new BoxLayout(backgroundLabel, BoxLayout.Y_AXIS));
+        backgroundLabel.add(spacerLabel);
+        backgroundLabel.add(start);
+        backgroundLabel.add(load);
+//        backgroundLabel.add(buttonsPanel);
+        backgroundLabel.add(locationPanel);
+
+        // Set main panel layout
+        this.setLayout(new BorderLayout());
+        this.add(backgroundLabel);
+
+//        this.add(welcomePanel);
+//        this.add(start);
+//        this.add(load);
+//        this.add(locationPanel);
+//        this.setBackground(new java.awt.Color(169, 152, 126));
 
         // Frame
         //JFrame frame = new JFrame("Farms Burner");
