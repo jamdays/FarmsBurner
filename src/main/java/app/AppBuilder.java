@@ -38,6 +38,8 @@ import main.java.use_case.sell.SellInteractor;
 import main.java.use_case.sell.SellOutputBoundary;
 import main.java.use_case.setcity.SetCityInteractor;
 import main.java.use_case.setcity.SetCityOutputBoundary;
+import main.java.use_case.setcrop.SetCropInteractor;
+import main.java.use_case.setcrop.SetCropOutputBoundary;
 import main.java.use_case.start.StartInteractor;
 import main.java.use_case.start.StartOutputBoundary;
 import main.java.use_case.upgradetool.UpgradeToolInteractor;
@@ -84,6 +86,7 @@ public class AppBuilder {
     private GetWeatherInteractor weatherInteractor;
     private SaveInteractor saveInteractor;
     private LoadFarmInteractor loadFarmInteractor;
+    private SetCropInteractor setCropInteractor;
     //TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -127,7 +130,7 @@ public class AppBuilder {
      */
     public AppBuilder addPlantUseCase() {
         final PlantOutputBoundary plantOutputBoundary = new PlantPresenter(farmViewModel);
-        plantInteractor = new PlantInteractor(plantOutputBoundary);
+        plantInteractor = new PlantInteractor(plantOutputBoundary, farmDAO);
 
 
         final PlantController plantController = new PlantController(plantInteractor);
@@ -158,6 +161,24 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Creates the objects for the Set Crop Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addSetCropUseCase() {
+        final SetCropOutputBoundary setCropOutputBoundary = new SetCropPresenter(farmViewModel);
+        setCropInteractor = new SetCropInteractor(setCropOutputBoundary);
+        final SetCropController controller = new SetCropController(setCropInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setSetCropController(controller);
+        return this;
+    }
     /**
      * Creates the objects for the Claim Use Case and connects the FarmView to its
      * controller.

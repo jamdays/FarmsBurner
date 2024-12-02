@@ -50,6 +50,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SelectCropViewModel selectCropViewModel;
     private SelectCropController selectCropController;
     private SaveController saveController;
+    private SetCropController setCropController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         //Add background as JLABEL to set images
@@ -178,6 +179,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 final WindowBuilder builder = new WindowBuilder();
                 SelectCropView selectCropView = new SelectCropView(selectCropViewModel);
                 selectCropView.setController(selectCropController);
+                selectCropView.setCropController(setCropController);
                 builder.addView(271, 250, selectCropView).build().setVisible(true);
             }
         });
@@ -349,7 +351,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     public void setWeatherController(WeatherController weatherController) {
-        this. weatherController = weatherController;
+        this.weatherController = weatherController;
+    }
+
+    public void setSetCropController(SetCropController setCropController) {
+        this.setCropController = setCropController;
     }
 
     public void setSaveController(SaveController saveController) {
