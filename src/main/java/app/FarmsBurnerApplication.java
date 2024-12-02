@@ -40,8 +40,8 @@ public class FarmsBurnerApplication {
 
         final AppBuilder builder = new AppBuilder();
         builder
-                .addFarmDAO(dao)
-                .addSaveDAO(new SaveFileAccess())
+                .addFarmDataAccessObject(dao)
+                .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
                 .addWelcomeView()
                 .addStartUseCase()

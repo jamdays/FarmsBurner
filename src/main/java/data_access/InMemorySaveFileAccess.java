@@ -1,23 +1,35 @@
 package main.java.data_access;
 
-import main.java.entity.*;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import main.java.entity.Crop;
+import main.java.entity.CropFactory;
+import main.java.entity.Farm;
+import main.java.entity.Land;
+import main.java.entity.Storage;
 import main.java.use_case.load.LoadDataAccessInterface;
 import main.java.use_case.save.DataAccessException;
 import main.java.use_case.save.SaveDataAccessInterface;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
+/**
+ * In memory save file access.
+ */
 public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadDataAccessInterface {
-    Farm farm;
+    private Farm farm;
     /**
+     * Save Data.
      * @param farm farm to be saved
      * @throws DataAccessException never because this is a test object, (add a case if you need to for testing)
      * @throws IOException never because this is a test object, (add a case if you need to for testing)
-     * @throws main.java.use_case.load.DataAccessException never because this is a test object, (add a case if you need to for testing)
+     * @throws main.java.use_case.load.DataAccessException never because this is a test object,
+     *      (add a case if you need to for testing)
+     *
      */
+
     @Override
-    public void saveData(Farm farm) throws DataAccessException, IOException, main.java.use_case.load.DataAccessException {
+    public void saveData(Farm farm)
+            throws DataAccessException, IOException, main.java.use_case.load.DataAccessException {
         /*
         Making a deep copy of the Farm
         Otherwise it passes by reference and the farm will just be a farm
@@ -27,9 +39,10 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
         this.farm.setBarnBucks(farm.getBarnBucks());
         this.farm.setPower(farm.getPower());
         this.farm.setSprinkler(farm.getSprinkler());
-        this.farm.setWeather(farm.getDay(), farm.isRainy(), farm.isFog(), farm.isThunderstorm(), farm.isSnowy(), farm.isCloudy(), farm.isClear());
-        //TODO set logout time
-        //this.farm.setLogOutTime();
+        this.farm.setWeather(farm.getDay(), farm.isRainy(), farm.isFog(), farm.isThunderstorm(), farm.isSnowy(),
+                farm.isCloudy(), farm.isClear());
+        // TODO set logout time
+        // this.farm.setLogOutTime();
         this.farm.setSprinklerPurchased(farm.getSprinklerPurchased());
         this.farm.setSprinklerLevel(farm.getSprinklerLevel());
         this.farm.setHarvesterPurchased(farm.getHarvesterPurchased());
@@ -54,7 +67,8 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
                 farmLand[i][j].setClaimed(land.isClaimed());
                 farmLand[i][j].setFertilized(land.isFertilized());
                 if (land.getCrop() != null) {
-                    Crop crop = cropFactory.createCrop(land.getCrop().getName(), land.getCrop().getTime(), farmLand[i][j]);
+                    Crop crop = cropFactory.createCrop(land.getCrop().getName(), land.getCrop().getTime(),
+                            farmLand[i][j]);
                     crop.setAge(land.getCrop().getAge());
                     crop.setPrice(land.getCrop().getPrice());
                     crop.setIsAlive(land.getCrop().getIsAlive());
@@ -65,11 +79,10 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
             }
         }
 
-
-
     }
 
     /**
+     * Load Data.
      * @return farm
      * @throws DataAccessException never because this is a test object, (add a case if you need to for testing)
      * @throws IOException never because this is a test object, (add a case if you need to for testing)

@@ -1,8 +1,36 @@
 package main.java.app;
 
+import java.awt.CardLayout;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
+
 import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.SaveFileAccess;
-import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.farm.ClaimController;
+import main.java.interface_adapter.farm.ClaimPresenter;
+import main.java.interface_adapter.farm.FarmViewModel;
+import main.java.interface_adapter.farm.FertilizeController;
+import main.java.interface_adapter.farm.FertilizePresenter;
+import main.java.interface_adapter.farm.GetActiveToolController;
+import main.java.interface_adapter.farm.GetActiveToolPresenter;
+import main.java.interface_adapter.farm.HarvestController;
+import main.java.interface_adapter.farm.HarvestPresenter;
+import main.java.interface_adapter.farm.LoadFarmController;
+import main.java.interface_adapter.farm.LoadFarmPresenter;
+import main.java.interface_adapter.farm.PlantController;
+import main.java.interface_adapter.farm.PlantPresenter;
+import main.java.interface_adapter.farm.SaveController;
+import main.java.interface_adapter.farm.SavePresenter;
+import main.java.interface_adapter.farm.SetCropController;
+import main.java.interface_adapter.farm.SetCropPresenter;
+import main.java.interface_adapter.farm.UseToolController;
+import main.java.interface_adapter.farm.UseToolPresenter;
+import main.java.interface_adapter.farm.WaterController;
+import main.java.interface_adapter.farm.WaterPresenter;
+import main.java.interface_adapter.farm.WeatherController;
+import main.java.interface_adapter.farm.WeatherPresenter;
 import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropPresenter;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
@@ -12,12 +40,24 @@ import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellPresenter;
 import main.java.interface_adapter.sell.SellViewModel;
-import main.java.interface_adapter.toolmenu.*;
-import main.java.interface_adapter.welcome.*;
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.BuyPresenter;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.UpgradePresenter;
+import main.java.interface_adapter.welcome.LoadController;
+import main.java.interface_adapter.welcome.LoadPresenter;
+import main.java.interface_adapter.welcome.SetCityController;
+import main.java.interface_adapter.welcome.SetCityPresenter;
+import main.java.interface_adapter.welcome.StartController;
+import main.java.interface_adapter.welcome.StartPresenter;
+import main.java.interface_adapter.welcome.WelcomeViewModel;
 import main.java.use_case.buytool.BuyToolInteractor;
 import main.java.use_case.buytool.BuyToolOutputBoundary;
 import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
+import main.java.use_case.fertilize.FertilizeInteractor;
+import main.java.use_case.fertilize.FertilizeOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
 import main.java.use_case.getweather.GetWeatherInteractor;
@@ -30,10 +70,10 @@ import main.java.use_case.loadFarm.LoadFarmInteractor;
 import main.java.use_case.loadFarm.LoadFarmOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
-import main.java.use_case.selectcrop.SelectCropInteractor;
-import main.java.use_case.selectcrop.SelectCropOutputBoundary;
 import main.java.use_case.save.SaveInteractor;
 import main.java.use_case.save.SaveOutputBoundary;
+import main.java.use_case.selectcrop.SelectCropInteractor;
+import main.java.use_case.selectcrop.SelectCropOutputBoundary;
 import main.java.use_case.selecttool.SelectToolInteractor;
 import main.java.use_case.selecttool.SelectToolOutputBoundary;
 import main.java.use_case.sell.SellInteractor;
@@ -51,35 +91,30 @@ import main.java.use_case.usetool.UseToolOutputBoundary;
 import main.java.use_case.water.WaterInteractor;
 import main.java.use_case.water.WaterOutputBoundary;
 import main.java.view.FarmView;
-import main.java.use_case.fertilize.FertilizeInteractor;
-import main.java.use_case.fertilize.FertilizeOutputBoundary;
 import main.java.view.ViewManager;
 import main.java.view.WelcomeView;
 
-import javax.swing.*;
-import java.awt.*;
-
 /**
- * Builder for farms burner
+ * Builder for farms burner.
  */
 public class AppBuilder {
-    //CONSTANTS
+    // CONSTANTS
     public static final int HEIGHT = 675;
     public static final int WIDTH = 1000;
-    //PANELS
+    // PANELS
     private JPanel views;
     private CardLayout cardLayout;
     private ViewManager viewManager;
-    //DAOS
-    private OpenWeatherAccess farmDAO;
+    // DAOS
+    private OpenWeatherAccess farmDataAccessObject;
     private SaveFileAccess saveFileAccess;
-    //THE WELCOME VIEW, MODEL, AND INTERACTORS
+    // THE WELCOME VIEW, MODEL, AND INTERACTORS
     private WelcomeView welcomeView;
     private WelcomeViewModel welcomeViewModel;
     private SetCityInteractor setCityInteractor;
     private LoadInteractor loadInteractor;
     private StartInteractor startInteractor;
-    //FARM VIEW, MODEL, AND INTERACTORS
+    // FARM VIEW, MODEL, AND INTERACTORS
     private FarmView farmView;
     private FarmViewModel farmViewModel;
     private PlantInteractor plantInteractor;
@@ -93,11 +128,11 @@ public class AppBuilder {
     private GetActiveToolInteractor getActiveToolInteractor;
     private UseToolInteractor useToolInteractor;
     private SetCropInteractor setCropInteractor;
-    //TOOL MENU VIEW, MODEL, AND INTERACTORS
+    // TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
     private UpgradeToolInteractor upgradeToolInteractor;
-    //SELL MENU VIEW, MODEL, AND INTERACTORS
+    // SELL MENU VIEW, MODEL, AND INTERACTORS
     private SellViewModel sellViewModel;
     private SelectToolViewModel selectToolViewModel;
     private SellInteractor sellInteractor;
@@ -114,8 +149,7 @@ public class AppBuilder {
      */
     public AppBuilder addSaveUseCase() {
         final SaveOutputBoundary saveOutputBoundary = new SavePresenter(farmViewModel);
-        saveInteractor = new SaveInteractor(saveFileAccess, saveOutputBoundary, farmDAO);
-
+        saveInteractor = new SaveInteractor(saveFileAccess, saveOutputBoundary, farmDataAccessObject);
 
         final SaveController saveController = new SaveController(saveInteractor);
 
@@ -136,8 +170,7 @@ public class AppBuilder {
      */
     public AppBuilder addPlantUseCase() {
         final PlantOutputBoundary plantOutputBoundary = new PlantPresenter(farmViewModel);
-        plantInteractor = new PlantInteractor(plantOutputBoundary, farmDAO);
-
+        plantInteractor = new PlantInteractor(plantOutputBoundary, farmDataAccessObject);
 
         final PlantController plantController = new PlantController(plantInteractor);
 
@@ -192,6 +225,7 @@ public class AppBuilder {
      * @return this builder
      * @throws RuntimeException if this method is called before addFarmView
      */
+
     public AppBuilder addClaimUseCase() {
         final ClaimOutputBoundary claimOutputBoundary = new ClaimPresenter(farmViewModel);
         claimInteractor = new ClaimInteractor(claimOutputBoundary);
@@ -232,7 +266,7 @@ public class AppBuilder {
      */
     public AppBuilder addWeatherUseCase() {
         final GetWeatherOutputBoundary weatherOutputBoundary = new WeatherPresenter(farmViewModel);
-        weatherInteractor = new GetWeatherInteractor(weatherOutputBoundary, farmDAO);
+        weatherInteractor = new GetWeatherInteractor(weatherOutputBoundary, farmDataAccessObject);
         final WeatherController controller = new WeatherController(weatherInteractor);
 
         if (farmView == null) {
@@ -267,21 +301,22 @@ public class AppBuilder {
     }
 
     /**
-     * Creates the DAO
+     * Creates the DAO.
      * @return this builder
      */
-    public AppBuilder addFarmDAO(OpenWeatherAccess farmDAO) {
-        this.farmDAO = farmDAO;
+    public AppBuilder addFarmDataAccessObject(OpenWeatherAccess farmDataAccessObject) {
+        this.farmDataAccessObject = farmDataAccessObject;
         return this;
     }
 
     /**
-     * Creates the Save DAO
+     * Creates the Save DAO.
      * MUST BE CALLED BEFORE LOAD USE CASE
+     * @param saveDataAccessObject .
      * @return this builder
      */
-    public AppBuilder addSaveDAO(SaveFileAccess saveDAO) {
-        this.saveFileAccess = saveDAO;
+    public AppBuilder addSaveDataAccessObject(SaveFileAccess saveDataAccessObject) {
+        this.saveFileAccess = saveDataAccessObject;
         return this;
     }
 
@@ -296,7 +331,8 @@ public class AppBuilder {
         sellViewModel = new SellViewModel();
         selectToolViewModel = new SelectToolViewModel();
         selectCropViewModel = new SelectCropViewModel();
-        farmView = new FarmView(farmViewModel, toolMenuViewModel, sellViewModel, selectToolViewModel, selectCropViewModel);
+        farmView = new FarmView(farmViewModel, toolMenuViewModel, sellViewModel, selectToolViewModel,
+                selectCropViewModel);
         views.add(farmView, ViewManager.FARM);
 
         return this;
@@ -314,7 +350,6 @@ public class AppBuilder {
 
         return this;
     }
-
 
     /**
      * Creates the objects for the LoadFarm Use Case and connects the WelcomeView to its
@@ -337,9 +372,10 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the SetCity Use Case
+     * Adds the SetCity Use Case.
      * The controllers are seperated for WelcomeView
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addSetCityUseCase() {
         final SetCityOutputBoundary setCityOutputBoundary = new SetCityPresenter(welcomeViewModel);
@@ -356,8 +392,9 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Buy Controller Use Case
+     * Adds the Buy Controller Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addBuyToolUseCase() {
         final BuyToolOutputBoundary buyToolOutputBoundary = new BuyPresenter(toolMenuViewModel);
@@ -372,7 +409,6 @@ public class AppBuilder {
         farmView.setBuyController(buyController);
         return this;
     }
-
 
     /**
      * Creates the objects for the Start Use Case and connects the WelcomeView to its
@@ -393,10 +429,10 @@ public class AppBuilder {
         return this;
     }
 
-
     /**
-     * Adds the Upgrade Controller Use Case
+     * Adds the Upgrade Controller Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addUpgradeUseCase() {
         final UpgradeToolOutputBoundary upgradeToolOutputBoundary = new UpgradePresenter(toolMenuViewModel);
@@ -413,8 +449,9 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Sell Use Case
+     * Adds the Sell Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addSellUseCase() {
         final SellOutputBoundary sellOutputBoundary = new SellPresenter(sellViewModel);
@@ -431,16 +468,16 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Load Use Case
+     * Adds the Load Use Case.
      * The controllers are seperated for WelcomeView
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addLoadUseCase() {
         final LoadOutputBoundary loadOutputBoundary = new LoadPresenter(welcomeViewModel);
         loadInteractor = new LoadInteractor(saveFileAccess, loadOutputBoundary);
 
         final LoadController loadController = new LoadController(loadInteractor);
-
 
         if (welcomeView == null) {
             throw new RuntimeException("addWelcomeView must be called before addUseCase");
@@ -450,17 +487,16 @@ public class AppBuilder {
         return this;
     }
 
-
     /**
-     * Adds the Select Tool Use Case
+     * Adds the Select Tool Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addSelectToolUseCase() {
         final SelectToolOutputBoundary selectToolOutputBoundary = new SelectToolPresenter(selectToolViewModel);
         selectToolInteractor = new SelectToolInteractor(selectToolOutputBoundary);
 
         final SelectToolController selectToolController = new SelectToolController(selectToolInteractor);
-
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
@@ -471,8 +507,9 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the get active Tool Use Case
+     * Adds the get active Tool Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addGetActiveToolUseCase() {
         final GetActiveToolOutputBoundary getActiveToolOutputBoundary = new GetActiveToolPresenter(farmViewModel);
@@ -487,12 +524,13 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the useTool Use Case
+     * Adds the useTool Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addUseToolUseCase() {
         final UseToolOutputBoundary useToolOutputBoundary = new UseToolPresenter(farmViewModel);
-        useToolInteractor = new UseToolInteractor(useToolOutputBoundary, farmDAO);
+        useToolInteractor = new UseToolInteractor(useToolOutputBoundary, farmDataAccessObject);
         final UseToolController controller = new UseToolController(useToolInteractor);
 
         if (farmView == null) {
@@ -503,15 +541,15 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Select Crop Use Case
+     * Adds the Select Crop Use Case.
      * @return this builder
+     * @throws RuntimeException .
      */
     public AppBuilder addSelectCropUseCase() {
         final SelectCropOutputBoundary selectCropOutputBoundary = new SelectCropPresenter(selectCropViewModel);
         selectCropInteractor = new SelectCropInteractor(selectCropOutputBoundary);
 
         final SelectCropController selectCropController = new SelectCropController(selectCropInteractor);
-
 
         if (farmView == null) {
             throw new RuntimeException("addFarmView must be called before addUseCase");
@@ -522,7 +560,7 @@ public class AppBuilder {
     }
 
     /**
-     * Creates and adds the View Manager
+     * Creates and adds the View Manager.
      * Should be called first
      * @return this builder
      */
