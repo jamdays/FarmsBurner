@@ -11,12 +11,11 @@ public class FarmState {
     private final int ALIVE = 0B100000;
     private final int FERTILIZED = 0B1000000;
     private final int READY = 0B10000000;
-    private final int CROP_MASK = 0B11100000000;
-    private final int WINTER_WHEAT = 0B10000000000;
-    private final int RICE = 0B00100000000;
-    private final int SNOWBERRY = 0B00000000000;
-    private final int CORN = 0B01100000000;
-    private final int WHEAT = 0B01000000000;
+    private final int CROP_MASK = 0B1100000000;
+    private final int RICE = 0B0100000000;
+    private final int SNOWBERRY = 0B0000000000;
+    private final int CORN = 0B1100000000;
+    private final int WHEAT = 0B1000000000;
     // 0 is night, 1 is day, 2 is sunrise/sunset
     private int day;
     private String weather;
@@ -108,9 +107,10 @@ public class FarmState {
         else if (crop.equalsIgnoreCase("corn")) {
             this.crop = CORN;
         }
-        else if (crop.equalsIgnoreCase("winter wheat")){
-            this.crop = WINTER_WHEAT;
-        }
+    }
+
+    public int getCrop(){
+        return crop;
     }
 
     public String getWeather(){
