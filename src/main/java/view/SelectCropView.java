@@ -72,6 +72,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
                 // notify the controller to begin the use case
                 cropController.selectCrop("rice");
                 controller.selectCrop("Rice");
+
                 // update the currently selected crop
                 currSelected.setText("Current Crop: " + currCrop);
             }

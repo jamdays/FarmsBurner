@@ -109,6 +109,10 @@ public class FarmState {
         }
     }
 
+    public int getCrop(){
+        return crop;
+    }
+
     public String getWeather(){
         return weather;
     }
