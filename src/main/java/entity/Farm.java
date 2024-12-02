@@ -38,7 +38,13 @@ public class Farm implements Serializable {
     // activeTool and activeCrop instance variables
 
     private boolean sprinklerPurchased;
+    private int sprinklerLevel;
     private boolean harvesterPurchased;
+    private int harvesterLevel;
+    private boolean tillerPurchased;
+    private int tillerLevel;
+    private boolean fertilizerPurchased;
+    private int fertilizerLevel;
 
     private String activeTool;
     private String activeCrop;
@@ -54,19 +60,21 @@ public class Farm implements Serializable {
         this.city = "Toronto";
         // give farm some storage (can store up to 100 crops)
         this.storage = new Storage(100);
-        // initialize so that you don't start with any tools
-        this.sprinklerPurchased = true;
-        this.harvesterPurchased = true;
+        this.sprinklerPurchased = false;
+        this.sprinklerLevel = 2;
+        this.harvesterPurchased = false;
+        this.harvesterLevel = 2;
+        this.tillerPurchased = false;
+        this.tillerLevel = 2;
+        this.fertilizerPurchased = false;
+        this.fertilizerLevel = 2;
     }
 
     public Farm(){
-        this.farmLand = new Land[8][10];
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 10; j++) {
+        this.farmLand = new Land[16][20];
+        for (int i = 0; i < 16; i++) {
+            for (int j = 0; j < 20; j++) {
                 farmLand[i][j] = new Land();
-                if ((i == 3 || i == 4) && (j == 4 || j == 5)){
-                    farmLand[i][j].setClaimed(true);
-                }
             }
         }
         this.barnBucks = 0;
@@ -74,9 +82,14 @@ public class Farm implements Serializable {
         this.sprinkler = new Sprinkler();
         this.city = "Toronto";
         this.storage = new Storage(100);
-        // initialize so that you don't start with any tools
         this.sprinklerPurchased = false;
+        this.sprinklerLevel = 2;
         this.harvesterPurchased = false;
+        this.harvesterLevel = 2;
+        this.tillerPurchased = false;
+        this.tillerLevel = 2;
+        this.fertilizerPurchased = false;
+        this.fertilizerLevel = 2;
 
     }
 
@@ -112,6 +125,14 @@ public class Farm implements Serializable {
         this.sprinklerPurchased = sprinklerPurchased;
     }
 
+    public int getSprinklerLevel() {
+        return this.sprinklerLevel;
+    }
+
+    public void setSprinklerLevel(int sprinklerLevel) {
+        this.sprinklerLevel = sprinklerLevel;
+    }
+
     public boolean getHarvesterPurchased() {
         return this.harvesterPurchased;
     }
@@ -120,12 +141,60 @@ public class Farm implements Serializable {
         this.harvesterPurchased = harvesterPurchased;
     }
 
+    public int getHarvesterLevel() {
+        return this.harvesterLevel;
+    }
+
+    public void setHarvesterLevel(int harvesterLevel) {
+        this.harvesterLevel = harvesterLevel;
+    }
+
+    public boolean getTillerPurchased() {
+        return this.tillerPurchased;
+    }
+
+    public void setTillerPurchased(boolean tillerPurchased) {
+        this.tillerPurchased = tillerPurchased;
+    }
+
+    public int getTillerLevel() {
+        return this.tillerLevel;
+    }
+
+    public void setTillerLevel(int tillerLevel) {
+        this.tillerLevel = tillerLevel;
+    }
+
+    public boolean getFertilizerPurchased() {
+        return this.fertilizerPurchased;
+    }
+
+    public void setFertilizerPurchased(boolean fertilizerPurchased) {
+        this.fertilizerPurchased = fertilizerPurchased;
+    }
+
+    public int getFertilizerLevel() {
+        return this.fertilizerLevel;
+    }
+
+    public void setFertilizerLevel(int fertilizerLevel) {
+        this.fertilizerLevel = fertilizerLevel;
+    }
+
     public String getActiveTool() {
         return this.activeTool;
     }
 
     public void setActiveTool(String activeTool) {
         this.activeTool = activeTool;
+    }
+
+    public String getActiveCrop() {
+        return this.activeCrop;
+    }
+
+    public void setActiveCrop(String activeCrop) {
+        this.activeCrop = activeCrop;
     }
 
     public void water(int r, int c){
@@ -234,5 +303,33 @@ public class Farm implements Serializable {
 
     public Long getLogOutTime(){
         return logOutTime;
+    }
+
+    public boolean isClear() {
+        return clear;
+    }
+
+    public boolean isCloudy() {
+        return cloudy;
+    }
+
+    public boolean isFog() {
+        return fog;
+    }
+
+    public boolean isThunderstorm() {
+        return thunderstorm;
+    }
+
+    public boolean isSnowy() {
+        return snowy;
+    }
+
+    public boolean isRainy() {
+        return rainy;
+    }
+
+    public int getDay(){
+        return day;
     }
 }
