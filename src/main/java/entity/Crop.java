@@ -42,6 +42,7 @@ public abstract class Crop implements Serializable {
 
     /**
      * Sets the age and set prices accordingly.
+     * LOW KEY THE CROP CAN HAVE A NEGATIVE AGE I HAVEN'T FIXED IT YET
      * @param age the age to be set to
      */
     public void setAge(int age) {

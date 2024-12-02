@@ -32,7 +32,7 @@ public class Snowberry extends Crop {
                     this.setAge(this.getAge() + 1);
                 }
             }
-            else if (this.getTemp() > 8){
+            else if (this.getTemp() > 8 && this.getTemp() < 18){
                 this.setAge(this.getAge() - 1);
             }
             else if (this.getTemp() > 18){
