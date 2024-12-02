@@ -1,6 +1,7 @@
 package main.java.view;
 
 import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.ToolMenuState;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
 import main.java.interface_adapter.toolmenu.UpgradeController;
 
@@ -45,15 +46,17 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.anchor = GridBagConstraints.CENTER;
-        mainPanel.setSize(new Dimension(500, 300));
+        mainPanel.setSize(new Dimension(500, 400));
         mainPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
+      
         createItemPanel("Sprinkler", 5,"Waters crops in a large area.", mainPanel, gbc, 0);
-        createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 1);
-        createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 2);
-        createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 3);
+        createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1);
+        createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 2);
+        createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 3);
+        createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -136,8 +139,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("buy")){
-            System.out.println("Property Change fired (Buying)");
-        }
+        // Change the level and Barnbucks somehow
     }
 }
