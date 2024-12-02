@@ -1,21 +1,11 @@
 package main.java.view;
 
-import main.java.app.WindowBuilder;
-
-import main.java.interface_adapter.farm.*;
-import main.java.interface_adapter.selectcrop.SelectCropController;
-import main.java.interface_adapter.selectcrop.SelectCropViewModel;
-import main.java.interface_adapter.selecttool.SelectToolController;
-import main.java.interface_adapter.sell.SellController;
-import main.java.interface_adapter.sell.SellViewModel;
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
-import main.java.interface_adapter.selecttool.SelectToolViewModel;
-
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -24,6 +14,23 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import javax.swing.*;
+
+import main.java.app.WindowBuilder;
+import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.selectcrop.SelectCropController;
+import main.java.interface_adapter.selectcrop.SelectCropViewModel;
+import main.java.interface_adapter.selecttool.SelectToolController;
+import main.java.interface_adapter.selecttool.SelectToolViewModel;
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellViewModel;
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
+
+/**
+ * The view for the farm.
+ */
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private JLabel backgroundLabel;
     private final int WET = 0B1;
@@ -49,7 +56,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private ToolMenuViewModel toolMenuViewModel;
     private BuyController buyController;
     private UpgradeController upgradeController;
-    private SellViewModel  sellViewModel;
+    private SellViewModel sellViewModel;
     private SellController sellController;
     private SelectToolViewModel selectToolViewModel;
     private SelectToolController selectToolController;
@@ -62,20 +69,18 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SetCropController setCropController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
-        //Add background as JLABEL to set images
+        // Add background as JLABEL to set images
         backgroundLabel = new JLabel();
         this.setLayout(new BorderLayout());
         this.add(backgroundLabel);
         // Navigation Bar
-
-        JPanel navBar = new JPanel();
         this.toolMenuViewModel = toolMenuViewModel;
         this.sellViewModel = sellViewModel;
         this.selectToolViewModel = selectToolViewModel;
         viewModel = farmViewModel;
         viewModel.addPropertyChangeListener(this);
         this.setBackground(new Color(169, 152, 126));
-        //FarmButton farmSettings = new FarmButton("≡");
+        // FarmButton farmSettings = new FarmButton("≡");
         FarmButton save = new FarmButton("Save");
         save.addActionListener(new ActionListener() {
             @Override
@@ -96,7 +101,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 String cloudCoverage = currWeatherForCity.get(3);
                 // test show results
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build().setVisible(true);
+                builder.addView(350, 280, new WeatherView(city, temp, conditions, cloudCoverage)).build()
+                        .setVisible(true);
                 }
         });
         FarmButton sell = new FarmButton("Sell");
@@ -115,7 +121,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 BuyView buyView = new BuyView(toolMenuViewModel);
-                builder.addView(380, 280, buyView).build().setVisible(true);
+                builder.addView(380, 300, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
@@ -143,13 +149,11 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 FarmLabel cropLabel = new CropLabel("", 20, Color.BLACK);
                 ImageIcon grass = new ImageIcon("src/main/resources/farmtile1.png");
                 cropLabel.setIcon(new ImageIcon(grass.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-//                cropLabel.setBorder(new LineBorder(Color.WHITE));
-//                cropLabel.setPreferredSize(new Dimension(25, 25));
                 farmLand[r][c] = cropLabel;
                 cropLabel.addMouseListener(new MouseAdapter() {
-                    public void mouseClicked(MouseEvent e) {
+                    public void mouseClicked(MouseEvent mouseEvent) {
                         // if plot is clicked while shift is held down, claim land
-                        if ((e.getModifiers() & 1) == 1) {
+                        if ((mouseEvent.getModifiers() & 1) == 1) {
                             // make it so that if tiller is active, you till an area
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
                                 useToolController.useTool("tiller", r, c);
@@ -159,7 +163,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             }
                         }
                         // if plot is clicked while ctrl is held down, plant crop on plot
-                        else if (e.getModifiers() == 18) {
+                        else if (mouseEvent.getModifiers() == 18) {
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
                                 useToolController.useTool("planter", r, c);
                             }
@@ -168,7 +172,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             }
                         }
                         // if plot is clicked while alt is held down, water plot
-                        else if (e.getModifiers() == 24) {
+                        else if (mouseEvent.getModifiers() == 24) {
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
                                 useToolController.useTool("sprinkler", r, c);
                             }
@@ -177,7 +181,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             }
                         }
                         // if plot is clicked while ctrl and alt are held down, fertilize crop
-                        else if ((e.getModifiers() & (18|24)) == (18|24)) {
+                        else if ((mouseEvent.getModifiers() & (18|24)) == (18|24)) {
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
                                 useToolController.useTool("fertilizer", r, c);
                             }
@@ -199,7 +203,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         JPanel footerPanel = new JPanel();
         // FarmLabel power = new FarmLabel("Power: 0");
         // FarmLabel barnBucks = new FarmLabel("Barn Bucks: 0");
-        //footerPanel.add(power);
+        // footerPanel.add(power);
         // footerPanel.add(barnBucks);
         FarmButton cropSelector = new FarmButton("Choose Crop");
 
@@ -229,8 +233,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
         footerPanel.add(cropSelector);
         footerPanel.add(toolSelector);
-        footerPanel.setBackground(new Color(169, 152, 126,0 ));
+        footerPanel.setBackground(new Color(169, 152, 126,0));
 
+        JPanel navBar = new JPanel();
         navBar.add(save);
         navBar.add(weather);
         navBar.add(sell);
@@ -252,22 +257,23 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final FarmState state = (FarmState) evt.getNewValue();
-        //TODO add default background in case it doesn't exist
+        // TODO add default background in case it doesn't exist
         if (evt.getPropertyName().equals("weather")) {
             String background = "src/main/resources/background-";
-            if (state.getDay() == 0){
+            if (state.getDay() == 0) {
                 background += "night";
-            } else if (state.getDay() == 1){
+            }
+            else if (state.getDay() == 1) {
                 background += "day";
             }
-            else{
+            else {
                 background += "dawndusk.png";
-                ImageIcon backgroundIMG = new ImageIcon(background);
+                ImageIcon backgroundImage = new ImageIcon(background);
                 System.out.println(background);
-                this.backgroundLabel.setIcon(new ImageIcon(backgroundIMG.getImage()));
+                this.backgroundLabel.setIcon(new ImageIcon(backgroundImage.getImage()));
                 return;
             }
-            switch(state.getWeather()){
+            switch (state.getWeather()) {
                 case "Clear":
                     background += "clear";
                     break;
@@ -295,19 +301,19 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     background += "cloudy";
             }
             background += ".png";
-            ImageIcon backgroundIMG = new ImageIcon(background);
+            ImageIcon backgroundImage = new ImageIcon(background);
             System.out.println(background);
-            this.backgroundLabel.setIcon(new ImageIcon(backgroundIMG.getImage()));
+            this.backgroundLabel.setIcon(new ImageIcon(backgroundImage.getImage()));
 
         }
         else {
             Color green = new Color(20, 130, 50);
             Color dirt = new Color(75, 40, 40);
-            Color wetdirt = new Color(50, 20, 20);
+            Color wetDirt = new Color(50, 20, 20);
             for (int r = 0; r < state.getFarmLand().length; r++) {
                 for (int c = 0; c < state.getFarmLand()[r].length; c++) {
                     ImageIcon dirtImg = null;
-                    // if farmland is claimed, change button color to dirt
+                    // if farmland is claimed, change button color to dirt  
                     if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
                         // Snowy & Claimed
                         if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
@@ -401,73 +407,141 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         baseLabel.setBounds(0, 0, 25, 25);
         layeredPane.add(baseLabel, JLayeredPane.DEFAULT_LAYER);
 
-        JLabel overlayLabel = new JLabel(new ImageIcon(overlayIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        JLabel overlayLabel = new JLabel(new ImageIcon(overlayIcon.getImage()
+                .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
         overlayLabel.setBounds(0, 0, 25, 25);
         layeredPane.add(overlayLabel, JLayeredPane.PALETTE_LAYER);
 
-        label.setIcon(null); // Clear the existing icon
+        // Clear the existing icon
+        label.setIcon(null);
         label.setLayout(new BorderLayout());
         label.add(layeredPane, BorderLayout.CENTER);
     }
 
+    /**
+     * Set Claim Controller.
+     * @param claimController .
+     */
     public void setClaimController(ClaimController claimController) {
         this.claimController = claimController;
     }
 
+    /**
+     * Set Fertilize Controller.
+     * @param fertilizeController .
+     */
     public void setFertilizeController(FertilizeController fertilizeController) {
         this.fertilizeController = fertilizeController;
     }
 
-    public void setBuyController(BuyController buyController){
+    /**
+     * Set Buy Controller.
+     * @param buyController .
+     */
+    public void setBuyController(BuyController buyController) {
         this.buyController = buyController;
     }
 
-    public void setUpgradeController(UpgradeController upgradeController){
+    /**
+     * Set Upgrade Controller.
+     * @param upgradeController .
+     */
+    public void setUpgradeController(UpgradeController upgradeController) {
         this.upgradeController = upgradeController;
     }
+
+    /**
+     * Set Harvest Controller.
+     * @param harvestController .
+     */
     public void setHarvestController(HarvestController harvestController) {
         this.harvestController = harvestController;
     }
 
+    /**
+     * Set Plant Controller.
+     * @param plantController .
+     */
     public void setPlantController(PlantController plantController) {
         this.plantController = plantController;
     }
 
+    /**
+     * Set Water Controller.
+     * @param waterController .
+     */
     public void setWaterController(WaterController waterController) {
         this.waterController = waterController;
     }
 
-    public void setSellController(SellController sellController){
+    /**
+     * Set Sell Controller.
+     * @param sellController .
+     */
+    public void setSellController(SellController sellController) {
         this.sellController = sellController;
     }
 
+    /**
+     * Set Select Tool Controller.
+     * @param selectToolController .
+     */
     public void setSelectToolController(SelectToolController selectToolController) {
         this.selectToolController = selectToolController;
     }
 
+    /**
+     * Set Select Crop Controller.
+     * @param selectCropController .
+     */
     public void setSelectCropController(SelectCropController selectCropController) {
         this.selectCropController = selectCropController;
     }
 
+    /**
+     * Set Weather Controller.
+     * @param weatherController .
+     */
     public void setWeatherController(WeatherController weatherController) {
         this.weatherController = weatherController;
     }
 
+    /**
+     * Set SetCrop Controller.
+     * @param setCropController .
+     */
     public void setSetCropController(SetCropController setCropController) {
         this.setCropController = setCropController;
     }
 
+    /**
+     * Set Use Tool Controller.
+     * @param useToolController .
+     */
     public void setUseToolController(UseToolController useToolController) {
         this.useToolController = useToolController;
     }
 
+    /**
+     * Set Get Active Tool Controller.
+     * @param getActiveToolController .
+     */
     public void setGetActiveToolController(GetActiveToolController getActiveToolController) {
         this.getActiveToolController = getActiveToolController;
     }
 
+    /**
+     * Set Save Controller.
+     * @param saveController .
+     */
     public void setSaveController(SaveController saveController) {
         this.saveController = saveController;
     }
+
+    /**
+     * Set action performed listener.
+     * @param evt the event to be processed
+     */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
