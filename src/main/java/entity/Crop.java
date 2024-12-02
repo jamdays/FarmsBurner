@@ -9,20 +9,26 @@ public class Crop implements Serializable {
     private boolean isAlive;
     private int price;
     private int waterlevel;
+    private Long time;
+    private Land land;
+    private boolean fertilized;
 
     // constructor
-    public Crop(int age, boolean isAlive, int price) {
+    public Crop(int age, boolean isAlive, int price, Long time, Land land) {
         this.age = age;
         this.isAlive = isAlive;
         this.price = price;
         this.waterlevel = 0;
+        this.time = time;
     }
 
-    public Crop(){
+    public Crop(Long time, Land land){
         this.age = 0;
         this.isAlive = true;
         this.price = 0;
         this.waterlevel = 0;
+        this.time = time;
+        System.out.println(time);
     }
 
     // getter and setter for age
@@ -66,6 +72,14 @@ public class Crop implements Serializable {
         return this.getAge() > 5;
     }
 
+    public long getTime(){
+        return this.time;
+    }
+
+    public void fertilize(){
+        this.fertilized = true;
+    }
+
     public void water(){
         if (this.waterlevel == 0){
             age += 1;
@@ -76,9 +90,38 @@ public class Crop implements Serializable {
         }
     }
 
-    public void harvest(){
-        this.isAlive = false;
+    /**
+     * Updates the state of the plant based on the time
+     * @param time the current time
+     */
+    public void update(long time){
+        //this.time is very different from time
+        long diff = time - this.time;
+        long days = diff/86400;
+        if (days == 1 && this.waterlevel != 0){
+            this.waterlevel = 0;
+            land.setIsWet(false);
+            age += 1;
+            if (age == 3){
+                this.price = 5;
+                if (this.fertilized){
+                    this.price*=2;
+                }
+            }
+            if (age > 3 && age < 6){
+                this.price += 1;
+            }
+            if (age > 5){
+                this.price -=1;
+            }
+            if (this.price == 0){
+                this.isAlive = false;
+            }
+        }
+    }
 
+    //TODO write harvest function
+    public void harvest(){
 //        // Crops are only ready to harvest if age > 5
 //        if (this.isAlive && this.age >= 5){
 //            this.isAlive = false;
