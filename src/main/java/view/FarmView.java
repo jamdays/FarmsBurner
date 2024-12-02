@@ -32,11 +32,12 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int PLANTED = 0B1000;
     private final int ALIVE = 0B100000;
     private final int FERTILIZED = 0B1000000;
-    private final int WINTER_WHEAT = 0B10000000000;
-    private final int RICE = 0B00100000000;
+    private final int CROP_MASK = 0B1100000000;
+    private final int RICE = 0B0100000000;
     private final int SNOWBERRY = 0B00000000000;
-    private final int CORN = 0B01100000000;
-    private final int WHEAT = 0B01000000000;
+    private final int CORN = 0B1100000000;
+    private final int WHEAT = 0B1000000000;
+    private final int READY = 0B10000000;
     private ClaimController claimController;
     private FertilizeController fertilizeController;
     private HarvestController harvestController;
@@ -282,26 +283,49 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 for (int c = 0; c < state.getFarmLand()[r].length; c++) {
                     ImageIcon dirtImg = null;
                     // if farmland is claimed, change button color to dirt
+                    String file = "";
+                    if ((state.getFarmLand()[r][c] & CROP_MASK) == CORN){
+                        file += "Corn";
+                    }
+                    else if ((state.getFarmLand()[r][c] & CROP_MASK) == WHEAT){
+                        file+= "Wheat";
+                    }
+                    //BECAUSE SNOWBERRY IS 0 so it is on by default
+                    else if ((state.getFarmLand()[r][c] & CROP_MASK) == SNOWBERRY && (state.getFarmLand()[r][c] & PLANTED) == PLANTED){
+                        file += "Snowberry";
+                    }
+                    else if ((state.getFarmLand()[r][c] & CROP_MASK) == RICE){
+                        file += "Rice";
+                    }
+                    if ((state.getFarmLand()[r][c] & READY) == READY){
+                        file += "Ready";
+                    }
                     if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
-                        dirtImg = new ImageIcon("src/main/resources/farmtile2.png");
-                        ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile2.png");
+                        ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile2" + file + ".png");
                         farmLand[r][c].setIcon(new ImageIcon(dirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         // given the farmland is claimed, if it is wet as well as fertilized, set label image to wet and fertilized dirt
                         if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
-                            dirtImg = new ImageIcon("src/main/resources/farmtile5.png");
-                            ImageIcon wetfertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile5.png");
+                            ImageIcon wetfertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile5" + file + ".png");
                             farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
                         // given the farmland is claimed, if it is wet but unfertilized, set label image to wet but unfertilized dirt
                         if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
-                            dirtImg = new ImageIcon("src/main/resources/farmtile3.png");
-                            ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile3.png");
+                            ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile3" + file + ".png");
                             farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        }
+                        // given the farmland is claimed, if a crop has been planted there, make it appear
+                        if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
+                            farmLand[r][c].setHorizontalTextPosition(JLabel.CENTER);
+                            farmLand[r][c].setForeground(Color.gray);
+                            // set the plant colour to green if and only if it is alive
+                            if ((state.getFarmLand()[r][c] & ALIVE) == ALIVE) {
+                                farmLand[r][c].setForeground(green);
+
+                            }
                         }
                         // given the farmland is claimed, if it has been fertilized but is dry, set label image to fertilized but dry dirt
                         if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
-                            dirtImg = new ImageIcon("src/main/resources/farmtile4.png");
-                            ImageIcon fertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile4.png");
+                            ImageIcon fertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile4" +file + ".png")
                             farmLand[r][c].setIcon(new ImageIcon(fertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
                     }
