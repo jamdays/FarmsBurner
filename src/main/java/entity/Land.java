@@ -99,7 +99,7 @@ public class Land implements Serializable {
     }
 
     // plant should only work on claimed land and if it is not snowy and if there isn't already a plant
-    public void plant() throws PlantingException {
+    public void plant(Long time) throws PlantingException {
         if (!claimed){
             throw new PlantingException("Land is not claimed");
         } else if (isSnowy){
@@ -108,7 +108,7 @@ public class Land implements Serializable {
             throw new PlantingException("There is already a plant here");
         } else{
             planted = true;
-            this.crop = new Crop();
+            this.crop = new Crop(time, this);
         }
 //        if (claimed && !planted && !isSnowy){
 //            planted = true;
@@ -141,6 +141,10 @@ public class Land implements Serializable {
             throw new FertilizeException("Land is already fertilized");
         } else {
             fertilized = true;
+            // If the crop is not null set it to fertilized
+            if (crop != null){
+                crop.fertilize();
+            }
         }
     }
 }

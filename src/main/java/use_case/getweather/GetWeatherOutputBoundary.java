@@ -5,5 +5,5 @@ public interface GetWeatherOutputBoundary {
     /**
      * gets the current weather for the game location selected by the player
      */
-    void weather(String condition, int day);
+    void weather(String condition, int day, long time);
 }

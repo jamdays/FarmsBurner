@@ -23,7 +23,7 @@ public class CropLabel extends FarmLabel{
         this.setFont(new Font("Press Start 2P", Font.BOLD, size));
         setBackground(color);
         this.setOpaque(true);
-        this.setBorder(new LineBorder(Color.WHITE));
+        this.setBorder(new LineBorder(new Color(69, 44, 42)));
         this.setPreferredSize(new Dimension(25,25));
     }
 }

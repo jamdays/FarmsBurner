@@ -31,7 +31,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
         // Barn Bucks
         // TODO: implement barnBucks so that it updates with the amount of barnBucks the user has
-        FarmLabel barnBucksLabel = new FarmLabel("         Barn Bucks: " + this.barnBucks, 18);
+        FarmLabel barnBucksLabel = new FarmLabel("Barn Bucks: " + this.barnBucks, 18);
         JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         topRightPanel.add(barnBucksLabel);
         topRightPanel.setBackground(new java.awt.Color(169, 152, 126));
@@ -50,13 +50,12 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
-        createItemPanel("Sprinkler", "5","Waters crops in a large area.", mainPanel, gbc, 0);
-
-        // TODO: figure out what else goes on the buy menu
-        createItemPanel("Harvester", "5", "Harvests crops in a large area.", mainPanel, gbc, 1);
-        createItemPanel("Tiller", "5", "Claims land in a large area.", mainPanel, gbc, 2);
-        createItemPanel("Fertilizer", "5", "Fertilizes a large area of tilled land.", mainPanel, gbc, 3);
-        createItemPanel("Planter", "5", "Plants crops in a large area", mainPanel, gbc, 4);
+      
+        createItemPanel("Sprinkler", 5,"Waters crops in a large area.", mainPanel, gbc, 0);
+        createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1)
+        createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 2);
+        createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 3);
+        createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -71,9 +70,9 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         label.setText("Barn Bucks: " + amount);
     }
 
-    private JPanel createItemPanel(String itemName, String price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
+    private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
         // Item Label
-        JLabel itemLabel = new JLabel(itemName);
+        JLabel itemLabel = new JLabel("Level 0 " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         // Item Description Label
@@ -85,7 +84,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         purchaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int priceInt = Integer.parseInt(price);
                 buyController.buy(itemName);
                 // TODO: access barnBucks and add to tools
 //                if (priceInt < barnBucks) {
@@ -94,7 +92,9 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 //                    System.out.println("Purchased " + itemName);
 //                } else {
 //                    System.out.println("Not enough barn bucks");
-                purchaseButton.setText("Purchased");
+                purchaseButton.setText("Upgrade");
+                barnBucks -= price;
+                itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
             }
         });
 
@@ -106,7 +106,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
         // Add Price
         gbc.gridx = 1;
-        JLabel priceLabel = new JLabel("Price: " + price);
+        JLabel priceLabel = new JLabel("Price: " + price + " ");
         priceLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(priceLabel, gbc);
 
@@ -120,8 +120,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         gbc.gridwidth = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel.add(descriptionLabel, gbc);
-
-        return panel;
 
     }
 
@@ -140,6 +138,8 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
+        if (evt.getPropertyName().equals("buy")){
+            System.out.println("Property Change fired (Buying)");
+        }
     }
 }
