@@ -38,6 +38,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int CORN = 0B1100000000;
     private final int WHEAT = 0B1000000000;
     private final int READY = 0B10000000;
+    private final int DEAD = 0B10000000000;
     private ClaimController claimController;
     private FertilizeController fertilizeController;
     private HarvestController harvestController;
@@ -372,7 +373,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     // given the farmland is claimed, if a crop has been planted there, make it appear
                     if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
                         ImageIcon cropImg = null;
-                        if (state.getCrop() == RICE) {
+                        if (state.getCrop() == DEAD){
+                            cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                        } else if (state.getCrop() == RICE) {
                             cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
                         } else if (state.getCrop() == CORN) {
                             cropImg = new ImageIcon("src/main/resources/CornUnready.png");
