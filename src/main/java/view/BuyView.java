@@ -1,17 +1,30 @@
 package main.java.view;
 
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.ToolMenuState;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
+
+/**
+ * Buy View.
+ */
 public class BuyView extends JPanel implements ActionListener, PropertyChangeListener {
     private ToolMenuViewModel viewModel;
     private BuyController buyController;
@@ -52,7 +65,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
       
-        createItemPanel("Sprinkler", 5,"Waters crops in a large area.", mainPanel, gbc, 0);
+        createItemPanel("Sprinkler", 5, "Waters crops in a large area.", mainPanel, gbc, 0);
         createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1);
         createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 2);
         createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 3);
@@ -67,11 +80,18 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     }
 
     // TODO: implement updateBarnBucks so that it updates with the amount of barnBucks the user has. Not sure if this should be in the BuyView class or the Farm
+
+    /**
+     * Update Barn Bucks.
+     * @param label .
+     * @param amount .
+     */
     public static void updateBarnBucks(FarmLabel label, int amount) {
         label.setText("Barn Bucks: " + amount);
     }
 
-    private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc, int startY) {
+    private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc,
+                                 int startY) {
         // Item Label
         JLabel itemLabel = new JLabel("Level 0 " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -87,12 +107,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
             public void actionPerformed(ActionEvent e) {
                 buyController.buy(itemName);
                 // TODO: access barnBucks and add to tools
-//                if (priceInt < barnBucks) {
-//                    barnBucks -= priceInt;
-//                    updateBarnBucks(barnBucksLabel, barnBucks);
-//                    System.out.println("Purchased " + itemName);
-//                } else {
-//                    System.out.println("Not enough barn bucks");
                 purchaseButton.setText("Upgrade");
                 barnBucks -= price;
                 itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
