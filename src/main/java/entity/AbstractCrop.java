@@ -195,13 +195,7 @@ public abstract class AbstractCrop implements Serializable {
      * Water.
      */
     public void water() {
-        if (this.waterlevel == 0) {
-            age += 1;
-        }
-        this.waterlevel += 1;
-        if (this.waterlevel == 5) {
-            isAlive = false;
-        }
+        this.waterlevel++;
     }
 
     /**

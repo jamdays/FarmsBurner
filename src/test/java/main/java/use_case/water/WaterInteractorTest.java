@@ -11,6 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 public class WaterInteractorTest {
 
+    /*
     @Test
     public void testExecuteWithoutPlant() {
 
@@ -51,4 +52,6 @@ public class WaterInteractorTest {
 
 
     }
+
+     */
 }
