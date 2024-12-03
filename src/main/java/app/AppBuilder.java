@@ -9,29 +9,7 @@ import javax.swing.WindowConstants;
 import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.data_access.SaveFileAccess;
-import main.java.interface_adapter.farm.ClaimController;
-import main.java.interface_adapter.farm.ClaimPresenter;
-import main.java.interface_adapter.farm.FarmViewModel;
-import main.java.interface_adapter.farm.FertilizeController;
-import main.java.interface_adapter.farm.FertilizePresenter;
-import main.java.interface_adapter.farm.GetActiveToolController;
-import main.java.interface_adapter.farm.GetActiveToolPresenter;
-import main.java.interface_adapter.farm.HarvestController;
-import main.java.interface_adapter.farm.HarvestPresenter;
-import main.java.interface_adapter.farm.LoadFarmController;
-import main.java.interface_adapter.farm.LoadFarmPresenter;
-import main.java.interface_adapter.farm.PlantController;
-import main.java.interface_adapter.farm.PlantPresenter;
-import main.java.interface_adapter.farm.SaveController;
-import main.java.interface_adapter.farm.SavePresenter;
-import main.java.interface_adapter.farm.SetCropController;
-import main.java.interface_adapter.farm.SetCropPresenter;
-import main.java.interface_adapter.farm.UseToolController;
-import main.java.interface_adapter.farm.UseToolPresenter;
-import main.java.interface_adapter.farm.WaterController;
-import main.java.interface_adapter.farm.WaterPresenter;
-import main.java.interface_adapter.farm.WeatherController;
-import main.java.interface_adapter.farm.WeatherPresenter;
+import main.java.interface_adapter.farm.*;
 import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropPresenter;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
@@ -59,6 +37,8 @@ import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
 import main.java.use_case.fertilize.FertilizeInteractor;
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
+import main.java.use_case.forecast.ForecastInteractor;
+import main.java.use_case.forecast.ForecastOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
 import main.java.use_case.getstorage.GetStorageInteractor;
@@ -146,6 +126,7 @@ public class AppBuilder {
     private SelectCropViewModel selectCropViewModel;
     private SelectCropInteractor selectCropInteractor;
     private GetStorageInteractor getStorageInteractor;
+    private ForecastInteractor forecastInteractor;
 
     /**
      * Creates the objects for the Save Use Case and connects the FarmView to its
@@ -225,6 +206,26 @@ public class AppBuilder {
         farmView.setSetCropController(controller);
         return this;
     }
+
+    /**
+     * Creates the objects for the Forecast Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addForecastUseCase() {
+        final ForecastOutputBoundary forecastOutputBoundary = new ForecastPresenter(farmViewModel);
+        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, farmDataAccessObject);
+        final ForecastController controller = new ForecastController(forecastInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setForecastController(controller);
+        return this;
+    }
+
     /**
      * Creates the objects for the Claim Use Case and connects the FarmView to its
      * controller.

@@ -22,7 +22,6 @@ public class Farm implements Serializable {
     private final Land[][] farmLand;
     private int barnBucks;
     private int power;
-    private Sprinkler sprinkler;
     private String city;
     private Storage storage;
     private int day;
@@ -55,8 +54,6 @@ public class Farm implements Serializable {
         this.farmLand = farmLand;
         this.barnBucks = 0;
         this.power = 0;
-        // TODO: implement sprinkler so that you don't start with a sprinkler
-        this.sprinkler = new Sprinkler();
         // Default city for testing
         this.city = "Toronto";
         // give farm some storage (can store up to 100 crops)
@@ -85,7 +82,6 @@ public class Farm implements Serializable {
         this.activeCrop = "snowberry";
         this.barnBucks = 0;
         this.power = 0;
-        this.sprinkler = new Sprinkler();
         this.city = "Toronto";
         this.storage = new Storage(100);
         this.sprinklerPurchased = false;
@@ -124,14 +120,6 @@ public class Farm implements Serializable {
      */
     public void setBarnBucks(int barnBucks) {
         this.barnBucks = barnBucks;
-    }
-
-    /**
-     * Get sprinkler.
-     * @return sprinkler.
-     */
-    public Sprinkler getSprinkler() {
-        return this.sprinkler;
     }
 
     /**
@@ -444,13 +432,6 @@ public class Farm implements Serializable {
         this.city = city;
     }
 
-    /**
-     * Set sprinkler .
-     * @param sprinkler .
-     */
-    public void setSprinkler(Sprinkler sprinkler) {
-        this.sprinkler = sprinkler;
-    }
 
     /**
      * Set storage .
