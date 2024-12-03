@@ -118,7 +118,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                SellView sellView = new SellView(sellViewModel, getStorageController);
+                SellView sellView = new SellView(sellViewModel, getStorageController, getBarnBucksController);
                 builder.addView(350, 280, sellView).build().setVisible(true);
                 sellView.setSellController(sellController);
             }
