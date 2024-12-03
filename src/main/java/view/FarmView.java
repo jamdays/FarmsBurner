@@ -76,6 +76,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private GetToolBoughtController getToolBoughtController;
     private GetStorageController getStorageController;
     private GetBarnBucksController getBarnBucksController;
+    private PowerRefundController powerRefundController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         // Add background as JLABEL to set images
@@ -644,5 +645,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
     public void setGetBarnBucksController(GetBarnBucksController getBarnBucksController) {
         this.getBarnBucksController = getBarnBucksController;
+    }
+
+    public void setPowerRefundController(PowerRefundController powerRefundController) {
+        this.powerRefundController = powerRefundController;
     }
 }
