@@ -10,6 +10,7 @@ public interface GetWeatherOutputBoundary {
      * @param condition .
      * @param day .
      * @param time .
+     * @param temp .
      */
     void weather(String condition, int day, long time, int temp);
 }
