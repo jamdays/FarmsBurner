@@ -19,16 +19,6 @@ public class Land implements Serializable {
     private boolean planted;
     private boolean fertilized;
 
-    // constructor
-    public Land(AbstractCrop crop) {
-        this.crop = crop;
-        this.isWet = false;
-        this.isSnowy = false;
-        this.planted = true;
-        this.claimed = true;
-        this.fertilized = true;
-    }
-
     public Land() {
         this.isWet = false;
         this.isSnowy = false;
@@ -155,10 +145,10 @@ public class Land implements Serializable {
     /**
      * Plant should only work on claimed land and if it is not snowy and if there isn't already a plant.
      * @param time .
-     * @param crop .
+     * @param currCrop .
      * @throws PlantingException .
      */
-    public void plant(Long time, String crop) throws PlantingException {
+    public void plant(Long time, String currCrop) throws PlantingException {
         if (!claimed) {
             throw new PlantingException("Land is not claimed");
         }
@@ -171,7 +161,7 @@ public class Land implements Serializable {
         else {
             CropFactory cropFactory = new CropFactory();
             planted = true;
-            this.crop = cropFactory.createCrop(crop, time, this);
+            this.crop = cropFactory.createCrop(currCrop, time, this);
         }
     }
 

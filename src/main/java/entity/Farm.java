@@ -16,6 +16,7 @@ boolean isSnowy
 /**
  * Farm class.
  */
+@SuppressWarnings("checkstyle:MagicNumber")
 public class Farm implements Serializable {
 
     // Instance Variables
@@ -142,25 +143,29 @@ public class Farm implements Serializable {
         this.power = power;
     }
 
-    public void refreshPower(long time){
-        if (time - powerRefresh > 10800){
-            powerRefresh = time;
-            if ("Clear".equalsIgnoreCase(weather)){
+    /**
+     * Refresh power.
+     * @param currTime .
+     */
+    public void refreshPower(long currTime) {
+        if (currTime - powerRefresh > 10800) {
+            powerRefresh = currTime;
+            if ("Clear".equalsIgnoreCase(weather)) {
                 power += 100;
             }
-            else if ("Clouds".equalsIgnoreCase(weather)){
+            else if ("Clouds".equalsIgnoreCase(weather)) {
                 power += 50;
             }
-            else if ("Rain".equalsIgnoreCase(weather)){
+            else if ("Rain".equalsIgnoreCase(weather)) {
                 power += 50;
             }
-            else if ("Drizzle".equalsIgnoreCase(weather)){
+            else if ("Drizzle".equalsIgnoreCase(weather)) {
                 power += 50;
             }
-            else if ("Thunderstorm".equalsIgnoreCase(weather)){
+            else if ("Thunderstorm".equalsIgnoreCase(weather)) {
                 power += 250;
             }
-            else if ("Snow".equalsIgnoreCase(weather)){
+            else if ("Snow".equalsIgnoreCase(weather)) {
                 power += 50;
             }
             else {
@@ -172,6 +177,7 @@ public class Farm implements Serializable {
      * Get sprinkler purchased.
      * @return sprinkler purchased.
      */
+
     public boolean getSprinklerPurchased() {
         return this.sprinklerPurchased;
     }
@@ -181,9 +187,9 @@ public class Farm implements Serializable {
      * @param sprinklerPurchased .
      */
     public void setSprinklerPurchased(boolean sprinklerPurchased) {
-        this.barnBucks -= prices[sprinklerLevel-1];
-        if (this.barnBucks < 0){
-            this.barnBucks += prices[sprinklerLevel-1];
+        this.barnBucks -= prices[sprinklerLevel - 1];
+        if (this.barnBucks < 0) {
+            this.barnBucks += prices[sprinklerLevel - 1];
             return;
         }
         this.sprinklerPurchased = sprinklerPurchased;
@@ -203,7 +209,7 @@ public class Farm implements Serializable {
      */
     public void setSprinklerLevel(int sprinklerLevel) {
         this.barnBucks -= prices[sprinklerLevel];
-        if (this.barnBucks < 0){
+        if (this.barnBucks < 0) {
             this.barnBucks += prices[sprinklerLevel];
             return;
         }
@@ -223,9 +229,9 @@ public class Farm implements Serializable {
      * @param harvesterPurchased .
      */
     public void setHarvesterPurchased(boolean harvesterPurchased) {
-        this.barnBucks -= prices[harvesterLevel-1];
-        if (this.barnBucks < 0){
-            this.barnBucks += prices[harvesterLevel-1];
+        this.barnBucks -= prices[harvesterLevel - 1];
+        if (this.barnBucks < 0) {
+            this.barnBucks += prices[harvesterLevel - 1];
             return;
         }
         this.harvesterPurchased = harvesterPurchased;
@@ -245,7 +251,7 @@ public class Farm implements Serializable {
      */
     public void setHarvesterLevel(int harvesterLevel) {
         this.barnBucks -= prices[harvesterLevel];
-        if (this.barnBucks < 0){
+        if (this.barnBucks < 0) {
             this.barnBucks += prices[harvesterLevel];
             return;
         }
@@ -265,9 +271,9 @@ public class Farm implements Serializable {
      * @param tillerPurchased .
      */
     public void setTillerPurchased(boolean tillerPurchased) {
-        this.barnBucks -= prices[tillerLevel-1];
-        if (this.barnBucks < 0){
-            this.barnBucks += prices[tillerLevel-1];
+        this.barnBucks -= prices[tillerLevel - 1];
+        if (this.barnBucks < 0) {
+            this.barnBucks += prices[tillerLevel - 1];
             return;
         }
         this.tillerPurchased = tillerPurchased;
@@ -287,7 +293,7 @@ public class Farm implements Serializable {
      */
     public void setTillerLevel(int tillerLevel) {
         this.barnBucks -= prices[tillerLevel];
-        if (this.barnBucks < 0){
+        if (this.barnBucks < 0) {
             this.barnBucks += prices[tillerLevel];
             return;
         }
@@ -307,9 +313,9 @@ public class Farm implements Serializable {
      * @param fertilizerPurchased .
      */
     public void setFertilizerPurchased(boolean fertilizerPurchased) {
-        this.barnBucks -= prices[fertilizerLevel-1];
-        if (this.barnBucks < 0){
-            this.barnBucks += prices[fertilizerLevel-1];
+        this.barnBucks -= prices[fertilizerLevel - 1];
+        if (this.barnBucks < 0) {
+            this.barnBucks += prices[fertilizerLevel - 1];
             return;
         }
         this.fertilizerPurchased = fertilizerPurchased;
@@ -329,7 +335,7 @@ public class Farm implements Serializable {
      */
     public void setFertilizerLevel(int fertilizerLevel) {
         this.barnBucks -= prices[fertilizerLevel];
-        if (this.barnBucks < 0){
+        if (this.barnBucks < 0) {
             this.barnBucks += prices[fertilizerLevel];
             return;
         }
@@ -377,7 +383,7 @@ public class Farm implements Serializable {
         if (this.farmLand[row][col].isClaimed()) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
-                if (power < 0){
+                if (power < 0) {
                     power += 5;
                     return;
                 }
@@ -390,21 +396,20 @@ public class Farm implements Serializable {
      * Plants a crop and sets its planting time.
      * @param row row to plant at
      * @param col column to plant at
-     * @param time time of planting
+     * @param currTime time of planting
      * @throws PlantingException if there is already a plant there
      */
-    public void plant(int row, int col, Long time) throws PlantingException {
+    public void plant(int row, int col, Long currTime) throws PlantingException {
         if (this.farmLand[row][col].isClaimed() && !this.farmLand[row][col].isPlanted()) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
-                if (power < 0){
+                if (power < 0) {
                     power += 5;
                     return;
                 }
             }
+            this.farmLand[row][col].plant(time, activeCrop);
         }
-        this.farmLand[row][col].plant(time, activeCrop);
-
     }
 
     /**
@@ -496,25 +501,29 @@ public class Farm implements Serializable {
 
     /**
      * Sets the weather for the farm.
-     * @param day 0 if night, 1 if day, 2 if dawn/dusk
-     * @param rainy true if rainy, false if not
-     * @param fog true if foggy, false if not
-     * @param thunderstorm true if thunderstorm, false if not
-     * @param snowy true if snowy, false if not
-     * @param cloudy true if cloudy, false if not
+     * @param currDay 0 if night, 1 if day, 2 if dawn/dusk
+     * @param isRainy true if rainy, false if not
+     * @param isFog true if foggy, false if not
+     * @param isThunderstorm true if thunderstorm, false if not
+     * @param isSnowy true if snowy, false if not
+     * @param isCloudy true if cloudy, false if not
+     * @param isClear true if clear, false if not
+     * @param currTemp current temp
+     * @param currWeather current weather
+     * @param currTime current time
      */
-    public void setWeather(int day, boolean rainy, boolean fog, boolean thunderstorm, boolean snowy,
-                           boolean cloudy, boolean clear, int temp, String weather, long time) {
-        this.day = day;
-        this.rainy = rainy;
-        this.fog = fog;
-        this.thunderstorm = thunderstorm;
-        this.snowy = snowy;
-        this.cloudy = cloudy;
-        this.clear = clear;
-        this.temp = temp;
-        this.weather = weather;
-        refreshPower(time);
+    public void setWeather(int currDay, boolean isRainy, boolean isFog, boolean isThunderstorm, boolean isSnowy,
+                           boolean isCloudy, boolean isClear, int currTemp, String currWeather, long currTime) {
+        this.day = currDay;
+        this.rainy = isRainy;
+        this.fog = isFog;
+        this.thunderstorm = isThunderstorm;
+        this.snowy = isSnowy;
+        this.cloudy = isCloudy;
+        this.clear = isClear;
+        this.temp = currTemp;
+        this.weather = currWeather;
+        refreshPower(currTime);
     }
 
     /**
@@ -526,7 +535,7 @@ public class Farm implements Serializable {
         if (!this.farmLand[row][col].isFertilized() && !this.farmLand[row][col].isClaimed()) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
-                if (power < 0){
+                if (power < 0) {
                     power += 5;
                     return;
                 }
@@ -551,7 +560,6 @@ public class Farm implements Serializable {
         this.city = city;
     }
 
-
     /**
      * Set storage .
      * @param storage .
@@ -570,17 +578,17 @@ public class Farm implements Serializable {
 
     /**
      * Set logout time.
-     * @param time .
+     * @param currTime .
      */
-    public void setLogOutTime(long time) {
-        this.time = time;
+    public void setLogOutTime(long currTime) {
+        this.time = currTime;
         for (Land[] lands : farmLand) {
             for (Land land : lands) {
                 if (land.getCrop() != null) {
                     land.getCrop().setLand(land);
                     land.getCrop().setWeather(this.weather);
                     land.getCrop().setTemp(this.temp);
-                    land.getCrop().update(time);
+                    land.getCrop().update(currTime);
                 }
             }
         }
@@ -692,23 +700,43 @@ public class Farm implements Serializable {
         this.planterLevel = planterLevel;
     }
 
+    /**
+     * Get temp.
+     * @return temp.
+     */
     public int getTemp() {
         return temp;
     }
 
+    /**
+     * Set temp.
+     * @param temp .
+     */
     public void setTemp(int temp) {
         this.temp = temp;
     }
 
+    /**
+     * Get weather.
+     * @return weather.
+     */
     public String getWeather() {
         return weather;
     }
 
-    public void weather(String weather) {
-        this.weather = weather;
+    /**
+     * Weather.
+     * @param currWeather .
+     */
+    public void weather(String currWeather) {
+        this.weather = currWeather;
     }
 
-    public long getPowerRefresh(){
+    /**
+     * Get power refresh.
+     * @return power refresh.
+     */
+    public long getPowerRefresh() {
         return powerRefresh;
     }
 }

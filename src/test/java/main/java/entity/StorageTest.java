@@ -21,11 +21,12 @@ public class StorageTest extends TestCase {
         assertEquals(storage.getCrops().size(), 0);
     }
 
-//    public void testSetCrops() {
-//        Storage storage = new Storage(10);
-//        ArrayList<AbstractCrop> crops = new ArrayList<AbstractCrop>();
-//        crops.add(new AbstractCrop());
-//        storage.setCrops(crops);
-//        assertEquals(storage.getCrops().size(), 1);
-//    }
+    public void testSetCrops() {
+        Storage storage = new Storage(10);
+        Land land = new Land();
+        ArrayList<AbstractCrop> crops = new ArrayList<AbstractCrop>();
+        crops.add(new Rice(System.currentTimeMillis(), land));
+        storage.setCrops(crops);
+        assertEquals(storage.getCrops().size(), 1);
+    }
 }

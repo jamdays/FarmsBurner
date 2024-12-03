@@ -207,6 +207,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
                 }
             }
         }
-        bbLabel.setText("Barn Bucks: " + state.getBb());
+        bbLabel.setText("Barn Bucks: " + state.getBarnBucks());
     }
 }

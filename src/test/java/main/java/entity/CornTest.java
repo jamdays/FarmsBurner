@@ -7,6 +7,31 @@ import static org.junit.Assert.*;
 public class CornTest {
 
     @Test
+    public void testConstructCorn(){
+        /*
+        Test the other constructor
+         */
+        Land land  = new Land();
+        Corn corn = new Corn(5, false, 99, 2L, land);
+
+        assertSame(land, corn.getLand());
+
+        assertEquals(5, corn.getAge());
+
+        assertFalse(corn.getIsAlive());
+
+        assertEquals(2L, corn.getTime());
+
+        assertEquals(99, corn.getPrice());
+
+        assertEquals("Corn", corn.getName());
+
+        assertEquals(0, corn.getWaterlevel());
+
+        assertEquals("", corn.getWeather());
+
+    }
+    @Test
     public void testDefaultCorn() {
         /*
         Test corn default constructor

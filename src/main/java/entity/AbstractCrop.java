@@ -18,7 +18,6 @@ public abstract class AbstractCrop implements Serializable {
     private String name;
     private String weather;
     private int temp;
-    private boolean isInitialized = false;
 
     // constructor
     public AbstractCrop(int age, boolean isAlive, int price, Long time, Land land) {
@@ -28,15 +27,17 @@ public abstract class AbstractCrop implements Serializable {
         this.waterlevel = 0;
         this.time = time;
         this.weather = "";
+        this.land = land;
     }
 
-    public AbstractCrop(Long time, Land land) {
+    public AbstractCrop(long time, Land land) {
         this.age = 0;
         this.isAlive = true;
         this.price = 0;
         this.waterlevel = 0;
         this.time = time;
         this.weather = "";
+        this.land = land;
         System.out.println(time);
     }
 
@@ -68,7 +69,7 @@ public abstract class AbstractCrop implements Serializable {
             this.setPrice(this.getPrice() + 1);
         }
         if (this.getAge() > 7) {
-            this.setPrice(this.getPrice()-1);
+            this.setPrice(this.getPrice() - 1);
         }
         if (this.getPrice() < 0) {
             this.setIsAlive(false);
@@ -232,8 +233,6 @@ public abstract class AbstractCrop implements Serializable {
     public void setTemp(int temp) {
         this.temp = temp;
     }
-
-
 
     /**
      * Updates the state of the plant based on the time.

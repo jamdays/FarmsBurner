@@ -19,7 +19,7 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
     private Farm farm;
     /**
      * Save Data.
-     * @param farm farm to be saved
+     * @param currFarm farm to be saved
      * @throws DataAccessException never because this is a test object, (add a case if you need to for testing)
      * @throws IOException never because this is a test object, (add a case if you need to for testing)
      * @throws main.java.use_case.load.DataAccessException never because this is a test object,
@@ -28,40 +28,41 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
      */
 
     @Override
-    public void saveData(Farm farm)
+    public void saveData(Farm currFarm)
             throws DataAccessException, IOException, main.java.use_case.load.DataAccessException {
         /*
         Making a deep copy of the Farm
         Otherwise it passes by reference and the farm will just be a farm
          */
-        this.farm = farm;
-        this.farm.setCity(farm.getCity());
-        this.farm.setBarnBucks(farm.getBarnBucks());
-        this.farm.setPower(farm.getPower());
-        //NEVER REALLY USE THIS SO IT DOESN'T WORK LOW KEY
-        this.farm.setWeather(farm.getDay(), farm.isRainy(), farm.isFog(), farm.isThunderstorm(), farm.isSnowy(),
-                farm.isCloudy(), farm.isClear(), farm.getTemp(), farm.getWeather(), 0);
+        this.farm = currFarm;
+        this.farm.setCity(currFarm.getCity());
+        this.farm.setBarnBucks(currFarm.getBarnBucks());
+        this.farm.setPower(currFarm.getPower());
+        // NEVER REALLY USE THIS SO IT DOESN'T WORK LOW KEY
+        this.farm.setWeather(currFarm.getDay(), currFarm.isRainy(), currFarm.isFog(),
+                currFarm.isThunderstorm(), currFarm.isSnowy(),
+                currFarm.isCloudy(), currFarm.isClear(), currFarm.getTemp(), currFarm.getWeather(), 0);
         // TODO set logout time
         // this.farm.setLogOutTime();
-        this.farm.setSprinklerPurchased(farm.getSprinklerPurchased());
-        this.farm.setSprinklerLevel(farm.getSprinklerLevel());
-        this.farm.setHarvesterPurchased(farm.getHarvesterPurchased());
-        this.farm.setHarvesterLevel(farm.getHarvesterLevel());
-        this.farm.setTillerPurchased(farm.getTillerPurchased());
-        this.farm.setTillerLevel(farm.getTillerLevel());
-        this.farm.setFertilizerLevel(farm.getFertilizerLevel());
-        this.farm.setFertilizerPurchased(farm.getFertilizerPurchased());
+        this.farm.setSprinklerPurchased(currFarm.getSprinklerPurchased());
+        this.farm.setSprinklerLevel(currFarm.getSprinklerLevel());
+        this.farm.setHarvesterPurchased(currFarm.getHarvesterPurchased());
+        this.farm.setHarvesterLevel(currFarm.getHarvesterLevel());
+        this.farm.setTillerPurchased(currFarm.getTillerPurchased());
+        this.farm.setTillerLevel(currFarm.getTillerLevel());
+        this.farm.setFertilizerLevel(currFarm.getFertilizerLevel());
+        this.farm.setFertilizerPurchased(currFarm.getFertilizerPurchased());
 
-        Storage storage = new Storage(farm.getStorage().getCapacity());
-        storage.setCrops(new ArrayList<>(farm.getStorage().getCrops()));
+        Storage storage = new Storage(currFarm.getStorage().getCapacity());
+        storage.setCrops(new ArrayList<>(currFarm.getStorage().getCrops()));
         this.farm.setStorage(storage);
 
-        Land[][] farmLand = new Land[farm.getFarmLand().length][farm.getFarmLand()[0].length];
+        Land[][] farmLand = new Land[currFarm.getFarmLand().length][currFarm.getFarmLand()[0].length];
         CropFactory cropFactory = new CropFactory();
-        for (int i = 0; i < farm.getFarmLand().length; i++) {
-            for (int j = 0; j < farm.getFarmLand()[0].length; j++) {
+        for (int i = 0; i < currFarm.getFarmLand().length; i++) {
+            for (int j = 0; j < currFarm.getFarmLand()[0].length; j++) {
                 farmLand[i][j] = new Land();
-                Land land = farm.getFarmLand()[i][j];
+                Land land = currFarm.getFarmLand()[i][j];
                 farmLand[i][j].setIsSnowy(land.getIsSnowy());
                 farmLand[i][j].setIsWet(land.isWet());
                 farmLand[i][j].setClaimed(land.isClaimed());

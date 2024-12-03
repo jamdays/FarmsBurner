@@ -7,6 +7,31 @@ import static org.junit.Assert.*;
 public class WheatTest {
 
     @Test
+    public void testConstructWheat(){
+        /*
+        Test the other constructor
+         */
+        Land land  = new Land();
+        Wheat wheat = new Wheat(5, false, 99, 2L, land);
+
+        assertSame(land, wheat.getLand());
+
+        assertEquals(5, wheat.getAge());
+
+        assertFalse(wheat.getIsAlive());
+
+        assertEquals(2L, wheat.getTime());
+
+        assertEquals(99, wheat.getPrice());
+
+        assertEquals("Wheat", wheat.getName());
+
+        assertEquals(0, wheat.getWaterlevel());
+
+        assertEquals("", wheat.getWeather());
+
+    }
+    @Test
     public void testDefaultWheat() {
         /*
         Test wheat default constructor

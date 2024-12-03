@@ -2,7 +2,10 @@ package main.java.use_case.powerrefund;
 
 import main.java.entity.FarmSingleton;
 
-public class PowerRefundInteractor implements PowerRefundInputBoundary{
+/**
+ * Power refund interactor.
+ */
+public class PowerRefundInteractor implements PowerRefundInputBoundary {
     private final PowerRefundOutputboundary powerRefundOutputboundary;
 
     public PowerRefundInteractor(PowerRefundOutputboundary powerRefundOutputboundary) {
@@ -10,6 +13,7 @@ public class PowerRefundInteractor implements PowerRefundInputBoundary{
     }
 
     /**
+     * Refund.
      * @param amt amount.
      */
     @Override

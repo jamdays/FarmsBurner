@@ -6,6 +6,31 @@ import static org.junit.Assert.assertEquals;
 
 public class SnowberryTest{
     @Test
+    public void testConstructSnowberry(){
+        /*
+        Test the other constructor
+         */
+        Land land  = new Land();
+        Snowberry snowberry = new Snowberry(5, false, 99, 2L, land);
+
+        assertSame(land, snowberry.getLand());
+
+        assertEquals(5, snowberry.getAge());
+
+        assertFalse(snowberry.getIsAlive());
+
+        assertEquals(2L, snowberry.getTime());
+
+        assertEquals(99, snowberry.getPrice());
+
+        assertEquals("Snowberry", snowberry.getName());
+
+        assertEquals(0, snowberry.getWaterlevel());
+
+        assertEquals("", snowberry.getWeather());
+
+    }
+    @Test
     public void testDefaultSnowberry() {
         /*
         Test snowberry default constructor

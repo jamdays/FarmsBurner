@@ -12,5 +12,5 @@ public interface UseToolInputBoundary {
      * @param cStart starting column
      * @return the level of the tool.
      */
-     int useTool(String tool, int rStart, int cStart);
+    int useTool(String tool, int rStart, int cStart);
 }
