@@ -1,9 +1,12 @@
 package main.java.use_case.sell;
 
+/**
+ * Sell output boundary.
+ */
 public interface SellOutputBoundary {
     /**
-     * updates the state so that the crops are sold
-     * @param quantity, the number of crops being sold
+     * Updates the state so that the crops are sold.
+     * @param quantity the number of crops being sold
      */
-    public void sell(int quantity);
+    void sell(int quantity);
 }

@@ -1,10 +1,13 @@
 package main.java.use_case.water;
 
+/**
+ * Water output boundary.
+ */
 public interface WaterOutputBoundary {
     /**
-     * waters a plant
-     * @param r row
-     * @param c column
+     * Waters a plant.
+     * @param row row
+     * @param col column
      */
-    void water(int r, int c);
+    void water(int row, int col);
 }
