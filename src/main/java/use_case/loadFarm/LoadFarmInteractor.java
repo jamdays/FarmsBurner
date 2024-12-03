@@ -48,7 +48,7 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
 
                 //If Planted set landInt to alive by adding const for this
                 if (land[r][c].isPlanted()){
-                    landInt[r][c] += PLANTED;
+                    landInt[r][c] += planted;
                     prices[r][c] = land[r][c].getCrop().getPrice();
                     cropTimes[r][c] = land[r][c].getCrop().getTime();
                     cropAges[r][c] = land[r][c].getCrop().getAge();
@@ -79,7 +79,7 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
                 }
 
                 if (land[r][c].getCrop() != null && land[r][c].getCrop().getReadyToHarvest()){
-                    landInt[r][c] += READY;
+                    landInt[r][c] += ready;
                 }
             }
         }
