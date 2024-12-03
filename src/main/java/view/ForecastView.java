@@ -59,30 +59,5 @@ public class ForecastView extends JPanel{
     }
 
     public static void main(String[] args) {
-        var props = new Properties();
-        var envFile = Paths.get(".env");
-        try (var inputStream = Files.newInputStream(envFile)) {
-            props.load(inputStream);
-        }
-        catch (IOException ioException) {
-            throw new RuntimeException(ioException);
-        }
-        String apiKey = props.get("WAK").toString();
-        // TODO MAKE A GENERAL DATA ACCESS FOR TESTING ETC
-        final OpenWeatherAccess dao = new OpenWeatherAccess(apiKey);
-        try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
-        }
-        catch (Exception exception) {
-            exception.printStackTrace();
-        }
-
-
-        ForecastView forecastView = new ForecastView(dao.fiveDayForecast("Toronto"), "City");
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(350, 280);
-        frame.getContentPane().add(forecastView);
-        frame.setVisible(true);
     }
 }

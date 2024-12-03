@@ -1,5 +1,7 @@
 package main.java.use_case.forecast;
 
+import main.java.data_access.OpenForecastAccess;
+import main.java.data_access.OpenForecastAccessInterface;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.entity.FarmSingleton;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
@@ -8,11 +10,11 @@ import java.util.List;
 
 public class ForecastInteractor implements ForecastInputBoundary {
     private final ForecastOutputBoundary outputBoundary;
-    private final OpenWeatherAccessInterface openWeatherAccess;
+    private final OpenForecastAccessInterface openForecastAccess;
 
-    public ForecastInteractor(ForecastOutputBoundary outputBoundary, OpenWeatherAccessInterface openWeatherAccess) {
+    public ForecastInteractor(ForecastOutputBoundary outputBoundary, OpenForecastAccessInterface openForecastAccess) {
         this.outputBoundary = outputBoundary;
-        this.openWeatherAccess = openWeatherAccess;
+        this.openForecastAccess = openForecastAccess;
     }
 
     /**
@@ -21,6 +23,6 @@ public class ForecastInteractor implements ForecastInputBoundary {
      */
     public List<String> forecast() {
         outputBoundary.execute();
-        return openWeatherAccess.fiveDayForecast(FarmSingleton.getInstance().getFarm().getCity());
+        return openForecastAccess.fiveDayForecast(FarmSingleton.getInstance().getFarm().getCity());
     }
 }
