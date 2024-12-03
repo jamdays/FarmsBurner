@@ -44,7 +44,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(title, BorderLayout.CENTER);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
-        topPanel.setPreferredSize(new Dimension(350,50));
+        topPanel.setPreferredSize(new Dimension(350, 50));
         topPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JLabel currSelected = new JLabel("Current Tool: " + currTool);
@@ -54,7 +54,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
         JPanel midPanel = new JPanel(new BorderLayout());
         midPanel.add(currSelected, BorderLayout.CENTER);
         midPanel.setBackground(new java.awt.Color(169, 152, 126));
-        midPanel.setPreferredSize(new Dimension(350,50));
+        midPanel.setPreferredSize(new Dimension(350, 50));
 
         FarmButton chooseSprinkler = new FarmButton("Sprinkler");
         chooseSprinkler.addActionListener(new ActionListener() {
@@ -134,7 +134,7 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
         JPanel bottomPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         bottomPanel.setBackground(new java.awt.Color(169, 152, 126));
-        bottomPanel.setPreferredSize(new Dimension(350,125));
+        bottomPanel.setPreferredSize(new Dimension(350, 125));
 
         gbc.gridx = 0;
         gbc.gridy = 0;

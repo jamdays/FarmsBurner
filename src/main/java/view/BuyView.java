@@ -75,10 +75,10 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         // TODO: how much area does the sprinkler water?
       
         createItemPanel("Sprinkler", "Waters crops in a large area.", mainPanel, gbc, 0);
-        createItemPanel("Planter",  "Plants crops in a large area.", mainPanel, gbc, 1);
-        createItemPanel("Harvester",  "Harvests crops in a large area.", mainPanel, gbc, 2);
-        createItemPanel("Tiller",  "Claims land in a large area.", mainPanel, gbc, 3);
-        createItemPanel("Fertilizer",  "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
+        createItemPanel("Planter", "Plants crops in a large area.", mainPanel, gbc, 1);
+        createItemPanel("Harvester", "Harvests crops in a large area.", mainPanel, gbc, 2);
+        createItemPanel("Tiller", "Claims land in a large area.", mainPanel, gbc, 3);
+        createItemPanel("Fertilizer", "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -100,7 +100,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     private void createItemPanel(String itemName, String description, JPanel panel, GridBagConstraints gbc,
                                  int startY) {
         // Item Label
-        int[] prices = {0, 300, 900, 2700, 8100};
+        final int[] prices = {0, 300, 900, 2700, 8100};
         int level = (int) getToolBoughtController.getToolBought(itemName).get(1);
         JLabel itemLabel = new JLabel("Level" + " " + (level - 1) + " " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -132,7 +132,8 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
                 // upgrade tool if purchased and not maxed out
                 else if ((int) getToolBoughtController.getToolBought(itemName).get(1) < 5) {
                     upgradeController.upgrade(itemName);
-                    itemLabel.setText("Level " + ((Integer)getToolBoughtController.getToolBought(itemName).get(1) - 1) + " " + itemName + " ");
+                    itemLabel.setText("Level " + ((Integer) getToolBoughtController
+                            .getToolBought(itemName).get(1) - 1) + " " + itemName + " ");
                     if ((int) getToolBoughtController.getToolBought(itemName).get(1) == 5) {
                         purchaseButton.setText("Max Level");
                     }
@@ -197,9 +198,9 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ToolMenuState state = ((ToolMenuState)(evt.getNewValue()));
+        ToolMenuState state = (ToolMenuState) (evt.getNewValue());
         if ("Buy".equalsIgnoreCase(evt.getPropertyName()) || "Upgrade".equalsIgnoreCase(evt.getPropertyName())) {
-            int[] prices = {0, 300, 900, 2700, 8100, 0};
+            final int[] prices = {0, 300, 900, 2700, 8100, 0};
             for (int i = 0; i < priceLabels.length; i++) {
                 if (state.getPurchased()[i]) {
                     this.priceLabels[i].setText("Price: " + prices[state.getLevels()[i]]);
