@@ -2,6 +2,9 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
 
+/**
+ * Get active tool presenter.
+ */
 public class GetActiveToolPresenter implements GetActiveToolOutputBoundary {
 
     private final FarmViewModel viewModel;

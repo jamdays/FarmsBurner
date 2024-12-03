@@ -2,6 +2,9 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.harvest.HarvestInputBoundary;
 
+/**
+ * Harvest controller.
+ */
 public class HarvestController {
     private final HarvestInputBoundary harvestInteractor;
 
@@ -9,7 +12,12 @@ public class HarvestController {
         this.harvestInteractor = harvestInteractor;
     }
 
-    public void harvestCrop(int r, int c) {
-        harvestInteractor.execute(r, c);
+    /**
+     * Harvest crop.
+     * @param row .
+     * @param col .
+     */
+    public void harvestCrop(int row, int col) {
+        harvestInteractor.execute(row, col);
     }
 }

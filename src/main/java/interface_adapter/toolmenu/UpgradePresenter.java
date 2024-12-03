@@ -1,8 +1,10 @@
 package main.java.interface_adapter.toolmenu;
 
-import main.java.use_case.upgradetool.UpgradeToolInputBoundary;
 import main.java.use_case.upgradetool.UpgradeToolOutputBoundary;
 
+/**
+ * Upgrade presenter.
+ */
 public class UpgradePresenter implements UpgradeToolOutputBoundary {
     private final ToolMenuViewModel viewModel;
 
@@ -12,7 +14,7 @@ public class UpgradePresenter implements UpgradeToolOutputBoundary {
 
     @Override
     public void upgrade(String tool) {
-        ((ToolMenuState)(viewModel.getState())).upgrade(tool);
+        ((ToolMenuState) (viewModel.getState())).upgrade(tool);
         viewModel.firePropertyChanged("upgrade");
 
     }
