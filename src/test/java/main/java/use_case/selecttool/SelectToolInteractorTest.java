@@ -4,9 +4,6 @@ import junit.framework.TestCase;
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
 import main.java.interface_adapter.selecttool.SelectToolController;
-import main.java.interface_adapter.toolmenu.UpgradeController;
-import main.java.use_case.upgradetool.UpgradeToolInteractor;
-import main.java.use_case.upgradetool.UpgradeToolOutputBoundary;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

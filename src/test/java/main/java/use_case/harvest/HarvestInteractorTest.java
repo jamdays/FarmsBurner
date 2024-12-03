@@ -9,18 +9,17 @@ import org.junit.Test;
 import static org.junit.Assert.assertThrows;
 
 public class HarvestInteractorTest extends TestCase {
-    /*
+
     @Test
     public void testExecute() throws PlantingException {
         Farm farm = new Farm();
         farm.claim(1, 1);
-        farm.plant(1, 1);
+        farm.plant(1, 1, System.currentTimeMillis());
         farm.getFarmLand()[1][1].getCrop().setAge(5);
         FarmSingleton.getInstance().setFarm(farm);
         HarvestOutputBoundary harvestOutputBoundary = new HarvestOutputBoundary() {
             @Override
             public void harvestCrop(int row, int col){
-                farm.harvest(row, col);
                 assertFalse(FarmSingleton.getInstance().getFarm().getFarmLand()[row][col].isPlanted());
             }
 
@@ -38,10 +37,10 @@ public class HarvestInteractorTest extends TestCase {
         farm.claim(2, 2);
         farm.claim(1, 2);
         farm.claim(2, 1);
-        farm.plant(1, 1);
-        farm.plant(2, 2);
-        farm.plant(1, 2);
-        farm.plant(2, 1);
+        farm.plant(1, 1, System.currentTimeMillis());
+        farm.plant(2, 2, System.currentTimeMillis());
+        farm.plant(1, 2, System.currentTimeMillis());
+        farm.plant(2, 1, System.currentTimeMillis());
         farm.getFarmLand()[1][1].getCrop().setAge(5);
         farm.getFarmLand()[2][2].getCrop().setAge(5);
         farm.getFarmLand()[1][2].getCrop().setAge(5);
@@ -71,28 +70,10 @@ public class HarvestInteractorTest extends TestCase {
     }
 
     @Test
-    public void testNotReady() throws PlantingException, HarvestException {
-        Farm farm = new Farm();
-        farm.claim(1, 1);
-        farm.plant(1, 1);
-        farm.getFarmLand()[1][1].getCrop().setAge(1);
-
-        HarvestOutputBoundary harvestOutputBoundary = new HarvestOutputBoundary() {
-            @Override
-            public void harvestCrop(int row, int col) {
-                assertThrows(HarvestException.class, () -> farm.harvest(row, col));
-            }
-        };
-
-        HarvestInteractor harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
-        harvestInteractor.execute(1, 1);
-    }
-
-    @Test
     public void testDeadPlant() throws HarvestException, PlantingException {
         Farm farm = FarmSingleton.getInstance().getFarm();
         farm.claim(1, 1);
-        farm.plant(1, 1);
+        farm.plant(1, 1, System.currentTimeMillis());
         farm.getFarmLand()[1][1].getCrop().setIsAlive(false);
 
         HarvestOutputBoundary harvestOutputBoundary = new HarvestOutputBoundary() {
@@ -105,7 +86,5 @@ public class HarvestInteractorTest extends TestCase {
         HarvestInteractor harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
         harvestInteractor.execute(1, 1);
     }
-
-     */
 
 }
