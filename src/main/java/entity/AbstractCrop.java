@@ -237,32 +237,11 @@ public abstract class AbstractCrop implements Serializable {
 
     /**
      * Updates the state of the plant based on the time.
-     * @param time the current time
+     * @param tim the current time
      */
-    public void update(long time) {
+    public void update(long tim) {
+        this.time += 0;
         // this.time is very different from time
-        long diff = time - this.time;
-        long days = diff / 86400;
-        if (days >= 1 && this.waterlevel != 0) {
-            this.waterlevel = 0;
-            land.setIsWet(false);
-            age += 1;
-            if (age == 3) {
-                this.price = 5;
-                if (this.fertilized) {
-                    this.price *= 2;
-                }
-            }
-            if (age > 3 && age < 6) {
-                this.price += 1;
-            }
-            if (age > 5) {
-                this.price -= 1;
-            }
-            if (this.price == 0) {
-                this.isAlive = false;
-            }
-        }
     }
 
     // TODO write harvest function
