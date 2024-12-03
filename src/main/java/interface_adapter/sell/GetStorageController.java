@@ -1,9 +1,12 @@
 package main.java.interface_adapter.sell;
 
-import main.java.use_case.getstorage.GetStorageInputBoundary;
-
 import java.util.List;
 
+import main.java.use_case.getstorage.GetStorageInputBoundary;
+
+/**
+ * Get storage controller.
+ */
 public class GetStorageController {
 
     private GetStorageInputBoundary inputBoundary;
@@ -12,6 +15,10 @@ public class GetStorageController {
         this.inputBoundary = inputBoundary;
     }
 
+    /**
+     * Get storage.
+     * @return storage.
+     */
     public List<Integer> getStorage() {
         return inputBoundary.getStorage();
     }

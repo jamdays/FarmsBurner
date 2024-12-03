@@ -14,7 +14,7 @@ public class ToolMenuState {
     private boolean tillerPurchased;
     private int fertilizerLevel;
     private boolean fertilizerPurchased;
-    private int bb;
+    private int barnBucks;
     private final int[] prices = {0, 300, 900, 2700, 8100};
 
     public ToolMenuState() {
@@ -37,9 +37,9 @@ public class ToolMenuState {
     public void buy(String tool) {
         if ("sprinkler".equalsIgnoreCase(tool)) {
             if (!sprinklerPurchased) {
-                bb -= prices[sprinklerLevel - 1];
-                if (bb < 0){
-                    bb += prices[sprinklerLevel - 1];
+                barnBucks -= prices[sprinklerLevel - 1];
+                if (barnBucks < 0) {
+                    barnBucks += prices[sprinklerLevel - 1];
                     return;
                 }
                 sprinklerPurchased = true;
@@ -47,9 +47,9 @@ public class ToolMenuState {
         }
         if ("planter".equalsIgnoreCase(tool)) {
             if (!planterPurchased) {
-                bb -= prices[planterLevel - 1];
-                if (bb < 0){
-                    bb += prices[planterLevel - 1];
+                barnBucks -= prices[planterLevel - 1];
+                if (barnBucks < 0) {
+                    barnBucks += prices[planterLevel - 1];
                     return;
                 }
                 planterPurchased = true;
@@ -57,9 +57,9 @@ public class ToolMenuState {
         }
         if ("harvester".equalsIgnoreCase(tool)) {
             if (!harvesterPurchased) {
-                bb -= prices[harvesterLevel - 1];
-                if (bb < 0){
-                    bb += prices[harvesterLevel - 1];
+                barnBucks -= prices[harvesterLevel - 1];
+                if (barnBucks < 0) {
+                    barnBucks += prices[harvesterLevel - 1];
                     return;
                 }
                 harvesterPurchased = true;
@@ -67,9 +67,9 @@ public class ToolMenuState {
         }
         if ("tiller".equalsIgnoreCase(tool)) {
             if (!tillerPurchased) {
-                bb -= prices[tillerLevel - 1];
-                if (bb < 0){
-                    bb += prices[tillerLevel - 1];
+                barnBucks -= prices[tillerLevel - 1];
+                if (barnBucks < 0) {
+                    barnBucks += prices[tillerLevel - 1];
                     return;
                 }
                 tillerPurchased = true;
@@ -77,9 +77,9 @@ public class ToolMenuState {
         }
         if ("fertilizer".equalsIgnoreCase(tool)) {
             if (!fertilizerPurchased) {
-                bb -= prices[fertilizerLevel - 1];
-                if (bb < 0){
-                    bb += prices[fertilizerLevel - 1];
+                barnBucks -= prices[fertilizerLevel - 1];
+                if (barnBucks < 0) {
+                    barnBucks += prices[fertilizerLevel - 1];
                     return;
                 }
                 fertilizerPurchased = true;
@@ -123,9 +123,9 @@ public class ToolMenuState {
     public void upgrade(String tool) {
         if ("sprinkler".equalsIgnoreCase(tool)) {
             if (sprinklerLevel < 5) {
-                bb -= prices[sprinklerLevel];
-                if (bb < 0){
-                    bb += prices[sprinklerLevel];
+                barnBucks -= prices[sprinklerLevel];
+                if (barnBucks < 0) {
+                    barnBucks += prices[sprinklerLevel];
                     return;
                 }
                 sprinklerLevel += 1;
@@ -133,9 +133,9 @@ public class ToolMenuState {
         }
         if ("planter".equalsIgnoreCase(tool)) {
             if (planterLevel < 5) {
-                bb -= prices[planterLevel];
-                if (bb < 0){
-                    bb += prices[planterLevel];
+                barnBucks -= prices[planterLevel];
+                if (barnBucks < 0) {
+                    barnBucks += prices[planterLevel];
                     return;
                 }
                 planterLevel += 1;
@@ -143,9 +143,9 @@ public class ToolMenuState {
         }
         if ("harvester".equalsIgnoreCase(tool)) {
             if (harvesterLevel < 5) {
-                bb -= prices[harvesterLevel];
-                if (bb < 0){
-                    bb += prices[harvesterLevel];
+                barnBucks -= prices[harvesterLevel];
+                if (barnBucks < 0) {
+                    barnBucks += prices[harvesterLevel];
                     return;
                 }
                 harvesterLevel += 1;
@@ -153,9 +153,9 @@ public class ToolMenuState {
         }
         if ("tiller".equalsIgnoreCase(tool)) {
             if (tillerLevel < 5) {
-                bb -= prices[tillerLevel];
-                if (bb < 0){
-                    bb += prices[tillerLevel];
+                barnBucks -= prices[tillerLevel];
+                if (barnBucks < 0) {
+                    barnBucks += prices[tillerLevel];
                     return;
                 }
                 tillerLevel += 1;
@@ -163,9 +163,9 @@ public class ToolMenuState {
         }
         if ("fertilizer".equalsIgnoreCase(tool)) {
             if (fertilizerLevel < 5) {
-                bb -= prices[fertilizerLevel];
-                if (bb < 0){
-                    bb += prices[fertilizerLevel];
+                barnBucks -= prices[fertilizerLevel];
+                if (barnBucks < 0) {
+                    barnBucks += prices[fertilizerLevel];
                     return;
                 }
                 fertilizerLevel += 1;
@@ -173,19 +173,35 @@ public class ToolMenuState {
         }
     }
 
-    public void setBb(int bb) {
-        this.bb = bb;
+    /**
+     * Set BarnBucks.
+     * @param barnBucks .
+     */
+    public void setBarnBucks(int barnBucks) {
+        this.barnBucks = barnBucks;
     }
 
-    public int getBb(){
-        return bb;
+    /**
+     * Get barnBucks.
+     * @return barnbucks.
+     */
+    public int getBarnBucks() {
+        return barnBucks;
     }
 
-    public int[] getLevels(){
+    /**
+     * Get levels.
+     * @return levels.
+     */
+    public int[] getLevels() {
         return new int[]{sprinklerLevel, planterLevel, harvesterLevel ,tillerLevel, fertilizerLevel};
     }
 
-    public boolean[] getPurchased(){
+    /**
+     * Get purchased.
+     * @return purchased.
+     */
+    public boolean[] getPurchased() {
         return new boolean[]{sprinklerPurchased, planterPurchased, harvesterPurchased, tillerPurchased, fertilizerPurchased};
     }
 }

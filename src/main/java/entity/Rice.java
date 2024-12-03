@@ -19,12 +19,12 @@ public class Rice extends AbstractCrop implements Serializable {
 
     /**
      * Updates the state of the plant based on the time.
-     * @param time the current time
+     * @param currTime the current time
      */
     @Override
-    public void update(long time) {
+    public void update(long currTime) {
         // this.time is very different from time
-        long diff = time - this.getTime();
+        long diff = currTime - this.getTime();
         long days = diff / 86400;
         if (days >= 1 && this.getWaterlevel() != 0) {
             this.setWaterLevel(0);

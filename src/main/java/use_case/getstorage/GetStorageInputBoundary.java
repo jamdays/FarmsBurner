@@ -1,13 +1,14 @@
 package main.java.use_case.getstorage;
 
-import main.java.entity.AbstractCrop;
-
 import java.util.List;
 
+/**
+ * Get storage input boundary.
+ */
 public interface GetStorageInputBoundary {
-
     /**
-     * executes code for getStorage use case
+     * Executes code for getStorage use case.
+     * @return storage.
      */
-    public List<Integer> getStorage();
+    List<Integer> getStorage();
 }
