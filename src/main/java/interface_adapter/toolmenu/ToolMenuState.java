@@ -15,7 +15,7 @@ public class ToolMenuState {
     private int fertilizerLevel;
     private boolean fertilizerPurchased;
     private int bb;
-    private final int[] prices = {300, 900, 2700, 8100};
+    private final int[] prices = {0, 300, 900, 2700, 8100};
 
     public ToolMenuState() {
         this.sprinklerLevel = 2;

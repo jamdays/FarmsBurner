@@ -67,11 +67,11 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
       
-        createItemPanel("Sprinkler", 5, "Waters crops in a large area.", mainPanel, gbc, 0);
-        createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1);
-        createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 2);
-        createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 3);
-        createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
+        createItemPanel("Sprinkler", "Waters crops in a large area.", mainPanel, gbc, 0);
+        createItemPanel("Planter",  "Plants crops in a large area.", mainPanel, gbc, 1);
+        createItemPanel("Harvester",  "Harvests crops in a large area.", mainPanel, gbc, 2);
+        createItemPanel("Tiller",  "Claims land in a large area.", mainPanel, gbc, 3);
+        createItemPanel("Fertilizer",  "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -80,9 +80,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         this.add(topPanel, BorderLayout.NORTH);
         this.add(mainPanel, BorderLayout.CENTER);
     }
-
-    // TODO: implement updateBarnBucks so that it updates with the amount of barnBucks the user has.
-    //  Not sure if this should be in the BuyView class or the Farm
 
     /**
      * Update Barn Bucks.
@@ -93,9 +90,10 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         label.setText("Barn Bucks: " + amount);
     }
 
-    private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc,
+    private void createItemPanel(String itemName, String description, JPanel panel, GridBagConstraints gbc,
                                  int startY) {
         // Item Label
+        int[] prices = {0, 300, 900, 2700, 8100};
         int level = (int) getToolBoughtController.getToolBought(itemName).get(1);
         JLabel itemLabel = new JLabel("Level" + " " + (level - 1) + " " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
@@ -143,7 +141,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
         // Add Price
         gbc.gridx = 1;
-        JLabel priceLabel = new JLabel("Price: " + price + " ");
+        JLabel priceLabel = new JLabel("Price: " + prices[level - 1] + " ");
         priceLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(priceLabel, gbc);
 
@@ -191,6 +189,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
         bbLabel.setText("Barn Bucks: " + ((ToolMenuState)evt.getNewValue()).getBb());
     }
 }
