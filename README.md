@@ -67,7 +67,10 @@ Farms Burner is an idle farming game in which the in-game weather is dependent o
 
 ## Installation Instructions
 
-- TODO: add documentation for installation instructions
+- Download a Java IDE such as IntelliJ
+- Open this repository in your chosen IDE
+- Run the FarmsBurnerApplication class
+- Enjoy the game!
 
 ## Usage Guide
 
