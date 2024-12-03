@@ -1,11 +1,14 @@
 package main.java.use_case.fertilize;
 
+/**
+ * Fertilize input boundary.
+ */
 public interface FertilizeInputBoundary {
 
     /**
-     * executes code for fertilize use case
-     * @param r, row to be claimed
-     * @param c, column to be claimed
+     * Executes code for fertilize use case.
+     * @param row row to be claimed
+     * @param col column to be claimed
      */
-    void execute(int r, int c);
+    void execute(int row, int col);
 }

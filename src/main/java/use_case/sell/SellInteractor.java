@@ -3,7 +3,9 @@ package main.java.use_case.sell;
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
 
-
+/**
+ * Sell interactor.
+ */
 public class SellInteractor implements SellInputBoundary {
 
     private final SellOutputBoundary outputBoundary;

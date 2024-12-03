@@ -2,22 +2,26 @@ package main.java.use_case.upgradetool;
 
 import main.java.entity.FarmSingleton;
 
-public class UpgradeToolInteractor implements UpgradeToolInputBoundary{
-    UpgradeToolOutputBoundary outputBoundary;
+/**
+ * Upgrade tool interactor.
+ */
+public class UpgradeToolInteractor implements UpgradeToolInputBoundary {
+    private UpgradeToolOutputBoundary outputBoundary;
+
     public UpgradeToolInteractor(UpgradeToolOutputBoundary outputBoundary) {
         this.outputBoundary = outputBoundary;
     }
 
     @Override
     public void upgrade(String tool) {
-        if (tool.equalsIgnoreCase("sprinkler")){
+        if ("sprinkler".equalsIgnoreCase(tool)) {
             outputBoundary.upgrade("sprinkler");
             int currSprinklerLevel = FarmSingleton.getInstance().getFarm().getSprinklerLevel();
             if (currSprinklerLevel < 5) {
                 FarmSingleton.getInstance().getFarm().setSprinklerLevel(currSprinklerLevel + 1);
             }
         }
-        if (tool.equalsIgnoreCase("planter")){
+        if ("planter".equalsIgnoreCase(tool)) {
             outputBoundary.upgrade("planter");
             int currPlanterLevel = FarmSingleton.getInstance().getFarm().getPlanterLevel();
             if (currPlanterLevel < 5) {
@@ -25,7 +29,7 @@ public class UpgradeToolInteractor implements UpgradeToolInputBoundary{
             }
 
         }
-        if (tool.equalsIgnoreCase("harvester")){
+        if ("harvester".equalsIgnoreCase(tool)) {
             outputBoundary.upgrade("harvester");
             int currHarvesterLevel = FarmSingleton.getInstance().getFarm().getHarvesterLevel();
             if (currHarvesterLevel < 5) {
@@ -33,14 +37,14 @@ public class UpgradeToolInteractor implements UpgradeToolInputBoundary{
             }
 
         }
-        if (tool.equalsIgnoreCase("tiller")){
+        if ("tiller".equalsIgnoreCase(tool)) {
             outputBoundary.upgrade("tiller");
             int currTillerLevel = FarmSingleton.getInstance().getFarm().getTillerLevel();
             if (currTillerLevel < 5) {
                 FarmSingleton.getInstance().getFarm().setTillerLevel(currTillerLevel + 1);
             }
         }
-        if (tool.equalsIgnoreCase("fertilizer")){
+        if ("fertilizer".equalsIgnoreCase(tool)) {
             outputBoundary.upgrade("fertilizer");
             int currFertilizerLevel = FarmSingleton.getInstance().getFarm().getFertilizerLevel();
             if (currFertilizerLevel < 5) {
