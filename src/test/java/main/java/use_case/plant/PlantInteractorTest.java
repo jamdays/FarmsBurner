@@ -45,6 +45,7 @@ public class PlantInteractorTest {
         interactor = new PlantInteractor(outputBoundary, openWeatherAccess);
 
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
         farm.claim(1, 1);
         FarmSingleton.getInstance().setFarm(farm);
     }

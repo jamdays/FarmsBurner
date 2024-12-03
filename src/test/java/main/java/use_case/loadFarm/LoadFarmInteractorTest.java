@@ -42,6 +42,9 @@ public class LoadFarmInteractorTest extends TestCase {
     @Test
     public void testLoadFarm() throws PlantingException {
         Land land = new Land();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
+        farm.setPower(5000);
         Rice rice = new Rice(5, true, 3, System.currentTimeMillis(), land);
         farm.claim(1, 1);
         farm.plant(1, 1, System.currentTimeMillis());

@@ -13,6 +13,8 @@ public class HarvestInteractorTest extends TestCase {
     @Test
     public void testExecute() throws PlantingException {
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
         farm.claim(1, 1);
         farm.plant(1, 1, System.currentTimeMillis());
         farm.getFarmLand()[1][1].getCrop().setAge(5);
@@ -33,6 +35,9 @@ public class HarvestInteractorTest extends TestCase {
     public void testHarvestSuccessMultiple() throws PlantingException {
         // Create a farm and plant a crop.
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
+        farm.setPower(5000);
         farm.claim(1, 1);
         farm.claim(2, 2);
         farm.claim(1, 2);

@@ -18,6 +18,7 @@ public class SetCropInteractorTest extends TestCase {
         SetCropOutputBoundary outputBoundary = new SetCropOutputBoundary() {
             @Override
             public void setCrop(String crop) {
+                farm.setActiveCrop(crop);
             }
         };
         interactor = new SetCropInteractor(outputBoundary);

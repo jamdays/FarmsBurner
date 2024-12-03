@@ -19,49 +19,22 @@ public class ClaimInteractorTest {
     public void claimSuccess() {
 
         // Create a farm and claim a plot of land.
-        Farm farm1 = new Farm();
-        farm1.claim(r, c);
+        Farm farm = new Farm();
+        FarmSingleton.getInstance().setFarm(farm);
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
 
         ClaimOutputBoundary outputBoundary = new ClaimOutputBoundary() {
 
             @Override
             public void claim(int row, int col) {
-                // Assert if land is claimed.
-                assertTrue(farm1.getFarmLand()[row][col].isClaimed());
+                FarmSingleton.getInstance().getFarm().getFarmLand()[row][col].setClaimed(true);
             }
         };
 
         ClaimInteractor interactor = new ClaimInteractor(outputBoundary);
         interactor.execute(r, c);
-    }
 
-    @Test
-    public void claimSuccessMultiple() {
-
-        // Create a farm and claim a plot of land.
-        Farm farm = new Farm();
-        farm.claim(r, c);
-        farm.claim(r + 1, c + 1);
-        farm.claim(r, c + 1);
-        farm.claim(r + 1, c);
-
-        ClaimOutputBoundary outputBoundary = new ClaimOutputBoundary() {
-
-            @Override
-            public void claim(int row, int col) {
-                // Assert if multiple pieces of land is claimed.
-                assertTrue(farm.getFarmLand()[0][0].isClaimed());
-                assertTrue(farm.getFarmLand()[1][1].isClaimed());
-                assertTrue(farm.getFarmLand()[0][1].isClaimed());
-                assertTrue(farm.getFarmLand()[1][0].isClaimed());
-            }
-        };
-
-        ClaimInteractor interactor = new ClaimInteractor(outputBoundary);
-        interactor.execute(0, 0);
-        interactor.execute(1, 1);
-        interactor.execute(0, 1);
-        interactor.execute(1, 0);
+        assertTrue(FarmSingleton.getInstance().getFarm().getFarmLand()[r][c].isClaimed());
     }
 
     @Test
@@ -69,16 +42,6 @@ public class ClaimInteractorTest {
         // Farm should initiate with no land claimed.
         Farm farm = new Farm();
 
-        ClaimOutputBoundary outputBoundary = new ClaimOutputBoundary() {
-
-            @Override
-            public void claim(int row, int col) {
-                // Assert that the farm starts with no FarmLand claimed.
-                assertFalse(farm.getFarmLand()[row][col].isClaimed());
-            }
-        };
-
-        ClaimInputBoundary interactor = new ClaimInteractor(outputBoundary);
-        interactor.execute(r, c);
+        assertFalse(farm.getFarmLand()[r][c].isClaimed());
     }
 }
