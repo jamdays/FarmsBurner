@@ -1,14 +1,17 @@
 package main.java.data_access;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
 import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class OpenForecastAccess implements OpenForecastAccessInterface{
+/**
+ * Open forecast access.
+ */
+public class OpenForecastAccess implements OpenForecastAccessInterface {
     private String apiKey;
     private OpenWeatherMapClient openWeatherMapClient;
 
@@ -16,6 +19,7 @@ public class OpenForecastAccess implements OpenForecastAccessInterface{
         this.apiKey = apiKey;
         openWeatherMapClient = new OpenWeatherMapClient(apiKey);
     }
+
     /**
      * Forecast for city.
      * @param city .
@@ -50,7 +54,7 @@ public class OpenForecastAccess implements OpenForecastAccessInterface{
         String out = "";
         for (int i = 0; i < forecast.size(); i++) {
             out += forecast.get(i) + "\n";
-            if (i > 1 && (i + 1) % 4 == 0){
+            if (i > 1 && (i + 1) % 4 == 0) {
                 out += "\n";
             }
         }

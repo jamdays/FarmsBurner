@@ -1,9 +1,7 @@
 package main.java.data_access;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,8 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.prominence.openweathermap.api.OpenWeatherMapClient;
 import com.github.prominence.openweathermap.api.enums.Language;
 import com.github.prominence.openweathermap.api.enums.UnitSystem;
-import com.github.prominence.openweathermap.api.model.forecast.Forecast;
-import com.github.prominence.openweathermap.api.model.forecast.WeatherForecast;
 
 /**
  * Open weather access.
@@ -27,7 +23,12 @@ public class OpenWeatherAccess implements OpenWeatherAccessInterface {
         openWeatherMapClient = new OpenWeatherMapClient(apiKey);
     }
 
-    // returns a list of 4 strings, containing (in order) the city name, temperature, conditions and cloud coverage %
+    /**
+     * Returns a list of 4 strings, containing (in order) the city name, temperature, conditions and cloud coverage.
+     * @param city .
+     * @return list containing city name, temperature, conditions, and cloud coverage.
+     * @throws RuntimeException .
+     */
     public List<String> currentDisplayInfoForCity(String city) {
         String currentInfoJSON = openWeatherMapClient
                 .currentWeather()
