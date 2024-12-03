@@ -55,7 +55,7 @@ public class FarmsBurnerApplication {
 
         final AppBuilder builder = new AppBuilder();
         builder
-                .addFarmDataAccessObject(mockDao)
+                .addFarmDataAccessObject(dao)
                 .addForecastDataAccessObject(forecastDao)
                 .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
