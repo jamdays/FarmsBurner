@@ -18,28 +18,26 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.GetToolBoughtController;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.*;
 
 /**
  * Buy View.
  */
 public class BuyView extends JPanel implements ActionListener, PropertyChangeListener {
+    private JLabel bbLabel;
     private ToolMenuViewModel viewModel;
     private BuyController buyController;
     private UpgradeController upgradeController;
     private GetToolBoughtController getToolBoughtController;
-    private int barnBucks;
+    private GetBarnBucksController getBarnBucksController;
 
-    public BuyView(ToolMenuViewModel viewModel, GetToolBoughtController getToolBoughtController) {
+    public BuyView(ToolMenuViewModel viewModel, GetToolBoughtController getToolBoughtController, GetBarnBucksController getBarnBucksController) {
         // initialize instance variables
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
-        this.barnBucks = 10;
+        this.getBarnBucksController = getBarnBucksController;
         this.getToolBoughtController = getToolBoughtController;
-
+        int barnBucks = getBarnBucksController.getbb();
         // Buy Menu
         FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
         buyMenuTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -48,10 +46,9 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         topLeftPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Barn Bucks
-        // TODO: implement barnBucks so that it updates with the amount of barnBucks the user has
-        FarmLabel barnBucksLabel = new FarmLabel("Barn Bucks: " + this.barnBucks, 18);
+        bbLabel = new FarmLabel("Barn Bucks: " + barnBucks, 18);
         JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        topRightPanel.add(barnBucksLabel);
+        topRightPanel.add(bbLabel);
         topRightPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Top Panel
@@ -135,7 +132,8 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
                     }
                 }
                 // TODO: access barnBucks and add to tools
-                barnBucks -= price;
+                int barnBucks = getBarnBucksController.getbb();
+                bbLabel.setText("Barn Bucks: " + barnBucks);
             }
         });
 

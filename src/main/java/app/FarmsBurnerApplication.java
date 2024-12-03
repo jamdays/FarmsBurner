@@ -87,6 +87,7 @@ public class FarmsBurnerApplication {
                 .addGetToolBoughtUseCase()
                 .addGetStorageUseCase()
                 .addForecastUseCase()
+                .addGetBarnBucksUseCase()
                 .build().setVisible(true);
     }
 }

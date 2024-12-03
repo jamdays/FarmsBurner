@@ -31,10 +31,7 @@ import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.GetToolBoughtController;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.*;
 
 /**
  * The view for the farm.
@@ -77,6 +74,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SetCropController setCropController;
     private GetToolBoughtController getToolBoughtController;
     private GetStorageController getStorageController;
+    private GetBarnBucksController getBarnBucksController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         // Add background as JLABEL to set images
@@ -131,7 +129,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 System.out.println(getToolBoughtController.toString());
-                BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController);
+                BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController, getBarnBucksController);
                 builder.addView(380, 280, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
@@ -638,5 +636,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     }
     public void setGetStorageController(GetStorageController getStorageController) {
         this.getStorageController = getStorageController;
+    }
+
+    public void setGetBarnBucksController(GetBarnBucksController getBarnBucksController) {
+        this.getBarnBucksController = getBarnBucksController;
     }
 }
