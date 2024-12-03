@@ -36,7 +36,7 @@ public class Snowberry extends AbstractCrop implements Serializable {
                     this.setAge(this.getAge() + 1);
                 }
             }
-            else if (this.getTemp() > 8) {
+            else if (this.getTemp() < 19 && this.getTemp() > 8) {
                 this.setAge(this.getAge() - 1);
             }
             else if (this.getTemp() > 18) {
