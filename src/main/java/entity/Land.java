@@ -138,7 +138,7 @@ public class Land implements Serializable {
         else if (!planted) {
             System.out.println("No crop is planted");
         }
-        else {
+        else {  
             crop.water();
             isWet = true;
         }
