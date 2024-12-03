@@ -394,7 +394,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             }
                         }
                         if ((state.getFarmLand()[r][c] & fertilized) == fertilized
-                                && (state.getFarmLand()[r][c] & wet) == wet) {
+                                && !((state.getFarmLand()[r][c] & wet) == wet)) {
                             // Snowy & Fertilized
                             if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");

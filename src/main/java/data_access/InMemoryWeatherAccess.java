@@ -54,7 +54,10 @@ public class InMemoryWeatherAccess implements OpenWeatherAccessInterface {
 
     @Override
     public List<String> currentDisplayInfoForCity(String city) {
-        return List.of();
+        List<String> result = new ArrayList<>();
+        result.add("hi");
+        result.add(" 15°C");
+        return result;
     }
 
     /**

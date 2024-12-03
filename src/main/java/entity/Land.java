@@ -169,6 +169,7 @@ public class Land implements Serializable {
             throw new PlantingException("There is already a plant here");
         }
         else {
+            System.out.println(crop);
             CropFactory cropFactory = new CropFactory();
             planted = true;
             this.crop = cropFactory.createCrop(crop, time, this);

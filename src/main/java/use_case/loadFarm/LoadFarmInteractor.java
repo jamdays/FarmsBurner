@@ -52,12 +52,26 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
                     prices[r][c] = land[r][c].getCrop().getPrice();
                     cropTimes[r][c] = land[r][c].getCrop().getTime();
                     cropAges[r][c] = land[r][c].getCrop().getAge();
+                    System.out.println(land[r][c].getCrop().getName());
+                    if ("Snowberry".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                        landInt[r][c] += snowberry;
+                    }
+                    else if ("Wheat".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                        landInt[r][c] += wheat;
+                    }
+                    else if ("Rice".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                        landInt[r][c] += rice;
+                    }
+                    else if ("Corn".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                        landInt[r][c] += corn;
+                    }
                 }
 
                 // If Fertilized set landInt to alive by adding const for this
                 if (land[r][c].isFertilized()) {
                     landInt[r][c] += fertilized;
                 }
+
 
                 // If Wet set landInt to alive by adding const for this
                 if (land[r][c].isWet()) {
