@@ -9,10 +9,7 @@ import java.util.Properties;
 
 import javax.swing.UIManager;
 
-import main.java.data_access.InMemoryWeatherAccess;
-import main.java.data_access.OpenWeatherAccess;
-import main.java.data_access.OpenWeatherAccessInterface;
-import main.java.data_access.SaveFileAccess;
+import main.java.data_access.*;
 
 /**
  * Main FarmsBurner application.
@@ -35,6 +32,7 @@ public class FarmsBurnerApplication {
         String apiKey = props.get("WAK").toString();
         // TODO MAKE A GENERAL DATA ACCESS FOR TESTING ETC
         final OpenWeatherAccess dao = new OpenWeatherAccess(apiKey);
+        final OpenForecastAccess forecastDao = new OpenForecastAccess(apiKey);
         try {
             UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
         }
@@ -61,6 +59,7 @@ public class FarmsBurnerApplication {
         final AppBuilder builder = new AppBuilder();
         builder
                 .addFarmDataAccessObject(mockDao)
+                .addForecastDataAccessObject(forecastDao)
                 .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
                 .addWelcomeView()

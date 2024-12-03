@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import main.java.data_access.OpenForecastAccessInterface;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
@@ -87,6 +88,7 @@ public class AppBuilder {
     private ViewManager viewManager;
     // DAOS
     private OpenWeatherAccessInterface farmDataAccessObject;
+    private OpenForecastAccessInterface forecastDAO;
     private SaveFileAccess saveFileAccess;
     // THE WELCOME VIEW, MODEL, AND INTERACTORS
     private WelcomeView welcomeView;
@@ -212,7 +214,7 @@ public class AppBuilder {
      */
     public AppBuilder addForecastUseCase() {
         final ForecastOutputBoundary forecastOutputBoundary = new ForecastPresenter(farmViewModel);
-        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, farmDataAccessObject);
+        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, forecastDAO);
         final ForecastController controller = new ForecastController(forecastInteractor);
 
         if (farmView == null) {
@@ -310,6 +312,16 @@ public class AppBuilder {
      */
     public AppBuilder addFarmDataAccessObject(OpenWeatherAccessInterface farmDataAccessObject) {
         this.farmDataAccessObject = farmDataAccessObject;
+        return this;
+    }
+
+    /**
+     * Creates the Forecast DAO.
+     * @param forecastAccessObject .
+     * @return this builder
+     */
+    public AppBuilder addForecastDataAccessObject(OpenForecastAccessInterface forecastAccessObject) {
+        this.forecastDAO = forecastAccessObject;
         return this;
     }
 
