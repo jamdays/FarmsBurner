@@ -33,7 +33,7 @@ public class GetWeatherInteractorTest extends TestCase {
 
         @Override
         public List<String> currentDisplayInfoForCity(String city) {
-            return List.of("a", "b", "c");
+            return List.of("a", " 1°C", "c");
         }
 
         @Override
