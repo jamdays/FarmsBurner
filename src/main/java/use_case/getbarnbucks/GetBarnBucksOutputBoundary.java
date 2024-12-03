@@ -1,9 +1,9 @@
 package main.java.use_case.getbarnbucks;
 
 public interface GetBarnBucksOutputBoundary {
-
     /**
-     * executes code for getBarnBucks use case
+     * Executes get barn bucks.
+     * @param bb barn bucks.
      */
-    void getBarnBucks(int barnBucks);
+    void bucks(int bb);
 }

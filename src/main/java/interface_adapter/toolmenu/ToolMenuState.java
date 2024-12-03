@@ -14,6 +14,7 @@ public class ToolMenuState {
     private boolean tillerPurchased;
     private int fertilizerLevel;
     private boolean fertilizerPurchased;
+    private int bb;
 
     public ToolMenuState() {
         this.sprinklerLevel = 2;
@@ -119,5 +120,9 @@ public class ToolMenuState {
                 fertilizerLevel += 1;
             }
         }
+    }
+
+    public void setBb(int bb) {
+        this.bb = bb;
     }
 }

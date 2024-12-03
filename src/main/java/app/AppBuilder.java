@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
@@ -17,13 +16,7 @@ import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolPresenter;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.*;
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.BuyPresenter;
-import main.java.interface_adapter.toolmenu.GetToolBoughtController;
-import main.java.interface_adapter.toolmenu.GetToolBoughtPresenter;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
-import main.java.interface_adapter.toolmenu.UpgradePresenter;
+import main.java.interface_adapter.toolmenu.*;
 import main.java.interface_adapter.welcome.LoadController;
 import main.java.interface_adapter.welcome.LoadPresenter;
 import main.java.interface_adapter.welcome.SetCityController;
@@ -115,7 +108,6 @@ public class AppBuilder {
     private GetActiveToolInteractor getActiveToolInteractor;
     private UseToolInteractor useToolInteractor;
     private SetCropInteractor setCropInteractor;
-    private GetBarnBucksInteractor getBarnBucksInteractor;
     // TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -130,6 +122,7 @@ public class AppBuilder {
     private SelectCropInteractor selectCropInteractor;
     private GetStorageInteractor getStorageInteractor;
     private ForecastInteractor forecastInteractor;
+    private GetBarnBucksInteractor getBarnBucksInteractor;
 
     /**
      * Creates the objects for the Save Use Case and connects the FarmView to its
@@ -440,13 +433,14 @@ public class AppBuilder {
         return this;
     }
 
+
     /**
      * Adds the GetBarnBucks Use Case.
      * @return this builder
      * @throws RuntimeException .
      */
     public AppBuilder addGetBarnBucksUseCase() {
-        final GetBarnBucksOutputBoundary getBarnBucksOutputBoundary = new GetBarnBucksPresenter(farmViewModel);
+        final GetBarnBucksOutputBoundary getBarnBucksOutputBoundary = new GetBarnBucksPresenter(toolMenuViewModel);
         getBarnBucksInteractor = new GetBarnBucksInteractor(getBarnBucksOutputBoundary);
 
         final GetBarnBucksController getBarnBucksController = new GetBarnBucksController(getBarnBucksInteractor);

@@ -31,10 +31,7 @@ import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.GetToolBoughtController;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.*;
 
 /**
  * The view for the farm.

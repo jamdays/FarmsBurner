@@ -1,9 +1,13 @@
 package main.java.use_case.getbarnbucks;
 
+/**
+ * Get barn Bucks input boundary.
+ */
 public interface GetBarnBucksInputBoundary {
 
     /**
-     * executes code for getbarnbucks use case
+     * Executes code for barnbucks use case.
+     * @return tool.
      */
-    public int getBarnBucks();
+    int getBarnBucks();
 }
