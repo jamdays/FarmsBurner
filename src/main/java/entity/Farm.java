@@ -375,6 +375,11 @@ public class Farm implements Serializable {
      */
     public void water(int row, int col) {
         this.farmLand[row][col].water();
+        if (this.farmLand[row][col].isClaimed()) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+            }
+        }
     }
 
     /**
@@ -386,6 +391,11 @@ public class Farm implements Serializable {
      */
     public void plant(int row, int col, Long time) throws PlantingException {
         this.farmLand[row][col].plant(time, activeCrop);
+        if (this.farmLand[row][col].isClaimed() && !this.farmLand[row][col].isPlanted()) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+            }
+        }
 
     }
 
@@ -395,6 +405,11 @@ public class Farm implements Serializable {
      * @param col .
      */
     public void claim(int row, int col) {
+        if (!this.farmLand[row][col].isClaimed()) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+            }
+        }
         this.farmLand[row][col].setClaimed(true);
     }
 
@@ -413,6 +428,10 @@ public class Farm implements Serializable {
                 this.getFarmLand()[row][col].setFertilized(false);
                 // make it so that land is no longer planted
                 this.getFarmLand()[row][col].setPlanted(false);
+                this.getFarmLand()[row][col].setIsWet(false);
+                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                    power -= 5;
+                }
             }
             else {
                 System.out.println("not enough space in storage");
@@ -424,6 +443,10 @@ public class Farm implements Serializable {
                 this.getStorage().getCrops().add(land.getCrop());
                 // make it so that land is no longer planted
                 this.getFarmLand()[row][col].setPlanted(false);
+                this.getFarmLand()[row][col].setIsWet(false);
+                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                    power -= 5;
+                }
             }
             else {
                 System.out.println("not enough space in storage");
@@ -486,6 +509,11 @@ public class Farm implements Serializable {
      */
     public void fertilize(int row, int col) {
         this.farmLand[row][col].fertilize();
+        if (!this.farmLand[row][col].isFertilized() && !this.farmLand[row][col].isClaimed()) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+            }
+        }
     }
 
     /**

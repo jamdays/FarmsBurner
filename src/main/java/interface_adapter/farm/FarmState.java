@@ -79,6 +79,9 @@ public class FarmState {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED && (farmLand[row][col] & PLANTED) != PLANTED) {
             this.cropTimes[row][col] = time;
             this.farmLand[row][col] = farmLand[row][col] | PLANTED | ALIVE | crop;
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+            }
         }
         for (int r = 0; r < cropTimes.length; r++) {
             for (int c = 0; c < cropTimes[r].length; c++) {
@@ -100,6 +103,9 @@ public class FarmState {
     public void water(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
             this.farmLand[row][col] = farmLand[row][col] | WET;
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+            }
         }
     }
 
@@ -109,6 +115,11 @@ public class FarmState {
      * @param col .
      */
     public void claim(int row, int col) {
+        if ((this.farmLand[row][col] & CLAIMED) != CLAIMED) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+            }
+        }
         this.farmLand[row][col] = farmLand[row][col] | CLAIMED;
     }
 
@@ -127,6 +138,11 @@ public class FarmState {
      */
     public void harvest(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
+            if ((this.farmLand[row][col] & PLANTED) == PLANTED && (this.farmLand[row][col] & ALIVE) == ALIVE) {
+                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                    power -= 5;
+                }
+            }
             this.farmLand[row][col] = CLAIMED;
         }
     }
@@ -138,6 +154,11 @@ public class FarmState {
      */
     public void fertilize(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
+            if ((this.farmLand[row][col] & FERTILIZED) == FERTILIZED) {
+                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                    power -= 5;
+                }
+            }
             this.farmLand[row][col] = farmLand[row][col] | FERTILIZED;
         }
     }
