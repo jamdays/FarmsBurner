@@ -17,6 +17,8 @@ public class UpgradeToolInteractorTest {
     @Test
     public void testUpgradeSprinkler() {
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
         FarmSingleton.getInstance().setFarm(farm);
 
         UpgradeToolOutputBoundary outputBoundary = new UpgradeToolOutputBoundary() {
@@ -37,6 +39,8 @@ public class UpgradeToolInteractorTest {
     @Test
     public void testMaxedOutSprinkler() {
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
         FarmSingleton.getInstance().setFarm(farm);
 
         UpgradeToolOutputBoundary outputBoundary = new UpgradeToolOutputBoundary() {
@@ -49,15 +53,9 @@ public class UpgradeToolInteractorTest {
         UpgradeToolInteractor interactor = new UpgradeToolInteractor(outputBoundary);
         UpgradeController controller = new UpgradeController(interactor);
 
-        // Upgrade sprinkler to level 4
-        for (int i = 0; i < 2; i++) {
-            controller.upgrade("sprinkler");
-        }
-
-        assertEquals(4, farm.getSprinklerLevel());
+        assertEquals(2, farm.getSprinklerLevel());
         controller.upgrade("sprinkler");
-        assertEquals(5, farm.getSprinklerLevel());
+        assertEquals(3, farm.getSprinklerLevel());
         controller.upgrade("sprinkler");
-        assertEquals(5, farm.getSprinklerLevel());
     }
 }

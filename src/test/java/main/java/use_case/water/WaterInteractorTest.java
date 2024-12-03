@@ -34,6 +34,7 @@ public class WaterInteractorTest {
     public void testExecuteWithPlant() throws PlantingException {
 
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
         farm.claim(1, 1);
         farm.plant(1, 1, System.currentTimeMillis());
         FarmSingleton.getInstance().setFarm(farm);
