@@ -7,7 +7,9 @@ import java.util.Properties;
 
 import javax.swing.UIManager;
 
+import main.java.data_access.InMemoryWeatherAccess;
 import main.java.data_access.OpenWeatherAccess;
+import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.data_access.SaveFileAccess;
 
 /**
@@ -38,9 +40,12 @@ public class FarmsBurnerApplication {
             exception.printStackTrace();
         }
 
+        OpenWeatherAccessInterface memoryWeatherAccess = new InMemoryWeatherAccess();
+
+
         final AppBuilder builder = new AppBuilder();
         builder
-                .addFarmDataAccessObject(dao)
+                .addFarmDataAccessObject(memoryWeatherAccess)
                 .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
                 .addWelcomeView()

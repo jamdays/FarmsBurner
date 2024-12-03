@@ -1,11 +1,6 @@
 package main.java.view;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 
 import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.*;
@@ -46,7 +42,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int CORN = 0B1100000000;
     private final int WHEAT = 0B1000000000;
     private final int READY = 0B10000000;
-    private final int DEAD = 0B10000000000;
     private ClaimController claimController;
     private FertilizeController fertilizeController;
     private HarvestController harvestController;
@@ -332,7 +327,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             // Snowy & Wet & Fertilized
                             if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles5.png");
-                                ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles2.png");
+                                ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles5.png");
                                 farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             } else {
                                 dirtImg = new ImageIcon("src/main/resources/farmtile5.png");
@@ -353,7 +348,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             }
                         }
-                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
                             // Snowy & Fertilized
                             if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");
@@ -381,15 +376,15 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     // given the farmland is claimed, if a crop has been planted there, make it appear
                     if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
                         ImageIcon cropImg = null;
-                        if (state.getCrop() == DEAD){
+                        if ((state.getFarmLand()[r][c] & ALIVE) != ALIVE){
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
-                        } else if (state.getCrop() == RICE) {
+                        } else if ((state.getFarmLand()[r][c] & CROP_MASK)  == RICE) {
                             cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
-                        } else if (state.getCrop() == CORN) {
+                        } else if ((state.getFarmLand()[r][c] & CROP_MASK) == CORN) {
                             cropImg = new ImageIcon("src/main/resources/CornUnready.png");
-                        } else if (state.getCrop() == WHEAT) {
+                        } else if ((state.getFarmLand()[r][c] & CROP_MASK) == WHEAT) {
                             cropImg = new ImageIcon("src/main/resources/WheatUnready.png");
-                        } else if (state.getCrop() == SNOWBERRY) {
+                        } else if ((state.getFarmLand()[r][c] & CROP_MASK) == SNOWBERRY) {
                             cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
                         }
                         if (cropImg != null) {
@@ -402,9 +397,12 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         }
 
     private void setLayeredIcons(JLabel label, ImageIcon baseIcon, ImageIcon overlayIcon) {
+        label.removeAll();
+        label.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
+        this.setBorder(new LineBorder(new Color(69, 44, 42)));
+        label.setPreferredSize(new Dimension(25,25));
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(label.getSize());
-
         JLabel baseLabel = new JLabel(new ImageIcon(baseIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
         baseLabel.setBounds(0, 0, 25, 25);
         layeredPane.add(baseLabel, JLayeredPane.DEFAULT_LAYER);
@@ -415,7 +413,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         layeredPane.add(overlayLabel, JLayeredPane.PALETTE_LAYER);
 
         // Clear the existing icon
-        label.setIcon(null);
         label.setLayout(new BorderLayout());
         label.add(layeredPane, BorderLayout.CENTER);
     }
