@@ -38,8 +38,9 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
         this.farm.setCity(farm.getCity());
         this.farm.setBarnBucks(farm.getBarnBucks());
         this.farm.setPower(farm.getPower());
+        //NEVER REALLY USE THIS SO IT DOESN'T WORK LOW KEY
         this.farm.setWeather(farm.getDay(), farm.isRainy(), farm.isFog(), farm.isThunderstorm(), farm.isSnowy(),
-                farm.isCloudy(), farm.isClear(), farm.getTemp(), farm.getWeather());
+                farm.isCloudy(), farm.isClear(), farm.getTemp(), farm.getWeather(), 0);
         // TODO set logout time
         // this.farm.setLogOutTime();
         this.farm.setSprinklerPurchased(farm.getSprinklerPurchased());

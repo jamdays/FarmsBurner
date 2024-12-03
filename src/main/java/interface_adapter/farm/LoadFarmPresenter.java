@@ -13,13 +13,14 @@ public class LoadFarmPresenter implements LoadFarmOutputBoundary {
     }
 
     @Override
-    public void load(int[][] land, long[][] times, int[][] ages, int[][] prices, int barnBucks, int power) {
+    public void load(int[][] land, long[][] times, int[][] ages, int[][] prices, int barnBucks, int power, long time) {
         ((FarmState) (farmViewModel.getState())).setLand(land);
         ((FarmState) (farmViewModel.getState())).setCropTimes(times);
         ((FarmState) (farmViewModel.getState())).setPrices(prices);
         ((FarmState) (farmViewModel.getState())).setCropAges(ages);
         ((FarmState) (farmViewModel.getState())).setBarnBucks(barnBucks);
         ((FarmState) (farmViewModel.getState())).setPower(power);
+        ((FarmState)(farmViewModel.getState())).refreshPower(time);
         farmViewModel.firePropertyChanged("load farm");
     }
 

@@ -28,6 +28,7 @@ public class FarmState {
     private int crop;
     private int barnBucks;
     private int power;
+    private long powerRefresh;
 
 
     public FarmState() {
@@ -49,6 +50,10 @@ public class FarmState {
      */
     public void setCropTimes(long[][] cropTimes) {
         this.cropTimes = cropTimes;
+    }
+
+    public long getPowerRefresh(){
+        return powerRefresh;
     }
 
     /**
@@ -147,6 +152,7 @@ public class FarmState {
         this.weather = weather;
         this.day = day;
         this.temp = temp;
+        refreshPower(time);
         //Update crops so that any that should be ready become ready
 
         for (int r = 0; r < cropTimes.length; r++) {
@@ -425,6 +431,33 @@ public class FarmState {
      */
     public int getDay() {
         return day;
+    }
+
+    public void refreshPower(long time){
+        if (time - powerRefresh > 10800){
+            powerRefresh = time;
+            if ("Clear".equalsIgnoreCase(weather)){
+                power += 100;
+            }
+            else if ("Clouds".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Rain".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Drizzle".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Thunderstorm".equalsIgnoreCase(weather)){
+                power += 250;
+            }
+            else if ("Snow".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else {
+                power += 25;
+            }
+        }
     }
 
 }

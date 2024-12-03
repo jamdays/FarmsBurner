@@ -51,7 +51,7 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
             float temp_float = Float.parseFloat(temp.substring(temp.indexOf(" ") + 1, temp.indexOf("°C")));
             int temp_int = Math.round(temp_float);
             outputBoundary.weather(weather, day, times.get(0), temp_int);
-            farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear, temp_int, weather);
+            farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear, temp_int, weather, times.get(0));
             return openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity());
         }
         catch (Exception exception) {

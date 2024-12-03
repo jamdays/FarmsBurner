@@ -41,6 +41,7 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
         int[][] prices = new int[land.length][land[0].length];
         int barnBucks = farm.getBarnBucks();
         int power = farm.getPower();
+        long powerRefresh = farm.getPowerRefresh();
 
         // Iterate through landToCreate landInt
         for (int r = 0; r < land.length; r++) {
@@ -96,7 +97,7 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
                 }
             }
         }
-        loadFarmOutputBoundary.load(landInt, cropTimes, cropAges, prices, barnBucks, power);
+        loadFarmOutputBoundary.load(landInt, cropTimes, cropAges, prices, barnBucks, power, powerRefresh);
     }
 
 }

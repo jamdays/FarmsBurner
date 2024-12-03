@@ -38,6 +38,7 @@ import main.java.interface_adapter.toolmenu.*;
  */
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private JLabel backgroundLabel;
+    private FarmLabel power;
     private final int wet = 0B1;
     private final int claimed = 0B10;
     private final int snowy = 0B100;
@@ -79,6 +80,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         // Add background as JLABEL to set images
         backgroundLabel = new JLabel();
+        power = new FarmLabel("Power: 0");
         this.setLayout(new BorderLayout());
         this.add(backgroundLabel);
         // Navigation Bar
@@ -272,6 +274,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         navBar.add(sell);
         navBar.add(buy);
         navBar.add(help);
+        navBar.add(power);
         navBar.setBackground(new Color(169, 152, 126, 0));
 
         backgroundLabel.setLayout(new BoxLayout(backgroundLabel, BoxLayout.Y_AXIS));
@@ -288,6 +291,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final FarmState state = (FarmState) evt.getNewValue();
+        power.setText("Power: " + state.getPower());
         if (evt.getPropertyName().equals("weather")) {
             String background = "src/main/resources/background-";
             if (state.getDay() == 0) {

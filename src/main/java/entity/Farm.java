@@ -22,6 +22,7 @@ public class Farm implements Serializable {
     private final Land[][] farmLand;
     private int barnBucks;
     private int power;
+    private long powerRefresh;
     private String city;
     private Storage storage;
     private int day;
@@ -141,6 +142,32 @@ public class Farm implements Serializable {
         this.power = power;
     }
 
+    public void refreshPower(long time){
+        if (time - powerRefresh > 10800){
+            powerRefresh = time;
+            if ("Clear".equalsIgnoreCase(weather)){
+                power += 100;
+            }
+            else if ("Clouds".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Rain".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Drizzle".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Thunderstorm".equalsIgnoreCase(weather)){
+                power += 250;
+            }
+            else if ("Snow".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else {
+                power += 25;
+            }
+        }
+    }
     /**
      * Get sprinkler purchased.
      * @return sprinkler purchased.
@@ -439,7 +466,7 @@ public class Farm implements Serializable {
      * @param cloudy true if cloudy, false if not
      */
     public void setWeather(int day, boolean rainy, boolean fog, boolean thunderstorm, boolean snowy,
-                           boolean cloudy, boolean clear, int temp, String weather) {
+                           boolean cloudy, boolean clear, int temp, String weather, long time) {
         this.day = day;
         this.rainy = rainy;
         this.fog = fog;
@@ -449,6 +476,7 @@ public class Farm implements Serializable {
         this.clear = clear;
         this.temp = temp;
         this.weather = weather;
+        refreshPower(time);
     }
 
     /**
@@ -631,5 +659,9 @@ public class Farm implements Serializable {
 
     public void weather(String weather) {
         this.weather = weather;
+    }
+
+    public long getPowerRefresh(){
+        return powerRefresh;
     }
 }
