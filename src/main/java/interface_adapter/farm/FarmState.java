@@ -81,8 +81,8 @@ public class FarmState {
                 power -= 5;
                 if (power < 0){
                     power += 5;
+                    return;
                 }
-                return;
             }
             this.cropTimes[row][col] = time;
             this.farmLand[row][col] = farmLand[row][col] | PLANTED | ALIVE | crop;
@@ -110,8 +110,8 @@ public class FarmState {
                 power -= 5;
                 if (power < 0){
                     power += 5;
+                    return;
                 }
-                return;
             }
             this.farmLand[row][col] = farmLand[row][col] | WET;
         }
@@ -128,8 +128,8 @@ public class FarmState {
                 power -= 5;
                 if (power < 0){
                     power += 5;
+                    return;
                 }
-                return;
             }
         }
         this.farmLand[row][col] = farmLand[row][col] | CLAIMED;
@@ -155,8 +155,8 @@ public class FarmState {
                     power -= 5;
                     if (power < 0){
                         power += 5;
+                        return;
                     }
-                    return;
                 }
             }
             this.farmLand[row][col] = CLAIMED;
@@ -175,8 +175,8 @@ public class FarmState {
                     power -= 5;
                     if (power < 0){
                         power += 5;
+                        return;
                     }
-                    return;
                 }
             }
             this.farmLand[row][col] = farmLand[row][col] | FERTILIZED;

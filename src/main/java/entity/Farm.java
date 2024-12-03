@@ -416,6 +416,10 @@ public class Farm implements Serializable {
         if (!this.farmLand[row][col].isClaimed()) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
+                if (power < 0) {
+                    power += 5;
+                    return;
+                }
             }
         }
         this.farmLand[row][col].setClaimed(true);

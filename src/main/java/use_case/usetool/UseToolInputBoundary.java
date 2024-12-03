@@ -10,6 +10,7 @@ public interface UseToolInputBoundary {
      * @param tool the tool being used
      * @param rStart starting row
      * @param cStart starting column
+     * @return the level of the tool.
      */
-    void useTool(String tool, int rStart, int cStart);
+     int useTool(String tool, int rStart, int cStart);
 }
