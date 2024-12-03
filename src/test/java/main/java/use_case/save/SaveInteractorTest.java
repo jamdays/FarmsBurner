@@ -72,15 +72,6 @@ public class SaveInteractorTest {
                 return "";
             }
 
-            /**
-             * @param city 
-             * @return
-             */
-            @Override
-            public List<String> fiveDayForecast(String city) {
-                return List.of();
-            }
-
 
         };
 

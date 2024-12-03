@@ -57,14 +57,6 @@ public class UseToolInteractorTest extends TestCase {
                 return "";
             }
 
-            /**
-             * @param city 
-             * @return
-             */
-            @Override
-            public List<String> fiveDayForecast(String city) {
-                return List.of();
-            }
         };
 
         UseToolInteractor interactor = new UseToolInteractor(outputBoundary, openWeatherAccess);

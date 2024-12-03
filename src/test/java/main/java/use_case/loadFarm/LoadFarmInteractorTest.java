@@ -22,9 +22,18 @@ public class LoadFarmInteractorTest extends TestCase {
         farm = new Farm();
         FarmSingleton.getInstance().setFarm(farm);
         outputBoundary = new LoadFarmOutputBoundary() {
+            /**
+             * @param farmState .
+             * @param cropTimes
+             * @param cropAge
+             * @param prices
+             * @param barnBucks
+             * @param power
+             * @param time
+             */
             @Override
-            public void load(int[][] landInt, long[][] cropTimes, int[][] cropAges, int[][] prices, int barnBucks, int power) {
-                // No-op for testing
+            public void load(int[][] farmState, long[][] cropTimes, int[][] cropAge, int[][] prices, int barnBucks, int power, long time) {
+
             }
         };
         interactor = new LoadFarmInteractor(outputBoundary);
