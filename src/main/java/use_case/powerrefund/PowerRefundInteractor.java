@@ -14,7 +14,7 @@ public class PowerRefundInteractor implements PowerRefundInputBoundary{
      */
     @Override
     public void refund(int amt) {
-        FarmSingleton.getInstance().getFarm().setPower(FarmSingleton.getInstance().getFarm().getPower() + amt);
-        powerRefundOutputboundary.refund(amt);
+        FarmSingleton.getInstance().getFarm().setPower(FarmSingleton.getInstance().getFarm().getPower() + amt*amt);
+        powerRefundOutputboundary.refund(amt*amt);
     }
 }

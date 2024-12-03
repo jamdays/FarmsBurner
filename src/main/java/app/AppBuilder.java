@@ -51,6 +51,8 @@ import main.java.use_case.loadFarm.LoadFarmInteractor;
 import main.java.use_case.loadFarm.LoadFarmOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import main.java.use_case.powerrefund.PowerRefundInteractor;
+import main.java.use_case.powerrefund.PowerRefundOutputboundary;
 import main.java.use_case.save.SaveInteractor;
 import main.java.use_case.save.SaveOutputBoundary;
 import main.java.use_case.selectcrop.SelectCropInteractor;
@@ -110,6 +112,7 @@ public class AppBuilder {
     private GetActiveToolInteractor getActiveToolInteractor;
     private UseToolInteractor useToolInteractor;
     private SetCropInteractor setCropInteractor;
+    private PowerRefundInteractor refundInteractor;
     // TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -303,6 +306,25 @@ public class AppBuilder {
             throw new RuntimeException("addFarmView must be called before addUseCase");
         }
         farmView.setHarvestController(controller);
+        return this;
+    }
+
+    /**
+     * Creates the objects for the Power Refund Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addPowerRefundUseCase() {
+        final PowerRefundOutputboundary refundOutputBoundary = new PowerRefundPresenter(farmViewModel);
+        refundInteractor = new PowerRefundInteractor(refundOutputBoundary);
+        final PowerRefundController controller = new PowerRefundController(refundInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setPowerRefundController(controller);
         return this;
     }
 

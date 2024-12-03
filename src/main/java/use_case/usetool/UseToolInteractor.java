@@ -21,8 +21,9 @@ public class UseToolInteractor implements UseToolInputBoundary {
      * @param tool the tool being used
      * @param rStart starting row
      * @param cStart starting column
+     * @return level of the tool for refund
      */
-    public void useTool(String tool, int rStart, int cStart) {
+    public int useTool(String tool, int rStart, int cStart) {
         // use sprinkler
         if ("sprinkler".equalsIgnoreCase(tool)) {
             System.out.println("water the crops starting at row r and column c based on sprinkler level,"
@@ -36,6 +37,7 @@ public class UseToolInteractor implements UseToolInputBoundary {
             }
             outputBoundary.useTool(tool, rStart, cStart, FarmSingleton.getInstance().getFarm().getSprinklerLevel(),
                     openWeatherAccess.getTimesForCity(FarmSingleton.getInstance().getFarm().getCity()).get(0));
+            return FarmSingleton.getInstance().getFarm().getSprinklerLevel();
         }
         // use harvester
         if ("harvester".equalsIgnoreCase(tool)) {
@@ -50,6 +52,7 @@ public class UseToolInteractor implements UseToolInputBoundary {
             }
             outputBoundary.useTool(tool, rStart, cStart, FarmSingleton.getInstance().getFarm().getHarvesterLevel(),
                     openWeatherAccess.getTimesForCity(FarmSingleton.getInstance().getFarm().getCity()).get(0));
+            return FarmSingleton.getInstance().getFarm().getHarvesterLevel();
         }
         // use tiller
         if ("tiller".equalsIgnoreCase(tool)) {
@@ -63,6 +66,7 @@ public class UseToolInteractor implements UseToolInputBoundary {
             }
             outputBoundary.useTool(tool, rStart, cStart, FarmSingleton.getInstance().getFarm().getTillerLevel(),
                     openWeatherAccess.getTimesForCity(FarmSingleton.getInstance().getFarm().getCity()).get(0));
+            return FarmSingleton.getInstance().getFarm().getTillerLevel();
         }
         // use fertilizer
         if ("fertilizer".equalsIgnoreCase(tool)) {
@@ -81,6 +85,7 @@ public class UseToolInteractor implements UseToolInputBoundary {
             }
             outputBoundary.useTool(tool, rStart, cStart, FarmSingleton.getInstance().getFarm().getFertilizerLevel(),
                     openWeatherAccess.getTimesForCity(FarmSingleton.getInstance().getFarm().getCity()).get(0));
+            return FarmSingleton.getInstance().getFarm().getFertilizerLevel();
         }
         // use planter
         if ("planter".equalsIgnoreCase(tool)) {
@@ -103,5 +108,6 @@ public class UseToolInteractor implements UseToolInputBoundary {
         }
         outputBoundary.useTool(tool, rStart, cStart, FarmSingleton.getInstance().getFarm().getPlanterLevel(),
                 openWeatherAccess.getTimesForCity(FarmSingleton.getInstance().getFarm().getCity()).get(0));
+        return FarmSingleton.getInstance().getFarm().getPlanterLevel();
     }
 }
