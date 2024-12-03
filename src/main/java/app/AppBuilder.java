@@ -41,6 +41,8 @@ import main.java.use_case.forecast.ForecastInteractor;
 import main.java.use_case.forecast.ForecastOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
+import main.java.use_case.getbarnbucks.GetBarnBucksInteractor;
+import main.java.use_case.getbarnbucks.GetBarnBucksOutputBoundary;
 import main.java.use_case.getstorage.GetStorageInteractor;
 import main.java.use_case.getstorage.GetStorageOutputBoundary;
 import main.java.use_case.gettoolbought.GetToolBoughtInteractor;
@@ -113,6 +115,7 @@ public class AppBuilder {
     private GetActiveToolInteractor getActiveToolInteractor;
     private UseToolInteractor useToolInteractor;
     private SetCropInteractor setCropInteractor;
+    private GetBarnBucksInteractor getBarnBucksInteractor;
     // TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -436,6 +439,26 @@ public class AppBuilder {
         farmView.setGetToolBoughtController(getToolBoughtController);
         return this;
     }
+
+    /**
+     * Adds the GetBarnBucks Use Case.
+     * @return this builder
+     * @throws RuntimeException .
+     */
+    public AppBuilder addGetBarnBucksUseCase() {
+        final GetBarnBucksOutputBoundary getBarnBucksOutputBoundary = new GetBarnBucksPresenter(farmViewModel);
+        getBarnBucksInteractor = new GetBarnBucksInteractor(getBarnBucksOutputBoundary);
+
+        final GetBarnBucksController getBarnBucksController = new GetBarnBucksController(getBarnBucksInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setGetBarnBucksController(getBarnBucksController);
+        return this;
+    }
+
     /**
      * Creates the objects for the Start Use Case and connects the WelcomeView to its
      * controller.

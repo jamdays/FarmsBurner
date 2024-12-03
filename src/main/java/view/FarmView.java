@@ -77,6 +77,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SetCropController setCropController;
     private GetToolBoughtController getToolBoughtController;
     private GetStorageController getStorageController;
+    private GetBarnBucksController getBarnBucksController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         // Add background as JLABEL to set images
@@ -120,7 +121,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                SellView sellView = new SellView(sellViewModel, getStorageController);
+                SellView sellView = new SellView(sellViewModel, getStorageController, getBarnBucksController);
                 builder.addView(350, 280, sellView).build().setVisible(true);
                 sellView.setSellController(sellController);
             }
@@ -131,7 +132,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 System.out.println(getToolBoughtController.toString());
-                BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController);
+                BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController, getBarnBucksController);
                 builder.addView(380, 280, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
@@ -634,5 +635,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     }
     public void setGetStorageController(GetStorageController getStorageController) {
         this.getStorageController = getStorageController;
+    }
+
+    public void setGetBarnBucksController(GetBarnBucksController getBarnBucksController) {
+        this.getBarnBucksController = getBarnBucksController;
     }
 }
