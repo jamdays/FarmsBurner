@@ -1,9 +1,10 @@
 package main.java.interface_adapter.sell;
 
 import main.java.use_case.sell.SellInputBoundary;
-import main.java.use_case.sell.SellInteractor;
-import main.java.use_case.sell.SellOutputBoundary;
 
+/**
+ * Sell controller.
+ */
 public class SellController {
     private final SellInputBoundary sellInputBoundary;
 
@@ -13,7 +14,7 @@ public class SellController {
 
     /**
      * Executes the Sell Use Case.
-     * @param quantity
+     * @param quantity .
      */
     public void sell(int quantity) {
         this.sellInputBoundary.execute(quantity);
