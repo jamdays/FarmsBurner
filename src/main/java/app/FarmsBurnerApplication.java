@@ -40,12 +40,11 @@ public class FarmsBurnerApplication {
             exception.printStackTrace();
         }
 
-        OpenWeatherAccessInterface memoryWeatherAccess = new InMemoryWeatherAccess();
 
 
         final AppBuilder builder = new AppBuilder();
         builder
-                .addFarmDataAccessObject(memoryWeatherAccess)
+                .addFarmDataAccessObject(dao)
                 .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
                 .addWelcomeView()
