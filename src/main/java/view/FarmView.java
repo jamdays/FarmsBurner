@@ -54,6 +54,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int wheat = 0B1000000000;
     private final int ready = 0B10000000;
     private ClaimController claimController;
+    private ForecastController forecastController;
     private FertilizeController fertilizeController;
     private HarvestController harvestController;
     private PlantController plantController;
@@ -144,6 +145,14 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 builder.addView(300, 500, new Info()).build().setVisible(true);
+            }
+        });
+        FarmButton forecast = new FarmButton("Forecast");
+        forecast.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                final WindowBuilder builder = new WindowBuilder();
+                builder.addView(400, 500, new ForecastView(forecastController.forecast(), "Forecast")).build().setVisible(true);
             }
         });
 
@@ -258,6 +267,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         JPanel navBar = new JPanel();
         navBar.add(save);
         navBar.add(weather);
+        navBar.add(forecast);
         navBar.add(sell);
         navBar.add(buy);
         navBar.add(help);
@@ -416,7 +426,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     }
 
                     // given the farmland is claimed, if a crop has been planted there, make it appear
-                    if ((state.getFarmLand()[r][c] & planted) == planted) {
+                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) != ready) {
                         ImageIcon cropImg = null;
                         if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
@@ -432,6 +442,27 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         }
                         else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
                             cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
+                        }
+                        if (cropImg != null) {
+                            setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
+                        }
+                    }
+                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) == ready) {
+                        ImageIcon cropImg = null;
+                        if ((state.getFarmLand()[r][c] & alive) != alive) {
+                            cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
+                            cropImg = new ImageIcon("src/main/resources/RiceReady.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
+                            cropImg = new ImageIcon("src/main/resources/CornReady.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
+                            cropImg = new ImageIcon("src/main/resources/WheatReady.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
+                            cropImg = new ImageIcon("src/main/resources/SnowberryReady.png");
                         }
                         if (cropImg != null) {
                             setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
@@ -599,6 +630,9 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    public void setForecastController(ForecastController forecastController) {
+        this.forecastController = forecastController;
+    }
     public void setGetStorageController(GetStorageController getStorageController) {
         this.getStorageController = getStorageController;
     }
