@@ -408,9 +408,8 @@ public class Farm implements Serializable {
                     return;
                 }
             }
+            this.farmLand[row][col].plant(time, activeCrop);
         }
-        this.farmLand[row][col].plant(currTime, activeCrop);
-
     }
 
     /**
