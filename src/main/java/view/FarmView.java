@@ -343,6 +343,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     ImageIcon dirtImg = null;
                     // if farmland is claimed, change button color to dirt
                     if ((state.getFarmLand()[r][c] & claimed) == claimed) {
+                        farmLand[r][c].removeAll();
+                        farmLand[r][c].setFont(new Font("Press Start 2P", Font.PLAIN, 20));
+                        farmLand[r][c].setBorder(new LineBorder(new Color(69, 44, 42)));
+                        farmLand[r][c].setPreferredSize(new Dimension(25,25));
                         // Snowy & Claimed
                         if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                             dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
@@ -473,10 +477,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     private void setLayeredIcons(JLabel label, ImageIcon baseIcon, ImageIcon overlayIcon) {
-        label.removeAll();
-        label.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
-        this.setBorder(new LineBorder(new Color(69, 44, 42)));
-        label.setPreferredSize(new Dimension(25,25));
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(label.getSize());
         JLabel baseLabel = new JLabel(new ImageIcon(baseIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));

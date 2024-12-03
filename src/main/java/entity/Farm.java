@@ -335,7 +335,6 @@ public class Farm implements Serializable {
      */
     public void harvest(int row, int col) {
         Land land = this.farmLand[row][col];
-        // TODO add so that the age impacts if you make money or not
         if (land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
             // add the crop into storage and store its high price, given that there is space in storage
             if (this.getStorage().getCrops().size() < this.getStorage().getCapacity()) {
@@ -458,6 +457,7 @@ public class Farm implements Serializable {
         for (Land[] lands : farmLand) {
             for (Land land : lands) {
                 if (land.getCrop() != null) {
+                    land.getCrop().setLand(land);
                     land.getCrop().update(time);
                 }
             }

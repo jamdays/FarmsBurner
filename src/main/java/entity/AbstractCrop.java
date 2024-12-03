@@ -18,6 +18,7 @@ public abstract class AbstractCrop implements Serializable {
     private String name;
     private String weather;
     private int temp;
+    private boolean isInitialized = false;
 
     // constructor
     public AbstractCrop(int age, boolean isAlive, int price, Long time, Land land) {
@@ -26,6 +27,7 @@ public abstract class AbstractCrop implements Serializable {
         this.price = price;
         this.waterlevel = 0;
         this.time = time;
+        this.weather = "";
     }
 
     public AbstractCrop(Long time, Land land) {
@@ -34,6 +36,7 @@ public abstract class AbstractCrop implements Serializable {
         this.price = 0;
         this.waterlevel = 0;
         this.time = time;
+        this.weather = "";
         System.out.println(time);
     }
 
@@ -270,4 +273,5 @@ public abstract class AbstractCrop implements Serializable {
     public void harvest() {
 
     }
+
 }
