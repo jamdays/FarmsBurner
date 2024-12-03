@@ -113,7 +113,7 @@ public class FarmState {
      */
     public void harvest(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
-            this.farmLand[row][col] = farmLand[row][col] & ~ALIVE;
+            this.farmLand[row][col] = 0;
         }
     }
 

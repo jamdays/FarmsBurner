@@ -3,6 +3,8 @@ package main.java.app;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.swing.UIManager;
@@ -40,11 +42,18 @@ public class FarmsBurnerApplication {
             exception.printStackTrace();
         }
 
-
-
+        OpenWeatherAccessInterface mockDao = new InMemoryWeatherAccess();
+        ((InMemoryWeatherAccess)mockDao).setCondition("Clear");
+        List<Long> times = new ArrayList<Long>();
+        times.add(30000L);
+        times.add(28800L);
+        times.add(57600L);
+        ((InMemoryWeatherAccess)mockDao).setTimes(times);
+        ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess)mockDao).nextDay();
         final AppBuilder builder = new AppBuilder();
         builder
-                .addFarmDataAccessObject(dao)
+                .addFarmDataAccessObject(mockDao)
                 .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
                 .addWelcomeView()

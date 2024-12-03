@@ -1,9 +1,11 @@
 package main.java.entity;
 
+import java.io.Serializable;
+
 /**
  * Corn class.
  */
-public class Corn extends AbstractCrop {
+public class Corn extends AbstractCrop implements Serializable {
 
     public Corn(int age, boolean isAlive, int price, Long time, Land land) {
         super(age, isAlive, price, time, land);
