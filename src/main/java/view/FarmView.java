@@ -1,6 +1,12 @@
 package main.java.view;
 
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -9,8 +15,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.*;
 import javax.swing.border.LineBorder;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 
 import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.*;
@@ -30,18 +40,18 @@ import main.java.interface_adapter.toolmenu.UpgradeController;
  */
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private JLabel backgroundLabel;
-    private final int WET = 0B1;
-    private final int CLAIMED = 0B10;
-    private final int SNOWY = 0B100;
-    private final int PLANTED = 0B1000;
-    private final int ALIVE = 0B100000;
-    private final int FERTILIZED = 0B1000000;
-    private final int CROP_MASK = 0B1100000000;
-    private final int RICE = 0B0100000000;
-    private final int SNOWBERRY = 0B00000000000;
-    private final int CORN = 0B1100000000;
-    private final int WHEAT = 0B1000000000;
-    private final int READY = 0B10000000;
+    private final int wet = 0B1;
+    private final int claimed = 0B10;
+    private final int snowy = 0B100;
+    private final int planted = 0B1000;
+    private final int alive = 0B100000;
+    private final int fertilized = 0B1000000;
+    private final int cropMask = 0B1100000000;
+    private final int rice = 0B0100000000;
+    private final int snowberry = 0B00000000000;
+    private final int corn = 0B1100000000;
+    private final int wheat = 0B1000000000;
+    private final int ready = 0B10000000;
     private ClaimController claimController;
     private FertilizeController fertilizeController;
     private HarvestController harvestController;
@@ -311,90 +321,114 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 for (int c = 0; c < state.getFarmLand()[r].length; c++) {
                     ImageIcon dirtImg = null;
                     // if farmland is claimed, change button color to dirt
-                    if ((state.getFarmLand()[r][c] & CLAIMED) == CLAIMED) {
+                    if ((state.getFarmLand()[r][c] & claimed) == claimed) {
                         // Snowy & Claimed
-                        if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                        if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                             dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
-                            ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles2.png");
-                            farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                        } else {
+                            ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles2.png");
+                            farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        }
+                        else {
                             dirtImg = new ImageIcon("src/main/resources/farmtile2.png");
-                            ImageIcon dirtIMG = new ImageIcon("src/main/resources/farmtile2.png");
-                            farmLand[r][c].setIcon(new ImageIcon(dirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                            ImageIcon dirtImage = new ImageIcon("src/main/resources/farmtile2.png");
+                            farmLand[r][c].setIcon(new ImageIcon(dirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                        // given the farmland is claimed, if it is wet as well as fertilized, set label image to wet and fertilized dirt
-                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                        // given the farmland is claimed, if it is wet as well as fertilized,
+                        // set label image to wet and fertilized dirt
+                        if ((state.getFarmLand()[r][c] & fertilized) == fertilized
+                                && (state.getFarmLand()[r][c] & wet) == wet) {
                             // Snowy & Wet & Fertilized
-                            if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                            if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles5.png");
-                                ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles5.png");
-                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            } else {
+                                ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles2.png");
+                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                            }
+                            else {
                                 dirtImg = new ImageIcon("src/main/resources/farmtile5.png");
-                                ImageIcon wetfertilizeddirtIMG = new ImageIcon("src/main/resources/farmtile5.png");
-                                farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                                ImageIcon wetfertilizeddirtImage = new ImageIcon("src/main/resources/farmtile5.png");
+                                farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtImage.getImage()
+                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             }
                         }
-                        // given the farmland is claimed, if it is wet but unfertilized, set label image to wet but unfertilized dirt
-                        if (!((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && ((state.getFarmLand()[r][c] & WET) == WET)) {
+                        // given the farmland is claimed, if it is wet but unfertilized,
+                        // set label image to wet but unfertilized dirt
+                        if (!((state.getFarmLand()[r][c] & fertilized) == fertilized)
+                                && (state.getFarmLand()[r][c] & wet) == wet) {
                             // Snowy & Wet
-                            if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                            if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles3.png");
-                                ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles3.png");
-                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            } else {
+                                ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles3.png");
+                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                            }
+                            else {
                                 dirtImg = new ImageIcon("src/main/resources/farmtile3.png");
-                                ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile3.png");
-                                farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                                ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile3.png");
+                                farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
+                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             }
                         }
-                        if (((state.getFarmLand()[r][c] & FERTILIZED) == FERTILIZED) && !((state.getFarmLand()[r][c] & WET) == WET)) {
+                        if ((state.getFarmLand()[r][c] & fertilized) == fertilized
+                                && (state.getFarmLand()[r][c] & wet) == wet) {
                             // Snowy & Fertilized
-                            if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                            if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");
-                                ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles4.png");
-                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            } else {
+                                ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles4.png");
+                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                            }
+                            else {
                                 dirtImg = new ImageIcon("src/main/resources/farmtile4.png");
-                                ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile4.png");
-                                farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                                ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile4.png");
+                                farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
+                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                             }
                         }
                     }
 
                     // Snowy & Unclaimed
-                    else if ((state.getFarmLand()[r][c] & SNOWY) == SNOWY) {
+                    else if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                         dirtImg = new ImageIcon("src/main/resources/snowytiles1.png");
-                        ImageIcon snowyDirtIMG = new ImageIcon("src/main/resources/snowytiles1.png");
-                        farmLand[r][c].setIcon(new ImageIcon(snowyDirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                    } else {
+                        ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles1.png");
+                        farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                    }
+                    else {
                         dirtImg = new ImageIcon("src/main/resources/farmtile1.png");
-                        ImageIcon wetdirtIMG = new ImageIcon("src/main/resources/farmtile1.png");
-                        farmLand[r][c].setIcon(new ImageIcon(wetdirtIMG.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile1.png");
+                        farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
+                                .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                     }
 
                     // given the farmland is claimed, if a crop has been planted there, make it appear
-                    if ((state.getFarmLand()[r][c] & PLANTED) == PLANTED) {
+                    if ((state.getFarmLand()[r][c] & planted) == planted) {
                         ImageIcon cropImg = null;
-                        if ((state.getFarmLand()[r][c] & ALIVE) != ALIVE){
+                        if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
-                        } else if ((state.getFarmLand()[r][c] & CROP_MASK)  == RICE) {
+                        }
+                        else if (state.getCrop() == rice) {
                             cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
-                        } else if ((state.getFarmLand()[r][c] & CROP_MASK) == CORN) {
+                        }
+                        else if (state.getCrop() == corn) {
                             cropImg = new ImageIcon("src/main/resources/CornUnready.png");
-                        } else if ((state.getFarmLand()[r][c] & CROP_MASK) == WHEAT) {
+                        }
+                        else if (state.getCrop() == wheat) {
                             cropImg = new ImageIcon("src/main/resources/WheatUnready.png");
-                        } else if ((state.getFarmLand()[r][c] & CROP_MASK) == SNOWBERRY) {
+                        }
+                        else if (state.getCrop() == snowberry) {
                             cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
                         }
                         if (cropImg != null) {
                             setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
                         }
                     }
-                    }
                 }
             }
         }
+    }
 
     private void setLayeredIcons(JLabel label, ImageIcon baseIcon, ImageIcon overlayIcon) {
         label.removeAll();
@@ -537,6 +571,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         this.saveController = saveController;
     }
 
+    /**
+     * Set get tool bought controller.
+     * @param getToolBoughtController .
+     */
     public void setGetToolBoughtController(GetToolBoughtController getToolBoughtController) {
         this.getToolBoughtController = getToolBoughtController;
     }
