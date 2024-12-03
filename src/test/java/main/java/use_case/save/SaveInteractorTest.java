@@ -14,7 +14,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 public class SaveInteractorTest {
-    /*
+
     @Test
     public void testSave() throws PlantingException {
 
@@ -22,7 +22,7 @@ public class SaveInteractorTest {
         farm.claim(1, 1);
         farm.claim(2, 2);
         farm.claim(3, 1);
-        farm.plant(1, 1, 1L);
+        farm.plant(1, 1, System.currentTimeMillis());
         FarmSingleton.getInstance().setFarm(farm);
         SaveDataAccessInterface saveDAO = new SaveDataAccessInterface() {
 
@@ -48,5 +48,5 @@ public class SaveInteractorTest {
 //        saveInteractor.save();
 
     }
-     */
+
 }
