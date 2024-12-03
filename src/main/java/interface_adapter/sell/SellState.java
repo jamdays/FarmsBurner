@@ -20,8 +20,12 @@ public class SellState {
         this.money = 0;
     }
 
-    public void getStorage(List<Integer> storage) {
-        this.storage = storage;
+    /**
+     * Get storage.
+     * @param currStorage .
+     */
+    public void getStorage(List<Integer> currStorage) {
+        this.storage = currStorage;
     }
   
     /**

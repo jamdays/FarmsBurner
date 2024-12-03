@@ -20,7 +20,7 @@ public class LoadFarmPresenter implements LoadFarmOutputBoundary {
         ((FarmState) (farmViewModel.getState())).setCropAges(ages);
         ((FarmState) (farmViewModel.getState())).setBarnBucks(barnBucks);
         ((FarmState) (farmViewModel.getState())).setPower(power);
-        ((FarmState)(farmViewModel.getState())).refreshPower(time);
+        ((FarmState) (farmViewModel.getState())).refreshPower(time);
         farmViewModel.firePropertyChanged("load farm");
     }
 

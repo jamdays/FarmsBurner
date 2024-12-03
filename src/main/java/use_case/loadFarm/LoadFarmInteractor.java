@@ -4,7 +4,6 @@ import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
 import main.java.entity.Land;
 
-
 /**
  * Load farm interactor.
  */
@@ -16,7 +15,7 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
     private final int alive = 0B100000;
     private final int fertilized = 0B1000000;
     private final int ready = 0B10000000;
-    private final int crop_mask = 0B1100000000;
+    private final int cropMask = 0B1100000000;
     private final int rice = 0B0100000000;
     private final int snowberry = 0B0000000000;
     private final int corn = 0B1100000000;
@@ -47,22 +46,22 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
         for (int r = 0; r < land.length; r++) {
             for (int c = 0; c < land[0].length; c++) {
 
-                //If Planted set landInt to alive by adding const for this
-                if (land[r][c].isPlanted()){
+                // If Planted set landInt to alive by adding const for this
+                if (land[r][c].isPlanted()) {
                     landInt[r][c] += planted;
                     prices[r][c] = land[r][c].getCrop().getPrice();
                     cropTimes[r][c] = land[r][c].getCrop().getTime();
                     cropAges[r][c] = land[r][c].getCrop().getAge();
-                    if ("Snowberry".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                    if ("Snowberry".equalsIgnoreCase(land[r][c].getCrop().getName())) {
                         landInt[r][c] += snowberry;
                     }
-                    else if ("Wheat".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                    else if ("Wheat".equalsIgnoreCase(land[r][c].getCrop().getName())) {
                         landInt[r][c] += wheat;
                     }
-                    else if ("Rice".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                    else if ("Rice".equalsIgnoreCase(land[r][c].getCrop().getName())) {
                         landInt[r][c] += rice;
                     }
-                    else if ("Corn".equalsIgnoreCase(land[r][c].getCrop().getName())){
+                    else if ("Corn".equalsIgnoreCase(land[r][c].getCrop().getName())) {
                         landInt[r][c] += corn;
                     }
                 }
@@ -71,7 +70,6 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
                 if (land[r][c].isFertilized()) {
                     landInt[r][c] += fertilized;
                 }
-
 
                 // If Wet set landInt to alive by adding const for this
                 if (land[r][c].isWet()) {
@@ -92,7 +90,7 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
                     landInt[r][c] += alive;
                 }
 
-                if (land[r][c].getCrop() != null && land[r][c].getCrop().getReadyToHarvest()){
+                if (land[r][c].getCrop() != null && land[r][c].getCrop().getReadyToHarvest()) {
                     landInt[r][c] += ready;
                 }
             }

@@ -2,6 +2,9 @@ package main.java.interface_adapter.toolmenu;
 
 import main.java.use_case.getbarnbucks.GetBarnBucksInputBoundary;
 
+/**
+ * Get BarnBucks Controller.
+ */
 public class GetBarnBucksController {
 
     private final GetBarnBucksInputBoundary inputBoundary;

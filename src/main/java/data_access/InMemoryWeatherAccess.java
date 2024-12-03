@@ -29,7 +29,8 @@ public class InMemoryWeatherAccess implements OpenWeatherAccessInterface {
         if (times.get(0) < startofday || times.get(1) < startofday || times.get(2) < startofday) {
             throw new IllegalArgumentException("Times must be after or equal to start of day");
         }
-        if (times.get(0) > startofday + 86400L || times.get(1) > startofday + 86400L || times.get(2) > startofday + 86400L) {
+        if (times.get(0) > startofday + 86400L
+                || times.get(1) > startofday + 86400L || times.get(2) > startofday + 86400L) {
             throw new IllegalArgumentException("Times must be after or equal to end of day");
         }
         this.condition = condition;
@@ -108,8 +109,9 @@ public class InMemoryWeatherAccess implements OpenWeatherAccessInterface {
     }
 
     /**
-     * @param city 
-     * @return
+     * Five-day forecast.
+     * @param city .
+     * @return five-day forecast.
      */
     public List<String> fiveDayForecast(String city) {
         return List.of();
