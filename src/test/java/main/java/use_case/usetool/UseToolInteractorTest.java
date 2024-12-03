@@ -23,7 +23,6 @@ public class UseToolInteractorTest extends TestCase {
         farm.plant(0, 1, System.currentTimeMillis());
         farm.plant(1, 0, System.currentTimeMillis());
         farm.plant(1, 1, System.currentTimeMillis());
-        farm.getSprinkler().setLevel(1);
         FarmSingleton.getInstance().setFarm(farm);
 
         UseToolOutputBoundary outputBoundary = new UseToolOutputBoundary() {
@@ -56,6 +55,15 @@ public class UseToolInteractorTest extends TestCase {
             @Override
             public String jsonforcity(String city) {
                 return "";
+            }
+
+            /**
+             * @param city 
+             * @return
+             */
+            @Override
+            public List<String> fiveDayForecast(String city) {
+                return List.of();
             }
         };
 
