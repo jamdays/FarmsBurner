@@ -374,12 +374,16 @@ public class Farm implements Serializable {
      * @param col .
      */
     public void water(int row, int col) {
-        this.farmLand[row][col].water();
         if (this.farmLand[row][col].isClaimed()) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
+                if (power < 0){
+                    power += 5;
+                    return;
+                }
             }
         }
+        this.farmLand[row][col].water();
     }
 
     /**
@@ -390,12 +394,16 @@ public class Farm implements Serializable {
      * @throws PlantingException if there is already a plant there
      */
     public void plant(int row, int col, Long time) throws PlantingException {
-        this.farmLand[row][col].plant(time, activeCrop);
         if (this.farmLand[row][col].isClaimed() && !this.farmLand[row][col].isPlanted()) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
+                if (power < 0){
+                    power += 5;
+                    return;
+                }
             }
         }
+        this.farmLand[row][col].plant(time, activeCrop);
 
     }
 
@@ -420,6 +428,15 @@ public class Farm implements Serializable {
      */
     public void harvest(int row, int col) {
         Land land = this.farmLand[row][col];
+        if (land.isPlanted() && land.getCrop().getIsAlive()) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+                if (power < 0) {
+                    power += 5;
+                    return;
+                }
+            }
+        }
         if (land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
             // add the crop into storage and store its high price, given that there is space in storage
             if (this.getStorage().getCrops().size() < this.getStorage().getCapacity()) {
@@ -429,9 +446,6 @@ public class Farm implements Serializable {
                 // make it so that land is no longer planted
                 this.getFarmLand()[row][col].setPlanted(false);
                 this.getFarmLand()[row][col].setIsWet(false);
-                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
-                    power -= 5;
-                }
             }
             else {
                 System.out.println("not enough space in storage");
@@ -444,9 +458,6 @@ public class Farm implements Serializable {
                 // make it so that land is no longer planted
                 this.getFarmLand()[row][col].setPlanted(false);
                 this.getFarmLand()[row][col].setIsWet(false);
-                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
-                    power -= 5;
-                }
             }
             else {
                 System.out.println("not enough space in storage");
@@ -508,12 +519,16 @@ public class Farm implements Serializable {
      * @param col .
      */
     public void fertilize(int row, int col) {
-        this.farmLand[row][col].fertilize();
         if (!this.farmLand[row][col].isFertilized() && !this.farmLand[row][col].isClaimed()) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
+                if (power < 0){
+                    power += 5;
+                    return;
+                }
             }
         }
+        this.farmLand[row][col].fertilize();
     }
 
     /**

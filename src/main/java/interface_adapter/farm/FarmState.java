@@ -77,11 +77,15 @@ public class FarmState {
     public void plantCrop(int row, int col, long time) {
         // if claimed and not planted set time and update little guy
         if ((farmLand[row][col] & CLAIMED) == CLAIMED && (farmLand[row][col] & PLANTED) != PLANTED) {
-            this.cropTimes[row][col] = time;
-            this.farmLand[row][col] = farmLand[row][col] | PLANTED | ALIVE | crop;
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
+                if (power < 0){
+                    power += 5;
+                }
+                return;
             }
+            this.cropTimes[row][col] = time;
+            this.farmLand[row][col] = farmLand[row][col] | PLANTED | ALIVE | crop;
         }
         for (int r = 0; r < cropTimes.length; r++) {
             for (int c = 0; c < cropTimes[r].length; c++) {
@@ -102,10 +106,14 @@ public class FarmState {
      */
     public void water(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
-            this.farmLand[row][col] = farmLand[row][col] | WET;
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
+                if (power < 0){
+                    power += 5;
+                }
+                return;
             }
+            this.farmLand[row][col] = farmLand[row][col] | WET;
         }
     }
 
@@ -118,6 +126,10 @@ public class FarmState {
         if ((this.farmLand[row][col] & CLAIMED) != CLAIMED) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
+                if (power < 0){
+                    power += 5;
+                }
+                return;
             }
         }
         this.farmLand[row][col] = farmLand[row][col] | CLAIMED;
@@ -141,6 +153,10 @@ public class FarmState {
             if ((this.farmLand[row][col] & PLANTED) == PLANTED && (this.farmLand[row][col] & ALIVE) == ALIVE) {
                 if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                     power -= 5;
+                    if (power < 0){
+                        power += 5;
+                    }
+                    return;
                 }
             }
             this.farmLand[row][col] = CLAIMED;
@@ -157,6 +173,10 @@ public class FarmState {
             if ((this.farmLand[row][col] & FERTILIZED) == FERTILIZED) {
                 if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                     power -= 5;
+                    if (power < 0){
+                        power += 5;
+                    }
+                    return;
                 }
             }
             this.farmLand[row][col] = farmLand[row][col] | FERTILIZED;
