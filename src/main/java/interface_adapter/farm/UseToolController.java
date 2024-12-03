@@ -18,8 +18,9 @@ public class UseToolController {
      * @param tool .
      * @param rStart .
      * @param cStart .
+     * @return level of tool.
      */
-    public void useTool(String tool, int rStart, int cStart) {
-        inputBoundary.useTool(tool, rStart, cStart);
+    public int useTool(String tool, int rStart, int cStart) {
+        return inputBoundary.useTool(tool, rStart, cStart);
     }
 }

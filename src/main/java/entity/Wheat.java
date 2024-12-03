@@ -1,9 +1,11 @@
 package main.java.entity;
 
+import java.io.Serializable;
+
 /**
  * Wheat class.
  */
-public class Wheat extends AbstractCrop {
+public class Wheat extends AbstractCrop implements Serializable {
     public Wheat(int age, boolean isAlive, int price, Long time, Land land) {
         super(age, isAlive, price, time, land);
         this.setName("Wheat");
@@ -27,6 +29,7 @@ public class Wheat extends AbstractCrop {
             this.getLand().setIsWet(false);
             this.setAge(this.getAge() + 1);
             if (this.getTemp() < 3) {
+                System.out.println(this.getTemp());
                 this.setAge(this.getAge() - 1);
             }
             else if (this.getTemp() > 15) {

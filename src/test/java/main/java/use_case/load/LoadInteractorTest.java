@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class LoadInteractorTest {
-    /*
+
     @Test
     public void testLoad() throws PlantingException {
 
@@ -20,7 +20,7 @@ public class LoadInteractorTest {
         testfarm.claim(1, 1);
         testfarm.claim(2, 2);
         testfarm.claim(3, 1);
-        testfarm.plant(1, 1);
+        testfarm.plant(1, 1, System.currentTimeMillis());
         LoadDataAccessInterface loadDAO = new LoadDataAccessInterface() {
 
 
@@ -45,5 +45,5 @@ public class LoadInteractorTest {
 
     }
 
-     */
+
 }

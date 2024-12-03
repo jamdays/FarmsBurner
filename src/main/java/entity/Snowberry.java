@@ -1,9 +1,11 @@
 package main.java.entity;
 
+import java.io.Serializable;
+
 /**
  * Snowberry Class.
  */
-public class Snowberry extends AbstractCrop {
+public class Snowberry extends AbstractCrop implements Serializable {
     public Snowberry(int age, boolean isAlive, int price, Long time, Land land) {
         super(age, isAlive, price, time, land);
         this.setName("Snowberry");

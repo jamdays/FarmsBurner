@@ -1,36 +1,66 @@
 package main.java.use_case.plant;
 
+import main.java.data_access.OpenWeatherAccess;
+import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Properties;
+
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 public class PlantInteractorTest {
-    /*
-    @Test
-    public void testPlantSuccessUnfertilized() throws PlantingException {
-        // Create a farm and claim then plant on a plot of land.
-        Farm farm = new Farm();
-        farm.claim(1, 1);
-        farm.plant(1, 1);
+    private PlantInteractor interactor;
+    private OpenWeatherAccessInterface openWeatherAccess;
+    private PlantOutputBoundary outputBoundary;
+    private Properties props;
+    private String apiKey;
 
+    @Before
+    public void setUp() {
+        props = new Properties();
+        try (var inputStream = Files.newInputStream(Paths.get(".env"))) {
+            props.load(inputStream);
+            apiKey = props.getProperty("WAK");
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
+
+        openWeatherAccess = new OpenWeatherAccess(apiKey); // Use real implementation
         PlantOutputBoundary outputBoundary = new PlantOutputBoundary() {
-
             @Override
-            public void addCrop(int r, int c) {
-                // Assert land at [r][c] is planted.
-                assertTrue(farm.getFarmLand()[r][c].isPlanted());
+            public void addCrop(int row, int col, long time) {
+
             }
         };
+        interactor = new PlantInteractor(outputBoundary, openWeatherAccess);
 
-        PlantInteractor interactor = new PlantInteractor(outputBoundary);
-        interactor.execute(1, 1);
+        Farm farm = new Farm();
+        farm.claim(1, 1);
+        FarmSingleton.getInstance().setFarm(farm);
     }
 
+    @Test
+    public void testPlantSuccess() {
+        interactor.execute(1, 1);
+        assertTrue(FarmSingleton.getInstance().getFarm().getFarmLand()[1][1].isPlanted());
+    }
+
+    @Test
+    public void testPlantFail() {
+        interactor.execute(2,2);
+    }
+
+    /*
     @Test
     public void testPlantSuccessFertilized() throws PlantingException {
         // Create a farm and claim then plant on a plot of land.
@@ -133,7 +163,7 @@ public class PlantInteractorTest {
         PlantInteractor plantInteractor = new PlantInteractor(plantOB);
         plantInteractor.execute(1, 1);
     }
+*/
 
-     */
 
 }

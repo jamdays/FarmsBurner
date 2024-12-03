@@ -1,9 +1,14 @@
 package main.java.entity;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
 /**
  * Corn class.
  */
-public class Corn extends AbstractCrop {
+public class Corn extends AbstractCrop implements Serializable {
 
     public Corn(int age, boolean isAlive, int price, Long time, Land land) {
         super(age, isAlive, price, time, land);
@@ -21,6 +26,9 @@ public class Corn extends AbstractCrop {
      */
     @Override
     public void update(long time) {
+        System.out.println(this.getWeather());
+        System.out.println(this.getAge());
+        System.out.println(this.getTemp());
         // this.time is very different from time
         long diff = time - this.getTime();
         long days = diff / 86400;
@@ -39,4 +47,6 @@ public class Corn extends AbstractCrop {
             }
         }
     }
+
+
 }

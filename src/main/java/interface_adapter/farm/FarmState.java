@@ -28,6 +28,7 @@ public class FarmState {
     private int crop;
     private int barnBucks;
     private int power;
+    private long powerRefresh;
 
 
     public FarmState() {
@@ -51,6 +52,10 @@ public class FarmState {
         this.cropTimes = cropTimes;
     }
 
+    public long getPowerRefresh(){
+        return powerRefresh;
+    }
+
     /**
      * Sets the crop ages
      * @param cropAges to be set to
@@ -72,10 +77,26 @@ public class FarmState {
     public void plantCrop(int row, int col, long time) {
         // if claimed and not planted set time and update little guy
         if ((farmLand[row][col] & CLAIMED) == CLAIMED && (farmLand[row][col] & PLANTED) != PLANTED) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+                if (power < 0){
+                    power += 5;
+                    return;
+                }
+            }
             this.cropTimes[row][col] = time;
             this.farmLand[row][col] = farmLand[row][col] | PLANTED | ALIVE | crop;
         }
-        
+        for (int r = 0; r < cropTimes.length; r++) {
+            for (int c = 0; c < cropTimes[r].length; c++) {
+                if (cropTimes[r][c] != 0) {
+                    long diff = time - cropTimes[r][c];
+                    long days = diff / 86400;
+                    updateTime(r, c, time);
+                }
+            }
+        }
+
     }
 
     /**
@@ -85,6 +106,13 @@ public class FarmState {
      */
     public void water(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+                if (power < 0){
+                    power += 5;
+                    return;
+                }
+            }
             this.farmLand[row][col] = farmLand[row][col] | WET;
         }
     }
@@ -95,6 +123,15 @@ public class FarmState {
      * @param col .
      */
     public void claim(int row, int col) {
+        if ((this.farmLand[row][col] & CLAIMED) != CLAIMED) {
+            if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                power -= 5;
+                if (power < 0){
+                    power += 5;
+                    return;
+                }
+            }
+        }
         this.farmLand[row][col] = farmLand[row][col] | CLAIMED;
     }
 
@@ -113,7 +150,16 @@ public class FarmState {
      */
     public void harvest(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
-            this.farmLand[row][col] = farmLand[row][col] & ~ALIVE;
+            if ((this.farmLand[row][col] & PLANTED) == PLANTED && (this.farmLand[row][col] & ALIVE) == ALIVE) {
+                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                    power -= 5;
+                    if (power < 0){
+                        power += 5;
+                        return;
+                    }
+                }
+            }
+            this.farmLand[row][col] = CLAIMED;
         }
     }
 
@@ -124,6 +170,15 @@ public class FarmState {
      */
     public void fertilize(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
+            if ((this.farmLand[row][col] & FERTILIZED) == FERTILIZED) {
+                if (!"Thunderstorm".equalsIgnoreCase(weather)) {
+                    power -= 5;
+                    if (power < 0){
+                        power += 5;
+                        return;
+                    }
+                }
+            }
             this.farmLand[row][col] = farmLand[row][col] | FERTILIZED;
         }
     }
@@ -138,6 +193,7 @@ public class FarmState {
         this.weather = weather;
         this.day = day;
         this.temp = temp;
+        refreshPower(time);
         //Update crops so that any that should be ready become ready
 
         for (int r = 0; r < cropTimes.length; r++) {
@@ -218,6 +274,7 @@ public class FarmState {
         cropAges[row][col] = age;
         if (age == 3) {
             prices[row][col] = 5;
+            farmLand[row][col] = farmLand[row][col] | READY;
             if ((farmLand[row][col] & FERTILIZED) == FERTILIZED) {
                 prices[row][col] = prices[row][col] * 2;
             }
@@ -415,6 +472,33 @@ public class FarmState {
      */
     public int getDay() {
         return day;
+    }
+
+    public void refreshPower(long time){
+        if (time - powerRefresh > 10800){
+            powerRefresh = time;
+            if ("Clear".equalsIgnoreCase(weather)){
+                power += 100;
+            }
+            else if ("Clouds".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Rain".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Drizzle".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else if ("Thunderstorm".equalsIgnoreCase(weather)){
+                power += 250;
+            }
+            else if ("Snow".equalsIgnoreCase(weather)){
+                power += 50;
+            }
+            else {
+                power += 25;
+            }
+        }
     }
 
 }

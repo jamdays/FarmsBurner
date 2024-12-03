@@ -1,49 +1,34 @@
-package main.java.use_case.save;
+package main.java.use_case.usetool;
 
+import junit.framework.TestCase;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.entity.Farm;
 import main.java.entity.FarmSingleton;
 import main.java.use_case.plant.PlantingException;
-import main.java.use_case.save.SaveDataAccessInterface;
-import main.java.use_case.save.SaveInteractor;
-import main.java.use_case.save.SaveOutputBoundary;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-
-public class SaveInteractorTest {
+public class UseToolInteractorTest extends TestCase {
 
     @Test
-    public void testSave() throws PlantingException {
-
+    public void testUseTool() throws PlantingException {
         Farm farm = new Farm();
+        farm.claim(0, 0);
+        farm.claim(0, 1);
+        farm.claim(1, 0);
         farm.claim(1, 1);
-        farm.claim(2, 2);
-        farm.claim(3, 1);
+        farm.plant(0, 0, System.currentTimeMillis());
+        farm.plant(0, 1, System.currentTimeMillis());
+        farm.plant(1, 0, System.currentTimeMillis());
         farm.plant(1, 1, System.currentTimeMillis());
         FarmSingleton.getInstance().setFarm(farm);
-        SaveDataAccessInterface saveDAO = new SaveDataAccessInterface() {
 
-
+        UseToolOutputBoundary outputBoundary = new UseToolOutputBoundary() {
             @Override
-            public void saveData(Farm farm) {
-                assertTrue(farm.getFarmLand()[1][1].isClaimed());
-                assertTrue(farm.getFarmLand()[2][2].isClaimed());
-                assertTrue(farm.getFarmLand()[3][1].isClaimed());
-                assertTrue(farm.getFarmLand()[1][1].isPlanted());
+            public void useTool(String tool, int rStart, int cStart, int amount, long time) {
             }
-        };
-
-        SaveOutputBoundary saveOB = new SaveOutputBoundary() {
-            @Override
-            public void saved() {
-            }
-
         };
 
         OpenWeatherAccessInterface openWeatherAccess = new OpenWeatherAccessInterface() {
@@ -72,13 +57,14 @@ public class SaveInteractorTest {
                 return "";
             }
 
-
         };
 
-        SaveInteractor saveInteractor = new SaveInteractor(saveDAO, saveOB, openWeatherAccess);
-
-        saveInteractor.save();
-
+        UseToolInteractor interactor = new UseToolInteractor(outputBoundary, openWeatherAccess);
+        interactor.useTool("sprinkler", 0, 0);
+        assertTrue(farm.getFarmLand()[0][0].isWet());
+        assertTrue(farm.getFarmLand()[0][1].isWet());
+        assertTrue(farm.getFarmLand()[1][0].isWet());
+        assertTrue(farm.getFarmLand()[1][1].isWet());
     }
 
 }

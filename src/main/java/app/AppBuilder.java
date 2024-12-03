@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import main.java.data_access.OpenWeatherAccess;
+import main.java.data_access.OpenForecastAccessInterface;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.*;
@@ -17,13 +17,7 @@ import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolPresenter;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.*;
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.BuyPresenter;
-import main.java.interface_adapter.toolmenu.GetToolBoughtController;
-import main.java.interface_adapter.toolmenu.GetToolBoughtPresenter;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
-import main.java.interface_adapter.toolmenu.UpgradePresenter;
+import main.java.interface_adapter.toolmenu.*;
 import main.java.interface_adapter.welcome.LoadController;
 import main.java.interface_adapter.welcome.LoadPresenter;
 import main.java.interface_adapter.welcome.SetCityController;
@@ -41,6 +35,8 @@ import main.java.use_case.forecast.ForecastInteractor;
 import main.java.use_case.forecast.ForecastOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
+import main.java.use_case.getbarnbucks.GetBarnBucksInteractor;
+import main.java.use_case.getbarnbucks.GetBarnBucksOutputBoundary;
 import main.java.use_case.getstorage.GetStorageInteractor;
 import main.java.use_case.getstorage.GetStorageOutputBoundary;
 import main.java.use_case.gettoolbought.GetToolBoughtInteractor;
@@ -55,6 +51,8 @@ import main.java.use_case.loadFarm.LoadFarmInteractor;
 import main.java.use_case.loadFarm.LoadFarmOutputBoundary;
 import main.java.use_case.plant.PlantInteractor;
 import main.java.use_case.plant.PlantOutputBoundary;
+import main.java.use_case.powerrefund.PowerRefundInteractor;
+import main.java.use_case.powerrefund.PowerRefundOutputboundary;
 import main.java.use_case.save.SaveInteractor;
 import main.java.use_case.save.SaveOutputBoundary;
 import main.java.use_case.selectcrop.SelectCropInteractor;
@@ -92,6 +90,7 @@ public class AppBuilder {
     private ViewManager viewManager;
     // DAOS
     private OpenWeatherAccessInterface farmDataAccessObject;
+    private OpenForecastAccessInterface forecastDAO;
     private SaveFileAccess saveFileAccess;
     // THE WELCOME VIEW, MODEL, AND INTERACTORS
     private WelcomeView welcomeView;
@@ -113,6 +112,7 @@ public class AppBuilder {
     private GetActiveToolInteractor getActiveToolInteractor;
     private UseToolInteractor useToolInteractor;
     private SetCropInteractor setCropInteractor;
+    private PowerRefundInteractor refundInteractor;
     // TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -127,6 +127,7 @@ public class AppBuilder {
     private SelectCropInteractor selectCropInteractor;
     private GetStorageInteractor getStorageInteractor;
     private ForecastInteractor forecastInteractor;
+    private GetBarnBucksInteractor getBarnBucksInteractor;
 
     /**
      * Creates the objects for the Save Use Case and connects the FarmView to its
@@ -216,7 +217,7 @@ public class AppBuilder {
      */
     public AppBuilder addForecastUseCase() {
         final ForecastOutputBoundary forecastOutputBoundary = new ForecastPresenter(farmViewModel);
-        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, farmDataAccessObject);
+        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, forecastDAO);
         final ForecastController controller = new ForecastController(forecastInteractor);
 
         if (farmView == null) {
@@ -309,11 +310,40 @@ public class AppBuilder {
     }
 
     /**
+     * Creates the objects for the Power Refund Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addPowerRefundUseCase() {
+        final PowerRefundOutputboundary refundOutputBoundary = new PowerRefundPresenter(farmViewModel);
+        refundInteractor = new PowerRefundInteractor(refundOutputBoundary);
+        final PowerRefundController controller = new PowerRefundController(refundInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setPowerRefundController(controller);
+        return this;
+    }
+
+    /**
      * Creates the DAO.
      * @return this builder
      */
     public AppBuilder addFarmDataAccessObject(OpenWeatherAccessInterface farmDataAccessObject) {
         this.farmDataAccessObject = farmDataAccessObject;
+        return this;
+    }
+
+    /**
+     * Creates the Forecast DAO.
+     * @param forecastAccessObject .
+     * @return this builder
+     */
+    public AppBuilder addForecastDataAccessObject(OpenForecastAccessInterface forecastAccessObject) {
+        this.forecastDAO = forecastAccessObject;
         return this;
     }
 
@@ -436,6 +466,27 @@ public class AppBuilder {
         farmView.setGetToolBoughtController(getToolBoughtController);
         return this;
     }
+
+
+    /**
+     * Adds the GetBarnBucks Use Case.
+     * @return this builder
+     * @throws RuntimeException .
+     */
+    public AppBuilder addGetBarnBucksUseCase() {
+        final GetBarnBucksOutputBoundary getBarnBucksOutputBoundary = new GetBarnBucksPresenter(toolMenuViewModel);
+        getBarnBucksInteractor = new GetBarnBucksInteractor(getBarnBucksOutputBoundary);
+
+        final GetBarnBucksController getBarnBucksController = new GetBarnBucksController(getBarnBucksInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setGetBarnBucksController(getBarnBucksController);
+        return this;
+    }
+
     /**
      * Creates the objects for the Start Use Case and connects the WelcomeView to its
      * controller.

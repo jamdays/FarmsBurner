@@ -31,16 +31,14 @@ import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
-import main.java.interface_adapter.toolmenu.BuyController;
-import main.java.interface_adapter.toolmenu.GetToolBoughtController;
-import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
-import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.*;
 
 /**
  * The view for the farm.
  */
 public class FarmView extends JPanel implements ActionListener, PropertyChangeListener {
     private JLabel backgroundLabel;
+    private FarmLabel power;
     private final int wet = 0B1;
     private final int claimed = 0B10;
     private final int snowy = 0B100;
@@ -77,10 +75,15 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private SetCropController setCropController;
     private GetToolBoughtController getToolBoughtController;
     private GetStorageController getStorageController;
+    private GetBarnBucksController getBarnBucksController;
+    private PowerRefundController powerRefundController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         // Add background as JLABEL to set images
         backgroundLabel = new JLabel();
+        power = new FarmLabel("Power: 0");
+        power.setFont(new Font("Press Start 2P", Font.BOLD, 20));
+        power.setForeground(Color.WHITE);
         this.setLayout(new BorderLayout());
         this.add(backgroundLabel);
         // Navigation Bar
@@ -120,7 +123,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                SellView sellView = new SellView(sellViewModel, getStorageController);
+                SellView sellView = new SellView(sellViewModel, getStorageController, getBarnBucksController);
                 builder.addView(350, 280, sellView).build().setVisible(true);
                 sellView.setSellController(sellController);
             }
@@ -131,8 +134,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
                 System.out.println(getToolBoughtController.toString());
-                BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController);
-                builder.addView(380, 300, buyView).build().setVisible(true);
+                BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController, getBarnBucksController);
+                builder.addView(380, 280, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
@@ -172,49 +175,58 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 cropLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent mouseEvent) {
                         // if plot is clicked while shift is held down, claim land
-                        if ((mouseEvent.getModifiers() & 1) == 1) {
-                            // make it so that if tiller is active, you till an area
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
-                                useToolController.useTool("tiller", r, c);
+                        if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+                            if ((mouseEvent.getModifiers() & 1) == 1) {
+                                // make it so that if tiller is active, you till an area
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
+                                    int amt = useToolController.useTool("tiller", r, c);
+                                    powerRefundController.powerRefund(amt);
+                                } else {
+                                    claimController.claim(r, c);
+                                }
                             }
+                            // if plot is clicked while ctrl is held down, plant crop on plot
+                            else if (mouseEvent.getModifiers() == 18) {
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
+                                    int amt = useToolController.useTool("planter", r, c);
+                                    powerRefundController.powerRefund(amt);
+                                } else {
+                                    plantController.plantCrop(r, c);
+                                }
+                            }
+                            // if plot is clicked while alt is held down, water plot
+                            else if (mouseEvent.getModifiers() == 24) {
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
+                                    int amt = useToolController.useTool("sprinkler", r, c);
+                                    powerRefundController.powerRefund(amt);
+                                } else {
+                                    waterController.waterCrop(r, c);
+                                }
+                            }
+                            // if plot is clicked while ctrl and alt are held down, fertilize crop
+                            else if ((mouseEvent.getModifiers() & (18 | 24)) == (18 | 24)) {
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
+                                    int amt = useToolController.useTool("fertilizer", r, c);
+                                    powerRefundController.powerRefund(amt);
+                                } else {
+                                    fertilizeController.fertilize(r, c);
+                                }
+                            }
+                            // if plot is clicked with nothing held down, harvest crop
                             else {
-                                claimController.claim(r, c);
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("harvester")) {
+                                    int amt = useToolController.useTool("harvester", r, c);
+                                    powerRefundController.powerRefund(amt);
+                                } else {
+                                    harvestController.harvestCrop(r, c);
+                                }
                             }
                         }
-                        // if plot is clicked while ctrl is held down, plant crop on plot
-                        else if (mouseEvent.getModifiers() == 18) {
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
-                                useToolController.useTool("planter", r, c);
-                            }
-                            else {
-                                plantController.plantCrop(r, c);
-                            }
-                        }
-                        // if plot is clicked while alt is held down, water plot
-                        else if (mouseEvent.getModifiers() == 24) {
+                        else if (mouseEvent.getButton() == 3){
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
                                 useToolController.useTool("sprinkler", r, c);
-                            }
-                            else {
+                            } else {
                                 waterController.waterCrop(r, c);
-                            }
-                        }
-                        // if plot is clicked while ctrl and alt are held down, fertilize crop
-                        else if ((mouseEvent.getModifiers() & (18|24)) == (18|24)) {
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
-                                useToolController.useTool("fertilizer", r, c);
-                            }
-                            else {
-                                fertilizeController.fertilize(r, c);
-                            }
-                        }
-                        // if plot is clicked with nothing held down, harvest crop
-                        else {
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("harvester")) {
-                                useToolController.useTool("harvester", r, c);
-                            }
-                            else {
-                                harvestController.harvestCrop(r, c);
                             }
                         }
                     }
@@ -276,6 +288,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         backgroundLabel.add(navBar);
         backgroundLabel.add(landPanel);
         backgroundLabel.add(footerPanel);
+        backgroundLabel.add(power);
         // JFrame frame = new JFrame("Farm View");
         // frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         // frame.setSize(741, 420);
@@ -286,6 +299,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         final FarmState state = (FarmState) evt.getNewValue();
+        power.setText("Power: " + state.getPower());
         if (evt.getPropertyName().equals("weather")) {
             String background = "src/main/resources/background-";
             if (state.getDay() == 0) {
@@ -343,6 +357,10 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     ImageIcon dirtImg = null;
                     // if farmland is claimed, change button color to dirt
                     if ((state.getFarmLand()[r][c] & claimed) == claimed) {
+                        farmLand[r][c].removeAll();
+                        farmLand[r][c].setFont(new Font("Press Start 2P", Font.PLAIN, 20));
+                        farmLand[r][c].setBorder(new LineBorder(new Color(69, 44, 42)));
+                        farmLand[r][c].setPreferredSize(new Dimension(25,25));
                         // Snowy & Claimed
                         if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                             dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
@@ -393,7 +411,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             }
                         }
                         if ((state.getFarmLand()[r][c] & fertilized) == fertilized
-                                && (state.getFarmLand()[r][c] & wet) == wet) {
+                                && !((state.getFarmLand()[r][c] & wet) == wet)) {
                             // Snowy & Fertilized
                             if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                                 dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");
@@ -473,10 +491,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     private void setLayeredIcons(JLabel label, ImageIcon baseIcon, ImageIcon overlayIcon) {
-        label.removeAll();
-        label.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
-        this.setBorder(new LineBorder(new Color(69, 44, 42)));
-        label.setPreferredSize(new Dimension(25,25));
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(label.getSize());
         JLabel baseLabel = new JLabel(new ImageIcon(baseIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
@@ -629,19 +643,18 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         System.out.println("Click " + evt.getActionCommand());
     }
 
-    /**
-     * Set forecast controller.
-     * @param forecastController .
-     */
     public void setForecastController(ForecastController forecastController) {
         this.forecastController = forecastController;
     }
-
-    /**
-     * Get storage controller.
-     * @param getStorageController .
-     */
     public void setGetStorageController(GetStorageController getStorageController) {
         this.getStorageController = getStorageController;
+    }
+
+    public void setGetBarnBucksController(GetBarnBucksController getBarnBucksController) {
+        this.getBarnBucksController = getBarnBucksController;
+    }
+
+    public void setPowerRefundController(PowerRefundController powerRefundController) {
+        this.powerRefundController = powerRefundController;
     }
 }

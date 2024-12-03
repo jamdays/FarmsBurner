@@ -13,11 +13,11 @@ public class CropFactory {
      */
     public AbstractCrop createCrop(String cropName, long time, Land land) {
         switch (cropName) {
-            case "wheat":
+            case "Wheat":
                 return new Wheat(time, land);
-            case "corn":
+            case "Corn":
                 return new Corn(time, land);
-            case "rice":
+            case "Rice":
                 return new Rice(time, land);
             default:
                 return new Snowberry(time, land);
