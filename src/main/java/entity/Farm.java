@@ -47,6 +47,7 @@ public class Farm implements Serializable {
     private int fertilizerLevel;
     private boolean planterPurchased;
     private int planterLevel;
+    private final int[] prices = {300, 900, 2700, 8100};
 
     private String activeTool;
     private String activeCrop;
@@ -153,6 +154,7 @@ public class Farm implements Serializable {
      * @param sprinklerPurchased .
      */
     public void setSprinklerPurchased(boolean sprinklerPurchased) {
+        this.barnBucks -= prices[sprinklerLevel-1];
         this.sprinklerPurchased = sprinklerPurchased;
     }
 
@@ -169,6 +171,7 @@ public class Farm implements Serializable {
      * @param sprinklerLevel .
      */
     public void setSprinklerLevel(int sprinklerLevel) {
+        this.barnBucks -= prices[sprinklerLevel-1];
         this.sprinklerLevel = sprinklerLevel;
     }
 
@@ -185,6 +188,7 @@ public class Farm implements Serializable {
      * @param harvesterPurchased .
      */
     public void setHarvesterPurchased(boolean harvesterPurchased) {
+        this.barnBucks -= prices[harvesterLevel-1];
         this.harvesterPurchased = harvesterPurchased;
     }
 
@@ -201,6 +205,7 @@ public class Farm implements Serializable {
      * @param harvesterLevel .
      */
     public void setHarvesterLevel(int harvesterLevel) {
+        this.barnBucks -= prices[harvesterLevel-1];
         this.harvesterLevel = harvesterLevel;
     }
 
@@ -217,6 +222,7 @@ public class Farm implements Serializable {
      * @param tillerPurchased .
      */
     public void setTillerPurchased(boolean tillerPurchased) {
+        this.barnBucks -= prices[tillerLevel-1];
         this.tillerPurchased = tillerPurchased;
     }
 
@@ -233,6 +239,7 @@ public class Farm implements Serializable {
      * @param tillerLevel .
      */
     public void setTillerLevel(int tillerLevel) {
+        this.barnBucks -= prices[tillerLevel-1];
         this.tillerLevel = tillerLevel;
     }
 
@@ -249,6 +256,7 @@ public class Farm implements Serializable {
      * @param fertilizerPurchased .
      */
     public void setFertilizerPurchased(boolean fertilizerPurchased) {
+        this.barnBucks -= prices[fertilizerLevel-1];
         this.fertilizerPurchased = fertilizerPurchased;
     }
 
@@ -257,6 +265,7 @@ public class Farm implements Serializable {
      * @return fertilizer level.
      */
     public int getFertilizerLevel() {
+        this.barnBucks -= prices[fertilizerLevel-1];
         return this.fertilizerLevel;
     }
 

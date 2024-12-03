@@ -33,11 +33,13 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     public BuyView(ToolMenuViewModel viewModel, GetToolBoughtController getToolBoughtController, GetBarnBucksController getBarnBucksController) {
         // initialize instance variables
+        bbLabel = new FarmLabel("Hi");
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
         this.getBarnBucksController = getBarnBucksController;
-        this.getToolBoughtController = getToolBoughtController;
         int barnBucks = getBarnBucksController.getbb();
+        bbLabel = new FarmLabel("Barn Bucks: " + barnBucks, 18);
+        this.getToolBoughtController = getToolBoughtController;
         // Buy Menu
         FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
         buyMenuTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -46,7 +48,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         topLeftPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Barn Bucks
-        bbLabel = new FarmLabel("Barn Bucks: " + barnBucks, 18);
         JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         topRightPanel.add(bbLabel);
         topRightPanel.setBackground(new java.awt.Color(169, 152, 126));
@@ -131,9 +132,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
                         purchaseButton.setText("Max Level");
                     }
                 }
-                // TODO: access barnBucks and add to tools
-                int barnBucks = getBarnBucksController.getbb();
-                bbLabel.setText("Barn Bucks: " + barnBucks);
             }
         });
 
@@ -193,7 +191,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // Change the level and Barnbucks somehow
-        System.out.println("property change fired");
+        bbLabel.setText("Barn Bucks: " + ((ToolMenuState)evt.getNewValue()).getBb());
     }
 }
