@@ -25,6 +25,8 @@ public class FarmState {
     private int temp;
     private String currTool;
     private int crop;
+    private int barnBucks;
+    private int power;
 
 
     public FarmState() {
@@ -32,8 +34,28 @@ public class FarmState {
          cropTimes = new long[16][20];
     }
 
+    /**
+     * Sets the farmLand
+     * @param farmLand to be set to
+     */
     public void setLand(int[][] farmLand) {
         this.farmLand = farmLand;
+    }
+
+    /**
+     * Sets the crop times
+     * @param cropTimes to be set to
+     */
+    public void setCropTimes(long[][] cropTimes) {
+        this.cropTimes = cropTimes;
+    }
+
+    /**
+     * Sets the crop ages
+     * @param cropAges to be set to
+     */
+    public void setCropAges(int[][] cropAges) {
+        this.cropAges = cropAges;
     }
 
     public void setCrops(long[][] farmCrops) {
@@ -293,6 +315,37 @@ public class FarmState {
         }
     }
 
+    /**
+     * Returns the number of barn bucks
+     * @return returns barn bucks
+     */
+    public int getBarnBucks(){
+        return this.barnBucks;
+    }
+
+    /**
+     * Setter for barn bucks
+     * @param barnBucks how many barnBucks
+     */
+    public void setBarnBucks(int barnBucks){
+        this.barnBucks = barnBucks;
+    }
+
+    /**
+     * Getter for power
+     * @return this.power
+     */
+    public int getPower(){
+        return this.power;
+    }
+
+    /**
+     * Setter for power
+     * @param power how much power
+     */
+    public void setPower(int power){
+        this.power = power;
+    }
 
     public int getCrop(){
         return crop;
@@ -302,8 +355,15 @@ public class FarmState {
         this.currTool = currTool;
     }
 
+    /**
+     * Sets the prices
+     * @param prices prices to be set to
+     */
+    public void setPrices(int[][] prices){
+        this.prices = prices;
+    }
     // public int getCrop(){
-    //    return crop;
+    //   return crop;
     // }
 
     // public void setActiveTool(String currTool) {
