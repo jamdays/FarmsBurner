@@ -134,9 +134,10 @@ public class FarmState {
      * @param day .
      * @param time .
      */
-    public void setWeather(String weather, int day, long time) {
+    public void setWeather(String weather, int day, long time, int temp) {
         this.weather = weather;
         this.day = day;
+        this.temp = temp;
         //Update crops so that any that should be ready become ready
 
         for (int r = 0; r < cropTimes.length; r++) {
@@ -144,13 +145,7 @@ public class FarmState {
                 if (cropTimes[r][c] != 0) {
                     long diff = time - cropTimes[r][c];
                     long days = diff / 86400;
-                    if (days == 1 && (farmLand[r][c] & WET) == WET) {
-                        farmLand[r][c] = farmLand[r][c] ^ WET;
-                        cropAges[r][c] += 1;
-                        if (cropAges[r][c] > 3) {
-                            farmLand[r][c] = farmLand[r][c] | READY;
-                        }
-                    }
+                    updateTime(r, c, time);
                 }
             }
         }
