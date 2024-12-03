@@ -9,15 +9,53 @@ import javax.swing.WindowConstants;
 import main.java.data_access.OpenForecastAccessInterface;
 import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.data_access.SaveFileAccess;
-import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.farm.ClaimController;
+import main.java.interface_adapter.farm.ClaimPresenter;
+import main.java.interface_adapter.farm.FarmViewModel;
+import main.java.interface_adapter.farm.FertilizeController;
+import main.java.interface_adapter.farm.FertilizePresenter;
+import main.java.interface_adapter.farm.ForecastController;
+import main.java.interface_adapter.farm.ForecastPresenter;
+import main.java.interface_adapter.farm.GetActiveToolController;
+import main.java.interface_adapter.farm.GetActiveToolPresenter;
+import main.java.interface_adapter.farm.HarvestController;
+import main.java.interface_adapter.farm.HarvestPresenter;
+import main.java.interface_adapter.farm.LoadFarmController;
+import main.java.interface_adapter.farm.LoadFarmPresenter;
+import main.java.interface_adapter.farm.PlantController;
+import main.java.interface_adapter.farm.PlantPresenter;
+import main.java.interface_adapter.farm.PowerRefundController;
+import main.java.interface_adapter.farm.PowerRefundPresenter;
+import main.java.interface_adapter.farm.SaveController;
+import main.java.interface_adapter.farm.SavePresenter;
+import main.java.interface_adapter.farm.SetCropController;
+import main.java.interface_adapter.farm.SetCropPresenter;
+import main.java.interface_adapter.farm.UseToolController;
+import main.java.interface_adapter.farm.UseToolPresenter;
+import main.java.interface_adapter.farm.WaterController;
+import main.java.interface_adapter.farm.WaterPresenter;
+import main.java.interface_adapter.farm.WeatherController;
+import main.java.interface_adapter.farm.WeatherPresenter;
 import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropPresenter;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolPresenter;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
-import main.java.interface_adapter.sell.*;
-import main.java.interface_adapter.toolmenu.*;
+import main.java.interface_adapter.sell.GetStorageController;
+import main.java.interface_adapter.sell.GetStoragePresenter;
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellPresenter;
+import main.java.interface_adapter.sell.SellViewModel;
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.BuyPresenter;
+import main.java.interface_adapter.toolmenu.GetBarnBucksController;
+import main.java.interface_adapter.toolmenu.GetBarnBucksPresenter;
+import main.java.interface_adapter.toolmenu.GetToolBoughtController;
+import main.java.interface_adapter.toolmenu.GetToolBoughtPresenter;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
+import main.java.interface_adapter.toolmenu.UpgradePresenter;
 import main.java.interface_adapter.welcome.LoadController;
 import main.java.interface_adapter.welcome.LoadPresenter;
 import main.java.interface_adapter.welcome.SetCityController;
@@ -90,7 +128,7 @@ public class AppBuilder {
     private ViewManager viewManager;
     // DAOS
     private OpenWeatherAccessInterface farmDataAccessObject;
-    private OpenForecastAccessInterface forecastDAO;
+    private OpenForecastAccessInterface forecastDataAccessObject;
     private SaveFileAccess saveFileAccess;
     // THE WELCOME VIEW, MODEL, AND INTERACTORS
     private WelcomeView welcomeView;
@@ -217,7 +255,7 @@ public class AppBuilder {
      */
     public AppBuilder addForecastUseCase() {
         final ForecastOutputBoundary forecastOutputBoundary = new ForecastPresenter(farmViewModel);
-        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, forecastDAO);
+        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, forecastDataAccessObject);
         final ForecastController controller = new ForecastController(forecastInteractor);
 
         if (farmView == null) {
@@ -330,10 +368,11 @@ public class AppBuilder {
 
     /**
      * Creates the DAO.
+     * @param farmDataAccess .
      * @return this builder
      */
-    public AppBuilder addFarmDataAccessObject(OpenWeatherAccessInterface farmDataAccessObject) {
-        this.farmDataAccessObject = farmDataAccessObject;
+    public AppBuilder addFarmDataAccessObject(OpenWeatherAccessInterface farmDataAccess) {
+        this.farmDataAccessObject = farmDataAccess;
         return this;
     }
 
@@ -343,7 +382,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addForecastDataAccessObject(OpenForecastAccessInterface forecastAccessObject) {
-        this.forecastDAO = forecastAccessObject;
+        this.forecastDataAccessObject = forecastAccessObject;
         return this;
     }
 
@@ -466,7 +505,6 @@ public class AppBuilder {
         farmView.setGetToolBoughtController(getToolBoughtController);
         return this;
     }
-
 
     /**
      * Adds the GetBarnBucks Use Case.
