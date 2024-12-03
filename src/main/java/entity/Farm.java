@@ -47,6 +47,7 @@ public class Farm implements Serializable {
     private int fertilizerLevel;
     private boolean planterPurchased;
     private int planterLevel;
+    private final int[] prices = {0, 300, 900, 2700, 8100};
 
     private String activeTool;
     private String activeCrop;
@@ -153,6 +154,11 @@ public class Farm implements Serializable {
      * @param sprinklerPurchased .
      */
     public void setSprinklerPurchased(boolean sprinklerPurchased) {
+        this.barnBucks -= prices[sprinklerLevel-1];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[sprinklerLevel-1];
+            return;
+        }
         this.sprinklerPurchased = sprinklerPurchased;
     }
 
@@ -169,6 +175,11 @@ public class Farm implements Serializable {
      * @param sprinklerLevel .
      */
     public void setSprinklerLevel(int sprinklerLevel) {
+        this.barnBucks -= prices[sprinklerLevel];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[sprinklerLevel];
+            return;
+        }
         this.sprinklerLevel = sprinklerLevel;
     }
 
@@ -185,6 +196,11 @@ public class Farm implements Serializable {
      * @param harvesterPurchased .
      */
     public void setHarvesterPurchased(boolean harvesterPurchased) {
+        this.barnBucks -= prices[harvesterLevel-1];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[harvesterLevel-1];
+            return;
+        }
         this.harvesterPurchased = harvesterPurchased;
     }
 
@@ -201,6 +217,11 @@ public class Farm implements Serializable {
      * @param harvesterLevel .
      */
     public void setHarvesterLevel(int harvesterLevel) {
+        this.barnBucks -= prices[harvesterLevel];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[harvesterLevel];
+            return;
+        }
         this.harvesterLevel = harvesterLevel;
     }
 
@@ -217,6 +238,11 @@ public class Farm implements Serializable {
      * @param tillerPurchased .
      */
     public void setTillerPurchased(boolean tillerPurchased) {
+        this.barnBucks -= prices[tillerLevel-1];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[tillerLevel-1];
+            return;
+        }
         this.tillerPurchased = tillerPurchased;
     }
 
@@ -233,6 +259,11 @@ public class Farm implements Serializable {
      * @param tillerLevel .
      */
     public void setTillerLevel(int tillerLevel) {
+        this.barnBucks -= prices[tillerLevel];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[tillerLevel];
+            return;
+        }
         this.tillerLevel = tillerLevel;
     }
 
@@ -249,6 +280,11 @@ public class Farm implements Serializable {
      * @param fertilizerPurchased .
      */
     public void setFertilizerPurchased(boolean fertilizerPurchased) {
+        this.barnBucks -= prices[fertilizerLevel-1];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[fertilizerLevel-1];
+            return;
+        }
         this.fertilizerPurchased = fertilizerPurchased;
     }
 
@@ -265,6 +301,11 @@ public class Farm implements Serializable {
      * @param fertilizerLevel .
      */
     public void setFertilizerLevel(int fertilizerLevel) {
+        this.barnBucks -= prices[fertilizerLevel];
+        if (this.barnBucks < 0){
+            this.barnBucks += prices[fertilizerLevel];
+            return;
+        }
         this.fertilizerLevel = fertilizerLevel;
     }
 
@@ -547,6 +588,11 @@ public class Farm implements Serializable {
      * @param planterPurchased .
      */
     public void setPlanterPurchased(boolean planterPurchased) {
+        barnBucks -= prices[planterLevel-1];
+        if (barnBucks < 0) {
+            barnBucks += prices[planterLevel-1];
+            return;
+        }
         this.planterPurchased = planterPurchased;
     }
 
@@ -563,6 +609,11 @@ public class Farm implements Serializable {
      * @param planterLevel .
      */
     public void setPlanterLevel(int planterLevel) {
+        barnBucks -= prices[planterLevel];
+        if (barnBucks < 0) {
+            barnBucks += prices[planterLevel];
+            return;
+        }
         this.planterLevel = planterLevel;
     }
 

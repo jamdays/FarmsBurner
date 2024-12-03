@@ -16,7 +16,7 @@ import java.util.Properties;
 
 public class ForecastView extends JPanel{
     public ForecastView(List<String> conditions, String city) {
-        JLabel title = new JLabel("Weather Forecast " + city);
+        JLabel title = new JLabel("Weather Forecast ");
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
         title.setHorizontalAlignment(SwingConstants.CENTER);
 
