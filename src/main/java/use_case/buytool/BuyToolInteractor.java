@@ -1,35 +1,37 @@
 package main.java.use_case.buytool;
 
 import main.java.entity.FarmSingleton;
-import main.java.use_case.buytool.BuyToolOutputBoundary;
-import main.java.entity.Sprinkler;
 
+/**
+ * BuyToolInteractor.
+ */
 public class BuyToolInteractor implements BuyToolInputBoundary {
-    BuyToolOutputBoundary outputBoundary;
+    private final BuyToolOutputBoundary outputBoundary;
+
     public BuyToolInteractor(BuyToolOutputBoundary outputBoundary) {
         this.outputBoundary = outputBoundary;
     }
 
     @Override
     public void buy(String tool) {
-        if (tool.equalsIgnoreCase("sprinkler")){
+        if ("sprinkler".equalsIgnoreCase(tool)) {
             outputBoundary.buy("sprinkler");
             FarmSingleton.getInstance().getFarm().setSprinklerPurchased(true);
         }
-        if (tool.equalsIgnoreCase("harvester")){
+        if ("harvester".equalsIgnoreCase(tool)) {
             outputBoundary.buy("harvester");
             FarmSingleton.getInstance().getFarm().setHarvesterPurchased(true);
         }
-        if (tool.equalsIgnoreCase("tiller")){
+        if ("tiller".equalsIgnoreCase(tool)) {
             outputBoundary.buy("tiller");
             FarmSingleton.getInstance().getFarm().setTillerPurchased(true);
 
         }
-        if (tool.equalsIgnoreCase("fertilizer")){
+        if ("fertilizer".equalsIgnoreCase(tool)) {
             outputBoundary.buy("fertilizer");
             FarmSingleton.getInstance().getFarm().setFertilizerPurchased(true);
         }
-        if (tool.equalsIgnoreCase("planter")){
+        if ("planter".equalsIgnoreCase(tool)) {
             outputBoundary.buy("planter");
             FarmSingleton.getInstance().getFarm().setPlanterPurchased(true);
         }

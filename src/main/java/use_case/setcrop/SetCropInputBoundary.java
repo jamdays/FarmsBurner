@@ -1,9 +1,12 @@
 package main.java.use_case.setcrop;
 
+/**
+ * Set crop input boundary.
+ */
 public interface SetCropInputBoundary {
     /**
-     * executes code for setcrop use case
-     * @param crop, crop to be selected
+     * Executes code for setcrop use case.
+     * @param crop crop to be selected
      */
     void setCrop(String crop);
 }

@@ -1,15 +1,25 @@
 package main.java.view;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+/**
+ * Weather View.
+ */
 public class WeatherView extends JPanel {
-    String city;
-    String temp;
-    String conditions;
-    String cloudCoverage;
+    private String city;
+    private String temp;
+    private String conditions;
+    private String cloudCoverage;
+
     public WeatherView(String city, String temp, String conditions, String cloudCoverage) {
         this.city = city;
         this.temp = temp;
@@ -50,12 +60,5 @@ public class WeatherView extends JPanel {
         this.setBackground(new java.awt.Color(169, 152, 126));
         this.add(topPanel, BorderLayout.NORTH);
         this.add(contentPanel, BorderLayout.CENTER);
-
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(350, 280);
-//        frame.getContentPane().add(mainPanel);
-//        frame.setVisible(true);
-
     }
 }

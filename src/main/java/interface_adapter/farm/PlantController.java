@@ -2,6 +2,9 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.plant.PlantInputBoundary;
 
+/**
+ * Plant controller.
+ */
 public class PlantController {
     private final PlantInputBoundary plantInteractor;
 
@@ -9,8 +12,12 @@ public class PlantController {
         this.plantInteractor = plantInteractor;
     }
 
-
-    public void plantCrop(int r, int c){
-        plantInteractor.execute(r, c);
+    /**
+     * Plant crop.
+     * @param row .
+     * @param col .
+     */
+    public void plantCrop(int row, int col) {
+        plantInteractor.execute(row, col);
     }
 }

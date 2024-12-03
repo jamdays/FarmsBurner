@@ -1,8 +1,10 @@
 package main.java.use_case.fertilize;
 
 import main.java.entity.FarmSingleton;
-import main.java.use_case.plant.PlantingException;
 
+/**
+ * Fertilize interactor.
+ */
 public class FertilizeInteractor implements FertilizeInputBoundary {
     private final FertilizeOutputBoundary outputBoundary;
 
@@ -11,16 +13,14 @@ public class FertilizeInteractor implements FertilizeInputBoundary {
     }
 
     @Override
-    public void execute(int r, int c) {
-        try{
-            FarmSingleton.getInstance().getFarm().fertilize(r, c);
-            outputBoundary.fertilize(r, c);
+    public void execute(int row, int col) {
+        try {
+            FarmSingleton.getInstance().getFarm().fertilize(row, col);
+            outputBoundary.fertilize(row, col);
         }
-        catch (FertilizeException e) {
-            System.out.println(e.getMessage());
+        catch (FertilizeException fertilizeException) {
+            System.out.println(fertilizeException.getMessage());
         }
-//        FarmSingleton.getInstance().getFarm().fertilize(r, c);
-//        outputBoundary.fertilize(r, c);
 
     }
 

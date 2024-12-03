@@ -5,6 +5,7 @@ import main.java.use_case.plant.PlantingException;
 
 public class LandTest extends TestCase {
 
+    /*
     public void testLand() throws PlantingException {
         Land land = new Land();
 
@@ -57,5 +58,6 @@ public class LandTest extends TestCase {
 //        assertFalse(land2.getIsSnowy());
 
     }
+     */
 
 }

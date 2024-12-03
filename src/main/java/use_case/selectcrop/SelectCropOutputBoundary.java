@@ -1,10 +1,13 @@
 package main.java.use_case.selectcrop;
 
+/**
+ * Select crop output boundary.
+ */
 public interface SelectCropOutputBoundary {
 
     /**
-     * selects the crop
-     * @param crop, the crop to be selected
+     * Selects the crop.
+     * @param crop the crop to be selected
      */
     void selectCrop(String crop);
 }

@@ -1,17 +1,28 @@
 package main.java.view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolState;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
-import main.java.view.FarmButton;
 
+/**
+ * Select tool view.
+ */
 public class SelectToolView extends JPanel implements ActionListener, PropertyChangeListener {
 
     // instance variables
@@ -154,10 +165,18 @@ public class SelectToolView extends JPanel implements ActionListener, PropertyCh
         this.currTool = state.getCurrTool();
     }
 
+    /**
+     * Action performed.
+     * @param evt the event to be processed
+     */
     public void actionPerformed(ActionEvent evt) {
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    /**
+     * Set controller.
+     * @param controller .
+     */
     public void setController(SelectToolController controller) {
         this.controller = controller;
     }

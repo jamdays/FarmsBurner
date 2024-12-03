@@ -25,9 +25,9 @@ public class ClaimInteractorTest {
         ClaimOutputBoundary outputBoundary = new ClaimOutputBoundary() {
 
             @Override
-            public void claim(int r, int c) {
+            public void claim(int row, int col) {
                 // Assert if land is claimed.
-                assertTrue(farm1.getFarmLand()[r][c].isClaimed());
+                assertTrue(farm1.getFarmLand()[row][col].isClaimed());
             }
         };
 
@@ -48,7 +48,7 @@ public class ClaimInteractorTest {
         ClaimOutputBoundary outputBoundary = new ClaimOutputBoundary() {
 
             @Override
-            public void claim(int r, int c) {
+            public void claim(int row, int col) {
                 // Assert if multiple pieces of land is claimed.
                 assertTrue(farm.getFarmLand()[0][0].isClaimed());
                 assertTrue(farm.getFarmLand()[1][1].isClaimed());
@@ -72,9 +72,9 @@ public class ClaimInteractorTest {
         ClaimOutputBoundary outputBoundary = new ClaimOutputBoundary() {
 
             @Override
-            public void claim(int r, int c) {
+            public void claim(int row, int col) {
                 // Assert that the farm starts with no FarmLand claimed.
-                assertFalse(farm.getFarmLand()[r][c].isClaimed());
+                assertFalse(farm.getFarmLand()[row][col].isClaimed());
             }
         };
 

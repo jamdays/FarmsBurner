@@ -6,20 +6,36 @@ import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellState;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.entity.FarmSingleton;
-
 import javax.swing.*;
 import java.util.*;
 import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import main.java.entity.FarmSingleton;
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellViewModel;
+
+/**
+ * Sell view.
+ */
 public class SellView extends JPanel implements ActionListener, PropertyChangeListener {
-    int crops;
-    int barnBucks;
-    int cost;
+    private int crops;
+    private int barnBucks;
+    private int cost;
     private SellViewModel sellViewModel;
     private SellController sellController;
     private GetStorageController getStorageController;
@@ -148,17 +164,11 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
         this.setBackground(new java.awt.Color(169, 152, 126));
         this.add(topPanel, BorderLayout.NORTH);
         this.add(contentPanel);
-
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(350, 280);
-//        frame.getContentPane().add(mainPanel);
-//        frame.setVisible(true);
-
     }
 
     /**
-     * @param e the event to be processed
+     * Action performed.
+     * @param e The event to be processed
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -166,6 +176,7 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     /**
+     * Property change.
      * @param evt A PropertyChangeEvent object describing the event source
      *            and the property that has changed.
      */
@@ -175,7 +186,7 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     /**
-     * Sets the sellController, CALL BEFORE ANY BUTTONS CAN BE PRESSED
+     * Sets the sellController, CALL BEFORE ANY BUTTONS CAN BE PRESSED.
      * @param sellController the sellController
      */
     public void setSellController(SellController sellController) {

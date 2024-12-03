@@ -87,7 +87,8 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         this.add(mainPanel, BorderLayout.CENTER);
     }
 
-    // TODO: implement updateBarnBucks so that it updates with the amount of barnBucks the user has. Not sure if this should be in the BuyView class or the Farm
+    // TODO: implement updateBarnBucks so that it updates with the amount of barnBucks the user has.
+    //  Not sure if this should be in the BuyView class or the Farm
 
     /**
      * Update Barn Bucks.
@@ -101,7 +102,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc,
                                  int startY, FarmLabel barnBucksLabel) {
         // Item Label
-        int level = (int)getToolBoughtController.getToolBought(itemName).get(1);
+        int level = (int) getToolBoughtController.getToolBought(itemName).get(1);
         JLabel itemLabel = new JLabel("Level" + " " + (level - 1) + " " + itemName + " ");
         itemLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
@@ -111,10 +112,10 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
         JButton purchaseButton = new JButton();
         // purchaseButton
-        if (!(boolean)getToolBoughtController.getToolBought(itemName).get(0)) {
+        if (!(boolean) getToolBoughtController.getToolBought(itemName).get(0)) {
             purchaseButton.setText("Purchase");
         }
-        else if ((int)getToolBoughtController.getToolBought(itemName).get(1) < 5) {
+        else if ((int) getToolBoughtController.getToolBought(itemName).get(1) < 5) {
             purchaseButton.setText("Upgrade");
         }
         else {
@@ -124,13 +125,13 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
             @Override
             public void actionPerformed(ActionEvent e) {
                 // buy tool if unpurchased
-                if (!(boolean)getToolBoughtController.getToolBought(itemName).get(0)) {
+                if (!(boolean) getToolBoughtController.getToolBought(itemName).get(0)) {
                     buyController.buy(itemName);
                     purchaseButton.setText("Upgrade");
                     barnBucksLabel.setText("Barn Bucks: " + barnBucks);
                 }
                 // upgrade tool if purchased and not maxed out
-                else if ((int)getToolBoughtController.getToolBought(itemName).get(1) < 5) {
+                else if ((int) getToolBoughtController.getToolBought(itemName).get(1) < 5) {
                     upgradeController.upgrade(itemName);
                     barnBucksLabel.setText("Barn Bucks: " + barnBucks);
                     itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
@@ -139,13 +140,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
                     }
                 }
                 // TODO: access barnBucks and add to tools
-
-//                if (priceInt < barnBucks) {
-//                    barnBucks -= priceInt;
-//                    updateBarnBucks(barnBucksLabel, barnBucks);
-//                    System.out.println("Purchased " + itemName);
-//                } else {
-//                    System.out.println("Not enough barn bucks");
                 barnBucks -= price;
             }
         });
@@ -175,14 +169,26 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     }
 
+    /**
+     * Set buy controller.
+     * @param buyController .
+     */
     public void setBuyController(BuyController buyController) {
         this.buyController = buyController;
     }
 
+    /**
+     * Set upgrade controller.
+     * @param upgradeController .
+     */
     public void setUpgradeController(UpgradeController upgradeController) {
         this.upgradeController = upgradeController;
     }
 
+    /**
+     * Set get tool bought controller.
+     * @param getToolBoughtController .
+     */
     public void setGetToolBoughtController(GetToolBoughtController getToolBoughtController) {
         this.getToolBoughtController = getToolBoughtController;
     }

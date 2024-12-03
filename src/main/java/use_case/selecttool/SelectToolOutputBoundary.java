@@ -1,10 +1,13 @@
 package main.java.use_case.selecttool;
 
+/**
+ * Select tool output boundary.
+ */
 public interface SelectToolOutputBoundary {
 
     /**
-     * selects the tool
-     * @param tool, the tool to be selected
+     * Selects the tool.
+     * @param tool the tool to be selected
      */
     void selectTool(String tool);
 }

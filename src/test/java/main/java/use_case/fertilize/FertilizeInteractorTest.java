@@ -18,8 +18,8 @@ public class FertilizeInteractorTest extends TestCase {
         FarmSingleton.getInstance().setFarm(farm);
         FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizeOutputBoundary() {
             @Override
-            public void fertilize(int r, int c){
-                assertTrue(FarmSingleton.getInstance().getFarm().getFarmLand()[r][c].isFertilized());
+            public void fertilize(int row, int col){
+                assertTrue(FarmSingleton.getInstance().getFarm().getFarmLand()[row][col].isFertilized());
             }
 
         };
@@ -40,10 +40,10 @@ public class FertilizeInteractorTest extends TestCase {
         FertilizeOutputBoundary outputBoundary = new FertilizeOutputBoundary() {
 
             @Override
-            public void fertilize(int r, int c) {
+            public void fertilize(int row, int col) {
                 // Assert land is fertilized
-                farm.fertilize(r, c);
-                assertTrue(farm.getFarmLand()[r][c].isFertilized());
+                farm.fertilize(row, col);
+                assertTrue(farm.getFarmLand()[row][col].isFertilized());
             }
         };
 
@@ -62,8 +62,8 @@ public class FertilizeInteractorTest extends TestCase {
         farm.getFarmLand()[1][1].setIsSnowy(true);
         FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizeOutputBoundary() {
             @Override
-            public void fertilize(int r, int c){
-                assertThrows(FertilizeException.class, () -> farm.fertilize(r, c));
+            public void fertilize(int row, int col){
+                assertThrows(FertilizeException.class, () -> farm.fertilize(row, col));
             }
 
         };
@@ -81,8 +81,8 @@ public class FertilizeInteractorTest extends TestCase {
         farm.fertilize(1, 1);
         FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizeOutputBoundary() {
             @Override
-            public void fertilize(int r, int c){
-                assertThrows(FertilizeException.class, () -> farm.fertilize(r, c));
+            public void fertilize(int row, int col){
+                assertThrows(FertilizeException.class, () -> farm.fertilize(row, col));
             }
 
         };
