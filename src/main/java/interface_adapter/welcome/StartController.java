@@ -1,8 +1,10 @@
 package main.java.interface_adapter.welcome;
 
-import main.java.use_case.setcity.SetCityInputBoundary;
 import main.java.use_case.start.StartInputBoundary;
 
+/**
+ * Start controller.
+ */
 public class StartController {
     private final StartInputBoundary startInputBoundary;
 
@@ -10,7 +12,10 @@ public class StartController {
         this.startInputBoundary = startInputBoundary;
     }
 
-    public void start(){
+    /**
+     * Start.
+     */
+    public void start() {
         startInputBoundary.execute();
     }
 

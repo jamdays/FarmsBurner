@@ -1,5 +1,8 @@
 package main.java.interface_adapter.welcome;
 
+/**
+ * Welcome-state.
+ */
 public class WelcomeState {
     private String city;
     private boolean loaded;
@@ -11,23 +14,42 @@ public class WelcomeState {
         view = "welcome";
     }
 
-    public void setCity(String city){
+    /**
+     * Set city.
+     * @param city .
+     */
+    public void setCity(String city) {
         this.city = city;
     }
 
-    public void loaded(){
+    /**
+     * Loaded.
+     */
+    public void loaded() {
         this.view = "farm";
         this.loaded = true;
     }
 
-    public void start(){
+    /**
+     * Start.
+     */
+    public void start() {
         this.view = "farm";
     }
 
-    public String getView(){
+    /**
+     * Get view.
+     * @return view.
+     */
+    public String getView() {
         return view;
     }
-    public String getCity(){
+
+    /**
+     * Get city.
+     * @return city.
+     */
+    public String getCity() {
         return city;
     }
 }
