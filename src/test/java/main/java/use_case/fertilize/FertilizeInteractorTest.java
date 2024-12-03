@@ -14,6 +14,9 @@ public class FertilizeInteractorTest extends TestCase {
     @Test
     public void testExecute() throws PlantingException {
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
+        farm.setPower(5000);
         farm.claim(1, 1);
         FarmSingleton.getInstance().setFarm(farm);
         FertilizeOutputBoundary fertilizeOutputBoundary = new FertilizeOutputBoundary() {
@@ -32,6 +35,9 @@ public class FertilizeInteractorTest extends TestCase {
     public void testSucessMultiple() throws PlantingException {
         // Create a farm, claim land, fertilize land.
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
+        farm.setPower(5000);
         farm.claim(1, 1);
         farm.claim(2, 2);
         farm.claim(1, 2);
@@ -57,6 +63,9 @@ public class FertilizeInteractorTest extends TestCase {
     @Test
     public void testSnowy() throws PlantingException, FertilizeException {
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
+        farm.setPower(5000);
         FarmSingleton.getInstance().setFarm(farm);
         farm.claim(1, 1);
         farm.getFarmLand()[1][1].setIsSnowy(true);
@@ -76,6 +85,9 @@ public class FertilizeInteractorTest extends TestCase {
     @Test
     public void testAlreadyFertilized() throws PlantingException, FertilizeException {
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
+        farm.setPower(5000);
         FarmSingleton.getInstance().setFarm(farm);
         farm.claim(1, 1);
         farm.fertilize(1, 1);

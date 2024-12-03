@@ -17,6 +17,8 @@ public class LoadInteractorTest {
     public void testLoad() throws PlantingException {
 
         Farm testfarm = new Farm();
+        FarmSingleton.getInstance().setFarm(testfarm);
+        testfarm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
         testfarm.claim(1, 1);
         testfarm.claim(2, 2);
         testfarm.claim(3, 1);
