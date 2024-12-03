@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 public class WaterInteractorTest {
 
-    /*
+
     @Test
     public void testExecuteWithoutPlant() {
 
@@ -35,7 +35,7 @@ public class WaterInteractorTest {
 
         Farm farm = new Farm();
         farm.claim(1, 1);
-        farm.plant(1, 1);
+        farm.plant(1, 1, System.currentTimeMillis());
         FarmSingleton.getInstance().setFarm(farm);
         WaterOutputBoundary waterOB = new WaterOutputBoundary() {
             @Override
@@ -53,5 +53,5 @@ public class WaterInteractorTest {
 
     }
 
-     */
+
 }
