@@ -1,10 +1,12 @@
 package main.java.interface_adapter.farm;
 
-import main.java.use_case.forecast.ForecastInputBoundary;
-import main.java.use_case.forecast.ForecastOutputBoundary;
-
 import java.util.List;
 
+import main.java.use_case.forecast.ForecastInputBoundary;
+
+/**
+ * Forecast controller.
+ */
 public class ForecastController {
     private ForecastInputBoundary forecastController;
 

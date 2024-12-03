@@ -18,7 +18,7 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
     }
 
     /**
-     * Exectue.
+     * Execute.
      * @return Execute.
      * @throws InvalidCityException .
      */
@@ -48,10 +48,11 @@ public class GetWeatherInteractor implements GetWeatherInputBoundary {
             boolean foggy = "Fog".equals(weather) || "Mist".equals(weather) || "Haze".equals(weather);
             String temp = openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity()).get(1);
             System.out.println(temp);
-            float temp_float = Float.parseFloat(temp.substring(temp.indexOf(" ") + 1, temp.indexOf("°C")));
-            int temp_int = Math.round(temp_float);
-            outputBoundary.weather(weather, day, times.get(0), temp_int);
-            farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy, clear, temp_int, weather, times.get(0));
+            float tempFloat = Float.parseFloat(temp.substring(temp.indexOf(" ") + 1, temp.indexOf("°C")));
+            int tempInt = Math.round(tempFloat);
+            outputBoundary.weather(weather, day, times.get(0), tempInt);
+            farmSingleton.getFarm().setWeather(day, rainy, foggy, thunderstorm, snowy, cloudy,
+                    clear, tempInt, weather, times.get(0));
             return openWeatherAccess.currentDisplayInfoForCity(farmSingleton.getFarm().getCity());
         }
         catch (Exception exception) {

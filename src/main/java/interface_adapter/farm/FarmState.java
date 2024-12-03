@@ -8,18 +8,18 @@ public class FarmState {
     private long[][] cropTimes;
     private int[][] cropAges;
     private int[][] prices;
-    private final int WET = 0B1;
-    private final int CLAIMED = 0B10;
-    private final int SNOWY = 0B100;
-    private final int PLANTED = 0B1000;
-    private final int ALIVE = 0B100000;
-    private final int FERTILIZED = 0B1000000;
-    private final int READY = 0B10000000;
-    private final int CROP_MASK = 0B1100000000;
-    private final int RICE = 0B0100000000;
-    private final int SNOWBERRY = 0B0000000000;
-    private final int CORN = 0B1100000000;
-    private final int WHEAT = 0B1000000000;
+    private final int wet = 0B1;
+    private final int claimed = 0B10;
+    private final int snowy = 0B100;
+    private final int planted = 0B1000;
+    private final int alive = 0B100000;
+    private final int fertilized = 0B1000000;
+    private final int ready = 0B10000000;
+    private final int cropMask = 0B1100000000;
+    private final int rice = 0B0100000000;
+    private final int snowBerry = 0B0000000000;
+    private final int corn = 0B1100000000;
+    private final int wheat = 0B1000000000;
     // 0 is night, 1 is day, 2 is sunrise/sunset
     private int day;
     private String weather;
@@ -30,40 +30,47 @@ public class FarmState {
     private int power;
     private long powerRefresh;
 
-
     public FarmState() {
         farmLand = new int[16][20];
         cropTimes = new long[16][20];
     }
 
     /**
-     * Sets the farmLand
-     * @param farmLand to be set to
+     * Sets the farmLand.
+     * @param farmland to be set to
      */
-    public void setLand(int[][] farmLand) {
-        this.farmLand = farmLand;
+    public void setLand(int[][] farmland) {
+        this.farmLand = farmland;
     }
 
     /**
-     * Sets the crop times
+     * Sets the crop times.
      * @param cropTimes to be set to
      */
     public void setCropTimes(long[][] cropTimes) {
         this.cropTimes = cropTimes;
     }
 
-    public long getPowerRefresh(){
+    /**
+     * Get power refresh.
+     * @return power refresh.
+     */
+    public long getPowerRefresh() {
         return powerRefresh;
     }
 
     /**
-     * Sets the crop ages
+     * Sets the crop ages.
      * @param cropAges to be set to
      */
     public void setCropAges(int[][] cropAges) {
         this.cropAges = cropAges;
     }
 
+    /**
+     * Set crops.
+     * @param farmCrops .
+     */
     public void setCrops(long[][] farmCrops) {
         this.cropTimes = farmCrops;
     }
@@ -76,16 +83,16 @@ public class FarmState {
      */
     public void plantCrop(int row, int col, long time) {
         // if claimed and not planted set time and update little guy
-        if ((farmLand[row][col] & CLAIMED) == CLAIMED && (farmLand[row][col] & PLANTED) != PLANTED) {
+        if ((farmLand[row][col] & claimed) == claimed && (farmLand[row][col] & planted) != planted) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
-                if (power < 0){
+                if (power < 0) {
                     power += 5;
                     return;
                 }
             }
             this.cropTimes[row][col] = time;
-            this.farmLand[row][col] = farmLand[row][col] | PLANTED | ALIVE | crop;
+            this.farmLand[row][col] = farmLand[row][col] | planted | alive | crop;
         }
         for (int r = 0; r < cropTimes.length; r++) {
             for (int c = 0; c < cropTimes[r].length; c++) {
@@ -105,15 +112,15 @@ public class FarmState {
      * @param col .
      */
     public void water(int row, int col) {
-        if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
+        if ((farmLand[row][col] & claimed) == claimed) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
-                if (power < 0){
+                if (power < 0) {
                     power += 5;
                     return;
                 }
             }
-            this.farmLand[row][col] = farmLand[row][col] | WET;
+            this.farmLand[row][col] = farmLand[row][col] | wet;
         }
     }
 
@@ -123,16 +130,16 @@ public class FarmState {
      * @param col .
      */
     public void claim(int row, int col) {
-        if ((this.farmLand[row][col] & CLAIMED) != CLAIMED) {
+        if ((this.farmLand[row][col] & claimed) != claimed) {
             if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                 power -= 5;
-                if (power < 0){
+                if (power < 0) {
                     power += 5;
                     return;
                 }
             }
         }
-        this.farmLand[row][col] = farmLand[row][col] | CLAIMED;
+        this.farmLand[row][col] = farmLand[row][col] | claimed;
     }
 
     /**
@@ -149,17 +156,17 @@ public class FarmState {
      * @param col .
      */
     public void harvest(int row, int col) {
-        if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
-            if ((this.farmLand[row][col] & PLANTED) == PLANTED && (this.farmLand[row][col] & ALIVE) == ALIVE) {
+        if ((farmLand[row][col] & claimed) == claimed) {
+            if ((this.farmLand[row][col] & planted) == planted && (this.farmLand[row][col] & alive) == alive) {
                 if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                     power -= 5;
-                    if (power < 0){
+                    if (power < 0) {
                         power += 5;
                         return;
                     }
                 }
             }
-            this.farmLand[row][col] = CLAIMED;
+            this.farmLand[row][col] = claimed;
         }
     }
 
@@ -169,32 +176,32 @@ public class FarmState {
      * @param col .
      */
     public void fertilize(int row, int col) {
-        if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
-            if ((this.farmLand[row][col] & FERTILIZED) == FERTILIZED) {
+        if ((farmLand[row][col] & claimed) == claimed) {
+            if ((this.farmLand[row][col] & fertilized) == fertilized) {
                 if (!"Thunderstorm".equalsIgnoreCase(weather)) {
                     power -= 5;
-                    if (power < 0){
+                    if (power < 0) {
                         power += 5;
                         return;
                     }
                 }
             }
-            this.farmLand[row][col] = farmLand[row][col] | FERTILIZED;
+            this.farmLand[row][col] = farmLand[row][col] | fertilized;
         }
     }
 
     /**
      * Set weather.
-     * @param weather .
-     * @param day .
+     * @param currWeather .
+     * @param currDay .
      * @param time .
      */
-    public void setWeather(String weather, int day, long time, int temp) {
-        this.weather = weather;
-        this.day = day;
-        this.temp = temp;
+    public void setWeather(String currWeather, int currDay, long time, int currTemp) {
+        this.weather = currWeather;
+        this.day = currDay;
+        this.temp = currTemp;
         refreshPower(time);
-        //Update crops so that any that should be ready become ready
+        // Update crops so that any that should be ready become ready
 
         for (int r = 0; r < cropTimes.length; r++) {
             for (int c = 0; c < cropTimes[r].length; c++) {
@@ -213,19 +220,19 @@ public class FarmState {
      */
     public void setCrop(String crop) {
         if ("snowberry".equalsIgnoreCase(crop)) {
-            this.crop = SNOWBERRY;
+            this.crop = snowBerry;
         }
         // rainy crop
         else if ("rice".equalsIgnoreCase(crop)) {
-            this.crop = RICE;
+            this.crop = rice;
         }
         // dry crop
         else if ("wheat".equalsIgnoreCase(crop)) {
-            this.crop = WHEAT;
+            this.crop = wheat;
         }
         // regular crop
         else if ("corn".equalsIgnoreCase(crop)) {
-            this.crop = CORN;
+            this.crop = corn;
         }
     }
 
@@ -237,28 +244,27 @@ public class FarmState {
      * @param time new time
      */
     private void updateTime(int row, int col, long time) {
-        if ((farmLand[row][col] & ALIVE) == ALIVE) {
+        if ((farmLand[row][col] & alive) == alive) {
             return;
         }
-        if ((farmLand[row][col] & PLANTED) != PLANTED) {
+        if ((farmLand[row][col] & planted) != planted) {
             return;
         }
         long diff = time - cropTimes[row][col];
         long days = diff / 86400;
-        if ((farmLand[row][col] & CROP_MASK) == SNOWBERRY) {
+        if ((farmLand[row][col] & cropMask) == snowBerry) {
             updateSnowberry(row, col, days);
         }
-        if ((farmLand[row][col] & CROP_MASK) == CORN) {
+        if ((farmLand[row][col] & cropMask) == corn) {
             updateCorn(row, col, days);
         }
-        if ((farmLand[row][col] & CROP_MASK) == RICE) {
+        if ((farmLand[row][col] & cropMask) == rice) {
             updateRice(row, col, days);
         }
-        if ((farmLand[row][col] & CROP_MASK) == WHEAT) {
+        if ((farmLand[row][col] & cropMask) == wheat) {
             updateWheat(row, col, days);
         }
     }
-
 
     /**
      * Changes the age and updates the price with it.
@@ -274,8 +280,8 @@ public class FarmState {
         cropAges[row][col] = age;
         if (age == 3) {
             prices[row][col] = 5;
-            farmLand[row][col] = farmLand[row][col] | READY;
-            if ((farmLand[row][col] & FERTILIZED) == FERTILIZED) {
+            farmLand[row][col] = farmLand[row][col] | ready;
+            if ((farmLand[row][col] & fertilized) == fertilized) {
                 prices[row][col] = prices[row][col] * 2;
             }
 
@@ -290,7 +296,7 @@ public class FarmState {
             prices[row][col] = prices[row][col] - 1;
         }
         if (prices[row][col] == 0) {
-            farmLand[row][col] = farmLand[row][col] ^ ALIVE;
+            farmLand[row][col] = farmLand[row][col] ^ alive;
         }
     }
 
@@ -302,8 +308,8 @@ public class FarmState {
      * @param days days since planted
      */
     private void updateSnowberry(int row, int col, long days) {
-        if (days >= 1 && (farmLand[row][col] & WET) == WET) {
-            farmLand[row][col] = farmLand[row][col] ^ WET;
+        if (days >= 1 && (farmLand[row][col] & wet) == wet) {
+            farmLand[row][col] = farmLand[row][col] ^ wet;
             changeAge(row, col, cropAges[row][col] + 1);
             if (temp < 3) {
                 if ("Snow".equalsIgnoreCase(this.getWeather())) {
@@ -317,11 +323,10 @@ public class FarmState {
                 changeAge(row, col, cropAges[row][col] - 1);
             }
             else if (temp > 18) {
-                farmLand[row][col] = farmLand[row][col] ^ ALIVE;
+                farmLand[row][col] = farmLand[row][col] ^ alive;
             }
         }
     }
-
 
     /**
      * Updates the rice.
@@ -331,8 +336,8 @@ public class FarmState {
      * @param days days since planted
      */
     private void updateRice(int row, int col, long days) {
-        if (days >= 1 && (farmLand[row][col] & WET) == WET) {
-            farmLand[row][col] = farmLand[row][col] ^ WET;
+        if (days >= 1 && (farmLand[row][col] & wet) == wet) {
+            farmLand[row][col] = farmLand[row][col] ^ wet;
             changeAge(row, col, cropAges[row][col] + 1);
             if ("Thunderstorm".equalsIgnoreCase(this.getWeather())) {
                 changeAge(row, col, cropAges[row][col] + 1);
@@ -347,7 +352,6 @@ public class FarmState {
         }
     }
 
-
     /**
      * Updates the corn.
      * Private because it is only called in updateTime
@@ -356,8 +360,8 @@ public class FarmState {
      * @param days days since planted
      */
     private void updateCorn(int row, int col, long days) {
-        if (days >= 1 && (farmLand[row][col] & WET) == WET) {
-            farmLand[row][col] = farmLand[row][col] ^ WET;
+        if (days >= 1 && (farmLand[row][col] & wet) == wet) {
+            farmLand[row][col] = farmLand[row][col] ^ wet;
             changeAge(row, col, cropAges[row][col] + 1);
             if ("Thunderstorm".equalsIgnoreCase(this.getWeather())) {
                 changeAge(row, col, cropAges[row][col] - 1);
@@ -379,8 +383,8 @@ public class FarmState {
      * @param days days since planted
      */
     private void updateWheat(int row, int col, long days) {
-        if (days >= 1 && (farmLand[row][col] & WET) == WET) {
-            farmLand[row][col] = farmLand[row][col] ^ WET;
+        if (days >= 1 && (farmLand[row][col] & wet) == wet) {
+            farmLand[row][col] = farmLand[row][col] ^ wet;
             changeAge(row, col, cropAges[row][col] + 1);
             if (temp < 3) {
                 changeAge(row, col, cropAges[row][col] - 1);
@@ -404,50 +408,51 @@ public class FarmState {
         return crop;
     }
     /**
-     * Returns the number of barn bucks
+     * Returns the number of barn bucks.
      * @return returns barn bucks
      */
-    public int getBarnBucks(){
+
+    public int getBarnBucks() {
         return this.barnBucks;
     }
 
     /**
-     * Setter for barn bucks
+     * Setter for barn bucks.
      * @param barnBucks how many barnBucks
      */
-    public void setBarnBucks(int barnBucks){
+    public void setBarnBucks(int barnBucks) {
         this.barnBucks = barnBucks;
     }
 
     /**
-     * Getter for power
+     * Getter for power.
      * @return this.power
      */
-    public int getPower(){
+    public int getPower() {
         return this.power;
     }
 
     /**
-     * Setter for power
+     * Setter for power.
      * @param power how much power
      */
-    public void setPower(int power){
+    public void setPower(int power) {
         this.power = power;
     }
 
     /**
      * Set active tool.
-     * @param currTool .
+     * @param tool .
      */
-    public void setActiveTool(String currTool) {
-        this.currTool = currTool;
+    public void setActiveTool(String tool) {
+        this.currTool = tool;
     }
 
     /**
-     * Sets the prices
+     * Sets the prices.
      * @param prices prices to be set to
      */
-    public void setPrices(int[][] prices){
+    public void setPrices(int[][] prices) {
         this.prices = prices;
     }
     // public int getCrop(){
@@ -474,25 +479,29 @@ public class FarmState {
         return day;
     }
 
-    public void refreshPower(long time){
-        if (time - powerRefresh > 10800){
+    /**
+     * Refresh power.
+     * @param time .
+     */
+    public void refreshPower(long time) {
+        if (time - powerRefresh > 10800) {
             powerRefresh = time;
-            if ("Clear".equalsIgnoreCase(weather)){
+            if ("Clear".equalsIgnoreCase(weather)) {
                 power += 100;
             }
-            else if ("Clouds".equalsIgnoreCase(weather)){
+            else if ("Clouds".equalsIgnoreCase(weather)) {
                 power += 50;
             }
-            else if ("Rain".equalsIgnoreCase(weather)){
+            else if ("Rain".equalsIgnoreCase(weather)) {
                 power += 50;
             }
-            else if ("Drizzle".equalsIgnoreCase(weather)){
+            else if ("Drizzle".equalsIgnoreCase(weather)) {
                 power += 50;
             }
-            else if ("Thunderstorm".equalsIgnoreCase(weather)){
+            else if ("Thunderstorm".equalsIgnoreCase(weather)) {
                 power += 250;
             }
-            else if ("Snow".equalsIgnoreCase(weather)){
+            else if ("Snow".equalsIgnoreCase(weather)) {
                 power += 50;
             }
             else {
