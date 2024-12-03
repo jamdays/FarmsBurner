@@ -2,6 +2,9 @@ package main.java.interface_adapter.selecttool;
 
 import main.java.use_case.selecttool.SelectToolOutputBoundary;
 
+/**
+ * Select tool presenter.
+ */
 public class SelectToolPresenter implements SelectToolOutputBoundary {
     private final SelectToolViewModel viewModel;
 
