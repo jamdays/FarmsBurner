@@ -2,6 +2,9 @@ package main.java.interface_adapter.toolmenu;
 
 import main.java.use_case.upgradetool.UpgradeToolInputBoundary;
 
+/**
+ * Upgrade controller.
+ */
 public class UpgradeController {
     private final UpgradeToolInputBoundary upgradeToolInputBoundary;
 
@@ -9,7 +12,11 @@ public class UpgradeController {
         this.upgradeToolInputBoundary = upgradeToolInputBoundary;
     }
 
-    public void upgrade(String tool){
+    /**
+     * Upgrade.
+     * @param tool .
+     */
+    public void upgrade(String tool) {
         upgradeToolInputBoundary.upgrade(tool);
     }
 }
