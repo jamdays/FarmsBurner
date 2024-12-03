@@ -425,7 +425,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     }
 
                     // given the farmland is claimed, if a crop has been planted there, make it appear
-                    if ((state.getFarmLand()[r][c] & planted) == planted) {
+                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) != ready) {
                         ImageIcon cropImg = null;
                         if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
@@ -441,6 +441,27 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         }
                         else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
                             cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
+                        }
+                        if (cropImg != null) {
+                            setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
+                        }
+                    }
+                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) == ready) {
+                        ImageIcon cropImg = null;
+                        if ((state.getFarmLand()[r][c] & alive) != alive) {
+                            cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
+                            cropImg = new ImageIcon("src/main/resources/RiceReady.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
+                            cropImg = new ImageIcon("src/main/resources/CornReady.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
+                            cropImg = new ImageIcon("src/main/resources/WheatReady.png");
+                        }
+                        else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
+                            cropImg = new ImageIcon("src/main/resources/SnowberryReady.png");
                         }
                         if (cropImg != null) {
                             setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
