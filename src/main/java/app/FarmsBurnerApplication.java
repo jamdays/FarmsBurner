@@ -60,6 +60,7 @@ public class FarmsBurnerApplication {
         final AppBuilder builder = new AppBuilder();
         builder
                 .addFarmDataAccessObject(dao)
+                .addForecastDataAccessObject(forecastDao)
                 .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()
                 .addWelcomeView()
