@@ -47,7 +47,7 @@ public class Info extends JPanel {
         FarmLabel dryLandLabel = new CropLabel("", 20, Color.BLACK);
         ImageIcon dryLandImg = new ImageIcon("src/main/resources/farmtile2.png");
         dryLandLabel.setIcon(new ImageIcon(dryLandImg.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-        landInfo.add(dryLandLabel,gbc);
+        landInfo.add(dryLandLabel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
