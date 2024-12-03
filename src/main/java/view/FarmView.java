@@ -409,16 +409,16 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
                         }
-                        else if (state.getCrop() == rice) {
+                        else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
                             cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
                         }
-                        else if (state.getCrop() == corn) {
+                        else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
                             cropImg = new ImageIcon("src/main/resources/CornUnready.png");
                         }
-                        else if (state.getCrop() == wheat) {
+                        else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
                             cropImg = new ImageIcon("src/main/resources/WheatUnready.png");
                         }
-                        else if (state.getCrop() == snowberry) {
+                        else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
                             cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
                         }
                         if (cropImg != null) {
