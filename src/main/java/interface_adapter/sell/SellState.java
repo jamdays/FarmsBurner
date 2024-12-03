@@ -1,5 +1,8 @@
 package main.java.interface_adapter.sell;
 
+/**
+ * Sell state.
+ */
 public class SellState {
     private int money;
 
@@ -7,11 +10,18 @@ public class SellState {
         this.money = money;
     }
 
-    public SellState(){
+    /**
+     * Sell state.
+     */
+    public SellState() {
         this.money = 0;
     }
 
-    public void sell(int quantity){
-        this.money += quantity*5;
+    /**
+     * Sell.
+     * @param quantity .
+     */
+    public void sell(int quantity) {
+        this.money += quantity * 5;
     }
 }

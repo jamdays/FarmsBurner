@@ -2,6 +2,9 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.plant.PlantOutputBoundary;
 
+/**
+ * Plant presenter.
+ */
 public class PlantPresenter implements PlantOutputBoundary {
     private final FarmViewModel farmViewModel;
 

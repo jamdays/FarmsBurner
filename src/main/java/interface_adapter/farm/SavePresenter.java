@@ -2,6 +2,9 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.save.SaveOutputBoundary;
 
+/**
+ * Save presenter.
+ */
 public class SavePresenter implements SaveOutputBoundary {
     private final FarmViewModel farmViewModel;
 

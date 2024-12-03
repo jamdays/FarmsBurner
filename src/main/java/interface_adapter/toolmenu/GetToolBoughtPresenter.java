@@ -1,8 +1,10 @@
 package main.java.interface_adapter.toolmenu;
 
-import main.java.interface_adapter.farm.FarmState;
 import main.java.use_case.gettoolbought.GetToolBoughtOutputBoundary;
 
+/**
+ * Get tool bought presenter.
+ */
 public class GetToolBoughtPresenter implements GetToolBoughtOutputBoundary {
 
     private final ToolMenuViewModel viewModel;
