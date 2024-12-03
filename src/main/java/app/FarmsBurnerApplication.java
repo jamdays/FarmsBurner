@@ -9,7 +9,11 @@ import java.util.Properties;
 
 import javax.swing.UIManager;
 
-import main.java.data_access.*;
+import main.java.data_access.InMemoryWeatherAccess;
+import main.java.data_access.OpenForecastAccess;
+import main.java.data_access.OpenWeatherAccess;
+import main.java.data_access.OpenWeatherAccessInterface;
+import main.java.data_access.SaveFileAccess;
 
 /**
  * Main FarmsBurner application.
@@ -41,21 +45,21 @@ public class FarmsBurnerApplication {
         }
 
         OpenWeatherAccessInterface mockDao = new InMemoryWeatherAccess();
-        ((InMemoryWeatherAccess)mockDao).setCondition("Clear");
+        ((InMemoryWeatherAccess) mockDao).setCondition("Clear");
         List<Long> times = new ArrayList<Long>();
         times.add(30000L);
         times.add(28800L);
         times.add(57600L);
-        ((InMemoryWeatherAccess)mockDao).setTimes(times);
-        ((InMemoryWeatherAccess)mockDao).nextDay();
-        ((InMemoryWeatherAccess)mockDao).nextDay();
-        ((InMemoryWeatherAccess)mockDao).nextDay();
-        ((InMemoryWeatherAccess)mockDao).nextDay();
-        ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess) mockDao).setTimes(times);
+        ((InMemoryWeatherAccess) mockDao).nextDay();
+        ((InMemoryWeatherAccess) mockDao).nextDay();
+        ((InMemoryWeatherAccess) mockDao).nextDay();
+        ((InMemoryWeatherAccess) mockDao).nextDay();
+        ((InMemoryWeatherAccess) mockDao).nextDay();
 
         final AppBuilder builder = new AppBuilder();
         builder
-                .addFarmDataAccessObject(mockDao)
+                .addFarmDataAccessObject(dao)
                 .addForecastDataAccessObject(forecastDao)
                 .addSaveDataAccessObject(new SaveFileAccess())
                 .addViewManager()

@@ -17,6 +17,7 @@ public class Corn extends AbstractCrop implements Serializable {
 
     public Corn(long time, Land land) {
         super(time, land);
+        System.out.println(land);
         this.setName("Corn");
     }
 

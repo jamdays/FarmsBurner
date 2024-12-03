@@ -15,15 +15,28 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.border.LineBorder;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import main.java.app.WindowBuilder;
-import main.java.interface_adapter.farm.*;
+import main.java.interface_adapter.farm.ClaimController;
+import main.java.interface_adapter.farm.FarmViewModel;
+import main.java.interface_adapter.farm.FarmState;
+import main.java.interface_adapter.farm.FertilizeController;
+import main.java.interface_adapter.farm.ForecastController;
+import main.java.interface_adapter.farm.GetActiveToolController;
+import main.java.interface_adapter.farm.HarvestController;
+import main.java.interface_adapter.farm.PlantController;
+import main.java.interface_adapter.farm.PowerRefundController;
+import main.java.interface_adapter.farm.SaveController;
+import main.java.interface_adapter.farm.SetCropController;
+import main.java.interface_adapter.farm.UseToolController;
+import main.java.interface_adapter.farm.WaterController;
+import main.java.interface_adapter.farm.WeatherController;
 import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
 import main.java.interface_adapter.selecttool.SelectToolController;
@@ -31,7 +44,11 @@ import main.java.interface_adapter.selecttool.SelectToolViewModel;
 import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
-import main.java.interface_adapter.toolmenu.*;
+import main.java.interface_adapter.toolmenu.BuyController;
+import main.java.interface_adapter.toolmenu.GetBarnBucksController;
+import main.java.interface_adapter.toolmenu.GetToolBoughtController;
+import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
+import main.java.interface_adapter.toolmenu.UpgradeController;
 
 /**
  * The view for the farm.
@@ -135,7 +152,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 final WindowBuilder builder = new WindowBuilder();
                 System.out.println(getToolBoughtController.toString());
                 BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController, getBarnBucksController);
-                builder.addView(380, 280, buyView).build().setVisible(true);
+                builder.addView(380, 300, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
@@ -154,7 +171,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                builder.addView(400, 500, new ForecastView(forecastController.forecast(), "Forecast")).build().setVisible(true);
+                builder.addView(400, 500, new ForecastView(forecastController.forecast(), "Forecast"))
+                        .build().setVisible(true);
             }
         });
 
@@ -181,7 +199,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
                                     int amt = useToolController.useTool("tiller", r, c);
                                     powerRefundController.powerRefund(amt);
-                                } else {
+                                }
+                                else {
                                     claimController.claim(r, c);
                                 }
                             }
@@ -190,7 +209,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
                                     int amt = useToolController.useTool("planter", r, c);
                                     powerRefundController.powerRefund(amt);
-                                } else {
+                                }
+                                else {
                                     plantController.plantCrop(r, c);
                                 }
                             }
@@ -199,7 +219,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
                                     int amt = useToolController.useTool("sprinkler", r, c);
                                     powerRefundController.powerRefund(amt);
-                                } else {
+                                }
+                                else {
                                     waterController.waterCrop(r, c);
                                 }
                             }
@@ -208,7 +229,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
                                     int amt = useToolController.useTool("fertilizer", r, c);
                                     powerRefundController.powerRefund(amt);
-                                } else {
+                                }
+                                else {
                                     fertilizeController.fertilize(r, c);
                                 }
                             }
@@ -217,15 +239,17 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 if (getActiveToolController.getActiveTool().equalsIgnoreCase("harvester")) {
                                     int amt = useToolController.useTool("harvester", r, c);
                                     powerRefundController.powerRefund(amt);
-                                } else {
+                                }
+                                else {
                                     harvestController.harvestCrop(r, c);
                                 }
                             }
                         }
-                        else if (mouseEvent.getButton() == 3){
+                        else if (mouseEvent.getButton() == 3) {
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
                                 useToolController.useTool("sprinkler", r, c);
-                            } else {
+                            }
+                            else {
                                 waterController.waterCrop(r, c);
                             }
                         }
@@ -273,7 +297,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
 
         footerPanel.add(cropSelector);
         footerPanel.add(toolSelector);
-        footerPanel.setBackground(new Color(169, 152, 126,0));
+        footerPanel.setBackground(new Color(169, 152, 126, 0));
 
         JPanel navBar = new JPanel();
         navBar.add(save);
@@ -360,7 +384,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         farmLand[r][c].removeAll();
                         farmLand[r][c].setFont(new Font("Press Start 2P", Font.PLAIN, 20));
                         farmLand[r][c].setBorder(new LineBorder(new Color(69, 44, 42)));
-                        farmLand[r][c].setPreferredSize(new Dimension(25,25));
+                        farmLand[r][c].setPreferredSize(new Dimension(25, 25));
                         // Snowy & Claimed
                         if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                             dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
@@ -443,7 +467,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     }
 
                     // given the farmland is claimed, if a crop has been planted there, make it appear
-                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) != ready) {
+                    if ((state.getFarmLand()[r][c] & planted) == planted
+                            && (state.getFarmLand()[r][c] & ready) != ready) {
                         ImageIcon cropImg = null;
                         if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
@@ -464,7 +489,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
                         }
                     }
-                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) == ready) {
+                    if ((state.getFarmLand()[r][c] & planted) == planted
+                            && (state.getFarmLand()[r][c] & ready) == ready) {
                         ImageIcon cropImg = null;
                         if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
@@ -643,17 +669,34 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    /**
+     * Set forecast controller.
+     * @param forecastController .
+     */
     public void setForecastController(ForecastController forecastController) {
         this.forecastController = forecastController;
     }
+
+    /**
+     * Get storage controller.
+     * @param getStorageController .
+     */
     public void setGetStorageController(GetStorageController getStorageController) {
         this.getStorageController = getStorageController;
     }
 
+    /**
+     * Set get BarnBucks controller.
+     * @param getBarnBucksController .
+     */
     public void setGetBarnBucksController(GetBarnBucksController getBarnBucksController) {
         this.getBarnBucksController = getBarnBucksController;
     }
 
+    /**
+     * Set power refund controller.
+     * @param powerRefundController .
+     */
     public void setPowerRefundController(PowerRefundController powerRefundController) {
         this.powerRefundController = powerRefundController;
     }

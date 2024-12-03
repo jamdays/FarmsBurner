@@ -46,7 +46,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(title, BorderLayout.CENTER);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
-        topPanel.setPreferredSize(new Dimension(350,50));
+        topPanel.setPreferredSize(new Dimension(350, 50));
         topPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JLabel currSelected = new JLabel("Current Crop: " + currCrop);
@@ -56,10 +56,10 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         JPanel midPanel = new JPanel(new BorderLayout());
         midPanel.add(currSelected, BorderLayout.CENTER);
         midPanel.setBackground(new java.awt.Color(169, 152, 126));
-        midPanel.setPreferredSize(new Dimension(350,25));
+        midPanel.setPreferredSize(new Dimension(350, 25));
 
         FarmButton chooseSnowberry = new FarmButton("Snowberry");
-        chooseSnowberry.setPreferredSize(new Dimension(175,25));
+        chooseSnowberry.setPreferredSize(new Dimension(175, 25));
 
         chooseSnowberry.addActionListener(new ActionListener() {
             @Override
@@ -73,7 +73,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         });
 
         FarmButton chooseRice = new FarmButton("     Rice     ");
-        chooseRice.setPreferredSize(new Dimension(175,25));
+        chooseRice.setPreferredSize(new Dimension(175, 25));
 
         chooseRice.addActionListener(new ActionListener() {
             @Override
@@ -87,7 +87,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         });
 
         FarmButton chooseWheat = new FarmButton("    Wheat    ");
-        chooseWheat.setPreferredSize(new Dimension(175,25));
+        chooseWheat.setPreferredSize(new Dimension(175, 25));
 
         chooseWheat.addActionListener(new ActionListener() {
             @Override
@@ -101,7 +101,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         });
 
         FarmButton chooseCorn = new FarmButton("     Corn    ");
-        chooseCorn.setPreferredSize(new Dimension(175,25));
+        chooseCorn.setPreferredSize(new Dimension(175, 25));
 
         chooseCorn.addActionListener(new ActionListener() {
             @Override
@@ -117,7 +117,7 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         JPanel bottomPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         bottomPanel.setBackground(new java.awt.Color(169, 152, 126));
-        bottomPanel.setPreferredSize(new Dimension(350,100));
+        bottomPanel.setPreferredSize(new Dimension(350, 100));
 
         gbc.gridx = 0;
         gbc.gridy = 0;

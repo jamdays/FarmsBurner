@@ -1,9 +1,12 @@
 package main.java.use_case.forecast;
 
 import junit.framework.TestCase;
+
 import main.java.data_access.OpenForecastAccess;
 import main.java.data_access.OpenForecastAccessInterface;
 import main.java.data_access.OpenWeatherAccessInterface;
+import org.junit.Test;
+
 
 import java.util.List;
 
