@@ -1,10 +1,12 @@
 package main.java.interface_adapter.farm;
 
-import main.java.use_case.getweather.GetWeatherInputBoundary;
-import main.java.use_case.water.WaterInputBoundary;
-
 import java.util.List;
 
+import main.java.use_case.getweather.GetWeatherInputBoundary;
+
+/**
+ * Weather controller.
+ */
 public class WeatherController {
     private final GetWeatherInputBoundary weatherInteractor;
 
@@ -12,8 +14,11 @@ public class WeatherController {
         this.weatherInteractor = weatherInteractor;
     }
 
-
-    public List<String> weather(){
+    /**
+     * Weather.
+     * @return weather.
+     */
+    public List<String> weather() {
         return weatherInteractor.execute();
     }
 

@@ -1,8 +1,10 @@
 package main.java.interface_adapter.farm;
 
-
 import main.java.use_case.harvest.HarvestOutputBoundary;
 
+/**
+ * Harvest presenter.
+ */
 public class HarvestPresenter implements HarvestOutputBoundary {
     private final FarmViewModel farmViewModel;
 

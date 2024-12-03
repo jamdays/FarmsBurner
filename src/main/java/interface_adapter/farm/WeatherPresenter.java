@@ -2,6 +2,9 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.getweather.GetWeatherOutputBoundary;
 
+/**
+ * Weather presenter.
+ */
 public class WeatherPresenter implements GetWeatherOutputBoundary {
     private final FarmViewModel farmViewModel;
 
@@ -10,7 +13,7 @@ public class WeatherPresenter implements GetWeatherOutputBoundary {
     }
 
     @Override
-    public void weather(String weather, int day, long time){
+    public void weather(String weather, int day, long time) {
         ((FarmState) (farmViewModel.getState())).setWeather(weather, day, time);
         farmViewModel.firePropertyChanged("weather");
     }
