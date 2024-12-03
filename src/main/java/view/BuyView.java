@@ -118,16 +118,16 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         purchaseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // buy tool if unpurchased
                 if (!(boolean) getToolBoughtController.getToolBought(itemName).get(0)) {
                     buyController.buy(itemName);
-                    purchaseButton.setText("Upgrade");
+                    if ((boolean) getToolBoughtController.getToolBought(itemName).get(0)) {
+                        purchaseButton.setText("Upgrade");
+                    }
                 }
                 // upgrade tool if purchased and not maxed out
                 else if ((int) getToolBoughtController.getToolBought(itemName).get(1) < 5) {
                     upgradeController.upgrade(itemName);
-                    itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText()
-                            .replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
+                    itemLabel.setText("Level " + ((Integer)getToolBoughtController.getToolBought(itemName).get(1) - 1) + " " + itemName + " ");
                     if ((int) getToolBoughtController.getToolBought(itemName).get(1) == 5) {
                         purchaseButton.setText("Max Level");
                     }
