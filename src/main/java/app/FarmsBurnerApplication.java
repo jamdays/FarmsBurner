@@ -41,7 +41,6 @@ public class FarmsBurnerApplication {
         }
 
 
-
         final AppBuilder builder = new AppBuilder();
         builder
                 .addFarmDataAccessObject(dao)
@@ -69,6 +68,7 @@ public class FarmsBurnerApplication {
                 .addUseToolUseCase()
                 .addSetCropUseCase()
                 .addGetToolBoughtUseCase()
+                .addForecastUseCase()
                 .build().setVisible(true);
     }
 }
