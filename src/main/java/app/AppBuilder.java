@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import main.java.data_access.OpenWeatherAccess;
+import main.java.data_access.OpenWeatherAccessInterface;
 import main.java.data_access.SaveFileAccess;
 import main.java.interface_adapter.farm.ClaimController;
 import main.java.interface_adapter.farm.ClaimPresenter;
@@ -110,7 +111,7 @@ public class AppBuilder {
     private CardLayout cardLayout;
     private ViewManager viewManager;
     // DAOS
-    private OpenWeatherAccess farmDataAccessObject;
+    private OpenWeatherAccessInterface farmDataAccessObject;
     private SaveFileAccess saveFileAccess;
     // THE WELCOME VIEW, MODEL, AND INTERACTORS
     private WelcomeView welcomeView;
@@ -310,7 +311,7 @@ public class AppBuilder {
      * Creates the DAO.
      * @return this builder
      */
-    public AppBuilder addFarmDataAccessObject(OpenWeatherAccess farmDataAccessObject) {
+    public AppBuilder addFarmDataAccessObject(OpenWeatherAccessInterface farmDataAccessObject) {
         this.farmDataAccessObject = farmDataAccessObject;
         return this;
     }

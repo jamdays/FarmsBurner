@@ -1,20 +1,29 @@
 package main.java.view;
 
-import main.java.interface_adapter.farm.SetCropController;
-import main.java.interface_adapter.selectcrop.SelectCropController;
-import main.java.interface_adapter.selectcrop.SelectCropState;
-import main.java.interface_adapter.selectcrop.SelectCropViewModel;
-import main.java.interface_adapter.selecttool.SelectToolController;
-import main.java.interface_adapter.selecttool.SelectToolState;
-import main.java.view.FarmButton;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
+import main.java.interface_adapter.farm.SetCropController;
+import main.java.interface_adapter.selectcrop.SelectCropController;
+import main.java.interface_adapter.selectcrop.SelectCropState;
+import main.java.interface_adapter.selectcrop.SelectCropViewModel;
+
+/**
+ * Select crop view.
+ */
 public class SelectCropView extends JPanel implements ActionListener, PropertyChangeListener {
 
     // instance variables
@@ -140,10 +149,18 @@ public class SelectCropView extends JPanel implements ActionListener, PropertyCh
         this.currCrop = state.getCurrCrop();
     }
 
+    /**
+     * Set controller.
+     * @param controller .
+     */
     public void setController(SelectCropController controller) {
         this.controller = controller;
     }
 
+    /**
+     * Set crop controller.
+     * @param cropController .
+     */
     public void setCropController(SetCropController cropController) {
         this.cropController = cropController;
     }

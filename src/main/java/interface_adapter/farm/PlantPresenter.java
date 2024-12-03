@@ -2,6 +2,9 @@ package main.java.interface_adapter.farm;
 
 import main.java.use_case.plant.PlantOutputBoundary;
 
+/**
+ * Plant presenter.
+ */
 public class PlantPresenter implements PlantOutputBoundary {
     private final FarmViewModel farmViewModel;
 
@@ -10,8 +13,8 @@ public class PlantPresenter implements PlantOutputBoundary {
     }
 
     @Override
-    public void addCrop(int r, int c, long time) {
-        ((FarmState) (farmViewModel.getState())).plantCrop(r, c, time);
+    public void addCrop(int row, int col, long time) {
+        ((FarmState) (farmViewModel.getState())).plantCrop(row, col, time);
         farmViewModel.firePropertyChanged("plant");
     }
 }

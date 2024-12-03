@@ -1,8 +1,10 @@
 package main.java.interface_adapter.farm;
 
-import main.java.interface_adapter.selectcrop.SelectCropState;
 import main.java.use_case.usetool.UseToolOutputBoundary;
 
+/**
+ * Use tool presenter.
+ */
 public class UseToolPresenter implements UseToolOutputBoundary {
 
     private final FarmViewModel viewModel;
@@ -13,7 +15,7 @@ public class UseToolPresenter implements UseToolOutputBoundary {
 
     @Override
     public void useTool(String tool, int rStart, int cStart, int amount, long time) {
-        if (tool.equalsIgnoreCase("sprinkler")) {
+        if ("sprinkler".equalsIgnoreCase(tool)) {
             for (int i = 0; i < amount; i++) {
                 for (int j = 0; j < amount; j++) {
                     ((FarmState) (viewModel.getState())).water(rStart + i, cStart + j);
@@ -21,7 +23,7 @@ public class UseToolPresenter implements UseToolOutputBoundary {
             }
             viewModel.firePropertyChanged("sprinklerUsed");
         }
-        if (tool.equalsIgnoreCase("harvester")) {
+        if ("harvester".equalsIgnoreCase(tool)) {
             for (int i = 0; i < amount; i++) {
                 for (int j = 0; j < amount; j++) {
                     ((FarmState) (viewModel.getState())).harvest(rStart + i, cStart + j);
@@ -29,7 +31,7 @@ public class UseToolPresenter implements UseToolOutputBoundary {
             }
             viewModel.firePropertyChanged("harvesterUsed");
         }
-        if (tool.equalsIgnoreCase("tiller")) {
+        if ("tiller".equalsIgnoreCase(tool)) {
             for (int i = 0; i < amount; i++) {
                 for (int j = 0; j < amount; j++) {
                     ((FarmState) (viewModel.getState())).claim(rStart + i, cStart + j);
@@ -37,7 +39,7 @@ public class UseToolPresenter implements UseToolOutputBoundary {
             }
             viewModel.firePropertyChanged("tillerUsed");
         }
-        if (tool.equalsIgnoreCase("fertilizer")) {
+        if ("fertilizer".equalsIgnoreCase(tool)) {
             for (int i = 0; i < amount; i++) {
                 for (int j = 0; j < amount; j++) {
                     ((FarmState) (viewModel.getState())).fertilize(rStart + i, cStart + j);
@@ -45,7 +47,7 @@ public class UseToolPresenter implements UseToolOutputBoundary {
             }
             viewModel.firePropertyChanged("fertilizerUsed");
         }
-        if (tool.equalsIgnoreCase("planter")) {
+        if ("planter".equalsIgnoreCase(tool)) {
             for (int i = 0; i < amount; i++) {
                 for (int j = 0; j < amount; j++) {
                     ((FarmState) (viewModel.getState())).plantCrop(rStart + i, cStart + j, time);

@@ -2,6 +2,9 @@ package main.java.interface_adapter.welcome;
 
 import main.java.use_case.load.LoadInputBoundary;
 
+/**
+ * Load controller.
+ */
 public class LoadController {
     private final LoadInputBoundary loadInputBoundary;
 
@@ -9,7 +12,10 @@ public class LoadController {
         this.loadInputBoundary = loadInputBoundary;
     }
 
-    public void load(){
+    /**
+     * Load.
+     */
+    public void load() {
         loadInputBoundary.load();
     }
 }

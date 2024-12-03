@@ -1,13 +1,13 @@
 package main.java.use_case.load;
 
-import main.java.entity.FarmSingleton;
-import main.java.use_case.save.DataAccessException;
-import main.java.use_case.save.SaveDataAccessInterface;
-import main.java.use_case.save.SaveInputBoundary;
-import main.java.use_case.save.SaveOutputBoundary;
-
 import java.io.IOException;
 
+import main.java.entity.FarmSingleton;
+import main.java.use_case.save.DataAccessException;
+
+/**
+ * Load inteactor.
+ */
 public class LoadInteractor implements LoadInputBoundary {
 
     private final LoadDataAccessInterface loadDataAccessInterface;
@@ -19,17 +19,17 @@ public class LoadInteractor implements LoadInputBoundary {
     }
 
     /**
-     * Executes the load use case
+     * Executes the load use case.
      */
     @Override
-    public void load(){
-        //TODO MOVE THIS LATER
+    public void load() {
+        // TODO MOVE THIS LATER
         loadOutputBoundary.loaded();
         try {
             FarmSingleton.getInstance().setFarm(loadDataAccessInterface.loadData());
         }
-        catch (DataAccessException | IOException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+        catch (DataAccessException | IOException | ClassNotFoundException exception) {
+            System.out.println(exception.getMessage());
         }
     }
 }

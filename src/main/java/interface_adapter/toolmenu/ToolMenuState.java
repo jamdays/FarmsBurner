@@ -1,16 +1,19 @@
 package main.java.interface_adapter.toolmenu;
 
+/**
+ * Tool menu state.
+ */
 public class ToolMenuState {
-    int sprinklerLevel;
-    boolean sprinklerPurchased;
-    int planterLevel;
-    boolean planterPurchased;
-    int harvesterLevel;
-    boolean harvesterPurchased;
-    int tillerLevel;
-    boolean tillerPurchased;
-    int fertilizerLevel;
-    boolean fertilizerPurchased;
+    private int sprinklerLevel;
+    private boolean sprinklerPurchased;
+    private int planterLevel;
+    private boolean planterPurchased;
+    private int harvesterLevel;
+    private boolean harvesterPurchased;
+    private int tillerLevel;
+    private boolean tillerPurchased;
+    private int fertilizerLevel;
+    private boolean fertilizerPurchased;
 
     public ToolMenuState() {
         this.sprinklerLevel = 2;
@@ -25,79 +28,93 @@ public class ToolMenuState {
         this.fertilizerPurchased = false;
     }
 
-    public void buy(String tool){
-        if (tool.equalsIgnoreCase("sprinkler")) {
-            if (sprinklerPurchased == false) {
+    /**
+     * Buy.
+     * @param tool .
+     */
+    public void buy(String tool) {
+        if ("sprinkler".equalsIgnoreCase(tool)) {
+            if (!sprinklerPurchased) {
                 sprinklerPurchased = true;
             }
         }
-        if (tool.equalsIgnoreCase("planter")) {
-            if (planterPurchased == false) {
+        if ("planter".equalsIgnoreCase(tool)) {
+            if (!planterPurchased) {
                 planterPurchased = true;
             }
         }
-        if (tool.equalsIgnoreCase("harvester")) {
-            if (harvesterPurchased == false) {
+        if ("harvester".equalsIgnoreCase(tool)) {
+            if (!harvesterPurchased) {
                 harvesterPurchased = true;
             }
         }
-        if (tool.equalsIgnoreCase("tiller")) {
-            if (tillerPurchased == false) {
+        if ("tiller".equalsIgnoreCase(tool)) {
+            if (!tillerPurchased) {
                 tillerPurchased = true;
             }
         }
-        if (tool.equalsIgnoreCase("fertilizer")) {
+        if ("fertilizer".equalsIgnoreCase(tool)) {
             if (fertilizerPurchased == false) {
                 fertilizerPurchased = true;
             }
         }
     }
 
+    /**
+     * Set tool purchased.
+     * @param tool .
+     * @param bought .
+     * @param level .
+     */
     public void setToolPurchased(String tool, boolean bought, int level) {
-        if (tool.equalsIgnoreCase("sprinkler")) {
+        if ("sprinkler".equalsIgnoreCase(tool)) {
             sprinklerPurchased = bought;
             sprinklerLevel = level;
         }
-        if (tool.equalsIgnoreCase("planter")) {
+        if ("planter".equalsIgnoreCase(tool)) {
             planterPurchased = bought;
             planterLevel = level;
         }
-        if (tool.equalsIgnoreCase("harvester")) {
+        if ("harvester".equalsIgnoreCase(tool)) {
             harvesterPurchased = bought;
             harvesterLevel = level;
         }
-        if (tool.equalsIgnoreCase("tiller")) {
+        if ("tiller".equalsIgnoreCase(tool)) {
             tillerPurchased = bought;
             tillerLevel = level;
         }
-        if (tool.equalsIgnoreCase("fertilizer")) {
+        if ("fertilizer".equalsIgnoreCase(tool)) {
             fertilizerPurchased = bought;
             fertilizerLevel = level;
         }
     }
 
-    public void upgrade(String tool){
-        if (tool.equalsIgnoreCase("sprinkler")) {
+    /**
+     * Upgrade.
+     * @param tool .
+     */
+    public void upgrade(String tool) {
+        if ("sprinkler".equalsIgnoreCase(tool)) {
             if (sprinklerLevel < 5) {
                 sprinklerLevel += 1;
             }
         }
-        if (tool.equalsIgnoreCase("planter")) {
+        if ("planter".equalsIgnoreCase(tool)) {
             if (planterLevel < 5) {
                 planterLevel += 1;
             }
         }
-        if (tool.equalsIgnoreCase("harvester")) {
+        if ("harvester".equalsIgnoreCase(tool)) {
             if (harvesterLevel < 5) {
                 harvesterLevel += 1;
             }
         }
-        if (tool.equalsIgnoreCase("tiller")) {
+        if ("tiller".equalsIgnoreCase(tool)) {
             if (tillerLevel < 5) {
                 tillerLevel += 1;
             }
         }
-        if (tool.equalsIgnoreCase("fertilizer")) {
+        if ("fertilizer".equalsIgnoreCase(tool)) {
             if (fertilizerLevel < 5) {
                 fertilizerLevel += 1;
             }

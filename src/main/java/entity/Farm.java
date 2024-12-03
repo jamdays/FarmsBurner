@@ -71,7 +71,7 @@ public class Farm implements Serializable {
         this.fertilizerLevel = 2;
         this.planterPurchased = false;
         this.planterLevel = 2;
-        this.activeCrop = "none";
+        this.activeCrop = "snowberry";
         this.activeTool = "none";
     }
 
@@ -82,6 +82,7 @@ public class Farm implements Serializable {
                 farmLand[i][j] = new Land();
             }
         }
+        this.activeCrop = "snowberry";
         this.barnBucks = 0;
         this.power = 0;
         this.sprinkler = new Sprinkler();
@@ -97,7 +98,6 @@ public class Farm implements Serializable {
         this.fertilizerLevel = 2;
         this.planterPurchased = false;
         this.planterLevel = 2;
-        this.activeCrop = "none";
         this.activeTool = "none";
 
     }

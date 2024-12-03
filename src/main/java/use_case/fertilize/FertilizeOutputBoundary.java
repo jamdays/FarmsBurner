@@ -1,10 +1,13 @@
 package main.java.use_case.fertilize;
 
+/**
+ * Fertilize output boundary.
+ */
 public interface FertilizeOutputBoundary {
     /**
-            * fertilizes the land at (c, r)
-     * @param r, row to be placed at
-     * @param c, column to be placed at
+     * Fertilizes the land at (c, r).
+     * @param row row to be placed at
+     * @param col column to be placed at
      */
-    void fertilize(int r, int c);
+    void fertilize(int row, int col);
 }
