@@ -126,6 +126,14 @@ public class Land implements Serializable {
     }
 
     /**
+     * Set isPlanted.
+     * @param planted .
+     */
+    public void setPlanted(boolean planted) {
+        this.planted = planted;
+    }
+
+    /**
      * Water should only succeed if land is claimed, not snowy, and has a plant.
      */
     public void water() {

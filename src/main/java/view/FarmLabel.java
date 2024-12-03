@@ -1,8 +1,14 @@
 package main.java.view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
 
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+/**
+ * Farm Label.
+ */
 public class FarmLabel extends JLabel {
 
     public FarmLabel(String text) {

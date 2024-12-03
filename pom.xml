@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>223</groupId>
-    <artifactId>FarmsBurner</artifactId>
+    <artifactId>farmsburner</artifactId>
     <version>0.1</version>
 
     <dependencies>

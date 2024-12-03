@@ -1,29 +1,53 @@
 package main.java.view;
 
+import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellState;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.entity.FarmSingleton;
-
 import javax.swing.*;
+import java.util.*;
 import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import main.java.entity.FarmSingleton;
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellViewModel;
+
+/**
+ * Sell view.
+ */
 public class SellView extends JPanel implements ActionListener, PropertyChangeListener {
-    int crops;
-    int barnBucks;
-    int cost;
+    private int crops;
+    private int barnBucks;
+    private int cost;
     private SellViewModel sellViewModel;
     private SellController sellController;
+    private GetStorageController getStorageController;
 
-    public SellView(SellViewModel sellViewModel) {
+    public SellView(SellViewModel sellViewModel, GetStorageController getStorageController) {
         this.sellViewModel = sellViewModel;
         this.crops = FarmSingleton.getInstance().getFarm().getStorage().getCrops().size();
         this.barnBucks = FarmSingleton.getInstance().getFarm().getBarnBucks();
+        this.getStorageController = getStorageController;
         // TODO: Add actual cost of crops
+
+        List<Integer> storage = getStorageController.getStorage();
+        crops = storage.size();
 
         JLabel cropLabel = new JLabel("Crops: " + crops);
         cropLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -80,8 +104,17 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
             public void actionPerformed(ActionEvent e) {
                 int currentQuantity = Integer.parseInt(amountLabel.getText());
                 if (currentQuantity > 0) {
+                    // new code
                     amountLabel.setText(String.valueOf(currentQuantity - 1));
-                    earningLabel.setText("Total Earnings: " + Integer.parseInt(amountLabel.getText()) * cost);
+                    // store the total value of the first (amountLabel) crops in result
+                    int result = 0;
+                    for (int i = 0; i < Integer.parseInt(amountLabel.getText()); i++) {
+                        result += storage.get(i);
+                    }
+                    earningLabel.setText("Total Earnings: " + result + " BarnBucks");
+                    // previous code
+                    // amountLabel.setText(String.valueOf(currentQuantity - 1));
+                    // earningLabel.setText("Total Earnings: " + Integer.parseInt(amountLabel.getText()) * cost);
                 }
             }
         });
@@ -90,9 +123,17 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 int currentQuantity = Integer.parseInt(amountLabel.getText());
-                if (currentQuantity < Integer.parseInt(cropLabel.getText().substring(7))) {
+                if (currentQuantity < crops) {
+                    // new code
                     amountLabel.setText(String.valueOf(currentQuantity + 1));
-                    earningLabel.setText("Total Earnings: " + Integer.parseInt(amountLabel.getText()) * cost);
+                    // store the total value of the first (amountLabel) crops in result
+                    int result = 0;
+                    for (int i = 0; i < Integer.parseInt(amountLabel.getText()); i++) {
+                        result += storage.get(i);
+                    }
+                    earningLabel.setText("Total Earnings: " + result + " BarnBucks");
+                    // amountLabel.setText(String.valueOf(currentQuantity + 1));
+                    // earningLabel.setText("Total Earnings: " + Integer.parseInt(amountLabel.getText()) * cost);
                 }
             }
         });
@@ -100,11 +141,15 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int crops = Integer.parseInt(cropLabel.getText().substring(7));
                 int currentQuantity = Integer.parseInt(amountLabel.getText());
                 int barnBucks = Integer.parseInt(barnBucksLabel.getText().substring(12));
-                cropLabel.setText("Crops: " + (crops - currentQuantity));
-                barnBucksLabel.setText("Barn Bucks: " + (barnBucks + Integer.parseInt(amountLabel.getText()) * cost));
+                crops = crops - currentQuantity;
+                cropLabel.setText("Crops: " + crops);
+                int result = 0;
+                for (int i = 0; i < Integer.parseInt(amountLabel.getText()); i++) {
+                    result += storage.get(i);
+                }
+                barnBucksLabel.setText("Barn Bucks: " + (barnBucks + result));
                 amountLabel.setText("0");
                 earningLabel.setText("Total Earnings: 0");
                 sellController.sell(currentQuantity);
@@ -115,17 +160,11 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
         this.setBackground(new java.awt.Color(169, 152, 126));
         this.add(topPanel, BorderLayout.NORTH);
         this.add(contentPanel);
-
-//        JFrame frame = new JFrame();
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.setSize(350, 280);
-//        frame.getContentPane().add(mainPanel);
-//        frame.setVisible(true);
-
     }
 
     /**
-     * @param e the event to be processed
+     * Action performed.
+     * @param e The event to be processed
      */
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -133,6 +172,7 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     /**
+     * Property change.
      * @param evt A PropertyChangeEvent object describing the event source
      *            and the property that has changed.
      */
@@ -142,7 +182,7 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     /**
-     * Sets the sellController, CALL BEFORE ANY BUTTONS CAN BE PRESSED
+     * Sets the sellController, CALL BEFORE ANY BUTTONS CAN BE PRESSED.
      * @param sellController the sellController
      */
     public void setSellController(SellController sellController) {
