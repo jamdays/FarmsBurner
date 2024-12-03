@@ -2,8 +2,10 @@ package main.java.use_case.selecttool;
 
 import main.java.entity.FarmSingleton;
 
-public class SelectToolInteractor implements SelectToolInputBoundary{
-
+/**
+ * Select tool interactor.
+ */
+public class SelectToolInteractor implements SelectToolInputBoundary {
     private final SelectToolOutputBoundary outputBoundary;
 
     public SelectToolInteractor(SelectToolOutputBoundary outputBoundary) {
@@ -12,7 +14,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
 
     @Override
     public void selectTool(String tool) {
-        if (tool.equalsIgnoreCase("sprinkler")) {
+        if ("sprinkler".equalsIgnoreCase(tool)) {
             // only select sprinkler if it is purchased
             if (FarmSingleton.getInstance().getFarm().getSprinklerPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("sprinkler");
@@ -20,7 +22,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             }
         }
 
-        if (tool.equalsIgnoreCase("harvester")) {
+        if ("harvester".equalsIgnoreCase(tool)) {
             // only select harvester if it is purchased
             if (FarmSingleton.getInstance().getFarm().getHarvesterPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("harvester");
@@ -28,7 +30,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             }
         }
 
-        if (tool.equalsIgnoreCase("tiller")) {
+        if ("tiller".equalsIgnoreCase(tool)) {
             // only select tiller if it is purchased
             if (FarmSingleton.getInstance().getFarm().getTillerPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("tiller");
@@ -36,7 +38,7 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             }
         }
 
-        if (tool.equalsIgnoreCase("fertilizer")) {
+        if ("fertilizer".equalsIgnoreCase(tool)) {
             // only select tiller if it is purchased
             if (FarmSingleton.getInstance().getFarm().getFertilizerPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("fertilizer");
@@ -44,11 +46,11 @@ public class SelectToolInteractor implements SelectToolInputBoundary{
             }
         }
 
-        if (tool.equalsIgnoreCase("planter")) {
+        if ("planter".equalsIgnoreCase(tool)) {
             // only select tiller if it is purchased
             if (FarmSingleton.getInstance().getFarm().getPlanterPurchased()) {
                 FarmSingleton.getInstance().getFarm().setActiveTool("planter");
-                outputBoundary.selectTool("planter");
+                outputBoundary.selectTool("Planter");
             }
         }
     }

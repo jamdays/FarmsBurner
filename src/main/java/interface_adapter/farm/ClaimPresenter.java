@@ -13,8 +13,8 @@ public class ClaimPresenter implements ClaimOutputBoundary {
     }
 
     @Override
-    public void claim(int r, int c) {
-        ((FarmState) (farmViewModel.getState())).claim(r, c);
+    public void claim(int row, int col) {
+        ((FarmState) (farmViewModel.getState())).claim(row, col);
         farmViewModel.firePropertyChanged("claim");
     }
 

@@ -1,11 +1,14 @@
 package main.java.use_case.plant;
 
+/**
+ * Plant output boundary.
+ */
 public interface PlantOutputBoundary {
     /**
-     * adds the crop
-     * @param r, row to be placed at
-     * @param c, column to be placed at
-     * @param time, time of placement
+     * Adds the crop.
+     * @param row row to be placed at
+     * @param col column to be placed at
+     * @param time time of placement
      */
-    void addCrop(int r, int c, long time);
+    void addCrop(int row, int col, long time);
 }

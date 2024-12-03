@@ -1,10 +1,13 @@
 package main.java.use_case.harvest;
 
+/**
+ * Harvest Output boundary.
+ */
 public interface HarvestOutputBoundary {
     /**
-     * harvests the crop
-     * @param r, row to be harvested
-     * @param c, column to be harvested
+     * Harvests the crop.
+     * @param row row to be harvested
+     * @param col column to be harvested
      */
-    void harvestCrop(int r, int c);
+    void harvestCrop(int row, int col);
 }

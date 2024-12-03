@@ -1,11 +1,14 @@
 package main.java.use_case.plant;
 
+/**
+ * Plant input boundary.
+ */
 public interface PlantInputBoundary {
 
     /**
-     * executes code for plant use case
-     * @param r, row to be placed at
-     * @param c, column to be placed at
+     * Executes code for plant use case.
+     * @param row row to be placed at
+     * @param col column to be placed at
      */
-    void execute(int r, int c);
+    void execute(int row, int col);
 }

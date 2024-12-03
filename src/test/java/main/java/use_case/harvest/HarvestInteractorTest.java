@@ -18,9 +18,9 @@ public class HarvestInteractorTest extends TestCase {
         FarmSingleton.getInstance().setFarm(farm);
         HarvestOutputBoundary harvestOutputBoundary = new HarvestOutputBoundary() {
             @Override
-            public void harvestCrop(int r, int c){
-                farm.harvest(r, c);
-                assertFalse(FarmSingleton.getInstance().getFarm().getFarmLand()[r][c].isPlanted());
+            public void harvestCrop(int row, int col){
+                farm.harvest(row, col);
+                assertFalse(FarmSingleton.getInstance().getFarm().getFarmLand()[row][col].isPlanted());
             }
 
         };
@@ -53,9 +53,9 @@ public class HarvestInteractorTest extends TestCase {
         HarvestOutputBoundary outputBoundary = new HarvestOutputBoundary() {
 
             @Override
-            public void harvestCrop(int r, int c) {
+            public void harvestCrop(int row, int col) {
                 // Assert if the crop is harvested.
-                assertFalse(farm.getFarmLand()[r][c].isPlanted());
+                assertFalse(farm.getFarmLand()[row][col].isPlanted());
                 assertFalse(farm.getFarmLand()[1][1].isPlanted());
                 assertFalse(farm.getFarmLand()[0][1].isPlanted());
                 assertFalse(farm.getFarmLand()[1][0].isPlanted());
@@ -78,8 +78,8 @@ public class HarvestInteractorTest extends TestCase {
 
         HarvestOutputBoundary harvestOutputBoundary = new HarvestOutputBoundary() {
             @Override
-            public void harvestCrop(int r, int c) {
-                assertThrows(HarvestException.class, () -> farm.harvest(r, c));
+            public void harvestCrop(int row, int col) {
+                assertThrows(HarvestException.class, () -> farm.harvest(row, col));
             }
         };
 
@@ -96,8 +96,8 @@ public class HarvestInteractorTest extends TestCase {
 
         HarvestOutputBoundary harvestOutputBoundary = new HarvestOutputBoundary() {
             @Override
-            public void harvestCrop(int r, int c) {
-                assertThrows(HarvestException.class, () -> farm.harvest(r, c));
+            public void harvestCrop(int row, int col) {
+                assertThrows(HarvestException.class, () -> farm.harvest(row, col));
             }
         };
 

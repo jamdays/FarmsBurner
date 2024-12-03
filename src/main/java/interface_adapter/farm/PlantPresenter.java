@@ -13,8 +13,8 @@ public class PlantPresenter implements PlantOutputBoundary {
     }
 
     @Override
-    public void addCrop(int r, int c, long time) {
-        ((FarmState) (farmViewModel.getState())).plantCrop(r, c, time);
+    public void addCrop(int row, int col, long time) {
+        ((FarmState) (farmViewModel.getState())).plantCrop(row, col, time);
         farmViewModel.firePropertyChanged("plant");
     }
 }

@@ -1,9 +1,13 @@
 package main.java.use_case.getactivetool;
 
+/**
+ * Get active tool input boundary.
+ */
 public interface GetActiveToolInputBoundary {
 
     /**
-     * executes code for getactivetool use case
+     * Executes code for getactivetool use case.
+     * @return tool.
      */
-    public String getActiveTool();
+    String getActiveTool();
 }

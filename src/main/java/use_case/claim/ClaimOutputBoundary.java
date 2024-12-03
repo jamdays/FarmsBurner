@@ -1,11 +1,14 @@
 package main.java.use_case.claim;
 
+/**
+ * Claim output boundary.
+ */
 public interface ClaimOutputBoundary {
     /**
-     * adds the crop
-     * @param r, row to be placed at
-     * @param c, column to be placed at
+     * Adds the crop.
+     * @param row row to be placed at
+     * @param col column to be placed at
      */
-    void claim(int r, int c);
+    void claim(int row, int col);
 
 }

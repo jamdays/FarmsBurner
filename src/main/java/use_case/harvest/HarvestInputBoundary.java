@@ -1,11 +1,13 @@
 package main.java.use_case.harvest;
 
+/**
+ * Harvest input boundary.
+ */
 public interface HarvestInputBoundary {
-
-        /**
-        * executes code for harvestCrop use case
-        * @param r, row to be harvested
-        * @param c, column to be harvested
-        */
-        void execute(int r, int c);
+    /**
+     * Executes code for harvestCrop use case.
+     * @param row row to be harvested
+     * @param col column to be harvested
+     */
+    void execute(int row, int col);
 }
