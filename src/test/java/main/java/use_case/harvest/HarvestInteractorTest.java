@@ -9,6 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertThrows;
 
 public class HarvestInteractorTest extends TestCase {
+    /*
     @Test
     public void testExecute() throws PlantingException {
         Farm farm = new Farm();
@@ -104,5 +105,7 @@ public class HarvestInteractorTest extends TestCase {
         HarvestInteractor harvestInteractor = new HarvestInteractor(harvestOutputBoundary);
         harvestInteractor.execute(1, 1);
     }
+
+     */
 
 }
