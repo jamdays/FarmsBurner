@@ -1,9 +1,13 @@
 package main.java.view;
 
-import javax.swing.*;
-import java.awt.*;
-import javax.swing.JFrame;
+import java.awt.Color;
+import java.awt.Font;
 
+import javax.swing.JButton;
+
+/**
+ * Farm button.
+ */
 public class FarmButton extends JButton {
     private static Color cream = new Color(169, 152, 126);
 
@@ -19,13 +23,6 @@ public class FarmButton extends JButton {
         super(text);
         this.setFont(new Font("Press Start 2P", Font.BOLD, size));
         setBackground(cream);
-        this.setFocusPainted(false);
-    }
-
-    public FarmButton(String text, int size, Color color) {
-        super(text);
-        this.setFont(new Font("Press Start 2P", Font.BOLD, size));
-        setBackground(color);
         this.setFocusPainted(false);
     }
 

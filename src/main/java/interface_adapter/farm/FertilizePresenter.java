@@ -13,8 +13,8 @@ public class FertilizePresenter implements FertilizeOutputBoundary {
     }
 
     @Override
-    public void fertilize(int r, int c) {
-        ((FarmState) (farmViewModel.getState())).fertilize(r, c);
+    public void fertilize(int row, int col) {
+        ((FarmState) (farmViewModel.getState())).fertilize(row, col);
         farmViewModel.firePropertyChanged("fertilize");
     }
 }

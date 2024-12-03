@@ -1,13 +1,8 @@
 package main.java.view;
 
-
-import main.java.interface_adapter.farm.LoadFarmController;
-import main.java.interface_adapter.farm.WeatherController;
-import main.java.interface_adapter.welcome.*;
-import main.java.use_case.getweather.InvalidCityException;
-
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -15,10 +10,30 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import main.java.interface_adapter.farm.LoadFarmController;
+import main.java.interface_adapter.farm.WeatherController;
+import main.java.interface_adapter.welcome.LoadController;
+import main.java.interface_adapter.welcome.SetCityController;
+import main.java.interface_adapter.welcome.StartController;
+import main.java.interface_adapter.welcome.WelcomeState;
+import main.java.interface_adapter.welcome.WelcomeViewModel;
+import main.java.use_case.getweather.InvalidCityException;
+
+/**
+ * Welcome-view.
+ */
 public class WelcomeView extends JPanel implements ActionListener, PropertyChangeListener {
+    private FarmLabel title;
     private WelcomeViewModel viewModel;
     private JLabel backgroundLabel;
-    FarmLabel title;
     private LoadController loadController;
     private SetCityController setCityController;
     private StartController startController;
@@ -34,15 +49,11 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         // Main Panel with background image
         backgroundLabel = new JLabel();
         ImageIcon backgroundImg = new ImageIcon("src/main/resources/welcomeBg.png");
-        backgroundLabel.setIcon(new ImageIcon(backgroundImg.getImage().getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
+        backgroundLabel.setIcon(new ImageIcon(backgroundImg.getImage()
+                .getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
         this.add(backgroundLabel);
 
-        // Welcome panel
-//        FarmLabel welcome = new FarmLabel("Welcome to", 24);
-         title = new FarmLabel("(Toronto)", 36);
-//        welcomePanel.add(welcome);
-//        welcomePanel.add(title);
-//        welcomePanel.setBackground(new java.awt.Color(169, 152, 126));
+        title = new FarmLabel("(Toronto)", 36);
 
         // Start button
         FarmButton start = new FarmButton("Start", 12);
@@ -70,10 +81,10 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         });
         // Location
         JPanel locationPanel = new JPanel();
-        FarmButton location = (new FarmButton("Set Location:", 12));
+        FarmButton location = new FarmButton("Set Location:", 12);
         locationPanel.add(location);
         locationPanel.setOpaque(false);
-        locationPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        locationPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         JTextField locationText = new JTextField(20);
         locationText.addKeyListener(new KeyAdapter() {
             @Override
@@ -108,7 +119,6 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
             }
         });
         locationPanel.add(locationText);
-//        locationPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Spacer
         JLabel spacerLabel = new JLabel(" ");
@@ -121,7 +131,7 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         buttonsPanel.add(start);
         buttonsPanel.add(load);
 
-        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0,0,0,0));
+        buttonsPanel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
         buttonsPanel.add(title);
         // Main Panel
         backgroundLabel.setLayout(new BoxLayout(backgroundLabel, BoxLayout.Y_AXIS));
@@ -129,25 +139,12 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         backgroundLabel.add(title);
         backgroundLabel.add(start);
         backgroundLabel.add(load);
-//        backgroundLabel.add(buttonsPanel);
         backgroundLabel.add(locationPanel);
 
         // Set main panel layout
         this.setLayout(new BorderLayout());
         this.add(backgroundLabel);
 
-//        this.add(welcomePanel);
-//        this.add(start);
-//        this.add(load);
-//        this.add(locationPanel);
-//        this.setBackground(new java.awt.Color(169, 152, 126));
-
-        // Frame
-        //JFrame frame = new JFrame("Farms Burner");
-        //frame.setSize(741, 420);
-        //frame.setContentPane(mainPanel);
-        //frame.getContentPane().setBackground(new java.awt.Color(169, 152, 126));
-        //frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     @Override
@@ -163,23 +160,42 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         }
     }
 
+    /**
+     * Set set city controller.
+     * @param setCityController .
+     */
     public void setSetCityController(SetCityController setCityController) {
         this.setCityController = setCityController;
     }
 
+    /**
+     * Set load controller.
+     * @param loadController .
+     */
     public void setLoadController(LoadController loadController) {
         this.loadController = loadController;
     }
 
+    /**
+     * Set start controller.
+     * @param startController .
+     */
     public void setStartController(StartController startController) {
         this.startController = startController;
     }
 
-
+    /**
+     * Set weather controller.
+     * @param weatherController .
+     */
     public void setWeatherController(WeatherController weatherController) {
         this.weatherController = weatherController;
     }
 
+    /**
+     * Set load farm controller.
+     * @param loadFarmController .
+     */
     public void setLoadFarmController(LoadFarmController loadFarmController) {
         this.loadFarmController = loadFarmController;
     }

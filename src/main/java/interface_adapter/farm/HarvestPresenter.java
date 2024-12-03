@@ -13,8 +13,8 @@ public class HarvestPresenter implements HarvestOutputBoundary {
     }
 
     @Override
-    public void harvestCrop(int r, int c) {
-        ((FarmState) (farmViewModel.getState())).harvest(r, c);
+    public void harvestCrop(int row, int col) {
+        ((FarmState) (farmViewModel.getState())).harvest(row, col);
         farmViewModel.firePropertyChanged("harvestCrop");
     }
 

@@ -1,8 +1,10 @@
 package main.java.use_case.selectcrop;
 
-
 import main.java.entity.FarmSingleton;
 
+/**
+ * Select crop interactor.
+ */
 public class SelectCropInteractor implements SelectCropInputBoundary {
 
     private final SelectCropOutputBoundary outputBoundary;
@@ -11,24 +13,28 @@ public class SelectCropInteractor implements SelectCropInputBoundary {
         this.outputBoundary = outputBoundary;
     }
 
+    /**
+     * Select crop.
+     * @param crop tool to be selected
+     */
     public void selectCrop(String crop) {
         // cold weather crop
-        if (crop.equalsIgnoreCase("snowberry")) {
+        if ("snowberry".equalsIgnoreCase(crop)) {
             outputBoundary.selectCrop("Snowberry");
             FarmSingleton.getInstance().getFarm().setActiveCrop("Snowberry");
         }
         // rainy crop
-        else if (crop.equalsIgnoreCase("rice")) {
+        else if ("rice".equalsIgnoreCase(crop)) {
             outputBoundary.selectCrop("Rice");
             FarmSingleton.getInstance().getFarm().setActiveCrop("Rice");
         }
         // dry crop
-        else if (crop.equalsIgnoreCase("wheat")) {
+        else if ("wheat".equalsIgnoreCase(crop)) {
             outputBoundary.selectCrop("Wheat");
             FarmSingleton.getInstance().getFarm().setActiveCrop("Wheat");
         }
         // regular crop
-        else if (crop.equalsIgnoreCase("corn")) {
+        else if ("corn".equalsIgnoreCase(crop)) {
             outputBoundary.selectCrop("Corn");
             FarmSingleton.getInstance().getFarm().setActiveCrop("Corn");
         }

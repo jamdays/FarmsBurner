@@ -22,14 +22,26 @@ public class ViewModel<T> {
         this.viewName = viewName;
     }
 
+    /**
+     * Get view name.
+     * @return view name.
+     */
     public String getViewName() {
         return this.viewName;
     }
 
+    /**
+     * Get state.
+     * @return .
+     */
     public T getState() {
         return this.state;
     }
 
+    /**
+     * Set state.
+     * @param state .
+     */
     public void setState(T state) {
         support.firePropertyChange("state", this.state, state);
         this.state = state;
@@ -62,6 +74,10 @@ public class ViewModel<T> {
         this.support.addPropertyChangeListener(listener);
     }
 
+    /**
+     * Property change support.
+     * @return support.
+     */
     public PropertyChangeSupport getSupport() {
         return support;
     }

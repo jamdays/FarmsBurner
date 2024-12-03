@@ -2,6 +2,9 @@ package main.java.interface_adapter.welcome;
 
 import main.java.use_case.setcity.SetCityOutputBoundary;
 
+/**
+ * Set city presenter.
+ */
 public class SetCityPresenter implements SetCityOutputBoundary {
     private final WelcomeViewModel welcomeViewModel;
 
@@ -11,7 +14,7 @@ public class SetCityPresenter implements SetCityOutputBoundary {
 
     @Override
     public void setCity(String city) {
-        ((WelcomeState)(welcomeViewModel.getState())).setCity(city);
+        ((WelcomeState) (welcomeViewModel.getState())).setCity(city);
         welcomeViewModel.firePropertyChanged("city");
     }
 

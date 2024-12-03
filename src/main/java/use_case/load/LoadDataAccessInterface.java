@@ -1,16 +1,20 @@
 package main.java.use_case.load;
-import main.java.entity.Farm;
-import main.java.use_case.save.DataAccessException;
 
 import java.io.IOException;
 
+import main.java.entity.Farm;
+import main.java.use_case.save.DataAccessException;
+
 /**
- * interface for saving the farm data to a file
+ * Interface for saving the farm data to a file.
  */
 public interface LoadDataAccessInterface {
     /**
-     * Saves the Farm Data to a file
+     * Saves the Farm Data to a file.
      * @return Farm that is in storage
+     * @throws main.java.use_case.load.DataAccessException .
+     * @throws IOException .
+     * @throws ClassNotFoundException .
      */
     Farm loadData() throws DataAccessException, IOException, ClassNotFoundException;
 
