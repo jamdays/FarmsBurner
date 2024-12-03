@@ -132,7 +132,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 final WindowBuilder builder = new WindowBuilder();
                 System.out.println(getToolBoughtController.toString());
                 BuyView buyView = new BuyView(toolMenuViewModel, getToolBoughtController);
-                builder.addView(380, 280, buyView).build().setVisible(true);
+                builder.addView(380, 300, buyView).build().setVisible(true);
                 buyView.setBuyController(buyController);
                 buyView.setUpgradeController(upgradeController);
 
@@ -629,9 +629,18 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    /**
+     * Set forecast controller.
+     * @param forecastController .
+     */
     public void setForecastController(ForecastController forecastController) {
         this.forecastController = forecastController;
     }
+
+    /**
+     * Get storage controller.
+     * @param getStorageController .
+     */
     public void setGetStorageController(GetStorageController getStorageController) {
         this.getStorageController = getStorageController;
     }
