@@ -351,8 +351,11 @@ public class Farm implements Serializable {
         if (land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
             // add the crop into storage and store its high price, given that there is space in storage
             if (this.getStorage().getCrops().size() < this.getStorage().getCapacity()) {
-                land.getCrop().setPrice(5);
                 this.getStorage().getCrops().add(land.getCrop());
+                // remove fertilizer from land
+                this.getFarmLand()[row][col].setFertilized(false);
+                // make it so that land is no longer planted
+                this.getFarmLand()[row][col].setPlanted(false);
             }
             else {
                 System.out.println("not enough space in storage");
@@ -361,8 +364,9 @@ public class Farm implements Serializable {
         else if (!land.isFertilized() && land.isPlanted() && land.getCrop().getIsAlive()) {
             // add the crop into storage and store its regular price, given that there is space in storage
             if (this.getStorage().getCrops().size() < this.getStorage().getCapacity()) {
-                land.getCrop().setPrice(3);
                 this.getStorage().getCrops().add(land.getCrop());
+                // make it so that land is no longer planted
+                this.getFarmLand()[row][col].setPlanted(false);
             }
             else {
                 System.out.println("not enough space in storage");

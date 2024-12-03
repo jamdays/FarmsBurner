@@ -17,7 +17,6 @@ public class BuyToolInteractor implements BuyToolInputBoundary {
         if ("sprinkler".equalsIgnoreCase(tool)) {
             outputBoundary.buy("sprinkler");
             FarmSingleton.getInstance().getFarm().setSprinklerPurchased(true);
-
         }
         if ("harvester".equalsIgnoreCase(tool)) {
             outputBoundary.buy("harvester");

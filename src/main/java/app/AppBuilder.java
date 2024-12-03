@@ -38,9 +38,7 @@ import main.java.interface_adapter.selectcrop.SelectCropViewModel;
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolPresenter;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
-import main.java.interface_adapter.sell.SellController;
-import main.java.interface_adapter.sell.SellPresenter;
-import main.java.interface_adapter.sell.SellViewModel;
+import main.java.interface_adapter.sell.*;
 import main.java.interface_adapter.toolmenu.BuyController;
 import main.java.interface_adapter.toolmenu.BuyPresenter;
 import main.java.interface_adapter.toolmenu.GetToolBoughtController;
@@ -63,6 +61,8 @@ import main.java.use_case.fertilize.FertilizeInteractor;
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
+import main.java.use_case.getstorage.GetStorageInteractor;
+import main.java.use_case.getstorage.GetStorageOutputBoundary;
 import main.java.use_case.gettoolbought.GetToolBoughtInteractor;
 import main.java.use_case.gettoolbought.GetToolBoughtOutputBoundary;
 import main.java.use_case.getweather.GetWeatherInteractor;
@@ -145,6 +145,7 @@ public class AppBuilder {
     private SelectToolInteractor selectToolInteractor;
     private SelectCropViewModel selectCropViewModel;
     private SelectCropInteractor selectCropInteractor;
+    private GetStorageInteractor getStorageInteractor;
 
     /**
      * Creates the objects for the Save Use Case and connects the FarmView to its
@@ -489,6 +490,25 @@ public class AppBuilder {
         }
 
         farmView.setSellController(sellController);
+        return this;
+    }
+
+    /**
+     * Adds the Get Storage Use Case.
+     * @return this builder
+     * @throws RuntimeException .
+     */
+    public AppBuilder addGetStorageUseCase() {
+        final GetStorageOutputBoundary getStorageOutputBoundary = new GetStoragePresenter(sellViewModel);
+        getStorageInteractor = new GetStorageInteractor(getStorageOutputBoundary);
+
+        final GetStorageController getStorageController = new GetStorageController(getStorageInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setGetStorageController(getStorageController);
         return this;
     }
 
