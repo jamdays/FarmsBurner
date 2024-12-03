@@ -26,6 +26,8 @@ public class FarmState {
     private int temp;
     private String currTool;
     private int crop;
+    private int barnBucks;
+    private int power;
 
 
     public FarmState() {
@@ -34,17 +36,29 @@ public class FarmState {
     }
 
     /**
-     * Set land.
-     * @param farmLand .
+     * Sets the farmLand
+     * @param farmLand to be set to
      */
     public void setLand(int[][] farmLand) {
         this.farmLand = farmLand;
     }
 
     /**
-     * Set crops.
-     * @param farmCrops .
+     * Sets the crop times
+     * @param cropTimes to be set to
      */
+    public void setCropTimes(long[][] cropTimes) {
+        this.cropTimes = cropTimes;
+    }
+
+    /**
+     * Sets the crop ages
+     * @param cropAges to be set to
+     */
+    public void setCropAges(int[][] cropAges) {
+        this.cropAges = cropAges;
+    }
+
     public void setCrops(long[][] farmCrops) {
         this.cropTimes = farmCrops;
     }
@@ -123,7 +137,7 @@ public class FarmState {
     public void setWeather(String weather, int day, long time) {
         this.weather = weather;
         this.day = day;
-        // Update crops so that any that should be ready become ready
+        //Update crops so that any that should be ready become ready
 
         for (int r = 0; r < cropTimes.length; r++) {
             for (int c = 0; c < cropTimes[r].length; c++) {
@@ -194,6 +208,7 @@ public class FarmState {
         }
     }
 
+
     /**
      * Changes the age and updates the price with it.
      * <p>Assumes crop is alive</p>
@@ -237,7 +252,7 @@ public class FarmState {
     private void updateSnowberry(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
+            changeAge(row, col, cropAges[row][col] + 1);
             if (temp < 3) {
                 if ("Snow".equalsIgnoreCase(this.getWeather())) {
                     changeAge(row, col, cropAges[row][col] + 1);
@@ -255,6 +270,7 @@ public class FarmState {
         }
     }
 
+
     /**
      * Updates the rice.
      * Private because it is only called in updateTime
@@ -265,23 +281,20 @@ public class FarmState {
     private void updateRice(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
-            if (temp < 3) {
-                if (this.getWeather().equalsIgnoreCase("Snow")) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-                if (temp < -9) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
+            changeAge(row, col, cropAges[row][col] + 1);
+            if ("Thunderstorm".equalsIgnoreCase(this.getWeather())) {
+                changeAge(row, col, cropAges[row][col] + 1);
+                changeAge(row, col, cropAges[row][col] + 1);
             }
-            else if (temp > 8 && temp < 19) {
+            else if ("Rain".equalsIgnoreCase(this.getWeather())) {
+                changeAge(row, col, cropAges[row][col] + 1);
+            }
+            else if (temp < 0) {
                 changeAge(row, col, cropAges[row][col] - 1);
-            }
-            else if (temp > 18) {
-                farmLand[row][col] = farmLand[row][col] ^ ALIVE;
             }
         }
     }
+
 
     /**
      * Updates the corn.
@@ -293,20 +306,15 @@ public class FarmState {
     private void updateCorn(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
-            if (temp < 3) {
-                if (this.getWeather().equalsIgnoreCase("Snow")) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-                if (temp < -9) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-            }
-            else if (temp > 8 && temp < 19) {
+            changeAge(row, col, cropAges[row][col] + 1);
+            if ("Thunderstorm".equalsIgnoreCase(this.getWeather())) {
                 changeAge(row, col, cropAges[row][col] - 1);
             }
-            else if (temp > 18) {
-                farmLand[row][col] = farmLand[row][col] ^ ALIVE;
+            else if (temp > 15) {
+                changeAge(row, col, cropAges[row][col] + 1);
+            }
+            else if (temp < 5) {
+                changeAge(row, col, cropAges[row][col] - 1);
             }
         }
     }
@@ -321,20 +329,17 @@ public class FarmState {
     private void updateWheat(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
+            changeAge(row, col, cropAges[row][col] + 1);
             if (temp < 3) {
-                if (this.getWeather().equalsIgnoreCase("Snow")) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-                if (temp < -9) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-            }
-            else if (temp > 8 && temp < 19) {
                 changeAge(row, col, cropAges[row][col] - 1);
             }
-            else if (temp > 18) {
-                farmLand[row][col] = farmLand[row][col] ^ ALIVE;
+            else if (temp > 15) {
+                changeAge(row, col, cropAges[row][col] + 1);
+                if (!"Rain".equalsIgnoreCase(weather)
+                        && !"Drizzle".equalsIgnoreCase(weather)
+                        && !"Thunderstorm".equalsIgnoreCase(weather)) {
+                    changeAge(row, col, cropAges[row][col] + 1);
+                }
             }
         }
     }
@@ -346,6 +351,37 @@ public class FarmState {
     public int getCrop() {
         return crop;
     }
+    /**
+     * Returns the number of barn bucks
+     * @return returns barn bucks
+     */
+    public int getBarnBucks(){
+        return this.barnBucks;
+    }
+
+    /**
+     * Setter for barn bucks
+     * @param barnBucks how many barnBucks
+     */
+    public void setBarnBucks(int barnBucks){
+        this.barnBucks = barnBucks;
+    }
+
+    /**
+     * Getter for power
+     * @return this.power
+     */
+    public int getPower(){
+        return this.power;
+    }
+
+    /**
+     * Setter for power
+     * @param power how much power
+     */
+    public void setPower(int power){
+        this.power = power;
+    }
 
     /**
      * Set active tool.
@@ -355,8 +391,15 @@ public class FarmState {
         this.currTool = currTool;
     }
 
+    /**
+     * Sets the prices
+     * @param prices prices to be set to
+     */
+    public void setPrices(int[][] prices){
+        this.prices = prices;
+    }
     // public int getCrop(){
-    //    return crop;
+    //   return crop;
     // }
 
     // public void setActiveTool(String currTool) {

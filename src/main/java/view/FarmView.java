@@ -3,6 +3,7 @@ package main.java.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -14,6 +15,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import javax.swing.border.LineBorder;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -50,7 +52,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private final int corn = 0B1100000000;
     private final int wheat = 0B1000000000;
     private final int ready = 0B10000000;
-    private final int dead = 0B10000000000;
     private ClaimController claimController;
     private FertilizeController fertilizeController;
     private HarvestController harvestController;
@@ -405,7 +406,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     // given the farmland is claimed, if a crop has been planted there, make it appear
                     if ((state.getFarmLand()[r][c] & planted) == planted) {
                         ImageIcon cropImg = null;
-                        if (state.getCrop() == dead) {
+                        if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
                         }
                         else if (state.getCrop() == rice) {
@@ -430,9 +431,12 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     }
 
     private void setLayeredIcons(JLabel label, ImageIcon baseIcon, ImageIcon overlayIcon) {
+        label.removeAll();
+        label.setFont(new Font("Press Start 2P", Font.PLAIN, 20));
+        this.setBorder(new LineBorder(new Color(69, 44, 42)));
+        label.setPreferredSize(new Dimension(25,25));
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setPreferredSize(label.getSize());
-
         JLabel baseLabel = new JLabel(new ImageIcon(baseIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
         baseLabel.setBounds(0, 0, 25, 25);
         layeredPane.add(baseLabel, JLayeredPane.DEFAULT_LAYER);
@@ -443,7 +447,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         layeredPane.add(overlayLabel, JLayeredPane.PALETTE_LAYER);
 
         // Clear the existing icon
-        label.setIcon(null);
         label.setLayout(new BorderLayout());
         label.add(layeredPane, BorderLayout.CENTER);
     }

@@ -8,5 +8,5 @@ public interface LoadFarmOutputBoundary {
      * Updates farm state.
      * @param farmState .
      */
-    void load(int[][] farmState);
+    void load(int[][] farmState, long[][] cropTimes, int[][] cropAge, int[][] prices, int barnBucks, int power);
 }
