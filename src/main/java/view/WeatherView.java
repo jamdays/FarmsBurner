@@ -33,7 +33,7 @@ public class WeatherView extends JPanel {
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(title, BorderLayout.CENTER);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
-        topPanel.setPreferredSize(new Dimension(350,50));
+        topPanel.setPreferredSize(new Dimension(350, 50));
         topPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JPanel descriptionPanel = new JPanel();
