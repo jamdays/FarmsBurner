@@ -1,5 +1,6 @@
 package main.java.view;
 
+import main.java.interface_adapter.farm.GetBarnBucksController;
 import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellState;
@@ -22,8 +23,10 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
     private SellViewModel sellViewModel;
     private SellController sellController;
     private GetStorageController getStorageController;
+    private GetBarnBucksController getBarnBucksController;
 
-    public SellView(SellViewModel sellViewModel, GetStorageController getStorageController) {
+    public SellView(SellViewModel sellViewModel, GetStorageController getStorageController, GetBarnBucksController getBarnBucksController) {
+        this.getBarnBucksController = getBarnBucksController;
         this.sellViewModel = sellViewModel;
         this.crops = FarmSingleton.getInstance().getFarm().getStorage().getCrops().size();
         this.barnBucks = FarmSingleton.getInstance().getFarm().getBarnBucks();
@@ -36,6 +39,7 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
         JLabel cropLabel = new JLabel("Crops: " + crops);
         cropLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 
+        barnBucks = getBarnBucksController.getBarnBucks();
         JLabel barnBucksLabel = new JLabel("Barn Bucks: " + barnBucks);
         barnBucksLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         JPanel topPanel = new JPanel(new BorderLayout());

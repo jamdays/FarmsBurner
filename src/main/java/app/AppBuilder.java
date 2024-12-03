@@ -8,29 +8,7 @@ import javax.swing.WindowConstants;
 
 import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.SaveFileAccess;
-import main.java.interface_adapter.farm.ClaimController;
-import main.java.interface_adapter.farm.ClaimPresenter;
-import main.java.interface_adapter.farm.FarmViewModel;
-import main.java.interface_adapter.farm.FertilizeController;
-import main.java.interface_adapter.farm.FertilizePresenter;
-import main.java.interface_adapter.farm.GetActiveToolController;
-import main.java.interface_adapter.farm.GetActiveToolPresenter;
-import main.java.interface_adapter.farm.HarvestController;
-import main.java.interface_adapter.farm.HarvestPresenter;
-import main.java.interface_adapter.farm.LoadFarmController;
-import main.java.interface_adapter.farm.LoadFarmPresenter;
-import main.java.interface_adapter.farm.PlantController;
-import main.java.interface_adapter.farm.PlantPresenter;
-import main.java.interface_adapter.farm.SaveController;
-import main.java.interface_adapter.farm.SavePresenter;
-import main.java.interface_adapter.farm.SetCropController;
-import main.java.interface_adapter.farm.SetCropPresenter;
-import main.java.interface_adapter.farm.UseToolController;
-import main.java.interface_adapter.farm.UseToolPresenter;
-import main.java.interface_adapter.farm.WaterController;
-import main.java.interface_adapter.farm.WaterPresenter;
-import main.java.interface_adapter.farm.WeatherController;
-import main.java.interface_adapter.farm.WeatherPresenter;
+import main.java.interface_adapter.farm.*;
 import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropPresenter;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
@@ -60,6 +38,8 @@ import main.java.use_case.fertilize.FertilizeInteractor;
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
+import main.java.use_case.getbarnbucks.GetBarnBucksInteractor;
+import main.java.use_case.getbarnbucks.GetBarnBucksOutputBoundary;
 import main.java.use_case.getstorage.GetStorageInteractor;
 import main.java.use_case.getstorage.GetStorageOutputBoundary;
 import main.java.use_case.gettoolbought.GetToolBoughtInteractor;
@@ -132,6 +112,7 @@ public class AppBuilder {
     private GetActiveToolInteractor getActiveToolInteractor;
     private UseToolInteractor useToolInteractor;
     private SetCropInteractor setCropInteractor;
+    private GetBarnBucksInteractor getBarnBucksInteractor;
     // TOOL MENU VIEW, MODEL, AND INTERACTORS
     private ToolMenuViewModel toolMenuViewModel;
     private BuyToolInteractor buyToolInteractor;
@@ -434,6 +415,26 @@ public class AppBuilder {
         farmView.setGetToolBoughtController(getToolBoughtController);
         return this;
     }
+
+    /**
+     * Adds the GetBarnBucks Use Case.
+     * @return this builder
+     * @throws RuntimeException .
+     */
+    public AppBuilder addGetBarnBucksUseCase() {
+        final GetBarnBucksOutputBoundary getBarnBucksOutputBoundary = new GetBarnBucksPresenter(farmViewModel);
+        getBarnBucksInteractor = new GetBarnBucksInteractor(getBarnBucksOutputBoundary);
+
+        final GetBarnBucksController getBarnBucksController = new GetBarnBucksController(getBarnBucksInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+
+        farmView.setGetBarnBucksController(getBarnBucksController);
+        return this;
+    }
+
     /**
      * Creates the objects for the Start Use Case and connects the WelcomeView to its
      * controller.

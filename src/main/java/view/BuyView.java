@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import main.java.interface_adapter.farm.GetBarnBucksController;
 import main.java.interface_adapter.toolmenu.BuyController;
 import main.java.interface_adapter.toolmenu.GetToolBoughtController;
 import main.java.interface_adapter.toolmenu.ToolMenuViewModel;
@@ -32,14 +33,16 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     private BuyController buyController;
     private UpgradeController upgradeController;
     private GetToolBoughtController getToolBoughtController;
+    private GetBarnBucksController getBarnBucksController;
     private int barnBucks;
 
-    public BuyView(ToolMenuViewModel viewModel, GetToolBoughtController getToolBoughtController) {
+    public BuyView(ToolMenuViewModel viewModel, GetToolBoughtController getToolBoughtController, GetBarnBucksController getBarnBucksController) {
         // initialize instance variables
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
         this.barnBucks = 10;
         this.getToolBoughtController = getToolBoughtController;
+        this.getBarnBucksController = getBarnBucksController;
 
         // Buy Menu
         FarmLabel buyMenuTitle = new FarmLabel("Buy Menu", 18);
@@ -49,7 +52,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         topLeftPanel.setBackground(new java.awt.Color(169, 152, 126));
 
         // Barn Bucks
-        // TODO: implement barnBucks so that it updates with the amount of barnBucks the user has
+        barnBucks = getBarnBucksController.getBarnBucks();
         FarmLabel barnBucksLabel = new FarmLabel("Barn Bucks: " + this.barnBucks, 18);
         JPanel topRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         topRightPanel.add(barnBucksLabel);
@@ -70,11 +73,11 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         // Item Panel for Sprinkler
         // TODO: how much area does the sprinkler water?
       
-        createItemPanel("Sprinkler", 5, "Waters crops in a large area.", mainPanel, gbc, 0);
-        createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1);
-        createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 2);
-        createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 3);
-        createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 4);
+        createItemPanel("Sprinkler", 5, "Waters crops in a large area.", mainPanel, gbc, 0, barnBucksLabel);
+        createItemPanel("Planter", 10, "Plants crops in a large area.", mainPanel, gbc, 1, barnBucksLabel);
+        createItemPanel("Harvester", 10, "Harvests crops in a large area.", mainPanel, gbc, 2, barnBucksLabel);
+        createItemPanel("Tiller", 15, "Claims land in a large area.", mainPanel, gbc, 3, barnBucksLabel);
+        createItemPanel("Fertilizer", 20, "Fertilizes a large area of tilled land.", mainPanel, gbc, 4, barnBucksLabel);
 
         mainPanel.setBackground(new java.awt.Color(169, 152, 126));
 
@@ -96,7 +99,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     }
 
     private void createItemPanel(String itemName, int price, String description, JPanel panel, GridBagConstraints gbc,
-                                 int startY) {
+                                 int startY, FarmLabel barnBucksLabel) {
         // Item Label
         int level = (int)getToolBoughtController.getToolBought(itemName).get(1);
         JLabel itemLabel = new JLabel("Level" + " " + (level - 1) + " " + itemName + " ");
@@ -124,10 +127,12 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
                 if (!(boolean)getToolBoughtController.getToolBought(itemName).get(0)) {
                     buyController.buy(itemName);
                     purchaseButton.setText("Upgrade");
+                    barnBucksLabel.setText("Barn Bucks: " + barnBucks);
                 }
                 // upgrade tool if purchased and not maxed out
                 else if ((int)getToolBoughtController.getToolBought(itemName).get(1) < 5) {
                     upgradeController.upgrade(itemName);
+                    barnBucksLabel.setText("Barn Bucks: " + barnBucks);
                     itemLabel.setText("Level " + (Integer.parseInt(itemLabel.getText().replaceAll("[^0-9]", "")) + 1) + " " + itemName + " ");
                     if ((int)getToolBoughtController.getToolBought(itemName).get(1) == 5) {
                         purchaseButton.setText("Max Level");
@@ -190,6 +195,6 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         // Change the level and Barnbucks somehow
-        System.out.println("property change fired");
+
     }
 }

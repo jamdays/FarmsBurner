@@ -66,6 +66,7 @@ public class FarmsBurnerApplication {
                 .addSetCropUseCase()
                 .addGetToolBoughtUseCase()
                 .addGetStorageUseCase()
+                .addGetBarnBucksUseCase()
                 .build().setVisible(true);
     }
 }

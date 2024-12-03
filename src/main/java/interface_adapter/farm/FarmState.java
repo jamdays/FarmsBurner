@@ -25,6 +25,7 @@ public class FarmState {
     private int temp;
     private String currTool;
     private int crop;
+    private int barnBucks;
 
 
     public FarmState() {
@@ -316,6 +317,10 @@ public class FarmState {
 
     public int getDay(){
         return day;
+    }
+
+    public void setBarnBucks(int barnBucks) {
+        this.barnBucks = barnBucks;
     }
 
 }
