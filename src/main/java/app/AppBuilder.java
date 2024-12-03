@@ -37,6 +37,8 @@ import main.java.use_case.claim.ClaimInteractor;
 import main.java.use_case.claim.ClaimOutputBoundary;
 import main.java.use_case.fertilize.FertilizeInteractor;
 import main.java.use_case.fertilize.FertilizeOutputBoundary;
+import main.java.use_case.forecast.ForecastInteractor;
+import main.java.use_case.forecast.ForecastOutputBoundary;
 import main.java.use_case.getactivetool.GetActiveToolInteractor;
 import main.java.use_case.getactivetool.GetActiveToolOutputBoundary;
 import main.java.use_case.getbarnbucks.GetBarnBucksInteractor;
@@ -127,6 +129,7 @@ public class AppBuilder {
     private SelectCropViewModel selectCropViewModel;
     private SelectCropInteractor selectCropInteractor;
     private GetStorageInteractor getStorageInteractor;
+    private ForecastInteractor forecastInteractor;
 
     /**
      * Creates the objects for the Save Use Case and connects the FarmView to its
@@ -206,6 +209,26 @@ public class AppBuilder {
         farmView.setSetCropController(controller);
         return this;
     }
+
+    /**
+     * Creates the objects for the Forecast Use Case and connects the FarmView to its
+     * controller.
+     * <p>This method must be called after addFarmView!</p>
+     * @return this builder
+     * @throws RuntimeException if this method is called before addFarmView
+     */
+    public AppBuilder addForecastUseCase() {
+        final ForecastOutputBoundary forecastOutputBoundary = new ForecastPresenter(farmViewModel);
+        forecastInteractor = new ForecastInteractor(forecastOutputBoundary, farmDataAccessObject);
+        final ForecastController controller = new ForecastController(forecastInteractor);
+
+        if (farmView == null) {
+            throw new RuntimeException("addFarmView must be called before addUseCase");
+        }
+        farmView.setForecastController(controller);
+        return this;
+    }
+
     /**
      * Creates the objects for the Claim Use Case and connects the FarmView to its
      * controller.
