@@ -30,9 +30,11 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
     private UpgradeController upgradeController;
     private GetToolBoughtController getToolBoughtController;
     private GetBarnBucksController getBarnBucksController;
+    private JLabel[] priceLabels;
 
     public BuyView(ToolMenuViewModel viewModel, GetToolBoughtController getToolBoughtController, GetBarnBucksController getBarnBucksController) {
         // initialize instance variables
+        priceLabels = new JLabel[5];
         bbLabel = new FarmLabel("Hi");
         this.viewModel = viewModel;
         viewModel.addPropertyChangeListener(this);
@@ -142,6 +144,7 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
         // Add Price
         gbc.gridx = 1;
         JLabel priceLabel = new JLabel("Price: " + prices[level - 1] + " ");
+        priceLabels[startY] = priceLabel;
         priceLabel.setFont(new Font("Arial", Font.PLAIN, 18));
         panel.add(priceLabel, gbc);
 
@@ -189,7 +192,15 @@ public class BuyView extends JPanel implements ActionListener, PropertyChangeLis
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-
-        bbLabel.setText("Barn Bucks: " + ((ToolMenuState)evt.getNewValue()).getBb());
+        ToolMenuState state = ((ToolMenuState)(evt.getNewValue()));
+        if ("Buy".equalsIgnoreCase(evt.getPropertyName()) || "Upgrade".equalsIgnoreCase(evt.getPropertyName())) {
+            int[] prices = {0, 300, 900, 2700, 8100, 0};
+            for (int i = 0; i < priceLabels.length; i++) {
+                if (state.getPurchased()[i]) {
+                    this.priceLabels[i].setText("Price: " + prices[state.getLevels()[i]]);
+                }
+            }
+        }
+        bbLabel.setText("Barn Bucks: " + state.getBb());
     }
 }

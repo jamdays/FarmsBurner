@@ -140,4 +140,12 @@ public class ToolMenuState {
     public int getBb(){
         return bb;
     }
+
+    public int[] getLevels(){
+        return new int[]{sprinklerLevel, planterLevel, harvesterLevel ,tillerLevel, fertilizerLevel};
+    }
+
+    public boolean[] getPurchased(){
+        return new boolean[]{sprinklerPurchased, planterPurchased, harvesterPurchased, tillerPurchased, fertilizerPurchased};
+    }
 }
