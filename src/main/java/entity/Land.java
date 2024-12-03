@@ -19,16 +19,6 @@ public class Land implements Serializable {
     private boolean planted;
     private boolean fertilized;
 
-    // constructor
-    public Land(AbstractCrop crop) {
-        this.crop = crop;
-        this.isWet = false;
-        this.isSnowy = false;
-        this.planted = true;
-        this.claimed = true;
-        this.fertilized = true;
-    }
-
     public Land() {
         this.isWet = false;
         this.isSnowy = false;

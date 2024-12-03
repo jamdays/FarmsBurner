@@ -1,20 +1,22 @@
 package main.java.use_case.getweather;
 
 import junit.framework.TestCase;
-import main.java.data_access.OpenWeatherAccess;
 import main.java.data_access.OpenWeatherAccessInterface;
-import main.java.use_case.forecast.ForecastInteractor;
-import main.java.use_case.forecast.ForecastOutputBoundary;
+import main.java.entity.Farm;
+import main.java.entity.FarmSingleton;
 import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
 
 public class GetWeatherInteractorTest extends TestCase {
 
     @Test
     public void testGetWeather() {
+        Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setCity("Toronto");
+        FarmSingleton.getInstance().setFarm(farm);
 
         GetWeatherOutputBoundary getWeatherOutputBoundary = new GetWeatherOutputBoundary() {
             @Override
@@ -31,7 +33,7 @@ public class GetWeatherInteractorTest extends TestCase {
 
         @Override
         public List<String> currentDisplayInfoForCity(String city) {
-            return List.of();
+            return List.of("a", "b", "c");
         }
 
         @Override
@@ -46,7 +48,7 @@ public class GetWeatherInteractorTest extends TestCase {
 
         @Override
         public List<Long> getTimesForCity(String city) {
-            return List.of();
+            return List.of(0L, 0L, 0L);
         }
 
         @Override
