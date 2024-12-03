@@ -12,8 +12,8 @@ public class GetBarnBucksPresenter implements GetBarnBucksOutputBoundary {
     }
 
     @Override
-    public void bucks(int bb) {
-        ((ToolMenuState)(viewModel.getState())).setBb(bb);
+    public void bucks(int barnBucks) {
+        ((ToolMenuState)(viewModel.getState())).setBb(barnBucks);
         viewModel.firePropertyChanged("barnBucks");
     }
 }
