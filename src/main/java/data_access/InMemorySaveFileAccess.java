@@ -39,7 +39,7 @@ public class InMemorySaveFileAccess implements SaveDataAccessInterface, LoadData
         this.farm.setBarnBucks(farm.getBarnBucks());
         this.farm.setPower(farm.getPower());
         this.farm.setWeather(farm.getDay(), farm.isRainy(), farm.isFog(), farm.isThunderstorm(), farm.isSnowy(),
-                farm.isCloudy(), farm.isClear());
+                farm.isCloudy(), farm.isClear(), farm.getTemp(), farm.getWeather());
         // TODO set logout time
         // this.farm.setLogOutTime();
         this.farm.setSprinklerPurchased(farm.getSprinklerPurchased());

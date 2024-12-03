@@ -75,7 +75,16 @@ public class FarmState {
             this.cropTimes[row][col] = time;
             this.farmLand[row][col] = farmLand[row][col] | PLANTED | ALIVE | crop;
         }
-        
+        for (int r = 0; r < cropTimes.length; r++) {
+            for (int c = 0; c < cropTimes[r].length; c++) {
+                if (cropTimes[r][c] != 0) {
+                    long diff = time - cropTimes[r][c];
+                    long days = diff / 86400;
+                    updateTime(r, c, time);
+                }
+            }
+        }
+
     }
 
     /**
@@ -113,7 +122,7 @@ public class FarmState {
      */
     public void harvest(int row, int col) {
         if ((farmLand[row][col] & CLAIMED) == CLAIMED) {
-            this.farmLand[row][col] = 0;
+            this.farmLand[row][col] = CLAIMED;
         }
     }
 
@@ -218,6 +227,7 @@ public class FarmState {
         cropAges[row][col] = age;
         if (age == 3) {
             prices[row][col] = 5;
+            farmLand[row][col] = farmLand[row][col] | READY;
             if ((farmLand[row][col] & FERTILIZED) == FERTILIZED) {
                 prices[row][col] = prices[row][col] * 2;
             }

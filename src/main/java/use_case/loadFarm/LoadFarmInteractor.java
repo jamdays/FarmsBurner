@@ -52,7 +52,6 @@ public class LoadFarmInteractor implements LoadFarmInputBoundary {
                     prices[r][c] = land[r][c].getCrop().getPrice();
                     cropTimes[r][c] = land[r][c].getCrop().getTime();
                     cropAges[r][c] = land[r][c].getCrop().getAge();
-                    System.out.println(land[r][c].getCrop().getName());
                     if ("Snowberry".equalsIgnoreCase(land[r][c].getCrop().getName())){
                         landInt[r][c] += snowberry;
                     }
