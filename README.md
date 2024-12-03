@@ -88,9 +88,12 @@ Farms Burner is an idle farming game in which the in-game weather is dependent o
 - To select a crop type to plant, click on the button labelled "Select Crop Type" and choose from the available options
 - To plant a chosen crop on a piece of claimed land, hold down ctrl and then click on the plot
 
+
+
 ### Harvesting Crops
 
-- TODO: add instructions for how to harvest crop (once we have the harvest use case updating the view)
+- To harvest a crop that is ready to be harvested, click on the plot while not holding down any other key
+- This will harvest the crop and add it to your farm storage, allowing you to sell it for BarnBucks
 
 ### Selling Crops
 
@@ -108,7 +111,7 @@ Farms Burner is an idle farming game in which the in-game weather is dependent o
 ### Check the Weather
 
 - To check the current weather at anytime, click on the weather button on the top of the screen to access the weather interface
-- Similarly, you can find the forecast weather for 3 hours in the future by clicking on this same weather button
+- Similarly, you can find the forecast weather for the next 5 days (in 3 hour increments) by clicking on the forecast button on the top of the screen
 
 ## Feedback
 
@@ -129,6 +132,7 @@ Farms Burner is an idle farming game in which the in-game weather is dependent o
 ## Contributions
 
 - If you're looking to make a contribution to Farms Burner, we would be happy to take a look at what you can do!
+- To get an idea of where to start with contributions, read through the issues log in the repository to see what features and fixes are needed
 - To contribute, begin by forking this repository (for a tutorial on how, click <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo">here</a>) and make your desired changes
 - Once done, create a pull request by following the instructions <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork">here</a>
 - After doing this, give us some time to take a look at your pull request and review it
