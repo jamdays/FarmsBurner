@@ -1,14 +1,11 @@
 package main.java.view;
 
-import main.java.interface_adapter.farm.GetBarnBucksController;
 import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
-import main.java.interface_adapter.sell.SellState;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.entity.FarmSingleton;
-import javax.swing.*;
-import java.util.*;
-import java.awt.*;
+import main.java.interface_adapter.toolmenu.GetBarnBucksController;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,10 +21,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import main.java.entity.FarmSingleton;
-import main.java.interface_adapter.sell.SellController;
-import main.java.interface_adapter.sell.SellViewModel;
 
 /**
  * Sell view.
@@ -55,7 +48,7 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
         JLabel cropLabel = new JLabel("Crops: " + crops);
         cropLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 
-        barnBucks = getBarnBucksController.getBarnBucks();
+        barnBucks = getBarnBucksController.getbb();
         JLabel barnBucksLabel = new JLabel("Barn Bucks: " + barnBucks);
         barnBucksLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
         JPanel topPanel = new JPanel(new BorderLayout());

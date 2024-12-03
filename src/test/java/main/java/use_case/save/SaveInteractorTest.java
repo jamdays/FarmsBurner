@@ -71,6 +71,17 @@ public class SaveInteractorTest {
             public String jsonforcity(String city) {
                 return "";
             }
+
+            /**
+             * @param city 
+             * @return
+             */
+            @Override
+            public List<String> fiveDayForecast(String city) {
+                return List.of();
+            }
+
+
         };
 
         SaveInteractor saveInteractor = new SaveInteractor(saveDAO, saveOB, openWeatherAccess);
