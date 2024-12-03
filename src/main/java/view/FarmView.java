@@ -15,12 +15,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
-import javax.swing.border.LineBorder;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import main.java.app.WindowBuilder;
 import main.java.interface_adapter.farm.*;
@@ -222,7 +222,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                                 }
                             }
                         }
-                        else if (mouseEvent.getButton() == 3){
+                        else if (mouseEvent.getButton() == 3) {
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
                                 useToolController.useTool("sprinkler", r, c);
                             } else {
@@ -443,7 +443,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     }
 
                     // given the farmland is claimed, if a crop has been planted there, make it appear
-                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) != ready) {
+                    if ((state.getFarmLand()[r][c] & planted) == planted
+                            && (state.getFarmLand()[r][c] & ready) != ready) {
                         ImageIcon cropImg = null;
                         if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
@@ -464,7 +465,8 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
                         }
                     }
-                    if ((state.getFarmLand()[r][c] & planted) == planted && (state.getFarmLand()[r][c] & ready) == ready) {
+                    if ((state.getFarmLand()[r][c] & planted) == planted
+                            && (state.getFarmLand()[r][c] & ready) == ready) {
                         ImageIcon cropImg = null;
                         if ((state.getFarmLand()[r][c] & alive) != alive) {
                             cropImg = new ImageIcon("src/main/resources/deadPlant.png");
@@ -643,17 +645,34 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    /**
+     * Set forecast controller.
+     * @param forecastController .
+     */
     public void setForecastController(ForecastController forecastController) {
         this.forecastController = forecastController;
     }
+
+    /**
+     * Get storage controller.
+     * @param getStorageController .
+     */
     public void setGetStorageController(GetStorageController getStorageController) {
         this.getStorageController = getStorageController;
     }
 
+    /**
+     * Set get BarnBucks controller.
+     * @param getBarnBucksController .
+     */
     public void setGetBarnBucksController(GetBarnBucksController getBarnBucksController) {
         this.getBarnBucksController = getBarnBucksController;
     }
 
+    /**
+     * Set power refund controller.
+     * @param powerRefundController .
+     */
     public void setPowerRefundController(PowerRefundController powerRefundController) {
         this.powerRefundController = powerRefundController;
     }
