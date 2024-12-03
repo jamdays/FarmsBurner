@@ -11,7 +11,7 @@ public class HarvestInteractor implements HarvestInputBoundary {
 
     @Override
     public void execute(int r, int c) {
-        try{
+        try {
             FarmSingleton.getInstance().getFarm().harvest(r, c);
             outputBoundary.harvestCrop(r, c);
         } catch (HarvestException e) {

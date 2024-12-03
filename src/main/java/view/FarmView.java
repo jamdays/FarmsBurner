@@ -22,6 +22,7 @@ import main.java.interface_adapter.selectcrop.SelectCropController;
 import main.java.interface_adapter.selectcrop.SelectCropViewModel;
 import main.java.interface_adapter.selecttool.SelectToolController;
 import main.java.interface_adapter.selecttool.SelectToolViewModel;
+import main.java.interface_adapter.sell.GetStorageController;
 import main.java.interface_adapter.sell.SellController;
 import main.java.interface_adapter.sell.SellViewModel;
 import main.java.interface_adapter.toolmenu.BuyController;
@@ -69,6 +70,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
     private GetActiveToolController getActiveToolController;
     private SetCropController setCropController;
     private GetToolBoughtController getToolBoughtController;
+    private GetStorageController getStorageController;
 
     public FarmView(FarmViewModel farmViewModel, ToolMenuViewModel toolMenuViewModel, SellViewModel sellViewModel, SelectToolViewModel selectToolViewModel, SelectCropViewModel selectCropViewModel) {
         // Add background as JLABEL to set images
@@ -112,7 +114,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 final WindowBuilder builder = new WindowBuilder();
-                SellView sellView = new SellView(sellViewModel);
+                SellView sellView = new SellView(sellViewModel, getStorageController);
                 builder.addView(350, 280, sellView).build().setVisible(true);
                 sellView.setSellController(sellController);
             }
@@ -190,6 +192,15 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                             }
                             else {
                                 fertilizeController.fertilize(r, c);
+                            }
+                        }
+                        // if plot is clicked with nothing held down, harvest crop
+                        else {
+                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("harvester")) {
+                                useToolController.useTool("harvester", r, c);
+                            }
+                            else {
+                                harvestController.harvestCrop(r, c);
                             }
                         }
                     }
@@ -552,4 +563,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         System.out.println("Click " + evt.getActionCommand());
     }
 
+    public void setGetStorageController(GetStorageController getStorageController) {
+        this.getStorageController = getStorageController;
+    }
 }
