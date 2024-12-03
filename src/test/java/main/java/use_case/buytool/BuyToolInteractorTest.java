@@ -10,7 +10,7 @@ import static org.junit.Assert.assertEquals;
 
 public class BuyToolInteractorTest extends TestCase {
     @Test
-    public void testUpgradeSprinkler() {
+    public void testBuyTool() {
         Farm farm = new Farm();
         FarmSingleton.getInstance().setFarm(farm);
 
