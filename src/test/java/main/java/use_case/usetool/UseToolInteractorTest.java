@@ -15,6 +15,9 @@ public class UseToolInteractorTest extends TestCase {
     @Test
     public void testUseTool() throws PlantingException {
         Farm farm = new Farm();
+        farm.setWeather(0, false, false, false, false, false, true, 15, "sunny", System.currentTimeMillis());
+        farm.setBarnBucks(5000);
+        farm.setPower(5000);
         farm.claim(0, 0);
         farm.claim(0, 1);
         farm.claim(1, 0);

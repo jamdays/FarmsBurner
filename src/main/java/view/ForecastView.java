@@ -1,20 +1,22 @@
 package main.java.view;
 
-import main.java.data_access.OpenWeatherAccess;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.List;
-import java.util.Properties;
 
-public class ForecastView extends JPanel{
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
+
+/**
+ * Forecast view.
+ */
+public class ForecastView extends JPanel {
     public ForecastView(List<String> conditions, String city) {
         JLabel title = new JLabel("Weather Forecast ");
         title.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -23,7 +25,7 @@ public class ForecastView extends JPanel{
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.add(title, BorderLayout.CENTER);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
-        topPanel.setPreferredSize(new Dimension(350,50));
+        topPanel.setPreferredSize(new Dimension(350, 50));
         topPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JPanel descriptionPanel = new JPanel();
@@ -35,7 +37,7 @@ public class ForecastView extends JPanel{
             tempDescription.setHorizontalAlignment(SwingConstants.CENTER);
             tempDescription.setFont(new Font("Arial", Font.PLAIN, 18));
             descriptionPanel.add(tempDescription);
-            if (i > 1 && (i + 1) % 4 == 0){
+            if (i > 1 && (i + 1) % 4 == 0) {
                 JLabel spacing = new JLabel("\n");
                 spacing.setHorizontalAlignment(SwingConstants.CENTER);
                 spacing.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -54,8 +56,6 @@ public class ForecastView extends JPanel{
         this.setBackground(new java.awt.Color(169, 152, 126));
         this.add(topPanel, BorderLayout.NORTH);
         this.add(descriptionScrollPane, BorderLayout.CENTER);
-
-
     }
 
 }

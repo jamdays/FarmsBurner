@@ -1,11 +1,5 @@
 package main.java.view;
 
-import main.java.interface_adapter.sell.GetStorageController;
-import main.java.interface_adapter.sell.SellController;
-import main.java.interface_adapter.sell.SellViewModel;
-import main.java.entity.FarmSingleton;
-import main.java.interface_adapter.toolmenu.GetBarnBucksController;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,6 +15,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import main.java.entity.FarmSingleton;
+import main.java.interface_adapter.sell.GetStorageController;
+import main.java.interface_adapter.sell.SellController;
+import main.java.interface_adapter.sell.SellViewModel;
+import main.java.interface_adapter.toolmenu.GetBarnBucksController;
 
 /**
  * Sell view.
@@ -55,7 +55,7 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
         topPanel.add(cropLabel, BorderLayout.WEST);
         topPanel.add(barnBucksLabel, BorderLayout.EAST);
         topPanel.setBackground(new java.awt.Color(169, 152, 126));
-        topPanel.setPreferredSize(new Dimension(350,50));
+        topPanel.setPreferredSize(new Dimension(350, 50));
         topPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
         JPanel descriptionPanel = new JPanel();
@@ -72,9 +72,8 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
         sellLabel.setFont(new Font("Arial", Font.BOLD, 18));
         JButton minusButton = new JButton("-");
         JLabel amountLabel = new JLabel("0");
-        JButton plusButton = new JButton("+");
         amountLabel.setFont(new Font("Arial", Font.PLAIN, 15));
-
+        JButton plusButton = new JButton("+");
         sellPanel.add(sellLabel);
         sellPanel.add(minusButton);
         sellPanel.add(amountLabel);
@@ -139,14 +138,14 @@ public class SellView extends JPanel implements ActionListener, PropertyChangeLi
             @Override
             public void actionPerformed(ActionEvent e) {
                 int currentQuantity = Integer.parseInt(amountLabel.getText());
-                int barnBucks = Integer.parseInt(barnBucksLabel.getText().substring(12));
                 crops = crops - currentQuantity;
                 cropLabel.setText("Crops: " + crops);
                 int result = 0;
                 for (int i = 0; i < Integer.parseInt(amountLabel.getText()); i++) {
                     result += storage.get(i);
                 }
-                barnBucksLabel.setText("Barn Bucks: " + (barnBucks + result));
+                int currBarnBucks = Integer.parseInt(barnBucksLabel.getText().substring(12));
+                barnBucksLabel.setText("Barn Bucks: " + (currBarnBucks + result));
                 amountLabel.setText("0");
                 earningLabel.setText("Total Earnings: 0");
                 sellController.sell(currentQuantity);
