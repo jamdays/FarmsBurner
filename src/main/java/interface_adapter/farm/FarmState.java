@@ -252,7 +252,7 @@ public class FarmState {
     private void updateSnowberry(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
+            changeAge(row, col, cropAges[row][col] + 1);
             if (temp < 3) {
                 if ("Snow".equalsIgnoreCase(this.getWeather())) {
                     changeAge(row, col, cropAges[row][col] + 1);
@@ -281,20 +281,16 @@ public class FarmState {
     private void updateRice(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
-            if (temp < 3) {
-                if (this.getWeather().equalsIgnoreCase("Snow")) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-                if (temp < -9) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
+            changeAge(row, col, cropAges[row][col] + 1);
+            if ("Thunderstorm".equalsIgnoreCase(this.getWeather())) {
+                changeAge(row, col, cropAges[row][col] + 1);
+                changeAge(row, col, cropAges[row][col] + 1);
             }
-            else if (temp > 8 && temp < 19) {
+            else if ("Rain".equalsIgnoreCase(this.getWeather())) {
+                changeAge(row, col, cropAges[row][col] + 1);
+            }
+            else if (temp < 0) {
                 changeAge(row, col, cropAges[row][col] - 1);
-            }
-            else if (temp > 18) {
-                farmLand[row][col] = farmLand[row][col] ^ ALIVE;
             }
         }
     }
@@ -310,20 +306,15 @@ public class FarmState {
     private void updateCorn(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
-            if (temp < 3) {
-                if (this.getWeather().equalsIgnoreCase("Snow")) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-                if (temp < -9) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-            }
-            else if (temp > 8 && temp < 19) {
+            changeAge(row, col, cropAges[row][col] + 1);
+            if ("Thunderstorm".equalsIgnoreCase(this.getWeather())) {
                 changeAge(row, col, cropAges[row][col] - 1);
             }
-            else if (temp > 18) {
-                farmLand[row][col] = farmLand[row][col] ^ ALIVE;
+            else if (temp > 15) {
+                changeAge(row, col, cropAges[row][col] + 1);
+            }
+            else if (temp < 5) {
+                changeAge(row, col, cropAges[row][col] - 1);
             }
         }
     }
@@ -338,20 +329,17 @@ public class FarmState {
     private void updateWheat(int row, int col, long days) {
         if (days >= 1 && (farmLand[row][col] & WET) == WET) {
             farmLand[row][col] = farmLand[row][col] ^ WET;
-            changeAge(row, col, cropAges[row][col]);
+            changeAge(row, col, cropAges[row][col] + 1);
             if (temp < 3) {
-                if (this.getWeather().equalsIgnoreCase("Snow")) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-                if (temp < -9) {
-                    changeAge(row, col, cropAges[row][col] + 1);
-                }
-            }
-            else if (temp > 8 && temp < 19) {
                 changeAge(row, col, cropAges[row][col] - 1);
             }
-            else if (temp > 18) {
-                farmLand[row][col] = farmLand[row][col] ^ ALIVE;
+            else if (temp > 15) {
+                changeAge(row, col, cropAges[row][col] + 1);
+                if (!"Rain".equalsIgnoreCase(weather)
+                        && !"Drizzle".equalsIgnoreCase(weather)
+                        && !"Thunderstorm".equalsIgnoreCase(weather)) {
+                    changeAge(row, col, cropAges[row][col] + 1);
+                }
             }
         }
     }
