@@ -57,6 +57,9 @@ public class InMemoryWeatherAccess implements OpenWeatherAccessInterface {
         List<String> result = new ArrayList<>();
         result.add("hi");
         result.add(" 15°C");
+        result.add(" 15°C");
+        result.add(" 15°C");
+        result.add(" 15°C");
         return result;
     }
 

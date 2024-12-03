@@ -51,6 +51,13 @@ public class FarmsBurnerApplication {
         ((InMemoryWeatherAccess)mockDao).setTimes(times);
         ((InMemoryWeatherAccess)mockDao).nextDay();
         ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess)mockDao).nextDay();
+        ((InMemoryWeatherAccess)mockDao).nextDay();
+
         final AppBuilder builder = new AppBuilder();
         builder
                 .addFarmDataAccessObject(mockDao)

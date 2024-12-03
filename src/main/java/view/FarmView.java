@@ -172,49 +172,53 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 cropLabel.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent mouseEvent) {
                         // if plot is clicked while shift is held down, claim land
-                        if ((mouseEvent.getModifiers() & 1) == 1) {
-                            // make it so that if tiller is active, you till an area
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
-                                useToolController.useTool("tiller", r, c);
+                        if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+                            if ((mouseEvent.getModifiers() & 1) == 1) {
+                                // make it so that if tiller is active, you till an area
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("tiller")) {
+                                    useToolController.useTool("tiller", r, c);
+                                } else {
+                                    claimController.claim(r, c);
+                                }
                             }
+                            // if plot is clicked while ctrl is held down, plant crop on plot
+                            else if (mouseEvent.getModifiers() == 18) {
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
+                                    useToolController.useTool("planter", r, c);
+                                } else {
+                                    plantController.plantCrop(r, c);
+                                }
+                            }
+                            // if plot is clicked while alt is held down, water plot
+                            else if (mouseEvent.getModifiers() == 24) {
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
+                                    useToolController.useTool("sprinkler", r, c);
+                                } else {
+                                    waterController.waterCrop(r, c);
+                                }
+                            }
+                            // if plot is clicked while ctrl and alt are held down, fertilize crop
+                            else if ((mouseEvent.getModifiers() & (18 | 24)) == (18 | 24)) {
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
+                                    useToolController.useTool("fertilizer", r, c);
+                                } else {
+                                    fertilizeController.fertilize(r, c);
+                                }
+                            }
+                            // if plot is clicked with nothing held down, harvest crop
                             else {
-                                claimController.claim(r, c);
+                                if (getActiveToolController.getActiveTool().equalsIgnoreCase("harvester")) {
+                                    useToolController.useTool("harvester", r, c);
+                                } else {
+                                    harvestController.harvestCrop(r, c);
+                                }
                             }
                         }
-                        // if plot is clicked while ctrl is held down, plant crop on plot
-                        else if (mouseEvent.getModifiers() == 18) {
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("planter")) {
-                                useToolController.useTool("planter", r, c);
-                            }
-                            else {
-                                plantController.plantCrop(r, c);
-                            }
-                        }
-                        // if plot is clicked while alt is held down, water plot
-                        else if (mouseEvent.getModifiers() == 24) {
+                        else if (mouseEvent.getButton() == 3){
                             if (getActiveToolController.getActiveTool().equalsIgnoreCase("sprinkler")) {
                                 useToolController.useTool("sprinkler", r, c);
-                            }
-                            else {
+                            } else {
                                 waterController.waterCrop(r, c);
-                            }
-                        }
-                        // if plot is clicked while ctrl and alt are held down, fertilize crop
-                        else if ((mouseEvent.getModifiers() & (18|24)) == (18|24)) {
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("fertilizer")) {
-                                useToolController.useTool("fertilizer", r, c);
-                            }
-                            else {
-                                fertilizeController.fertilize(r, c);
-                            }
-                        }
-                        // if plot is clicked with nothing held down, harvest crop
-                        else {
-                            if (getActiveToolController.getActiveTool().equalsIgnoreCase("harvester")) {
-                                useToolController.useTool("harvester", r, c);
-                            }
-                            else {
-                                harvestController.harvestCrop(r, c);
                             }
                         }
                     }

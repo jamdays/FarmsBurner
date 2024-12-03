@@ -29,6 +29,7 @@ public class Wheat extends AbstractCrop implements Serializable {
             this.getLand().setIsWet(false);
             this.setAge(this.getAge() + 1);
             if (this.getTemp() < 3) {
+                System.out.println(this.getTemp());
                 this.setAge(this.getAge() - 1);
             }
             else if (this.getTemp() > 15) {

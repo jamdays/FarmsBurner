@@ -26,6 +26,9 @@ public class Corn extends AbstractCrop implements Serializable {
      */
     @Override
     public void update(long time) {
+        System.out.println(this.getWeather());
+        System.out.println(this.getAge());
+        System.out.println(this.getTemp());
         // this.time is very different from time
         long diff = time - this.getTime();
         long days = diff / 86400;

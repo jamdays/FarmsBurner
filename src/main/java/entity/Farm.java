@@ -32,6 +32,8 @@ public class Farm implements Serializable {
     private boolean cloudy;
     private boolean clear;
     private long time;
+    private int temp;
+    private String weather;
 
     // activeTool and activeCrop instance variables
 
@@ -396,7 +398,7 @@ public class Farm implements Serializable {
      * @param cloudy true if cloudy, false if not
      */
     public void setWeather(int day, boolean rainy, boolean fog, boolean thunderstorm, boolean snowy,
-                           boolean cloudy, boolean clear) {
+                           boolean cloudy, boolean clear, int temp, String weather) {
         this.day = day;
         this.rainy = rainy;
         this.fog = fog;
@@ -404,6 +406,8 @@ public class Farm implements Serializable {
         this.snowy = snowy;
         this.cloudy = cloudy;
         this.clear = clear;
+        this.temp = temp;
+        this.weather = weather;
     }
 
     /**
@@ -458,6 +462,8 @@ public class Farm implements Serializable {
             for (Land land : lands) {
                 if (land.getCrop() != null) {
                     land.getCrop().setLand(land);
+                    land.getCrop().setWeather(this.weather);
+                    land.getCrop().setTemp(this.temp);
                     land.getCrop().update(time);
                 }
             }
@@ -560,4 +566,19 @@ public class Farm implements Serializable {
         this.planterLevel = planterLevel;
     }
 
+    public int getTemp() {
+        return temp;
+    }
+
+    public void setTemp(int temp) {
+        this.temp = temp;
+    }
+
+    public String getWeather() {
+        return weather;
+    }
+
+    public void weather(String weather) {
+        this.weather = weather;
+    }
 }

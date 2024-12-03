@@ -70,7 +70,7 @@ public abstract class AbstractCrop implements Serializable {
         if (this.getAge() > 7) {
             this.setPrice(this.getPrice()-1);
         }
-        if (this.getPrice() == 0) {
+        if (this.getPrice() < 0) {
             this.setIsAlive(false);
         }
     }
@@ -176,7 +176,7 @@ public abstract class AbstractCrop implements Serializable {
      * @return whether age > 5.
      */
     public boolean getReadyToHarvest() {
-        return this.getAge() > 5;
+        return this.getAge() > 3;
     }
 
     /**
