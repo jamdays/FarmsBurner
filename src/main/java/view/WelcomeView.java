@@ -9,6 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.URL;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -49,6 +50,11 @@ public class WelcomeView extends JPanel implements ActionListener, PropertyChang
         // Main Panel with background image
         backgroundLabel = new JLabel();
         ImageIcon backgroundImg = new ImageIcon("src/main/resources/welcomeBg.png");
+        String imgurlstr = "/main/resources/welcomeBg.png";
+        URL imgurl = Info.class.getResource(imgurlstr);
+        if (imgurl != null) {
+            backgroundImg = new ImageIcon(imgurl);
+        }
         backgroundLabel.setIcon(new ImageIcon(backgroundImg.getImage()
                 .getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
         this.add(backgroundLabel);

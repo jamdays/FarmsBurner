@@ -75,6 +75,7 @@ public class Farm implements Serializable {
         this.planterLevel = 2;
         this.activeCrop = "snowberry";
         this.activeTool = "none";
+        this.barnBucks = 30000000;
     }
 
     public Farm() {
@@ -86,7 +87,7 @@ public class Farm implements Serializable {
         }
         this.activeCrop = "snowberry";
         this.barnBucks = 0;
-        this.power = 0;
+        this.power = 10000;
         this.city = "Toronto";
         this.storage = new Storage(100);
         this.sprinklerPurchased = false;
@@ -100,6 +101,7 @@ public class Farm implements Serializable {
         this.planterPurchased = false;
         this.planterLevel = 2;
         this.activeTool = "none";
+        this.barnBucks = 30000000;
 
     }
 
@@ -588,6 +590,7 @@ public class Farm implements Serializable {
                     land.getCrop().setLand(land);
                     land.getCrop().setWeather(this.weather);
                     land.getCrop().setTemp(this.temp);
+                    land.getCrop().setSnowy(this.snowy);
                     land.getCrop().update(currTime);
                 }
             }

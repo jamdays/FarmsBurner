@@ -19,6 +19,7 @@ public class GetBarnBucksInteractor implements GetBarnBucksInputBoundary {
      */
     public int getBarnBucks() {
         int bb = FarmSingleton.getInstance().getFarm().getBarnBucks();
+        System.out.println(bb);
         outputBoundary.bucks(bb);
         return bb;
     }
