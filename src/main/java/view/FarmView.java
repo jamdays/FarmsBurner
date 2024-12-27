@@ -536,7 +536,6 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         }
                     }
                 }
-                //TODO FINISH THIS (MAKE THEM READABLE BY JAR)
                 // Snowy & Unclaimed
                 else if ((state.getFarmLand()[r][c] & snowy) == snowy) {
                     String dirtImgicon = "/main/resources/snowytiles1.png";
@@ -576,19 +575,44 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         && (state.getFarmLand()[r][c] & ready) != ready) {
                     ImageIcon cropImg = null;
                     if ((state.getFarmLand()[r][c] & alive) != alive) {
+                        String cropImgicon = "/main/resources/deadPlant.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
+                        String cropImgicon = "/main/resources/RiceUnready.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
+                        String cropImgicon = "/main/resources/CornUnready.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/CornUnready.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
+                        String cropImgicon = "/main/resources/WheatUnready.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/WheatUnready.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
-                        cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
+                        String cropImgicon = "/main/resources/SnowberryUnready.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
+                        cropImg = new ImageIcon("src/main/resources/SnowyberryUnready.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     if (cropImg != null) {
                         setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
@@ -598,19 +622,44 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                         && (state.getFarmLand()[r][c] & ready) == ready) {
                     ImageIcon cropImg = null;
                     if ((state.getFarmLand()[r][c] & alive) != alive) {
+                        String cropImgicon = "/main/resources/deadPlant.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
+                        String cropImgicon = "/main/resources/RiceReady.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/RiceReady.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
+                        String cropImgicon = "/main/resources/CornReady.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/CornReady.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
+                        String cropImgicon = "/main/resources/WheatReady.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/WheatReady.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
+                        String cropImgicon = "/main/resources/SnowberryReady.png";
+                        URL imgurl = FarmView.class.getResource(cropImgicon);
                         cropImg = new ImageIcon("src/main/resources/SnowberryReady.png");
+                        if (imgurl != null) {
+                            cropImg = new ImageIcon(imgurl);
+                        }
                     }
                     if (cropImg != null) {
                         setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
