@@ -219,7 +219,7 @@ public class FarmState {
                 if ("Snow".equalsIgnoreCase(weather)) {
                     farmLand[r][c] += snowy;
                 }
-                else if (currTemp > 0){
+                else if (currTemp > 0 && (farmLand[r][c] & snowy) == snowy){
                     farmLand[r][c] -= snowy;
                 }
             }

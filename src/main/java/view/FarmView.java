@@ -539,14 +539,34 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                 //TODO FINISH THIS (MAKE THEM READABLE BY JAR)
                 // Snowy & Unclaimed
                 else if ((state.getFarmLand()[r][c] & snowy) == snowy) {
+                    String dirtImgicon = "/main/resources/snowytiles1.png";
+                    URL imgurl = FarmView.class.getResource(dirtImgicon);
                     dirtImg = new ImageIcon("src/main/resources/snowytiles1.png");
+                    if (imgurl != null) {
+                        dirtImg = new ImageIcon(imgurl);
+                    }
+                    String dirturl = "/main/resources/snowytiles1.png";
+                    imgurl = FarmView.class.getResource(dirturl);
                     ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles1.png");
+                    if (imgurl != null) {
+                        snowyDirtImage= new ImageIcon(imgurl);
+                    }
                     farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
                             .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                 }
                 else {
+                    String dirtImgicon = "/main/resources/farmtile1.png";
+                    URL imgurl = FarmView.class.getResource(dirtImgicon);
                     dirtImg = new ImageIcon("src/main/resources/farmtile1.png");
+                    if (imgurl != null) {
+                        dirtImg = new ImageIcon(imgurl);
+                    }
+                    String dirturl = "/main/resources/farmtile1.png";
+                    imgurl = FarmView.class.getResource(dirturl);
                     ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile1.png");
+                    if (imgurl != null) {
+                        wetdirtImage= new ImageIcon(imgurl);
+                    }
                     farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
                             .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                 }
