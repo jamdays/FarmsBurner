@@ -18,6 +18,7 @@ public abstract class AbstractCrop implements Serializable {
     private String name;
     private String weather;
     private int temp;
+    private boolean snowy;
 
     // constructor
     public AbstractCrop(int age, boolean isAlive, int price, Long time, Land land) {
@@ -250,6 +251,15 @@ public abstract class AbstractCrop implements Serializable {
      */
     public void harvest() {
 
+    }
+
+    public void setSnowy(boolean snowy) {
+        if (snowy){
+            this.snowy = true;
+        }
+        else if (this.temp > 0){
+            this.snowy = false;
+        }
     }
 
 }

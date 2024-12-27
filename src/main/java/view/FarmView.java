@@ -13,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -325,7 +327,7 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
         final FarmState state = (FarmState) evt.getNewValue();
         power.setText("Power: " + state.getPower());
         if (evt.getPropertyName().equals("weather")) {
-            String background = "src/main/resources/background-";
+            String background = "/main/resources/background-";
             if (state.getDay() == 0) {
                 background += "night";
             }
@@ -361,155 +363,237 @@ public class FarmView extends JPanel implements ActionListener, PropertyChangeLi
                     background += "fog";
                     break;
                 case "Thunderstorm":
-                    background = "src/main/resources/background-thunderstorm";
+                    background = "main/resources/background-thunderstorm";
                     break;
                 default:
                     background += "cloudy";
             }
             background += ".png";
             ImageIcon backgroundImage = new ImageIcon(background);
+            URL imgurl = FarmView.class.getResource(background);
+            if (imgurl != null) {
+                backgroundImage = new ImageIcon(imgurl);
+            }
             System.out.println(background);
             this.backgroundLabel.setIcon(new ImageIcon(backgroundImage.getImage()));
 
         }
-        else {
-            Color green = new Color(20, 130, 50);
-            Color dirt = new Color(75, 40, 40);
-            Color wetDirt = new Color(50, 20, 20);
-            for (int r = 0; r < state.getFarmLand().length; r++) {
-                for (int c = 0; c < state.getFarmLand()[r].length; c++) {
-                    ImageIcon dirtImg = null;
-                    // if farmland is claimed, change button color to dirt
-                    if ((state.getFarmLand()[r][c] & claimed) == claimed) {
-                        farmLand[r][c].removeAll();
-                        farmLand[r][c].setFont(new Font("Press Start 2P", Font.PLAIN, 20));
-                        farmLand[r][c].setBorder(new LineBorder(new Color(69, 44, 42)));
-                        farmLand[r][c].setPreferredSize(new Dimension(25, 25));
-                        // Snowy & Claimed
-                        if ((state.getFarmLand()[r][c] & snowy) == snowy) {
-                            dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
-                            ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles2.png");
-                            farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
-                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+        Color green = new Color(20, 130, 50);
+        Color dirt = new Color(75, 40, 40);
+        Color wetDirt = new Color(50, 20, 20);
+        for (int r = 0; r < state.getFarmLand().length; r++) {
+            for (int c = 0; c < state.getFarmLand()[r].length; c++) {
+                ImageIcon dirtImg = null;
+                // if farmland is claimed, change button color to dirt
+                if ((state.getFarmLand()[r][c] & claimed) == claimed) {
+                    farmLand[r][c].removeAll();
+                    farmLand[r][c].setFont(new Font("Press Start 2P", Font.PLAIN, 20));
+                    farmLand[r][c].setBorder(new LineBorder(new Color(69, 44, 42)));
+                    farmLand[r][c].setPreferredSize(new Dimension(25, 25));
+                    // Snowy & Claimed
+                    if ((state.getFarmLand()[r][c] & snowy) == snowy) {
+                        String dirtImgicon = "/main/resources/snowytiles2.png";
+                        URL imgurl = FarmView.class.getResource(dirtImgicon);
+                        dirtImg = new ImageIcon("src/main/resources/snowytiles2.png");
+                        if (imgurl != null) {
+                            dirtImg = new ImageIcon(imgurl);
                         }
-                        else {
-                            dirtImg = new ImageIcon("src/main/resources/farmtile2.png");
-                            ImageIcon dirtImage = new ImageIcon("src/main/resources/farmtile2.png");
-                            farmLand[r][c].setIcon(new ImageIcon(dirtImage.getImage()
-                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                        String snowdirturl = "/main/resources/snowytiles2.png";
+                        imgurl = FarmView.class.getResource(snowdirturl);
+                        ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles2.png");
+                        if (imgurl != null) {
+                            snowyDirtImage = new ImageIcon(imgurl);
                         }
-                        // given the farmland is claimed, if it is wet as well as fertilized,
-                        // set label image to wet and fertilized dirt
-                        if ((state.getFarmLand()[r][c] & fertilized) == fertilized
-                                && (state.getFarmLand()[r][c] & wet) == wet) {
-                            // Snowy & Wet & Fertilized
-                            if ((state.getFarmLand()[r][c] & snowy) == snowy) {
-                                dirtImg = new ImageIcon("src/main/resources/snowytiles5.png");
-                                ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles2.png");
-                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
-                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            }
-                            else {
-                                dirtImg = new ImageIcon("src/main/resources/farmtile5.png");
-                                ImageIcon wetfertilizeddirtImage = new ImageIcon("src/main/resources/farmtile5.png");
-                                farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtImage.getImage()
-                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            }
-                        }
-                        // given the farmland is claimed, if it is wet but unfertilized,
-                        // set label image to wet but unfertilized dirt
-                        if (!((state.getFarmLand()[r][c] & fertilized) == fertilized)
-                                && (state.getFarmLand()[r][c] & wet) == wet) {
-                            // Snowy & Wet
-                            if ((state.getFarmLand()[r][c] & snowy) == snowy) {
-                                dirtImg = new ImageIcon("src/main/resources/snowytiles3.png");
-                                ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles3.png");
-                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
-                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            }
-                            else {
-                                dirtImg = new ImageIcon("src/main/resources/farmtile3.png");
-                                ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile3.png");
-                                farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
-                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            }
-                        }
-                        if ((state.getFarmLand()[r][c] & fertilized) == fertilized
-                                && !((state.getFarmLand()[r][c] & wet) == wet)) {
-                            // Snowy & Fertilized
-                            if ((state.getFarmLand()[r][c] & snowy) == snowy) {
-                                dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");
-                                ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles4.png");
-                                farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
-                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            }
-                            else {
-                                dirtImg = new ImageIcon("src/main/resources/farmtile4.png");
-                                ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile4.png");
-                                farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
-                                        .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
-                            }
-                        }
-                    }
-
-                    // Snowy & Unclaimed
-                    else if ((state.getFarmLand()[r][c] & snowy) == snowy) {
-                        dirtImg = new ImageIcon("src/main/resources/snowytiles1.png");
-                        ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles1.png");
                         farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
                                 .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                     }
                     else {
-                        dirtImg = new ImageIcon("src/main/resources/farmtile1.png");
-                        ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile1.png");
-                        farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
+                        String dirtImgicon = "/main/resources/farmtile2.png";
+                        URL imgurl = FarmView.class.getResource(dirtImgicon);
+                        dirtImg = new ImageIcon("src/main/resources/farmtile2.png");
+                        if (imgurl != null) {
+                            dirtImg = new ImageIcon(imgurl);
+                        }
+                        String dirturl = "/main/resources/farmtile2.png";
+                        imgurl = FarmView.class.getResource(dirturl);
+                        ImageIcon dirtImage = new ImageIcon("src/main/resources/farmtile2.png");
+                        if (imgurl != null) {
+                            dirtImage = new ImageIcon(imgurl);
+                        }
+                        farmLand[r][c].setIcon(new ImageIcon(dirtImage.getImage()
                                 .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                     }
-
-                    // given the farmland is claimed, if a crop has been planted there, make it appear
-                    if ((state.getFarmLand()[r][c] & planted) == planted
-                            && (state.getFarmLand()[r][c] & ready) != ready) {
-                        ImageIcon cropImg = null;
-                        if ((state.getFarmLand()[r][c] & alive) != alive) {
-                            cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                    // given the farmland is claimed, if it is wet as well as fertilized,
+                    // set label image to wet and fertilized dirt
+                    if ((state.getFarmLand()[r][c] & fertilized) == fertilized
+                            && (state.getFarmLand()[r][c] & wet) == wet) {
+                        // Snowy & Wet & Fertilized
+                        if ((state.getFarmLand()[r][c] & snowy) == snowy) {
+                            String dirtImgicon = "/main/resources/snowytiles5.png";
+                            URL imgurl = FarmView.class.getResource(dirtImgicon);
+                            dirtImg = new ImageIcon("src/main/resources/snowytiles5.png");
+                            if (imgurl != null) {
+                                dirtImg = new ImageIcon(imgurl);
+                            }
+                            String dirturl = "/main/resources/snowytiles5.png";
+                            imgurl = FarmView.class.getResource(dirturl);
+                            ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles5.png");
+                            if (imgurl != null) {
+                                snowyDirtImage = new ImageIcon(imgurl);
+                            }
+                            farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
-                            cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
-                        }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
-                            cropImg = new ImageIcon("src/main/resources/CornUnready.png");
-                        }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
-                            cropImg = new ImageIcon("src/main/resources/WheatUnready.png");
-                        }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
-                            cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
-                        }
-                        if (cropImg != null) {
-                            setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
+                        else {
+                            String dirtImgicon = "/main/resources/farmtile5.png";
+                            URL imgurl = FarmView.class.getResource(dirtImgicon);
+                            dirtImg = new ImageIcon("src/main/resources/farmtile5.png");
+                            if (imgurl != null) {
+                                dirtImg = new ImageIcon(imgurl);
+                            }
+                            String dirturl = "/main/resources/farmtile5.png";
+                            imgurl = FarmView.class.getResource(dirturl);
+                            ImageIcon wetfertilizeddirtImage = new ImageIcon("src/main/resources/farmtile5.png");
+                            if (imgurl != null) {
+                                wetfertilizeddirtImage= new ImageIcon(imgurl);
+                            }
+                            farmLand[r][c].setIcon(new ImageIcon(wetfertilizeddirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
                     }
-                    if ((state.getFarmLand()[r][c] & planted) == planted
-                            && (state.getFarmLand()[r][c] & ready) == ready) {
-                        ImageIcon cropImg = null;
-                        if ((state.getFarmLand()[r][c] & alive) != alive) {
-                            cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                    // given the farmland is claimed, if it is wet but unfertilized,
+                    // set label image to wet but unfertilized dirt
+                    if (!((state.getFarmLand()[r][c] & fertilized) == fertilized)
+                            && (state.getFarmLand()[r][c] & wet) == wet) {
+                        // Snowy & Wet
+                        if ((state.getFarmLand()[r][c] & snowy) == snowy) {
+                            String dirtImgicon = "/main/resources/snowytiles3.png";
+                            URL imgurl = FarmView.class.getResource(dirtImgicon);
+                            dirtImg = new ImageIcon("src/main/resources/snowytiles3.png");
+                            if (imgurl != null) {
+                                dirtImg = new ImageIcon(imgurl);
+                            }
+                            String dirturl = "/main/resources/snowytiles3.png";
+                            imgurl = FarmView.class.getResource(dirturl);
+                            ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles3.png");
+                            if (imgurl != null) {
+                                snowyDirtImage= new ImageIcon(imgurl);
+                            }
+                            farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
-                            cropImg = new ImageIcon("src/main/resources/RiceReady.png");
+                        else {
+                            String dirtImgicon = "/main/resources/farmtile3.png";
+                            URL imgurl = FarmView.class.getResource(dirtImgicon);
+                            dirtImg = new ImageIcon("src/main/resources/farmtile3.png");
+                            if (imgurl != null) {
+                                dirtImg = new ImageIcon(imgurl);
+                            }
+                            String dirturl = "/main/resources/farmtile3.png";
+                            imgurl = FarmView.class.getResource(dirturl);
+                            ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile3.png");
+                            if (imgurl != null) {
+                                wetdirtImage= new ImageIcon(imgurl);
+                            }
+                            farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
-                            cropImg = new ImageIcon("src/main/resources/CornReady.png");
+                    }
+                    if ((state.getFarmLand()[r][c] & fertilized) == fertilized
+                            && !((state.getFarmLand()[r][c] & wet) == wet)) {
+                        // Snowy & Fertilized
+                        if ((state.getFarmLand()[r][c] & snowy) == snowy) {
+                            String dirtImgicon = "/main/resources/snowytiles4.png";
+                            URL imgurl = FarmView.class.getResource(dirtImgicon);
+                            dirtImg = new ImageIcon("src/main/resources/snowytiles4.png");
+                            if (imgurl != null) {
+                                dirtImg = new ImageIcon(imgurl);
+                            }
+                            String dirturl = "/main/resources/snowytiles4.png";
+                            imgurl = FarmView.class.getResource(dirturl);
+                            ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles4.png");
+                            if (imgurl != null) {
+                                snowyDirtImage= new ImageIcon(imgurl);
+                            }
+                            farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
-                            cropImg = new ImageIcon("src/main/resources/WheatReady.png");
+                        else {
+                            String dirtImgicon = "/main/resources/farmtile4.png";
+                            URL imgurl = FarmView.class.getResource(dirtImgicon);
+                            dirtImg = new ImageIcon("src/main/resources/farmtile4.png");
+                            if (imgurl != null) {
+                                dirtImg = new ImageIcon(imgurl);
+                            }
+                            String dirturl = "/main/resources/farmtile4.png";
+                            imgurl = FarmView.class.getResource(dirturl);
+                            ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile4.png");
+                            if (imgurl != null) {
+                                wetdirtImage= new ImageIcon(imgurl);
+                            }
+                            farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
+                                    .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
                         }
-                        else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
-                            cropImg = new ImageIcon("src/main/resources/SnowberryReady.png");
-                        }
-                        if (cropImg != null) {
-                            setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
-                        }
+                    }
+                }
+                //TODO FINISH THIS (MAKE THEM READABLE BY JAR)
+                // Snowy & Unclaimed
+                else if ((state.getFarmLand()[r][c] & snowy) == snowy) {
+                    dirtImg = new ImageIcon("src/main/resources/snowytiles1.png");
+                    ImageIcon snowyDirtImage = new ImageIcon("src/main/resources/snowytiles1.png");
+                    farmLand[r][c].setIcon(new ImageIcon(snowyDirtImage.getImage()
+                            .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                }
+                else {
+                    dirtImg = new ImageIcon("src/main/resources/farmtile1.png");
+                    ImageIcon wetdirtImage = new ImageIcon("src/main/resources/farmtile1.png");
+                    farmLand[r][c].setIcon(new ImageIcon(wetdirtImage.getImage()
+                            .getScaledInstance(25, 25, Image.SCALE_SMOOTH)));
+                }
+
+                // given the farmland is claimed, if a crop has been planted there, make it appear
+                if ((state.getFarmLand()[r][c] & planted) == planted
+                        && (state.getFarmLand()[r][c] & ready) != ready) {
+                    ImageIcon cropImg = null;
+                    if ((state.getFarmLand()[r][c] & alive) != alive) {
+                        cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
+                        cropImg = new ImageIcon("src/main/resources/RiceUnready.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
+                        cropImg = new ImageIcon("src/main/resources/CornUnready.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
+                        cropImg = new ImageIcon("src/main/resources/WheatUnready.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
+                        cropImg = new ImageIcon("src/main/resources/SnowberryUnready.png");
+                    }
+                    if (cropImg != null) {
+                        setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
+                    }
+                }
+                if ((state.getFarmLand()[r][c] & planted) == planted
+                        && (state.getFarmLand()[r][c] & ready) == ready) {
+                    ImageIcon cropImg = null;
+                    if ((state.getFarmLand()[r][c] & alive) != alive) {
+                        cropImg = new ImageIcon("src/main/resources/deadPlant.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == rice) {
+                        cropImg = new ImageIcon("src/main/resources/RiceReady.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == corn) {
+                        cropImg = new ImageIcon("src/main/resources/CornReady.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == wheat) {
+                        cropImg = new ImageIcon("src/main/resources/WheatReady.png");
+                    }
+                    else if ((state.getFarmLand()[r][c] & cropMask) == snowberry) {
+                        cropImg = new ImageIcon("src/main/resources/SnowberryReady.png");
+                    }
+                    if (cropImg != null) {
+                        setLayeredIcons(farmLand[r][c], dirtImg, cropImg);
                     }
                 }
             }

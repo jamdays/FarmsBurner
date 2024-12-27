@@ -26,8 +26,8 @@ public class FarmState {
     private int temp;
     private String currTool;
     private int crop;
-    private int barnBucks;
-    private int power;
+    private int barnBucks = 30000000;
+    private int power = 10000;
     private long powerRefresh;
 
     public FarmState() {
@@ -166,7 +166,13 @@ public class FarmState {
                     }
                 }
             }
-            this.farmLand[row][col] = claimed;
+            if ((farmLand[row][col] & snowy) == snowy) {
+                this.farmLand[row][col] = snowy;
+                this.farmLand[row][col] += claimed;
+            }
+            else {
+                this.farmLand[row][col] = claimed;
+            }
         }
     }
 
@@ -209,6 +215,12 @@ public class FarmState {
                     long diff = time - cropTimes[r][c];
                     long days = diff / 86400;
                     updateTime(r, c, time);
+                }
+                if ("Snow".equalsIgnoreCase(weather)) {
+                    farmLand[r][c] += snowy;
+                }
+                else if (currTemp > 0){
+                    farmLand[r][c] -= snowy;
                 }
             }
         }
